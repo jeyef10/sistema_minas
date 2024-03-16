@@ -1,0 +1,346 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"if",
+				"if?\t$… = ( … ) ? … : …"
+			],
+			[
+				"con",
+				"console"
+			],
+			[
+				"alert",
+				"alert-secondary"
+			],
+			[
+				"text",
+				"text-left"
+			],
+			[
+				"d-",
+				"d-flex"
+			],
+			[
+				"cla",
+				"colspan"
+			],
+			[
+				"dis",
+				"display"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/nuser/code/sistema_inces/resources"
+	],
+	"file_history":
+	[
+		"/home/nuser/code/sistema_inces/database/migrations/014_create_sedes_table.php",
+		"/home/nuser/code/sistema_inces/app/Models/Persona.php",
+		"/home/nuser/code/sistema_inces/app/Http/Controllers/ReporteController.php",
+		"/home/nuser/code/sistema_inces/resources/views/reporte/index.blade.php",
+		"/home/nuser/code/sistema_inces/resources/views/persona/create.blade.php",
+		"/home/nuser/code/sistema_inces/public/js/validaciones.js",
+		"/home/nuser/code/sistema_inces/app/Models/Asignar.php",
+		"/home/nuser/code/sistema_inces/app/Http/Controllers/AsignarController.php",
+		"/home/nuser/code/sistema_inces/app/Http/Controllers/PerifericosController.php",
+		"/home/nuser/code/sistema_inces/storage/logs/laravel.log",
+		"/home/nuser/code/sistema_inces/app/Models/Sede.php",
+		"/home/nuser/code/sistema_inces/app/Models/PersonaDivisionSede.php",
+		"/home/nuser/code/sistema_inces/app/Models/DivisionSede.php",
+		"/home/nuser/code/sistema_inces/app/Models/Equipos.php",
+		"/home/nuser/code/sistema_inces/app/Http/Controllers/PersonaController.php",
+		"/home/nuser/code/sistema_inces/app/Http/Controllers/SedeController.php",
+		"/home/nuser/code/sistema_inces/app/Models/Cargo.php",
+		"/home/nuser/code/sistema_inces/resources/views/sede/create.blade.php",
+		"/home/nuser/code/s2324/resources/views/email/collections/messege.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/inscripciones/book.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/estudiants/deck/card/estudiant.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/inscripciones/table/crud.blade.php",
+		"/home/nuser/code/s2324/resources/views/livewire/profesor/incident/main/form/fields.blade.php",
+		"/home/nuser/code/s2324/resources/views/livewire/profesor/incident/main/index-component.blade.php",
+		"/home/nuser/code/s2324/resources/views/livewire/profesor/incident/main/form/create.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/estudiants/crud.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/representants/form/search.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/administrativas/form/search.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/registropagos/table/cuentaxpagarsIndividual.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/representants/saldos.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/representants/crud.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/deudas_anterior/table/crud.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/deudas_anterior/crud.blade.php",
+		"/home/nuser/code/s2324/resources/views/profesors/census/index.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/registropagos/form/search/cuentaxpagars.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/registropagos/form/search.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/registropagos/crud.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/registropagos/form/modal/adelantados/filters.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/registropagos/form/modal/fields.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/registropagos/form/modal/adelantados/fields.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/registropagos/form/modal/filters.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/registropagos/cuentaxpagars.blade.php",
+		"/home/nuser/code/s2324/resources/views/livewire/profesor/census/index-component.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/inscripciones/partials/search.blade.php",
+		"/home/nuser/code/s2324/resources/views/livewire/profesor/census/form/fields.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/inscripciones/crud.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/inscripciones/form/search.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/inscripciones/form/fields.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/administrativas/book.blade.php",
+		"/home/nuser/code/s2324/public/csv/2324/enrollments.csv",
+		"/home/nuser/code/s2324/resources/views/administracion/administrativas/crud.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/administrativas/form/search/administrativa.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/administrativas/book/pdf.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/inscripciones/book/pdf.blade.php",
+		"/home/nuser/code/s2324/resources/views/administracion/inscripciones/pdf/lists.blade.php",
+		"/home/nuser/code/s2324/resources/views/representants/layouts/dashboard/navbar/app.blade.php",
+		"/home/nuser/code/s2324/resources/views/representants/boletins/crud.blade.php",
+		"/home/nuser/code/s2324/resources/views/representants/inscripcions/crud.blade.php",
+		"/home/nuser/code/s2324/resources/views/representants/boletins/corte.blade.php",
+		"/home/nuser/code/s2324/database/seeds/data/incident.php",
+		"/home/nuser/code/s2324/database/seeds/IncidentReasonSeeder.php",
+		"/home/nuser/Downloads/sql/BSqnToEU3f ->s2324-2023-08-28.sql",
+		"/home/nuser/Downloads/sql/default.sql",
+		"/home/nuser/code/s2324/database/seeds/default/DatabaseSeeder.php",
+		"/home/nuser/Downloads/sql/BSqnToEU3f ->s2324-2023-08-26.sql",
+		"/home/nuser/code/s2324/app/Http/Controllers/Administracion/AssistControl/AssitAttendanceController.php",
+		"/home/nuser/code/s2324/app/Imports/AssitAttendanceImport.php",
+		"/home/nuser/code/s2324/routes/web.php",
+		"/home/nuser/code/s2324/routes/admin/test/coll_political.php",
+		"/home/nuser/code/s2324/app/Http/Controllers/Administracion/Email/CollectionScheduleController.php",
+		"/home/nuser/code/s2324/app/Models/app/Cobranzas/CollPolitical.php",
+		"/home/nuser/code/s2324/app/Console/include/coll_political.php",
+		"/home/nuser/Downloads/sql/X0Hoc79n->s2223-2023-08-01.sql",
+		"/home/nuser/code/s2223/public/csv/2223/enrollmenstI.csv",
+		"/home/nuser/code/s2223/public/csv/2223/enrollmentsH.csv",
+		"/home/nuser/code/s2223/app/Models/app/Estudiante/Census.php",
+		"/home/nuser/code/s2223/routes/web.php",
+		"/home/nuser/code/s2223/public/csv/2223/enrollments.csv",
+		"/home/nuser/code/s2223/app/Models/app/Estudiant.php",
+		"/home/nuser/code/s2223/app/Models/app/Estudiante/Representant.php",
+		"/home/nuser/code/s2223/public/csv/2223/abonos.csv",
+		"/home/nuser/code/s2223/public/csv/2223/saldos.csv",
+		"/home/nuser/code/s2223/public/csv/2223/enrollmentsA.csv",
+		"/home/nuser/code/s2223/app/Http/Controllers/Administracion/PDF/EnrollmentController.php",
+		"/home/nuser/code/s2223/app/Models/app/Estudiante/Functions/Estudiant/Inscripcions.php",
+		"/home/nuser/code/s2223/app/Models/app/Estudiante/Inscripcion.php",
+		"/home/nuser/code/s2223/routes/app/control.php",
+		"/home/nuser/code/s2223/routes/app/common.php",
+		"/home/nuser/Downloads/sql/X0Hoc79n->s2223-2023-07-26.sql",
+		"/home/nuser/code/s2223/app/Http/Livewire/General/Enrollment/RulesTrait.php",
+		"/home/nuser/code/s2223/app/Http/Livewire/General/Enrollment/IndexComponent.php",
+		"/home/nuser/code/s2223/app/Models/app/Estudiante/Enrollment.php",
+		"/home/nuser/code/s2223/app/Models/app/Bienestar/StudentRecord.php",
+		"/home/nuser/code/s2223/blueprint/base de datos/migraciones/logica_de_negocio",
+		"/home/nuser/code/s2223/database/migrations/2023_07_25_205040_add_student_records_to_enrollmens_table.php",
+		"/home/nuser/code/s2223/app/Http/Livewire/Administracion/Bienestar/StudentRecordTrait.php",
+		"/home/nuser/code/s2223/app/Models/app/Poll/PollQuestion.php",
+		"/home/nuser/code/s2223/routes/app/charts/polls.php",
+		"/home/nuser/code/s2223/app/Http/Controllers/Administracion/Chart/PollController.php",
+		"/home/nuser/code/s2223/app/Http/Controllers/Administracion/Chart/EstudiantController.php",
+		"/home/nuser/code/s2223/app/Models/app/Poll/PollAnswer.php",
+		"/home/nuser/code/s2223/app/Http/Controllers/Administracion/Chart/InscripcionController.php",
+		"/home/nuser/code/s2223/app/Http/Controllers/Administracion/Chart/IngresosController.php",
+		"/home/nuser/code/s2223/app/Models/app/Poll/PollMain.php",
+		"/home/nuser/code/s2223/app/Models/app/Poll/Functions/PollGroupTrait.php",
+		"/home/nuser/code/s2223/app/Http/Livewire/Administracion/Poll/IndexComponent.php",
+		"/home/nuser/code/s2223/app/Http/Controllers/Administracion/Email/PollController.php",
+		"/home/nuser/code/s2223/app/Http/Controllers/Administracion/Tab/Polls/PollMainController.php",
+		"/home/nuser/Downloads/sql/X0Hoc79n->s2223-2023-07-20.sql",
+		"/home/nuser/code/s2223/app/Http/Controllers/Administracion/Tab/HistoricoNotaController.php",
+		"/home/nuser/code/s2223/app/Models/app/Estudiante/Functions/Estudiant/Hnotas.php",
+		"/home/nuser/code/s2223/app/Models/app/HistoricoNota/Hnota.php",
+		"/home/nuser/code/s2223/app/Http/Controllers/Administracion/Tab/BoletinController.php",
+		"/home/nuser/code/s2223/app/Models/app/HistoricoNota/Tevaluacion.php",
+		"/home/nuser/code/s2223/app/Support/herpers.php",
+		"/home/nuser/code/s2223/app/Http/Controllers/Administracion/Tab/Functions/Boletins/Carga.php",
+		"/home/nuser/code/s2223/app/Http/Controllers/Administracion/Email/MailerController.php",
+		"/home/nuser/code/s2223/app/Http/Livewire/Administracion/Mailer/IndexComponent.php",
+		"/home/nuser/code/s2223/app/Models/app/Bienestar/Incident.php",
+		"/home/nuser/code/s2223/app/Http/Livewire/Profesor/Incident/Main/IndexComponent.php",
+		"/home/nuser/code/s2223/app/Http/Livewire/Profesor/Incident/Main/IncidentTrait.php",
+		"/home/nuser/code/s2223/database/migrations/incidents/2022_10_24_132950_create_incident_reasons_table.php",
+		"/home/nuser/code/s2223/database/migrations/2023_07_17_045309_add_status_reiterative_to_incidents.php",
+		"/home/nuser/code/s2223/database/migrations/2023_07_17_045234_add_description_profesor_to_incidents.php",
+		"/home/nuser/code/s2223/database/migrations/incidents/2022_10_24_132959_create_incidents_table.php",
+		"/home/nuser/code/s2223/app/Http/Livewire/Bienestar/Incident/IndexComponent.php",
+		"/home/nuser/code/s2223/blueprint/livewire/logica",
+		"/home/nuser/code/s2223/app/Http/Livewire/Bienestar/Incident/IncidentTrait.php"
+	],
+	"find":
+	{
+		"height": 22.0
+	},
+	"find_in_files":
+	{
+		"height": 98.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"folders":
+	[
+		{
+			"path": "/home/nuser/code/sistema_inces/resources"
+		}
+	],
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 22.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 0.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.mdpopups":
+	{
+		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 96.0
+	},
+	"pinned_build_system": "",
+	"project": "",
+	"replace":
+	{
+		"height": 40.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 258.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -1,0 +1,323 @@
+/********** Template CSS **********/
+:root {
+    --primary: #EB1616;
+    --secondary: #191C24;
+    --light: #6C7293;
+    --dark: #000000;
+}
+
+.back-to-top {
+    position: fixed;
+    display: none;
+    right: 45px;
+    bottom: 45px;
+    z-index: 99;
+}
+
+
+/*** Spinner ***/
+#spinner {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0s , visibility 0s linear 0s;
+    z-index: 99999;
+}
+
+#spinner.show {
+    transition: opacity .1s , visibility 0s linear 0s;
+    visibility: visible;
+    opacity: 1;
+}
+
+
+/*** Button ***/
+.btn {
+    transition: .5s;
+}
+
+.btn-square {
+    width: 38px;
+    height: 38px;
+}
+
+.btn-sm-square {
+    width: 32px;
+    height: 32px;
+}
+
+.btn-lg-square {
+    width: 48px;
+    height: 48px;
+}
+
+.btn-square,
+.btn-sm-square,
+.btn-lg-square {
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: normal;
+    border-radius: 50px;
+}
+
+
+/*** Capa de menu ***/
+.sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 216px;
+    height: 100%;
+    overflow-y: hidden;
+    background-color: rgb(190, 38, 38); 
+    transition: 0.5s;   
+}
+
+
+/*** El cuerpo del menu ***/
+.content {
+    margin-left: 210px;
+    min-height: 100vh;
+    background: url(../img/incesf.png);
+    background-size: cover;
+    transition: 0.5s;
+}
+
+@media (min-width: 992px) {
+    .sidebar {
+        margin-left: 0;
+    }
+
+    .sidebar.open {
+        margin-left: -250px;
+    }
+
+    .content {
+        width: calc(100% - 0px);
+    }
+
+    .content.open {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .sidebar {
+        margin-left: 0;
+    }
+
+    .sidebar.open {
+        margin-left: 0;
+    }
+
+    .content {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+
+/*** Navbar ***/
+
+.sidebar .navbar .navbar-nav .nav-link {
+    padding: 7px 20px;
+    color: rgb(255, 255, 255);
+    font-weight: 500;
+    border-radius: 0 30px 30px 0;
+    outline: none;
+}
+
+/**Icono para la sombra del menu**/
+.sidebar .navbar .navbar-nav .nav-link:hover,
+.sidebar .navbar .navbar-nav .nav-link.active {
+    color: rgb(255, 2, 2);/**Cambio de color en la letra**/ 
+    background: rgb(255, 255, 255); /**sombra de afuera del icono**/
+    border-color: rgb(251, 251, 251);
+}
+
+/**Icono para el menu**/
+.sidebar .navbar .navbar-nav .nav-link i {
+    width: 35px;
+    height: 35px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: black;
+    border-radius: 40px;
+}
+
+/**Forcus para el menu**/
+.sidebar .navbar .navbar-nav .nav-link:hover i,
+.sidebar .navbar .navbar-nav .nav-link.active i {
+    background: rgb(0, 0, 0); /**Color para el fondo del icono**/
+}
+
+.sidebar .navbar .dropdown-toggle::after {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    border: none;
+    content: "\f107";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    transition: .5s;
+}
+
+.sidebar .navbar .dropdown-toggle[aria-expanded=true]::after {
+    transform: rotate(-180deg);
+}
+
+/**Letra para sub-menu**/
+.sidebar .navbar .dropdown-item {
+    padding-left: 15px;
+    border-radius: 0 30px 30px 0;
+    color: rgb(255, 255, 255);
+}
+
+.sidebar .navbar .dropdown-item:hover,
+.sidebar .navbar .dropdown-item.active {
+    background: rgb(0, 0, 0);
+}
+
+.content .navbar .navbar-nav .nav-link {
+    margin-left: 25px;
+    padding: 12px 0;
+    color: black;
+    outline: none;
+}
+
+
+/**Para olcutar el menu lateral**/
+.content .navbar .sidebar-toggler,
+.content .navbar .navbar-nav .nav-link i {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 40px;
+}
+
+/**Menu Usuario para el forcus**/
+.content .navbar .nav-link {
+    padding: 5px 15px;
+    color: #ffffff;
+}
+
+/**Icono para la sobra del menu Usuario**/
+.content .navbar .nav-link:hover,
+.content .navbar .nav-link:hover.active {
+    color: #ff0000;/**Cambio de color en la letra**/
+    background: rgb(255, 255, 255); /**sombra de afuera del icono**/
+    border-radius: 0 30px 30px 0;
+}
+
+/**Icono para el menu Usuario**/
+.content .navbar .nav-link i {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(0, 0, 0);
+    border-radius: 40px;
+}
+
+/**Forcus para el menu Usuario**/
+.content .navbar .nav-link:hover i,
+.content .navbar .nav-link.active i {
+    background: rgb(0, 0, 0); /**Color para el fondo del icono**/
+}
+
+.content .navbar .nav-link.active{
+    color: rgb(0, 0, 0);  
+}
+
+/**Letra para la Barra de busqueda**/
+.content .navbar .dropdown-item {
+    color: rgb(0, 0, 0);
+}
+/**Cursor de sub-menu usuario**/
+.content .navbar .dropdown-item:hover,
+.content .navbar .dropdown-item.active {
+    background: rgb(0, 0, 0);
+    border-radius: 0 30px 30px 0;
+}
+
+.content .navbar .dropdown-toggle::after {
+    margin-left: 6px;
+    vertical-align: middle;
+    border: none;
+    content: "\f107";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    transition: .5s;
+}
+
+.content .navbar .dropdown-toggle[aria-expanded=true]::after {
+    transform: rotate(-180deg);
+}
+
+
+
+/*** Date Picker ***/
+.bootstrap-datetimepicker-widget.bottom {
+    top: auto !important;
+}
+
+.bootstrap-datetimepicker-widget .table * {
+    border-bottom-width: 0px;
+}
+
+.bootstrap-datetimepicker-widget .table th {
+    font-weight: 500;
+}
+
+.bootstrap-datetimepicker-widget.dropdown-menu {
+    padding: 10px;
+    border-radius: 2px;
+}
+
+.bootstrap-datetimepicker-widget table td.active,
+.bootstrap-datetimepicker-widget table td.active:hover {
+    background: var(--primary);
+}
+
+.bootstrap-datetimepicker-widget table td.today::before {
+    border-bottom-color: var(--primary);
+}
+
+
+/*** Testimonial ***/
+.progress .progress-bar {
+    width: 0px;
+    transition: 2s;
+}
+
+
+/*** Testimonial ***/
+.testimonial-carousel .owl-dots {
+    margin-top: 24px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.testimonial-carousel .owl-dot {
+    position: relative;
+    display: inline-block;
+    margin: 0 5px;
+    width: 15px;
+    height: 15px;
+    border: 5px solid var(--primary);
+    border-radius: 15px;
+    transition: .5s;
+}
+
+.testimonial-carousel .owl-dot.active {
+    background: var(--dark);
+    border-color: var(--primary);
+}                           
