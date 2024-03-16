@@ -50,12 +50,13 @@ class GaudysTovarSeeder extends Seeder
             'password' => ('123456'),
         ]);
 
-        // $rol = Role::create(['name'=>'Administrador']);
+        // // $rol = Role::create(['name'=>'Administrador']);
 
-        // $permisos = Permission::pluck('id', 'id')->all();
+        // // $permisos = Permission::pluck('id', 'id')->all();
 
-        // $rol->syncPermissions($permisos);
+        // // $rol->syncPermissions($permisos);
 
+        // $usuario->assignRole('Administrador');
         $usuario->assignRole('Administrador');
 
     }
