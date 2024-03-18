@@ -26,6 +26,8 @@ use App\Http\Controllers\EstadisticaController;
 use App\Models\Asignar;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ManualController;
+use App\Http\Controllers\PasswordResetController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,6 +42,18 @@ use App\Http\Controllers\ManualController;
 Route::get('/', function () {
     return view('auth.login');
 })->name('login');
+
+Route::get('/reset-password', function () {
+    return view('reset-password');
+})->name('password.email');
+
+Route::get('/reset-password/{token}/{email}', function ($token, $email) {
+    return view('reset-password-confirm', ['token' => $token, 'email' => $email]);
+})->name('password.reset');
+
+Route::post('/reset-password', [PasswordResetController::class, 'sendEmail'])->name('password.email');
+
+Route::post('/reset-password/{token}', [PasswordResetController::class, 'reset'])->name('password.update');
 
 // /* Ruta Importar Nómina */
 // Route::get('nomina', [NominaController::class, 'index']);

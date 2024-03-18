@@ -62,8 +62,9 @@
 		@csrf
             <h1 style="color: black;">Iniciar Sesión</h1>
                 <input type="text" name="username" placeholder="Usuario"  autocomplete="off">
-                <input type="password" name="password" placeholder="Contraseña"  autocomplete="off">
-                <input type="submit" value="Entrar">
+                <input type="password" name="password" placeholder="Contraseña"  autocomplete="off" >
+                <input type="submit" value="ENTRAR" id="log-in-button">
+                <a href="/reset-password"> Restablecer Contraseña </a>
         </form>
         </div>
 

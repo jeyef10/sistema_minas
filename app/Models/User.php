@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Notifications\ResetPasswordNotification;
 
 //Agregamos spatie
 use Spatie\Permission\Traits\HasRoles;
@@ -50,6 +51,16 @@ class User extends Authenticatable
     public function setPasswordAttribute(string $password){
         $this->attributes['password'] = bcrypt($password);
 
+    }
+
+    public function hasVerifiedEmail()
+    {
+        return !is_null($this->email_verified_at);
+    }
+
+    public function sendPasswordResetNotification($code)
+    {
+        $this->notify(new ResetPasswordNotification($code));
     }
 
 }
