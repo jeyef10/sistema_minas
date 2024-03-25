@@ -43,16 +43,11 @@
     <!-- Formulario de Registar -->
     <div class="container" id="container">
         <div class="form-container sign-up">
-		<form method="post" action="/register" onsubmit="return registrousuario(this)">
+		<form method="POST" action="{{ route('password.email') }}">
         @csrf
-            <h1 style="color: black;">Crear Cuenta</h1>
-                <input type="text" placeholder="Nombre"  name="name" autocomplete="off" onkeypress="return soloLetras(event);">
-				<input type="text" placeholder="Apellido"  name="nameA"autocomplete="off" onkeypress="return soloLetras(event);">
-				<input type="text" placeholder="Usuario"  name="username" autocomplete="off" onkeypress="return sinespacios(event);">
-                <input type="email" placeholder="Email" name="email" autocomplete="off" onkeypress="return sinespacios(event);">
-                <input type="password" placeholder="Contraseña" name="password" autocomplete="off" onkeypress="return sinespacios(event);">
-				<input type="password" placeholder="Confirmar Contraseña" name="password_confirmation" autocomplete="off" onkeypress="return sinespacios(event);">
-                <button>Registrar</button>
+            <h2 style="color: black; text-align: center;">Ingrese su correo electrónico</h2>
+                <input type="email" name="email" placeholder="Ingrese su correo">
+                <input type="submit" value="ENVIAR CÓDIGO" id="log-in-button">
         </form>
         </div>
 
@@ -64,7 +59,7 @@
                 <input type="text" name="username" placeholder="Usuario"  autocomplete="off">
                 <input type="password" name="password" placeholder="Contraseña"  autocomplete="off" >
                 <input type="submit" value="ENTRAR" id="log-in-button">
-                <a href="/reset-password"> Restablecer Contraseña </a>
+                
         </form>
         </div>
 
@@ -72,14 +67,15 @@
         <div class="toggle-container">
             <div class="toggle">
                 <div class="toggle-panel toggle-left">
-                    <h1>¡Bienvenido de nuevo!</h1>
-                    <p>Ingrese sus datos personales para utilizar todas las funciones del sitio</p>
+                    <h1>¡Vaya! Parece que tienes problemas de acceso</h1>
+                    <p>Ingrese su correo electrónico para recuperar contraseña</p>
                     <button class="hidden" id="login">Inicar Cuenta</button>
                 </div>
                 <div class="toggle-panel toggle-right">
                     <h1>¡Hola Amigo(a)!</h1>
                     <p>Regístrese con sus datos personales para utilizar todas las funciones del sitio</p>
-                    <button class="hidden" id="register">Crear una cuenta</button>
+                    <a href="#" id="register" class="hidden"> Restablecer Contraseña </a>
+                    {{-- <button class="hidden" id="register">Crear una cuenta</button> --}}
                 </div>
             </div>
         </div>
@@ -87,25 +83,6 @@
 
 	<script type="text/javascript" src="js/login.js"></script>
 
-</body>
-
-	<!-- <div class="background">
-        <div class="shape"></div>
-        <div class="shape"></div>
-    </div>
-    <form action="/login" method="POST">
-				@csrf
-        <h3>Iniciar Sesión</h3>
-
-        <label for="username">Usuario</label>
-        <input type="text" name="username" autocomplete="off">
-
-        <label for="password">Contraseña</label>
-        <input type="password" name="password">
-		<input type="submit" value="Entrar">
-        <div class="social">
-          <div class="go"><i class="fab fa-google"></i>Google</div>
-        </div>
-    </form> -->
+    </body>
 
 </html>

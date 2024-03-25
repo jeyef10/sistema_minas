@@ -31,7 +31,9 @@ class PasswordResetController extends Controller
                 ->subject('Restablecer su Contraseña');
         });        
 
-        return back()->with('message', '¡Le hemos enviado por correo electrónico el enlace para restablecer su contraseña!');
+        // return back()->with('message', '¡Le hemos enviado por correo electrónico el enlace para restablecer su contraseña!');
+        $email =  $request->email;
+        return view('auth.reset-password-confirm', compact('email', 'token'))->with('message', '¡Le hemos enviado por correo electrónico el enlace para restablecer su contraseña!');
     }
 
     public function reset(Request $request)
