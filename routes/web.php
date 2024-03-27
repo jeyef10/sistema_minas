@@ -27,6 +27,8 @@ use App\Models\Asignar;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ManualController;
 use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\SolicitanteController;
+use App\Http\Controllers\MineralController;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,11 +88,18 @@ Route::get('/logout', [LogoutController::class, 'logout']);
 Route::get('/Perfil',  [UserSettingsController::class,'Perfil'])->name('Perfil')->middleware('auth');
 Route::post('/change/password',  [UserSettingsController::class,'changePassword'])->name('changePassword');
 
-/* Ruta Sede */
-Route::get('/sede',  [SedeController::class,'index'])->name('sede')->middleware('auth');
-Route::get('/sede/create', [SedeController::class, 'create'])->name('create')->middleware('auth');
-Route::get('/sede/pdf',  [SedeController::class,'pdf'])->name('sede')->middleware('auth');
-Route::resource('sede', SedeController::class)->middleware('auth');
+/* Ruta Solicitante */
+Route::get('/solicitante',  [SolicitanteController::class,'index'])->name('solicitante')->middleware('auth');
+Route::get('/solicitante/create', [SolicitanteController::class, 'create'])->name('create')->middleware('auth');
+Route::get('/solicitante/pdf',  [SolicitanteController::class,'pdf'])->name('solicitante')->middleware('auth');
+Route::resource('solicitante', SolicitanteController::class)->middleware('auth');
+
+/* Ruta Mineral */
+Route::get('/mineral',  [MineralController::class,'index'])->name('mineral')->middleware('auth');
+Route::get('/mineral/create', [MineralController::class, 'create'])->name('create')->middleware('auth');
+Route::get('/mineral/pdf',  [MineralController::class,'pdf'])->name('mineral')->middleware('auth');
+Route::resource('mineral', MineralController::class)->middleware('auth');
+
 
 /* Ruta Cargo */
 Route::get('/cargo',  [CargoController::class,'index'])->name('cargo')->middleware('auth');
