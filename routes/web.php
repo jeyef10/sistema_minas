@@ -45,9 +45,9 @@ Route::get('/', function () {
     return view('auth.login');
 })->name('login');
 
-Route::get('/reset-password', function () {
-    return view('reset-password');
-})->name('password.email');
+// Route::get('/reset-password', function () {
+//     return view('reset-password');
+// })->name('password.email');
 
 Route::get('/reset-password/{token}/{email}', function ($token, $email) {
     return view('reset-password-confirm', ['token' => $token, 'email' => $email]);
@@ -101,27 +101,27 @@ Route::get('/mineral/pdf',  [MineralController::class,'pdf'])->name('mineral')->
 Route::resource('mineral', MineralController::class)->middleware('auth');
 
 
-/* Ruta Cargo */
+/* Ruta Cargo 
 Route::get('/cargo',  [CargoController::class,'index'])->name('cargo')->middleware('auth');
 
 Route::get('/cargo/create',[CargoController::class,'create'])->name('create')->middleware('auth');
 
 Route::get('/cargo/pdf',  [CargoController::class,'pdf'])->name('cargo')->middleware('auth');
 
-Route::resource('cargo', CargoController::class)->middleware('auth');
+Route::resource('cargo', CargoController::class)->middleware('auth');*/
 
-/* Ruta Division */
+/* Ruta Division 
 
 Route::get('/division',  [DivisionController::class,'index'])->name('division')->middleware('auth');
 
-Route::get('/division/create',[DivisionController::class,'create'])->name('create')->middleware('auth');
+Route::get('/division/create',[DivisionController::class,'create'])->name('create')->middleware('auth');*/
 
-/* Ruta de PDF Division */
+/* Ruta de PDF Division 
 Route::get('/division/archivo',  [DivisionController::class,'archivo'])->name('division.archivo')->middleware('auth');
 
-Route::resource('division', DivisionController::class)->middleware('auth');
+Route::resource('division', DivisionController::class)->middleware('auth');*/
 
-/* Ruta Marca */
+/* Ruta Marca 
 Route::get('/marca',  [MarcaController::class,'index'])->name('marca')->middleware('auth');
 
 Route::get('/marca/create',[MarcaController::class,'create'])->name('create')->middleware('auth');
@@ -131,9 +131,9 @@ Route::get('/marca/pdf',  [MarcaController::class,'pdf'])->name('marca')->middle
 
 Route::post('/marca/saveModal', [MarcaController::class, 'saveModal'])->name('marca.saveModal')->middleware('auth');//ruta para procesar la solicitud AJAX
 
-Route::resource('marca', MarcaController::class)->middleware('auth');
+Route::resource('marca', MarcaController::class)->middleware('auth');*/
 
-/* Ruta Modelo*/
+/* Ruta Modelo
 Route::get('/modelo',  [ModeloController::class,'index'])->name('modelo')->middleware('auth');
 
 Route::get('/modelo/create',[ModeloController::class,'create'])->name('create')->middleware('auth');
@@ -142,29 +142,29 @@ Route::get('/modelo/pdf',  [ModeloController::class,'pdf'])->name('modelo')->mid
 
 Route::post('/modelo/saveModal', [ModeloController::class, 'saveModal'])->name('modelo.saveModal')->middleware('auth');//ruta para procesar la solicitud AJAX
 
-Route::resource('modelo', ModeloController::class)->middleware('auth');
+Route::resource('modelo', ModeloController::class)->middleware('auth');*/
 
 
-/* Ruta Tipo de Periféricos*/
+/* Ruta Tipo de Periféricos
 Route::get('/tipoperiferico',  [TipoPerifericoController::class,'index'])->name('tipoperiferico')->middleware('auth');
 
 Route::get('/tipoperif/create',[TipoPerifericoController::class,'create'])->name('create')->middleware('auth');
 
 Route::get('/tipoperiferico/pdf',[TipoPerifericoController::class,'pdf'])->name('tipoperiferico')->middleware('auth');
 
-Route::resource('tipoperif', TipoPerifericoController::class)->middleware('auth');
+Route::resource('tipoperif', TipoPerifericoController::class)->middleware('auth');*/
 
 
-/* Ruta Periferico*/
+/* Ruta Periferico
 Route::get('/periferico',  [PerifericosController::class,'index'])->name('periferico')->middleware('auth');
 
 Route::get('/periferico/create',[PerifericosController::class,'create'])->name('create')->middleware('auth');
 
 Route::get('/periferico/pdf',  [PerifericosController::class,'pdf'])->name('periferico')->middleware('auth');
 
-Route::resource('periferico', PerifericosController::class)->middleware('auth');
+Route::resource('periferico', PerifericosController::class)->middleware('auth');*/
 
-/* Ruta Persona*/
+/* Ruta Persona
 Route::get('/persona',  [PersonaController::class,'index'])->name('persona')->middleware('auth');
 
 Route::get('persona/by-sede/{sede}', [PersonaController::class, 'getBySede'])->name('divisiones.by.sede');
@@ -173,18 +173,18 @@ Route::get('/persona/create',[PersonaController::class,'create']);
 
 Route::get('/persona/pdf',  [PersonaController::class,'pdf'])->name('persona')->middleware('auth');
 
-Route::resource('persona', PersonaController::class);
+Route::resource('persona', PersonaController::class);*/
 
-/* Ruta Sistema*/
+/* Ruta Sistema
 Route::get('/sistema',  [SistemaController::class,'index'])->name('sistema')->middleware('auth');
 
 Route::get('/sistema/create',[SistemaController::class,'create'])->name('create')->middleware('auth');
 
 Route::get('/sistema/pdf',  [SistemaController::class,'pdf'])->name('sistema')->middleware('auth');
 
-Route::resource('sistema', SistemaController::class)->middleware('auth');
+Route::resource('sistema', SistemaController::class)->middleware('auth');*/
 
-/* Ruta Equipo*/
+/* Ruta Equipo
 Route::get('/equipo',  [EquiposController::class,'index'])->name('equipo')->middleware('auth');
 
 Route::get('/equipo/create',[EquiposController::class,'create'])->name('create')->middleware('auth');
@@ -193,9 +193,9 @@ Route::get('/equipo/pdf',  [EquiposController::class,'pdf'])->name('equipo')->mi
 
 Route::resource('equipo', EquiposController::class)->middleware('auth');
 
-Route::post('/equipo/marca', [EquiposController::class,'modal'])->middleware('auth');
+Route::post('/equipo/marca', [EquiposController::class,'modal'])->middleware('auth');*/
 
-/* Ruta Asignar */
+/* Ruta Asignar 
 Route::get('/asignar', [AsignarController::class, 'index'])->name('asignar')->middleware('auth');
 Route::get('/asignar/pdf', [AsignarController::class, 'pdf'])->name('asignar')->middleware('auth');
 Route::get('/asignar/create', [AsignarController::class, 'create'])->name('asignar.create')->middleware('auth');
@@ -208,22 +208,22 @@ Route::resource('asignar', AsignarController::class)->middleware('auth');
 
 Route::get('/desincorporar', [AsignarController::class, 'desincorp'])->name('desincorporar')->middleware('auth');
 
-Route::get('/reincorporar', [AsignarController::class, 'reincorp'])->name('reincorporar')->middleware('auth');
+Route::get('/reincorporar', [AsignarController::class, 'reincorp'])->name('reincorporar')->middleware('auth');*/
 
-/* Ruta Estadistica */
+/* Ruta Estadistica 
 
-Route::get('estadistica', [EstadisticaController::class, 'index'])->name('estadistica')->middleware('auth');
+Route::get('estadistica', [EstadisticaController::class, 'index'])->name('estadistica')->middleware('auth');*/
 
-/* Ruta reportes */
+/* Ruta reportes 
 Route::get('reportes', [ReporteController::class, 'index'])->name('reportes')->middleware('auth');
 Route::get('/reportes/pdf',  [ReporteController::class,'reportesPdf'])->name('reportes.pdf')->middleware('auth');
 Route::get('reportes/indexperif', [ReporteController::class, 'indexperif'])->name('reportes')->middleware('auth');
 Route::get('/reportes/perifpdf',  [ReporteController::class,'reportesperifPdf'])->name('reportes.perifpdf')->middleware('auth');
-Route::get('bitacora', [ReporteController::class, 'bitacora'])->name('bitacora')->middleware('auth');
+Route::get('bitacora', [ReporteController::class, 'bitacora'])->name('bitacora')->middleware('auth'); */
 
-/* Ruta Inventario*/
+/* Ruta Inventario
 Route::get('/inventario',  [EquiposController::class,'indexinvent'])->name('equipo')->middleware('auth');
-Route::get('/inventario/estatus',  [AsignarController::class,'estatus'])->name('estatus')->middleware('auth');
+Route::get('/inventario/estatus',  [AsignarController::class,'estatus'])->name('estatus')->middleware('auth');*/
 
-/* Ruta Manual */
-Route::get('/manual',  [ManualController::class,'index'])->name('manual')->middleware('auth');
+/* Ruta Manual 
+Route::get('/manual',  [ManualController::class,'index'])->name('manual')->middleware('auth'); */
