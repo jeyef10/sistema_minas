@@ -29,6 +29,9 @@ use App\Http\Controllers\ManualController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\SolicitanteController;
 use App\Http\Controllers\MineralController;
+use App\Http\Controllers\RegaliaController;
+use App\Http\Controllers\PlazosController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -100,6 +103,17 @@ Route::get('/mineral/create', [MineralController::class, 'create'])->name('creat
 Route::get('/mineral/pdf',  [MineralController::class,'pdf'])->name('mineral')->middleware('auth');
 Route::resource('mineral', MineralController::class)->middleware('auth');
 
+/* Ruta Regalia */
+Route::get('/regalia',  [RegaliaController::class,'index'])->name('regalia')->middleware('auth');
+Route::get('/regalia/create', [RegaliaController::class, 'create'])->name('create')->middleware('auth');
+Route::get('/regalia/pdf',  [RegaliaController::class,'pdf'])->name('regalia')->middleware('auth');
+Route::resource('regalia', RegaliaController::class)->middleware('auth');
+
+/* Ruta Plazo*/
+Route::get('/plazo',  [PlazosController::class,'index'])->name('plazo')->middleware('auth');
+Route::get('/plazo/create', [PlazosController::class, 'create'])->name('create')->middleware('auth');
+Route::get('/plazo/pdf',  [PlazosController::class,'pdf'])->name('plazo')->middleware('auth');
+Route::resource('plazo', PlazosController::class)->middleware('auth');
 
 /* Ruta Cargo 
 Route::get('/cargo',  [CargoController::class,'index'])->name('cargo')->middleware('auth');

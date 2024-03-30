@@ -48,10 +48,8 @@
                     <h6 class="collapse-header">MODULOS</h6>
                     <a class="collapse-item" href="{{ url('solicitante') }}">Solicitante</a>
                     <a class="collapse-item" href="{{ url('mineral') }}">Mineral</a>
-                    <a class="collapse-item" href="dropdowns.html">Tasa de Regalias</a>
-                    <a class="collapse-item" href="modals.html">Plazos de Vigencia</a>
-                    {{-- <a class="collapse-item" href="popovers.html">Popovers</a>
-                    <a class="collapse-item" href="progress-bar.html">Progress Bars</a> --}}
+                    <a class="collapse-item" href="{{ url('regalia') }}">Tasa de Regalias</a>
+                    <a class="collapse-item" href="{{ url('plazo') }}">Plazos de Vigencia</a>
                   </div>
                 </div>
               </li>
