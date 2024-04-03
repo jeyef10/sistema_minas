@@ -1327,23 +1327,7 @@ var tipo = obj.tipo.value;
         obj.tipo.focus();
         return false;
     }
-    if (tipo.length < 3){
-        Swal.fire({
-            title: 'Tipo de Periférico',
-            text: "Faltan dígitos en este campo de texto.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
-
-            this.submit();
-        }
-        })
-        
-        obj.tipo.focus();
-        return (false);
-    }
+    
     if (tipo.trim() == "") {
         Swal.fire({
             title: 'Tipo de Periférico',

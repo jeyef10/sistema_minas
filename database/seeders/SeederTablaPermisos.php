@@ -31,11 +31,11 @@ class SeederTablaPermisos extends Seeder
             'editar-rol',
             'borrar-rol',
 
-            //Operaciones sobre tabla Sedes
-            /* 'ver-sede',
-            'crear-sede',
-            'editar-sede',
-            'borrar-sede', */
+            //Operaciones sobre tabla Solicitante
+            /* 'ver-solicitante',
+            'crear-solicitante',
+            'editar-solicitante',
+            'borrar-solicitante', */
 
             //Operaciones sobre tabla Divisiones
             /* 'ver-division',

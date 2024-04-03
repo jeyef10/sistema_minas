@@ -132,7 +132,7 @@
                   <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
                     <i class="fa fa-bars"></i>
                   </button>
-                  <MARQUEE style="color: white;"> BIENVENID@ {{ Auth::user()->name }} al SISTEMA ........</MARQUEE>
+                  <MARQUEE style="color: white;"> BIENVENID@ {{ Auth::user()->name }} al SISTEMA DE GESTIÓN DE SOLICITUDES Y LICENCIAS PARA LA DIRECCIÓN DE MINAS (SIGESOLI)</MARQUEE>
                   <ul class="navbar-nav ml-auto">
                     <div class="topbar-divider d-none d-sm-block"> 
                     </div>

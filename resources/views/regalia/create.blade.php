@@ -31,10 +31,10 @@
                                 </div>
 
                                 <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">Moneda de Longitud</label>
-                                    <select class="select2-single form-control" name="moneda_longitud" id="moneda_longutid">
+                                    <label  class="font-weight-bold text-primary">Moneda/Longitud</label>
+                                    <select class="select2-single form-control" name="moneda_longitud" id="moneda_longitud">
                                         <option value="0" selected="true" disabled>Seleccione una Moneda</option>
-                                        <option value="$ 1.5mtrs/3">$ 1.5mtrs/3</option>
+                                        <option value="$/mtrs/3">$/mtrs/3</option>
                                     </select>
                                 </div>
                         

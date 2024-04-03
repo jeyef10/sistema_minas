@@ -32,10 +32,10 @@
                                 </div>
         
                                 <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">Moneda de Longitud</label>
+                                    <label  class="font-weight-bold text-primary">Moneda/Longitud</label>
                                     <select class="select2-single form-control" name="moneda_longitud" id="">
                                         <option value="0" disabled>Seleccione una Marca</option>
-                                            <option value="$ 1.5mtrs/3" {{ (old('tipo', $mineral->tipo ?? '') === '$ 1.5mtrs/3') ? 'selected' : '' }}>$ 1.5mtrs/3</option>
+                                            <option value="$/mtrs/3" {{ (old('tipo', $mineral->tipo ?? '') === '$/mtrs/3') ? 'selected' : '' }}>$/mtrs/3</option>
                                            
                                     </select>
                                 </div>
