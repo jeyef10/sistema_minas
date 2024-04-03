@@ -18,7 +18,7 @@
                     </div>
                 
 
-                    <form method="post" action="{{ route('regalia.store') }}" enctype="multipart/form-data" onsubmit="return regalia(this)">
+                    <form method="post" action="{{ route('regalia.store') }}" enctype="multipart/form-data" onsubmit="return Regalia(this)">
                         @csrf
                             
                         <div class="card-body">
@@ -27,7 +27,7 @@
 
                             <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Monto</label>
-                                    <input type="text" class="form-control" id="name" name="monto" style="background: white;" value="" placeholder="Ingrese el monto" autocomplete="off" onkeypress="return solonum(event);">
+                                    <input type="text" class="form-control" id="monto" name="monto" style="background: white;" value="" placeholder="Ingrese el monto" autocomplete="off" onkeypress="return solonum(event);">
                                 </div>
 
                                 <div class="col-4">

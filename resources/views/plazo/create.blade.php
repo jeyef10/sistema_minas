@@ -18,7 +18,7 @@
                     </div>
                 
 
-                    <form method="post" action="{{ route('plazo.store') }}" enctype="multipart/form-data" onsubmit="return plazo(this)">
+                    <form method="post" action="{{ route('plazo.store') }}" enctype="multipart/form-data" onsubmit="return Plazo(this)">
                         @csrf
                             
                         <div class="card-body">
@@ -27,12 +27,12 @@
 
                             <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Cantidad</label>
-                                    <input type="text" class="form-control" id="name" name="cantidad" style="background: white;" value="" placeholder="Ingrese la cantidad" autocomplete="off" onkeypress="return solonum(event);">
+                                    <input type="text" class="form-control" id="cantidad" name="cantidad" style="background: white;" value="" placeholder="Ingrese la cantidad" autocomplete="off" onkeypress="return solonum(event);">
                                 </div>
 
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Medida de tiempo</label>
-                                    <input type="text" class="form-control" id="name" name="medida_tiempo" style="background: white;" value="" placeholder="Ingrese la medida del tiempo" autocomplete="off" onkeypress="return solonum(event);">
+                                    <input type="text" class="form-control" id="medida_tiempo" name="medida_tiempo" style="background: white;" value="" placeholder="Ingrese la medida del tiempo" autocomplete="off" onkeypress="return solonum(event);">
                                 </div>
 
                                 <!-- <div class="col-4">

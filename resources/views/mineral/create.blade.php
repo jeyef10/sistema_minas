@@ -18,7 +18,7 @@
                     </div>
                 
 
-                    <form method="post" action="{{ route('mineral.store') }}" enctype="multipart/form-data" onsubmit="return mineral(this)">
+                    <form method="post" action="{{ route('mineral.store') }}" enctype="multipart/form-data" onsubmit="return Mineral(this)">
                         @csrf
                             
                         <div class="card-body">
@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Nombre</label>
-                                    <input type="text" class="form-control" id="name" name="nombre" style="background: white;" value="" placeholder="Ingrese el nombre" autocomplete="off" onkeypress="return soloLetras(event);">
+                                    <input type="text" class="form-control" id="nombre" name="nombre" style="background: white;" value="" placeholder="Ingrese el nombre" autocomplete="off" onkeypress="return soloLetras(event);">
                                 </div>
 
                             </div>

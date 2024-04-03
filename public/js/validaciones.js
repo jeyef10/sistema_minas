@@ -417,13 +417,13 @@ function registrousuario(obj) {
     
 }
 
-// Validar SEDE
-function Sede(obj) {
-    var nombre_sede = obj.nombre_sede.value;
-    if (!nombre_sede) {
+// Validar REGALIA
+function Regalia(obj) {
+    var monto = obj.monto.value;
+    if (!monto) {
          Swal.fire({
-             title: 'Sede',
-             text: "Debe de ingresar el nombre de la sede.",
+             title: 'Regalia',
+             text: "Debe de ingresar el monto.",
              icon: 'warning',
              confirmButtonColor: '#3085d6',
              cancelButtonColor: '#d33',
@@ -434,9 +434,45 @@ function Sede(obj) {
             }
             })
 
-            obj.nombre_sede.focus();
+            obj.monto.focus();
              return false;
     }
+
+    var moneda_longitud = obj.moneda_longitud.value;
+    if (!moneda_longitud) {
+        Swal.fire({
+            title: 'Moneda/Longitud',
+            text: "Debe  seleccionar una moneda.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return false;
+    }
+    var moneda_longitud = obj.moneda_longitud.value;
+    if (moneda_longitud==0){
+        Swal.fire({
+            title: 'Moneda/Longitud',
+            text: "Debe seleccionar una moneda.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return (false);
+    }
+
     if (nombre_sede.length < 4){
         Swal.fire({
             title: 'Sede',
@@ -533,13 +569,31 @@ function Sede(obj) {
     
 
 
-// Validar DIVISIÓN
-function division(obj) {
-    var nombre_division = obj.nombre_division.value;
-    if (!nombre_division) {
+// Validar MINERAL
+function Mineral(obj) {
+    var tipo = obj.tipo.value;
+    if (tipo==0){
         Swal.fire({
-            title: 'División',
-            text: "Debe de ingresar el nombre de la división.",
+            title: 'Tipo',
+            text: "Debe seleccionar un tipo de mineral.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return (false);
+    }
+   
+    var nombre = obj.nombre.value;
+    if (!nombre) {
+        Swal.fire({
+            title: 'Nombre',
+            text: "Debe  ingresar nombre del mineral.",
             icon: 'warning',
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -550,9 +604,48 @@ function division(obj) {
         }
         })
 
-        obj.nombre_division.focus();
+        obj.nombre.focus();
         return false;
     }
+
+    if (nombre.trim() == "") {
+        Swal.fire({
+            title: 'Nombre',
+            text: "El campo de Nombre no debe contener espacios en blanco.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+
+        obj.nombre.focus();
+        return false;
+    }
+
+    if (!/^[A-Z][a-ó-z ]+$/.test(nombre)) {
+        Swal.fire({
+            title: 'Nombre',
+            text: "El nombre debe comenzar con una letra mayúscula y las demás en minúscula.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+       
+        obj.nombre.focus();
+        return false;
+
+        
+    }
+
 
     if (nombre_division.length < 6){
         Swal.fire({
@@ -572,23 +665,7 @@ function division(obj) {
         return (false);
     }
 
-    if (nombre_division.trim() == "") {
-        Swal.fire({
-            title: 'División',
-            text: "El campo de la división no debe contener espacios en blanco.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
-
-            this.submit();
-        }
-        })
-
-        obj.nombre_division.focus();
-        return false;
-    }
+    
     if (/^([a-zA-Z0-9])\1+$/.test(nombre_division)) {
         Swal.fire({
             title: 'División',
@@ -606,34 +683,16 @@ function division(obj) {
         obj.nombre_division.focus();
         return false;
     }
-    if (!/^[A-Z][a-ó-z ]+$/.test(nombre_division)) {
-        Swal.fire({
-            title: 'División',
-            text: "El nombre debe comenzar con una letra mayúscula y las demás en minúscula.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
-
-            this.submit();
-        }
-        })
-       
-        obj.nombre_division.focus();
-        return false;
-
-        
-    }
+  
    
 }
-//Validar Cargo
-function Cargo(obj) {
-    var nombre_cargo = obj.nombre_cargo.value;
-    if (!nombre_cargo) {
+//Validar Plazos de Vigencia
+function Plazo(obj) {
+    var cantidad = obj.cantidad.value;
+    if (!cantidad) {
         Swal.fire({
-            title: 'Cargo',
-            text: "Debe de ingresar el nombre del cargo.",
+            title: 'Plazos',
+            text: "Debe  ingresar una cantidad.",
             icon: 'warning',
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -644,9 +703,29 @@ function Cargo(obj) {
         }
         })
        
-        obj.nombre_cargo.focus();
+        obj.cantidad.focus();
         return false;
     }
+     
+    var medida_tiempo = obj.medida_tiempo.value;
+    if (!medida_tiempo) {
+        Swal.fire({
+            title: 'Plazos',
+            text: "Debe  ingresar la medida de tiempo correspondiente",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+       
+        obj.medida_tiempo.focus();
+        return false;
+    }
+
     if (nombre_cargo.length < 4){
         Swal.fire({
             title: 'Cargo',
