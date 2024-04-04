@@ -5,9 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Regalia;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
 
 class RegaliaController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:ver-regalia|crear-regalia|editar-regalia|borrar-regalia', ['only' => ['index']]);
+         $this->middleware('permission:crear-regalia', ['only' => ['create','store']]);
+         $this->middleware('permission:editar-regalia', ['only' => ['edit','update']]);
+         $this->middleware('permission:borrar-regalia', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

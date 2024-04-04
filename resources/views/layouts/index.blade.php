@@ -33,10 +33,6 @@
                   <span>INICIO</span></a>
               </li>
               <hr class="sidebar-divider">
-              <div class="sidebar-heading">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>MODULOS</span>
-              </div>
               <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
                   aria-expanded="true" aria-controls="collapseBootstrap">
@@ -45,7 +41,6 @@
                 </a>
                 <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
                   <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">MODULOS</h6>
                     <a class="collapse-item" href="{{ url('solicitante') }}">Solicitante</a>
                     <a class="collapse-item" href="{{ url('mineral') }}">Mineral</a>
                     <a class="collapse-item" href="{{ url('regalia') }}">Tasa de Regalias</a>

@@ -5,9 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Plazos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
 
 class PlazosController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:ver-plazo|crear-plazo|editar-plazo|borrar-plazo', ['only' => ['index']]);
+         $this->middleware('permission:crear-plazo', ['only' => ['create','store']]);
+         $this->middleware('permission:editar-plazo', ['only' => ['edit','update']]);
+         $this->middleware('permission:borrar-plazo', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

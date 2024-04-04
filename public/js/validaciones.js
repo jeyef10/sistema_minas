@@ -79,328 +79,352 @@ function login(obj) {
 }
 
 //Validar Registro de Usuario
-function registrousuario(obj) {
-    var name = obj.name.value;
-    if (!name) {
-        Swal.fire({
-            title: 'Registro de Usuario',
-            text: "Debe de ingresar un nombre",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+// function registrousuario(obj) {
+//     var name = obj.name.value;
+//     if (!name) {
+//         Swal.fire({
+//             title: 'Registro de Usuario',
+//             text: "Debe de ingresar un nombre",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+//             this.submit();
+//         }
+//         })
         
-        obj.name.focus();
-        return false;
-    }
-    if (name.length < 3){
-        Swal.fire({
-            title: 'Registro de Usuario',
-            text: "Faltan dígitos en este campo de texto.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+//         obj.name.focus();
+//         return false;
+//     }
+//     if (name.length < 3){
+//         Swal.fire({
+//             title: 'Registro de Usuario',
+//             text: "Faltan dígitos en este campo de texto.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+//             this.submit();
+//         }
+//         })
         
-        obj.name.focus();
-        return (false);
-    }
-    if (name.trim() == "") {
-        Swal.fire({
-           title: 'Registro de Usuario',
-           text: "El campo de nombre no debe contener espacios en blancos.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+//         obj.name.focus();
+//         return (false);
+//     }
+//     if (name.trim() == "") {
+//         Swal.fire({
+//            title: 'Registro de Usuario',
+//            text: "El campo de nombre no debe contener espacios en blancos.",
+//            icon: 'warning',
+//            confirmButtonColor: '#3085d6',
+//            cancelButtonColor: '#d33',
+//            }).then((result) => {
+//        if (result.isConfirmed) {
 
-           this.submit();
-       }
-       })
+//            this.submit();
+//        }
+//        })
       
-       obj.name.focus();
-       return false;
-    }
-    if (/^([a-zA-Z0-9])\1+$/.test(name)) {
-         Swal.fire({
-            title: 'Registro de Usuario',
-            text: "El campo de nombre no debe contener caracteres repetidos.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+//        obj.name.focus();
+//        return false;
+//     }
+//     if (/^([a-zA-Z0-9])\1+$/.test(name)) {
+//          Swal.fire({
+//             title: 'Registro de Usuario',
+//             text: "El campo de nombre no debe contener caracteres repetidos.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+//             this.submit();
+//         }
+//         })
        
-        obj.name.focus();
-        return false;
-    }
-    if (!/^[A-Z][a-z]+$/.test(name)) {
-        Swal.fire({
-            title: 'Registro de Usuario',
-            text: "El nombre debe comenzar con una letra mayúscula y las demás en minúscula.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+//         obj.name.focus();
+//         return false;
+//     }
+//     if (!/^[A-Z][a-z]+$/.test(name)) {
+//         Swal.fire({
+//             title: 'Registro de Usuario',
+//             text: "El nombre debe comenzar con una letra mayúscula y las demás en minúscula.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+//             this.submit();
+//         }
+//         })
        
-        obj.name.focus();
-        return false;
-    }
-    var nameA = obj.nameA.value;
-    if (!nameA) {
-        Swal.fire({
-            title: 'Registro de Usuario',
-            text: "Debe de ingresar un apellido",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+//         obj.name.focus();
+//         return false;
+//     }
+//     var nameA = obj.nameA.value;
+//     if (!nameA) {
+//         Swal.fire({
+//             title: 'Registro de Usuario',
+//             text: "Debe de ingresar un apellido",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+//             this.submit();
+//         }
+//         })
         
-        obj.nameA.focus();
-        return false;
-    }
-    if (nameA.length < 3){
-        Swal.fire({
-            title: 'Registro de Usuario',
-            text: "Faltan dígitos en este campo de texto.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+//         obj.nameA.focus();
+//         return false;
+//     }
+//     if (nameA.length < 3){
+//         Swal.fire({
+//             title: 'Registro de Usuario',
+//             text: "Faltan dígitos en este campo de texto.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+//             this.submit();
+//         }
+//         })
         
-        obj.nameA.focus();
-        return (false);
-    }
-    if (nameA.trim() == "") {
-        Swal.fire({
-           title: 'Registro de Usuario',
-           text: "El campo de nombre no debe contener espacios en blancos.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+//         obj.nameA.focus();
+//         return (false);
+//     }
+//     if (nameA.trim() == "") {
+//         Swal.fire({
+//            title: 'Registro de Usuario',
+//            text: "El campo de nombre no debe contener espacios en blancos.",
+//            icon: 'warning',
+//            confirmButtonColor: '#3085d6',
+//            cancelButtonColor: '#d33',
+//            }).then((result) => {
+//        if (result.isConfirmed) {
 
-           this.submit();
-       }
-       })
+//            this.submit();
+//        }
+//        })
       
-       obj.nameA.focus();
-       return false;
-    }
-    if (/^([a-zA-Z0-9])\1+$/.test(nameA)) {
-         Swal.fire({
-            title: 'Registro de Usuario',
-            text: "El campo de nombre no debe contener caracteres repetidos.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+//        obj.nameA.focus();
+//        return false;
+//     }
+//     if (/^([a-zA-Z0-9])\1+$/.test(nameA)) {
+//          Swal.fire({
+//             title: 'Registro de Usuario',
+//             text: "El campo de nombre no debe contener caracteres repetidos.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+//             this.submit();
+//         }
+//         })
        
-        obj.nameA.focus();
-        return false;
-    }
-    if (!/^[A-Z][a-z]+$/.test(nameA)) {
-        Swal.fire({
-            title: 'Registro de Usuario',
-            text: "El nombre debe comenzar con una letra mayúscula y las demás en minúscula.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+//         obj.nameA.focus();
+//         return false;
+//     }
+//     if (!/^[A-Z][a-z]+$/.test(nameA)) {
+//         Swal.fire({
+//             title: 'Registro de Usuario',
+//             text: "El nombre debe comenzar con una letra mayúscula y las demás en minúscula.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+//             this.submit();
+//         }
+//         })
        
-        obj.nameA.focus();
-        return false;
-    }
-    var email = obj.email.value;
-    if (!email) {
-        Swal.fire({
-            title: 'Registro de Usuario',
-            text: "Debe de ingresar un e-mail",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+//         obj.nameA.focus();
+//         return false;
+//     }
+//     var email = obj.email.value;
+//     if (!email) {
+//         Swal.fire({
+//             title: 'Registro de Usuario',
+//             text: "Debe de ingresar un e-mail",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+//             this.submit();
+//         }
+//         })
 
-        obj.email.focus();
-        return false;
-    }
-    if (email.length < 4){
-        Swal.fire({
-            title: 'Registro de Usuario',
-            text: "Faltan dígitos en este campo de texto.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+//         obj.email.focus();
+//         return false;
+//     }
+//     if (email.length < 4){
+//         Swal.fire({
+//             title: 'Registro de Usuario',
+//             text: "Faltan dígitos en este campo de texto.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+//             this.submit();
+//         }
+//         })
         
-        obj.email.focus();
-        return (false);
-    }
-    var username = obj.username.value;
-    if (!username) {
-        Swal.fire({
-            title: 'Registro de Usuario',
-            text: "Debe de ingresar un nombre de usuario",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+//         obj.email.focus();
+//         return (false);
+//     }
+//     var username = obj.username.value;
+//     if (!username) {
+//         Swal.fire({
+//             title: 'Registro de Usuario',
+//             text: "Debe de ingresar un nombre de usuario",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+//             this.submit();
+//         }
+//         })
         
-        obj.username.focus();
-        return false;
-    }
-    if (username.length < 3){
-        Swal.fire({
-            title: 'Registro de Usuario',
-            text: "Faltan dígitos en este campo de texo.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+//         obj.username.focus();
+//         return false;
+//     }
+//     if (username.length < 3){
+//         Swal.fire({
+//             title: 'Registro de Usuario',
+//             text: "Faltan dígitos en este campo de texo.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+//             this.submit();
+//         }
+//         })
         
-        obj.username.focus();
-        return (false);
-    }
-    // var rol = obj.rol.value;
-    // if (rol==0){
-    //     alert("Debe de seleccionar el Rol del Usuario");
-    //     return (false);
-    // }
-    var password = obj.password.value;
-    if (!password) {
-        Swal.fire({
-            title: 'Registro de Usuario',
-            text: "Debe de ingresar la contraseña",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+//         obj.username.focus();
+//         return (false);
+//     }
+//     // var rol = obj.rol.value;
+//     // if (rol==0){
+//     //     alert("Debe de seleccionar el Rol del Usuario");
+//     //     return (false);
+//     // }
+//     var password = obj.password.value;
+//     if (!password) {
+//         Swal.fire({
+//             title: 'Registro de Usuario',
+//             text: "Debe de ingresar la contraseña",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+//             this.submit();
+//         }
+//         })
         
-        obj.password.focus();
-        return false;
-    }
-    if (password.length < 4){
-        Swal.fire({
-            title: 'Registro de Usuario',
-            text: "Faltan dígitos en este campo de texo o numero.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+//         obj.password.focus();
+//         return false;
+//     }
+//     if (password.length < 4){
+//         Swal.fire({
+//             title: 'Registro de Usuario',
+//             text: "Faltan dígitos en este campo de texo o numero.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+//             this.submit();
+//         }
+//         })
 		
-		obj.password.focus();
-		return (false);
-	}
-    var password_confirmation = obj.password_confirmation.value;
-    if (!password_confirmation) {
-        Swal.fire({
-            title: 'Registro de Usuario',
-            text: "Debe de ingresar la confirmación de la contraseña",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+// 		obj.password.focus();
+// 		return (false);
+// 	}
+//     var password_confirmation = obj.password_confirmation.value;
+//     if (!password_confirmation) {
+//         Swal.fire({
+//             title: 'Registro de Usuario',
+//             text: "Debe de ingresar la confirmación de la contraseña",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+//             this.submit();
+//         }
+//         })
         
-        obj.password_confirmation.focus();
-        return false;
-    }
-    if (password_confirmation.length < 4){
-        Swal.fire({
-            title: 'Registro de Usuario',
-            text: "Faltan dígitos en este campo de texto o numero.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+//         obj.password_confirmation.focus();
+//         return false;
+//     }
+//     if (password_confirmation.length < 4){
+//         Swal.fire({
+//             title: 'Registro de Usuario',
+//             text: "Faltan dígitos en este campo de texto o numero.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+//             this.submit();
+//         }
+//         })
 	
-		obj.password_confirmation.focus();
-		return (false);
-	}
-    if (password_confirmation != password) {
+// 		obj.password_confirmation.focus();
+// 		return (false);
+// 	}
+//     if (password_confirmation != password) {
+//         Swal.fire({
+//             title: 'Registro de Usuario',
+//             text: "Las contraseñas no coinciden",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
+
+//             this.submit();
+//         }
+//         })
+        
+//         obj.password_confirmation.focus();
+//         return false;
+//     }
+    
+// }
+
+
+// Validar MINERAL
+function Mineral(obj) {
+    var tipo = obj.tipo.value;
+    if (tipo==0){
         Swal.fire({
-            title: 'Registro de Usuario',
-            text: "Las contraseñas no coinciden",
+            title: 'Tipo',
+            text: "Debe seleccionar un tipo de mineral.",
             icon: 'warning',
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -411,10 +435,105 @@ function registrousuario(obj) {
         }
         })
         
-        obj.password_confirmation.focus();
+        return (false);
+    }
+   
+    var nombre = obj.nombre.value;
+    if (!nombre) {
+        Swal.fire({
+            title: 'Nombre',
+            text: "Debe  ingresar nombre del mineral.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+
+        obj.nombre.focus();
         return false;
     }
+
+    if (nombre.trim() == "") {
+        Swal.fire({
+            title: 'Nombre',
+            text: "El campo de Nombre no debe contener espacios en blanco.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+
+        obj.nombre.focus();
+        return false;
+    }
+
+    if (!/^[A-Z][a-ó-z ]+$/.test(nombre)) {
+        Swal.fire({
+            title: 'Nombre',
+            text: "El nombre debe comenzar con una letra mayúscula y las demás en minúscula.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+       
+        obj.nombre.focus();
+        return false;
+
+        
+    }
+
+
+    if (nombre_division.length < 6){
+        Swal.fire({
+            title: 'División',
+            text: "Faltan dígitos en este campo de texto.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+       
+        obj.nombre_division.focus();
+        return (false);
+    }
+
     
+    if (/^([a-zA-Z0-9])\1+$/.test(nombre_division)) {
+        Swal.fire({
+            title: 'División',
+            text: "El campo de división no debe contener caracteres repetidos.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+       
+        obj.nombre_division.focus();
+        return false;
+    }
+  
+   
 }
 
 // Validar REGALIA
@@ -567,125 +686,6 @@ function Regalia(obj) {
         return true;
 }
     
-
-
-// Validar MINERAL
-function Mineral(obj) {
-    var tipo = obj.tipo.value;
-    if (tipo==0){
-        Swal.fire({
-            title: 'Tipo',
-            text: "Debe seleccionar un tipo de mineral.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
-
-            this.submit();
-        }
-        })
-        
-        return (false);
-    }
-   
-    var nombre = obj.nombre.value;
-    if (!nombre) {
-        Swal.fire({
-            title: 'Nombre',
-            text: "Debe  ingresar nombre del mineral.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
-
-            this.submit();
-        }
-        })
-
-        obj.nombre.focus();
-        return false;
-    }
-
-    if (nombre.trim() == "") {
-        Swal.fire({
-            title: 'Nombre',
-            text: "El campo de Nombre no debe contener espacios en blanco.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
-
-            this.submit();
-        }
-        })
-
-        obj.nombre.focus();
-        return false;
-    }
-
-    if (!/^[A-Z][a-ó-z ]+$/.test(nombre)) {
-        Swal.fire({
-            title: 'Nombre',
-            text: "El nombre debe comenzar con una letra mayúscula y las demás en minúscula.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
-
-            this.submit();
-        }
-        })
-       
-        obj.nombre.focus();
-        return false;
-
-        
-    }
-
-
-    if (nombre_division.length < 6){
-        Swal.fire({
-            title: 'División',
-            text: "Faltan dígitos en este campo de texto.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
-
-            this.submit();
-        }
-        })
-       
-        obj.nombre_division.focus();
-        return (false);
-    }
-
-    
-    if (/^([a-zA-Z0-9])\1+$/.test(nombre_division)) {
-        Swal.fire({
-            title: 'División',
-            text: "El campo de división no debe contener caracteres repetidos.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
-
-            this.submit();
-        }
-        })
-       
-        obj.nombre_division.focus();
-        return false;
-    }
-  
-   
-}
 //Validar Plazos de Vigencia
 function Plazo(obj) {
     var cantidad = obj.cantidad.value;
@@ -726,74 +726,75 @@ function Plazo(obj) {
         return false;
     }
 
-    if (nombre_cargo.length < 4){
-        Swal.fire({
-            title: 'Cargo',
-            text: "Faltan dígitos en este campo de texto.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+    // if (nombre_cargo.length < 4){
+    //     Swal.fire({
+    //         title: 'Cargo',
+    //         text: "Faltan dígitos en este campo de texto.",
+    //         icon: 'warning',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         }).then((result) => {
+    //     if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+    //         this.submit();
+    //     }
+    //     })
 
-        obj.nombre_cargo.focus();
-        return (false);
-    }
-    if (nombre_cargo.trim() == "") {
-        Swal.fire({
-            title: 'Cargo',
-            text: "El campo de cargo no debe contener espacios en blanco.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+    //     obj.nombre_cargo.focus();
+    //     return (false);
+    // }
+    // if (nombre_cargo.trim() == "") {
+    //     Swal.fire({
+    //         title: 'Cargo',
+    //         text: "El campo de cargo no debe contener espacios en blanco.",
+    //         icon: 'warning',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         }).then((result) => {
+    //     if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+    //         this.submit();
+    //     }
+    //     })
          
-        obj.nombre_cargo.focus();
-        return false;
-    }
-    if (/^([a-zA-Z0-9])\1+$/.test(nombre_cargo)) {
-        Swal.fire({
-            title: 'Cargo',
-            text: "El campo de cargo no debe contener caracteres repetidos.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+    //     obj.nombre_cargo.focus();
+    //     return false;
+    // }
 
-            this.submit();
-        }
-        })
-       
-        obj.nombre_cargo.focus();
-        return false;
-    }
-    if (!/^[A-Z][a-z]+$/.test(nombre_cargo)) {
-        Swal.fire({
-            title: 'Cargo',
-            text: "El nombre debe comenzar con una letra mayúscula y las demás en minúscula.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+    // if (/^([a-zA-Z0-9])\1+$/.test(nombre_cargo)) {
+    //     Swal.fire({
+    //         title: 'Cargo',
+    //         text: "El campo de cargo no debe contener caracteres repetidos.",
+    //         icon: 'warning',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         }).then((result) => {
+    //     if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+    //         this.submit();
+    //     }
+    //     })
        
-        obj.nombre_cargo.focus();
-        return false;
-    }
+    //     obj.nombre_cargo.focus();
+    //     return false;
+    // }
+    // if (!/^[A-Z][a-z]+$/.test(nombre_cargo)) {
+    //     Swal.fire({
+    //         title: 'Cargo',
+    //         text: "El nombre debe comenzar con una letra mayúscula y las demás en minúscula.",
+    //         icon: 'warning',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         }).then((result) => {
+    //     if (result.isConfirmed) {
+
+    //         this.submit();
+    //     }
+    //     })
+       
+    //     obj.nombre_cargo.focus();
+    //     return false;
+    // }
    
 }
 

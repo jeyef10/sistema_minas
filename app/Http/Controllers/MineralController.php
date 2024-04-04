@@ -5,9 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Minerales;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
 
 class MineralController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:ver-mineral|crear-mineral|editar-mineral|borrar-mineral', ['only' => ['index']]);
+         $this->middleware('permission:crear-mineral', ['only' => ['create','store']]);
+         $this->middleware('permission:editar-mineral', ['only' => ['edit','update']]);
+         $this->middleware('permission:borrar-mineral', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

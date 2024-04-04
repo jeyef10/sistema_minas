@@ -115,6 +115,9 @@ Route::get('/plazo/create', [PlazosController::class, 'create'])->name('create')
 Route::get('/plazo/pdf',  [PlazosController::class,'pdf'])->name('plazo')->middleware('auth');
 Route::resource('plazo', PlazosController::class)->middleware('auth');
 
+/* Ruta Bitacora*/
+Route::get('bitacora', [ReporteController::class, 'bitacora'])->name('bitacora')->middleware('auth');
+
 /* Ruta Cargo 
 Route::get('/cargo',  [CargoController::class,'index'])->name('cargo')->middleware('auth');
 
@@ -233,7 +236,7 @@ Route::get('reportes', [ReporteController::class, 'index'])->name('reportes')->m
 Route::get('/reportes/pdf',  [ReporteController::class,'reportesPdf'])->name('reportes.pdf')->middleware('auth');
 Route::get('reportes/indexperif', [ReporteController::class, 'indexperif'])->name('reportes')->middleware('auth');
 Route::get('/reportes/perifpdf',  [ReporteController::class,'reportesperifPdf'])->name('reportes.perifpdf')->middleware('auth');
-Route::get('bitacora', [ReporteController::class, 'bitacora'])->name('bitacora')->middleware('auth'); */
+
 
 /* Ruta Inventario
 Route::get('/inventario',  [EquiposController::class,'indexinvent'])->name('equipo')->middleware('auth');

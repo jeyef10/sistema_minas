@@ -5,17 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Solicitante;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class SolicitanteController extends Controller
 {
-    // function __construct()
-    // {
-    //      $this->middleware('permission:ver-usuario|crear-usuario|editar-usuario|borrar-usuario', ['only' => ['index']]);
-    //      $this->middleware('permission:crear-usuario', ['only' => ['create','store']]);
-    //      $this->middleware('permission:editar-usuario', ['only' => ['edit','update']]);
-    //      $this->middleware('permission:borrar-usuario', ['only' => ['destroy']]);
-    // }
+    function __construct()
+    {
+         $this->middleware('permission:ver-solicitante|crear-solicitante|editar-solicitante|borrar-solicitante', ['only' => ['index']]);
+         $this->middleware('permission:crear-solicitante', ['only' => ['create','store']]);
+         $this->middleware('permission:editar-solicitante', ['only' => ['edit','update']]);
+         $this->middleware('permission:borrar-solicitante', ['only' => ['destroy']]);
+    }
 
     /**
      * Display a listing of the resource.

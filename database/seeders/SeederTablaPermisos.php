@@ -31,29 +31,29 @@ class SeederTablaPermisos extends Seeder
             'editar-rol',
             'borrar-rol',
 
-            //Operaciones sobre tabla Solicitante
-            /* 'ver-solicitante',
+            //Operaciones sobre tabla Solicitantes
+             'ver-solicitante',
             'crear-solicitante',
             'editar-solicitante',
-            'borrar-solicitante', */
+            'borrar-solicitante', 
 
-            //Operaciones sobre tabla Divisiones
-            /* 'ver-division',
-            'crear-division',
-            'editar-division',
-            'borrar-division',
- */
-            //Operaciones sobre tabla Cargos
-            /* 'ver-cargo',
-            'crear-cargo',
-            'editar-cargo',
-            'borrar-cargo', */
+            //Operaciones sobre tabla Minerales
+             'ver-mineral',
+            'crear-mineral',
+            'editar-mineral',
+            'borrar-mineral',
+ 
+            //Operaciones sobre tabla Regalias
+             'ver-regalia',
+            'crear-regalia',
+            'editar-regalia',
+            'borrar-regalia', 
 
-            //Operaciones sobre tabla Personas
-            /* 'ver-persona',
-            'crear-persona',
-            'editar-persona',
-            'borrar-persona', */
+            //Operaciones sobre tabla Plazos
+             'ver-plazo',
+            'crear-plazo',
+            'editar-plazo',
+            'borrar-plazo',
 
             //Operaciones sobre tabla Marcas
            /*  'ver-marca',
