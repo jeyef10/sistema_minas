@@ -26,7 +26,7 @@ class PasswordResetController extends Controller
         ]);
 
         // Envía el correo electrónico con el token
-        Mail::raw("Su Código de Restablecimiento es: $token. Copie este Código " , function ($message) use ($request) {
+        Mail::raw("Su Código de Restablecimiento es: $token. Copialo y úsalo en el formulario de restablecimiento de contraseña para recuperar el acceso a tu cuenta. ¡Te deseamos un feliz regreso a tu cuenta!" , function ($message) use ($request) {
             $message->to($request->email)
                 ->subject('Restablecer su Contraseña');
        

@@ -53,11 +53,11 @@
 
         <!-- Formulario de Iniciar Sensión -->
         <div class="form-container sign-in">
-		<form action="/login" method="POST">
+		<form action="/login" method="POST"  enctype="multipart/form-data" onsubmit="return login(this)">
 		@csrf
             <h1 style="color: black;">Iniciar Sesión</h1>
-                <input type="text" name="username" placeholder="Usuario"  autocomplete="off">
-                <input type="password" name="password" placeholder="Contraseña"  autocomplete="off" >
+                <input type="text" id="username" name="username" placeholder="Usuario"  autocomplete="off">
+                <input type="password" id="contraseña" name="password" placeholder="Contraseña"  autocomplete="off" >
                 <input type="submit" value="ENTRAR" id="log-in-button">
                 
         </form>

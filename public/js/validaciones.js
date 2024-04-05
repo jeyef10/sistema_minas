@@ -5,11 +5,11 @@ alertList.forEach(function (alert) {
 
 //Validar Login
 function login(obj) {
-    var usuario = obj.usuario.value;
-    if (!usuario) {
+    var username = obj.username.value;
+    if (!username) {
         Swal.fire({
             title: 'Login',
-            text: "Debe de ingresar un usuario",
+            text: "Debe ingresar su nombre de usuario",
             icon: 'warning',
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -20,13 +20,13 @@ function login(obj) {
         }
         })
         
-        obj.usuario.focus();
+        obj.username.focus();
         return false;
     }
-    if (usuario.length < 3){
+    if (username.length < 3){
         Swal.fire({
             title: 'Login',
-            text: "Faltan dígitos en este campo de texto.",
+            text: "¡Parece que faltan algunos dígitos en el usuario que ingresaste!",
             icon: 'warning',
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -37,14 +37,14 @@ function login(obj) {
         }
         })
         
-        obj.usuario.focus();
+        obj.username.focus();
         return (false);
     }
     var contraseña = obj.contraseña.value;
     if (!contraseña) {
         Swal.fire({
             title: 'Login',
-            text: "Debe de ingresar la contraseña",
+            text: "Debe  ingresar su contraseña",
             icon: 'warning',
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -61,7 +61,7 @@ function login(obj) {
     if (contraseña.length < 4){
         Swal.fire({
             title: 'Login',
-            text: "Faltan dígitos en este campo de texto o numero. ",
+            text: "¡Parece que faltan algunos dígitos en la contraseña que ingresaste!",
             icon: 'warning',
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -78,7 +78,7 @@ function login(obj) {
     
 }
 
-//Validar Registro de Usuario
+//Validar Registro de USUARIO
 // function registrousuario(obj) {
 //     var name = obj.name.value;
 //     if (!name) {
