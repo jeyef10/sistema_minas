@@ -31,6 +31,7 @@ use App\Http\Controllers\SolicitanteController;
 use App\Http\Controllers\MineralController;
 use App\Http\Controllers\RegaliaController;
 use App\Http\Controllers\PlazosController;
+use App\Http\Controllers\CategoriaController;
 
 
 /*
@@ -114,6 +115,12 @@ Route::get('/plazo',  [PlazosController::class,'index'])->name('plazo')->middlew
 Route::get('/plazo/create', [PlazosController::class, 'create'])->name('create')->middleware('auth');
 Route::get('/plazo/pdf',  [PlazosController::class,'pdf'])->name('plazo')->middleware('auth');
 Route::resource('plazo', PlazosController::class)->middleware('auth');
+
+/* Ruta Categoria*/
+Route::get('/categoria',  [CategoriaController::class,'index'])->name('categoria')->middleware('auth');
+Route::get('/categoria/create', [CategoriaController::class, 'create'])->name('create')->middleware('auth');
+Route::get('/categoria/pdf',  [CategoriaController::class,'pdf'])->name('categoria')->middleware('auth');
+Route::resource('categoria', CategoriaController::class)->middleware('auth');
 
 /* Ruta Bitacora*/
 Route::get('bitacora', [ReporteController::class, 'bitacora'])->name('bitacora')->middleware('auth');

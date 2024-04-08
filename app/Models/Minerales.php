@@ -9,8 +9,19 @@ class Minerales extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'tipo',
-        'nombre',
-    ];
+    protected $table = 'minerales';
+    protected $primaryKey = 'id';
+    public $timestamps = true;
+    protected $fillable = ['tipo', 'nombre'];
+
+    
+    // Relación con MineralCategoria
+    public function categorias()
+    {
+       return $this->belongsToMany(Categoria::class, 'mineral_categoria', 'id_mineral', 'id_categoria'); 
+    }
+
+    public function mineralcategoria() {
+        return $this->hasMany(MineralCategoria::class);
+     }
 }

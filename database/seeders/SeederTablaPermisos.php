@@ -55,17 +55,17 @@ class SeederTablaPermisos extends Seeder
             'editar-plazo',
             'borrar-plazo',
 
-            //Operaciones sobre tabla Marcas
-           /*  'ver-marca',
-            'crear-marca',
-            'editar-marca',
-            'borrar-marca',
- */
-            //Operaciones sobre tabla Modelos
-           /*  'ver-modelo',
-            'crear-modelo',
-            'editar-modelo',
-            'borrar-modelo', */
+            //Operaciones sobre tabla MineralCategoria
+            'ver-categoria',
+            'crear-categoria',
+            'editar-categoria',
+            'borrar-categoria',
+ 
+            //Operaciones sobre tabla Talonario
+            'ver-talonario',
+            'crear-talonario',
+            'editar-talonario',
+            'borrar-talonario', 
 
             /* //Operaciones sobre tabla Perifericos
             'ver-periferico',

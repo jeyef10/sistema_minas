@@ -45,6 +45,7 @@
                     <a class="collapse-item" href="{{ url('mineral') }}">Mineral</a>
                     <a class="collapse-item" href="{{ url('regalia') }}">Tasa de Regalias</a>
                     <a class="collapse-item" href="{{ url('plazo') }}">Plazos de Vigencia</a>
+                    <a class="collapse-item" href="{{ url('categoria') }}">Categoria</a>
                   </div>
                 </div>
               </li>

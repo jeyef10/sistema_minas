@@ -8,7 +8,7 @@ function login(obj) {
     var username = obj.username.value;
     if (!username) {
         Swal.fire({
-            title: 'Login',
+            title: '¡Atención Usuario!',
             text: "Debe ingresar su nombre de usuario",
             icon: 'warning',
             confirmButtonColor: '#3085d6',
@@ -25,7 +25,7 @@ function login(obj) {
     }
     if (username.length < 3){
         Swal.fire({
-            title: 'Login',
+            title: '¡Atención Usuario!',
             text: "¡Parece que faltan algunos dígitos en el usuario que ingresaste!",
             icon: 'warning',
             confirmButtonColor: '#3085d6',
@@ -43,7 +43,7 @@ function login(obj) {
     var contraseña = obj.contraseña.value;
     if (!contraseña) {
         Swal.fire({
-            title: 'Login',
+            title: '¡Atención Usuario!',
             text: "Debe  ingresar su contraseña",
             icon: 'warning',
             confirmButtonColor: '#3085d6',
@@ -60,7 +60,7 @@ function login(obj) {
     }
     if (contraseña.length < 4){
         Swal.fire({
-            title: 'Login',
+            title: '¡Atención Usuario!',
             text: "¡Parece que faltan algunos dígitos en la contraseña que ingresaste!",
             icon: 'warning',
             confirmButtonColor: '#3085d6',
@@ -2813,6 +2813,27 @@ function sinespacios(e){
     tecla_final = String.fromCharCode(tecla);
     return patron.test(tecla_final);
 }
+
+function showHideForms() {
+    const radios = document.querySelectorAll('input[type="radio"][name="customRadio"]'); // Select radio buttons
+    const forms = document.querySelectorAll('#form-n, #form-j'); // Select forms
+  
+    // Initially show form-n and hide form-j
+    forms[0].style.display = 'block';
+    forms[1].style.display = 'none';
+  
+    // Add a change event listener to the radio buttons
+    radios.forEach(radio => {
+      radio.addEventListener('change', (event) => {
+        const selectedFormId = `form-${event.target.value}`; // Get the ID of the form to show
+        for (const form of forms) {
+          form.style.display = form.id === selectedFormId ? 'block' : 'none';
+        }
+      });
+    });
+  }
+  
+  
 
 /*--------------Index--------------
 function validar(obj) {
