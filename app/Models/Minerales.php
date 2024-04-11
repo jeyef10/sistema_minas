@@ -12,7 +12,7 @@ class Minerales extends Model
     protected $table = 'minerales';
     protected $primaryKey = 'id';
     public $timestamps = true;
-    protected $fillable = ['tipo', 'nombre'];
+    protected $fillable = ['tipo', 'nombre', 'categoria'];
 
     
     // Relación con MineralCategoria

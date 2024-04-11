@@ -49,7 +49,7 @@
                                 <div class="col-4">
                                     <label for="mineral" class="font-weight-bold text-primary">Nombre Mineral</label>
                                     <select class="select2-single form-control" name="id_mineral" id="mineral">
-                                    <option value="0" disabled>Seleccione una Categoria</option>
+                                    <option value="0">Seleccione una Categoria</option>
                                         @foreach ($minerales as $mineral)
                                             @if ($mineral->tipo == 'Metálicos')
                                             <option value="{{ $mineral->id }}" data-tipo="Metálicos">{{ $mineral->nombre }}</option>
@@ -80,17 +80,18 @@
             </div>    
     </div>  
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
     // Obtener referencias a los elementos del formulario
     const tipoRadios = document.querySelectorAll('input[name="tipo"]');
-    const sistemaSelect = document.getElementById('mineral');
+    const mineralSelect = document.getElementById('mineral');
     
     // Obtener la opción "Seleccione un Mineral"
-    const opcionSeleccione = sistemaSelect.querySelector('option[value="0"]');
+    const opcionSeleccione = mineralSelect.querySelector('option[value="0"]');
     
     // Ocultar todas las opciones del select excepto "Seleccione un Mineral"
-    Array.from(sistemaSelect.options).forEach(option => {
+    Array.from(mineralSelect.options).forEach(option => {
         if (option !== opcionSeleccione) {
             option.style.display = 'none';
         }
@@ -103,7 +104,7 @@
             const tipoSeleccionado = this.value;
 
             // Mostrar u ocultar las opciones del select según el tipo seleccionado
-            Array.from(sistemaSelect.options).forEach(option => {
+            Array.from(mineralSelect.options).forEach(option => {
                 const tipoOpcion = option.getAttribute('data-tipo');
                 if (option === opcionSeleccione || tipoOpcion === tipoSeleccionado) {
                     option.style.display = 'block';
@@ -113,8 +114,8 @@
             });
 
             // Reiniciar el valor del select si la opción seleccionada se oculta
-            if (sistemaSelect.selectedIndex !== -1 && sistemaSelect.options[sistemaSelect.selectedIndex].style.display === 'none') {
-                sistemaSelect.selectedIndex = -1;
+            if (mineralSelect.selectedIndex !== -1 && mineralSelect.options[mineralSelect.selectedIndex].style.display === 'none') {
+                mineralSelect.selectedIndex = -1;
             }
         });
     });

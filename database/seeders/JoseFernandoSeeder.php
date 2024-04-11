@@ -50,13 +50,12 @@ class JoseFernandoSeeder extends Seeder
             'password' => ('josefernando10'),
         ]);
 
-         $usuario->assignRole('Administrador');
-        // $rol = Role::create(['name'=>'Administrador']);
+        $rol = Role::create(['name'=>'Administrador']);
 
-        // $permisos = Permission::pluck('id', 'id')->all();
+        $permisos = Permission::pluck('id', 'id')->all();
 
-        // $rol->syncPermissions($permisos);
+        $rol->syncPermissions($permisos);
 
-        // $usuario->assignRole([$rol->id]);
+        $usuario->assignRole([$rol->id]);
     }
 }

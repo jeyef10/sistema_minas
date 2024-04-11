@@ -28,16 +28,24 @@
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Tipo</label>
                                     <select class="select2-single form-control" name="tipo" id="tipo">
-                                        <option value="0" selected="true" disabled>Seleccione una Mineral</option>
-                                        <option value="No metálicos">No metálicos</option>
-                                        <option value="Metálicos">Metálicos</option>
+                                        <option value="0" disabled>Seleccione una Mineral</option>
+                                        <option value="No metálicos" selected="true">No metálicos</option>
+                                        <{{-- option value="Metálicos">Metálicos</option> --}}
                                     </select>
                                 </div>
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Nombre</label>
                                     <input type="text" class="form-control" id="nombre" name="nombre" style="background: white;" value="" placeholder="Ingrese el nombre" autocomplete="off" onkeypress="return soloLetras(event);">
                                 </div>
-
+                                <div class="col-4">
+                                    <label  class="font-weight-bold text-primary">Categoria</label>
+                                    <select class="select2-single form-control" name="categoria" id="categoria">
+                                        <option value="0" selected="true" disabled>Seleccione una Mineral</option>
+                                        <option value="Aprovechamiento">Aprovechamiento</option>
+                                        <option value="Procesamiento">Procesamiento</option>
+                                    </select>
+                                </div>
+                                
                             </div>
 
                         </div>

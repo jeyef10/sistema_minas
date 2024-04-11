@@ -36,6 +36,7 @@
                                 <tr>
                                     <th class="font-weight-bold text-Secondary">Tipo</th>
                                     <th class="font-weight-bold text-Secondary">Nombre</th>
+                                    <th class="font-weight-bold text-Secondary">Categoria</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center> </th>
                                 </tr>
                             </thead>
@@ -45,6 +46,7 @@
                                         <!-- <td class="font-weight-bold text-Secondary">{{ $mineral->id}}</td> -->
                                         <td class="font-weight-bold text-Secondary">{{ $mineral->tipo }}</td>
                                         <td class="font-weight-bold text-Secondary">{{ $mineral->nombre }}</td>
+                                        <td class="font-weight-bold text-Secondary">{{ $mineral->categoria }}</td>
                                         
                                         
                                         <td>

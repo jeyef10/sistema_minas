@@ -92,6 +92,14 @@
         </div>
     </div> 
 
+    @if (session('errors'))
+        @foreach (session('errors')->all() as $error)
+        <div class="alert alert-danger">
+            {{ $error }}
+        </div>
+        @endforeach
+    @endif
+
 @endsection 
 
 @section('datatable')

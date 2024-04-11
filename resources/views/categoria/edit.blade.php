@@ -35,23 +35,23 @@
                                 </div>
 
                                 <div class="col-3">
-                                    <label style="color: black;">Tipo de Minerales</label>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="tipo" id="metalicos" value="Metálicos" {{ $mineral->tipo == 'Metálicos' ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="metalicos">Metálicos</label>
+                                    <label class="font-weight-bold text-primary">Tipo de Minerales</label>
+                                    <div class="custom-control custom-radio col-1.5">
+                                        <input class="custom-control-input" type="radio" name="tipo" id="metalicos" value="Metálicos" {{ $mineral->tipo == 'Metálicos' ? 'checked' : '' }}>
+                                        <label class="custom-control-label" for="metalicos">Metálicos</label>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="tipo" id="no_metalico" value="No metálicos" {{ $mineral->tipo == 'No metálicos' ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="no_metalico">No Metálicos</label>
+                                    <div class="custom-control custom-radio col-1.5">
+                                        <input class="custom-control-input" type="radio" name="tipo" id="no_metalico" value="No metálicos" {{ $mineral->tipo == 'No metálicos' ? 'checked' : '' }}>
+                                        <label class="custom-control-label" for="no_metalico">No Metálicos</label>
                                     </div>
                                 </div>
                                 
                                 <div class="col-3">
                                     <label for="mineral" class="font-weight-bold text-primary">Nombre del Mineral</label>
-                                    <select class="select2-single form-control" id="id_mineral" name="id_mineral">
-                                        <option value="0">Seleccione un Mineral</option>
+                                    <select class="select2-single form-control" id="mineral" name="id_mineral">
+                                        <option value="0" disabled>Seleccione un Mineral</option>
                                         @foreach ($minerales as $mineral)
-                                            <option value="{{ $mineral->id }}" data-tipo="{{ $mineral->tipo }}" {{ $mineral->id == $categoria->id_mineral ? 'selected' : '' }}>{{ $mineral->nombre }}</option>
+                                            <option value="{{ $mineral->id }}" data-tipo="{{ $mineral->tipo }}" {{ $mineral->id == $id_mineral_seleccionado ? 'selected' : '' }}>{{ $mineral->nombre }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -76,12 +76,14 @@
             </div>    
     </div>
 
-    <script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
     $(document).ready(function() {
-        // Obtener el valor del tipo de mineral seleccionado
+        // Obtener el valor del tipo de Mineral seleccionado
         var tipoSeleccionado = $('input[name="tipo"]:checked').val();
         
-        // Filtrar y mostrar los minerales iniciales
+        // Filtrar y mostrar los Minerales iniciales
         filterMinerales(tipoSeleccionado);
         
         // Manejar el evento de cambio en el radio
@@ -90,14 +92,14 @@
             filterMinerales(tipo);
         });
         
-        // Función para filtrar y mostrar los minerales en el select
+        // Función para filtrar y mostrar los Minerales en el select
         function filterMinerales(tipo) {
             var select = $('#mineral');
             
             // Limpiar el select y reiniciar su valor
             select.empty().val('');
             
-            // Agregar la opción "Seleccione un Sistema" solo si no se ha seleccionado un radio
+            // Agregar la opción "Seleccione un Mineral" solo si se ha seleccionado un radio
             if (tipo === 'Metálicos' || tipo === 'No metálicos') {
                 select.append('<option value="0" selected>Seleccione un Mineral</option>');
             }
@@ -106,11 +108,11 @@
             @foreach($minerales as $mineral)
                 @if ($mineral->tipo == 'Metálicos')
                     if (tipo === 'Metálicos') {
-                        select.append('<option value="{{ $mineral->id }}" data-tipo="Metálicos" {{ $mineral->id == $categoria->id_mineral ? "selected" : "" }}>{{ $mineral->nombre }}</option>');
+                        select.append('<option value="{{ $mineral->id }}" data-tipo="Metálicos" {{ $mineral->id == $id_mineral_seleccionado ? "selected" : "" }}>{{ $mineral->nombre }}</option>');
                     }
                 @elseif ($mineral->tipo == 'No metálicos')
                     if (tipo === 'No metálicos') {
-                        select.append('<option value="{{ $mineral->id }}" data-tipo="No metálicos" {{ $mineral->id == $categoria->id_mineral ? "selected" : "" }}>{{ $mineral->nombre }}</option>');
+                        select.append('<option value="{{ $mineral->id }}" data-tipo="No metálicos" {{ $mineral->id == $id_mineral_seleccionado ? "selected" : "" }}>{{ $mineral->nombre }}</option>');
                     }
                 @endif
             @endforeach

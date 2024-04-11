@@ -31,7 +31,7 @@
                                     <select class="select2-single form-control" name="tipo" id="tipo">
                                         <option value="0" disabled>Seleccione una Marca</option>
                                             <option value="No Metálicos" {{ (old('tipo', $mineral->tipo ?? '') === 'No Metálicos') ? 'selected' : '' }}>No Metálicos</option>
-                                            <option value="Metálicos" {{ (old('tipo', $mineral->tipo ?? '') === 'Metálicos') ? 'selected' : '' }}>Metálicos</option>
+                                            {{-- <option value="Metálicos" {{ (old('tipo', $mineral->tipo ?? '') === 'Metálicos') ? 'selected' : '' }}>Metálicos</option> --}}
                                     </select>
                                 </div>
                             
@@ -40,7 +40,14 @@
                                     <input type="text" class="form-control" id="username" name="nombre" style="background: white;" value="{{ isset($mineral->nombre)?$mineral->nombre:'' }}" placeholder="Ingrese El Nombre" autocomplete="off">
                                 </div>
         
-                                
+                                <div class="col-4">
+                                    <label  class="font-weight-bold text-primary">Categoria</label>
+                                    <select class="select2-single form-control" name="categoria" id="categoria">
+                                        <option value="0" selected="true" disabled>Seleccione una Mineral</option>
+                                        <option value="Aprovechamiento" {{ (old('categoria', $mineral->categoria ?? '') === 'Aprovechamiento') ? 'selected' : '' }}>Aprovechamiento</option>
+                                        <option value="Procesamiento" {{ (old('categoria', $mineral->categoria ?? '') === 'Procesamiento') ? 'selected' : '' }}>Procesamiento</option>
+                                    </select>
+                                </div>
 
                             </div>
 
