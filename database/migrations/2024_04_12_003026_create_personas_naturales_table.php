@@ -13,13 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('solicitantes', function (Blueprint $table) {
-            $table->id(); 
-            $table->string('tipo');           
-            $table->string('num_minero');
-            $table->unsignedBigInteger('solicitante_especifico_id')->nullable(); // Cambia a snake case
-            $table->string('solicitante_especifico_type')->nullable(); // Cambia a snake case
+        Schema::create('personas_naturales', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('solicitante_id');
+            $table->string('cedula');
+            $table->string('nombre');
+            $table->string('apellido');
             $table->timestamps();
+
+            $table->foreign('solicitante_id')->references('id')->on('solicitantes');
         });
     }
 
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('solicitantes');
+        Schema::dropIfExists('personas_naturales');
     }
 };

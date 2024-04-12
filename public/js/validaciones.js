@@ -2814,7 +2814,7 @@ function sinespacios(e){
     return patron.test(tecla_final);
 }
 
-function showHideForms() {
+/* function showHideForms() {
     const radios = document.querySelectorAll('input[type="radio"][name="customRadio"]'); // Select radio buttons
     const forms = document.querySelectorAll('#form-n, #form-j'); // Select forms
   
@@ -2831,7 +2831,7 @@ function showHideForms() {
         }
       });
     });
-  }
+  } */
   
   
 

@@ -9,11 +9,13 @@ class Solicitante extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'cedula',
-        'rif',
-        'nombre',
-        'apellido',
-        'num_minero',
-    ];
+    protected $table = 'solicitantes';
+    protected $primaryKey = 'id';
+    public $timestamps = true;
+    protected $fillable = ['num_minero', 'tipo', 'solicitante_especifico_id', 'solicitante_especifico_type'];
+
+    public function solicitanteEspecifico()
+    {
+        return $this->morphTo();
+    }
 }

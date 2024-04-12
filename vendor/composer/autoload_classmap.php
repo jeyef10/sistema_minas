@@ -62,6 +62,7 @@ return array(
     'App\\Models\\Equipos' => $baseDir . '/app/Models/Equipos.php',
     'App\\Models\\Estadistica' => $baseDir . '/app/Models/Estadistica.php',
     'App\\Models\\Marca' => $baseDir . '/app/Models/Marca.php',
+    'App\\Models\\MineralCategoria' => $baseDir . '/app/Models/MineralCategoria.php',
     'App\\Models\\Minerales' => $baseDir . '/app/Models/Minerales.php',
     'App\\Models\\Modelo' => $baseDir . '/app/Models/Modelo.php',
     'App\\Models\\Nomina' => $baseDir . '/app/Models/Nomina.php',

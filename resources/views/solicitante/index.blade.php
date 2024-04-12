@@ -34,10 +34,12 @@
                         <table class="table align-items-center table-flush" id="dataTable">
                             <thead class="thead-light">
                                 <tr>
+                                    <th class="font-weight-bold text-Secondary">Tipo de Solicitante</th>
                                     <th class="font-weight-bold text-Secondary">Cédula</th>
                                     <th class="font-weight-bold text-Secondary">Rif</th>
                                     <th class="font-weight-bold text-Secondary">Nombre</th>
                                     <th class="font-weight-bold text-Secondary">Apellido</th>
+                                    <th class="font-weight-bold text-Secondary">Correo</th>
                                     <th class="font-weight-bold text-Secondary">N° Minero</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center> </th>
                                 </tr>
@@ -46,10 +48,30 @@
                                 @foreach ($solicitantes as $solicitante)
                                     <tr>
                                         <!-- <td class="font-weight-bold text-Secondary">{{ $solicitante->id}}</td> -->
-                                        <td class="font-weight-bold text-Secondary">{{ $solicitante->cedula }}</td>
-                                        <td class="font-weight-bold text-Secondary">{{ $solicitante->rif }}</td>
-                                        <td class="font-weight-bold text-Secondary">{{ $solicitante->nombre }}</td>
-                                        <td class="font-weight-bold text-Secondary">{{ $solicitante->apellido }}</td>
+
+                                        <!-- Muestra el tipo de solicitante (Natural o Jurídico) -->
+                                        <td class="font-weight-bold text-Secondary">{{ $solicitante->tipo }}</td>
+
+                                        <!-- Verifica si el solicitante es una Persona Natural -->
+                                        @if ($solicitante->solicitanteEspecifico instanceof \App\Models\PersonaNatural)
+                                            <!-- Si es una Persona Natural, muestra la cédula, el nombre y el apellido -->
+                                            <td class="font-weight-bold text-Secondary">{{ $solicitante->solicitanteEspecifico->cedula }}</td>
+                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
+                                            <td class="font-weight-bold text-Secondary">{{ $solicitante->solicitanteEspecifico->nombre }}</td>
+                                            <td class="font-weight-bold text-Secondary">{{ $solicitante->solicitanteEspecifico->apellido }}</td>
+                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
+
+                                        <!-- Verifica si el solicitante es una Persona Jurídica -->
+                                        @elseif ($solicitante->solicitanteEspecifico instanceof \App\Models\PersonaJuridica)
+                                            <!-- Si es una Persona Jurídica, muestra el rif, el nombre y el correo -->
+                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
+                                            <td class="font-weight-bold text-Secondary">{{ $solicitante->solicitanteEspecifico->rif }}</td>
+                                            <td class="font-weight-bold text-Secondary">{{ $solicitante->solicitanteEspecifico->nombre }}</td>
+                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
+                                            <td class="font-weight-bold text-Secondary">{{ $solicitante->solicitanteEspecifico->correo }}</td>
+                                        @endif
+
+                                        <!-- Muestra el número minero del solicitante -->
                                         <td class="font-weight-bold text-Secondary">{{ $solicitante->num_minero }}</td>
                                         
                                         <td>

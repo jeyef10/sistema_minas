@@ -664,6 +664,7 @@ class ComposerStaticInit3c912e9742101e8bbc559255f4dd3d0e
         'App\\Models\\Equipos' => __DIR__ . '/../..' . '/app/Models/Equipos.php',
         'App\\Models\\Estadistica' => __DIR__ . '/../..' . '/app/Models/Estadistica.php',
         'App\\Models\\Marca' => __DIR__ . '/../..' . '/app/Models/Marca.php',
+        'App\\Models\\MineralCategoria' => __DIR__ . '/../..' . '/app/Models/MineralCategoria.php',
         'App\\Models\\Minerales' => __DIR__ . '/../..' . '/app/Models/Minerales.php',
         'App\\Models\\Modelo' => __DIR__ . '/../..' . '/app/Models/Modelo.php',
         'App\\Models\\Nomina' => __DIR__ . '/../..' . '/app/Models/Nomina.php',
