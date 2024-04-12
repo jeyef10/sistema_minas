@@ -41,12 +41,13 @@
 	<body>
 		@include('partials.messages')
     <!-- Formulario de Registar -->
+    
     <div class="container" id="container">
         <div class="form-container sign-up">
-		<form method="POST" action="{{ route('password.email') }}">
+		<form method="POST" action="{{ route('password.email') }}" enctype="multipart/form-data" onsubmit="return Email(this)">
         @csrf
             <h2 style="color: black; text-align: center;">Ingrese su correo electrónico</h2>
-                <input type="email" name="email" placeholder="Ingrese su correo">
+                <input type="email" id="email_login" name="email" placeholder="Ingrese su correo" autocomplete="off">
                 <input type="submit" value="ENVIAR CÓDIGO" id="log-in-button">
         </form>
         </div>
@@ -82,6 +83,7 @@
     </div>
 
 	<script type="text/javascript" src="js/login.js"></script>
+
 
     </body>
 

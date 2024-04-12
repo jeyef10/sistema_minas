@@ -78,6 +78,65 @@ function login(obj) {
     
 }
 
+//Validar Login boton del correo
+function Email(obj) {
+    var email_login= obj.email_login.value;
+    if (!email_login) {
+        Swal.fire({
+            title: '¡Atención Usuario!',
+            text: "Debe ingresar su correo",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+ 
+        obj.email_login.focus();
+        return false;
+    }
+
+    if (email_login.trim() == "") {
+        Swal.fire({
+            title: '¡Atención Usuario!',
+            text: "El campo de gmail no debe contener espacios en blanco.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+
+        obj.email_login.focus();
+        return false;
+    }
+
+    if (/^([a-zA-Z0-9])\1+$/.test(email_login)) {
+        Swal.fire({
+            title: '¡Atención Usuario!',
+            text: "El campo de gmail no debe contener caracteres repetidos.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        obj.email_login.focus();
+        return false;
+    }
+    
+}
+
 //Validar Registro de USUARIO
 // function registrousuario(obj) {
 //     var name = obj.name.value;
