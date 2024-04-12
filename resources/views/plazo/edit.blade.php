@@ -31,9 +31,18 @@
                                     <input type="text" class="form-control" id="username" name="cantidad" style="background: white;" value="{{ isset($plazo->cantidad)?$plazo->cantidad:'' }}" placeholder="Ingrese La Cantidad" autocomplete="off">
                                 </div>
 
-                                <div class="col-4">
+                                {{-- <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Medidas de tiempo</label>
                                     <input type="text" class="form-control" id="username" name="medida_tiempo" style="background: white;" value="{{ isset($plazo->medida_tiempo)?$plazo->medida_tiempo:'' }}" placeholder="Ingrese La Medida De Tiempo" autocomplete="off">
+                                </div> --}}
+
+                                <div class="col-4">
+                                    <label  class="font-weight-bold text-primary">Medida de tiempo</label>
+                                    <select class="select2-single form-control" name="medida_tiempo" id="medida_tiempo">
+                                        <option value="0" disabled>Seleccione una medida de tiempo</option>
+                                            <option value="año(s)" {{ (old('medida_tiempo', $plazo->medida_tiempo ?? '') === 'año(s)') ? 'selected' : '' }}>año(s)</option>
+                                            <option value="mes(es)" {{ (old('medida_tiempo', $plazo->medida_tiempo ?? '') === 'mes(es)') ? 'selected' : '' }}>mes(es)</option>
+                                    </select>
                                 </div>
         
                                 <!-- <div class="col-4">

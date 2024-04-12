@@ -35,7 +35,7 @@
                                     <label  class="font-weight-bold text-primary">Moneda/Longitud</label>
                                     <select class="select2-single form-control" name="moneda_longitud" id="">
                                         <option value="0" disabled>Seleccione una Marca</option>
-                                            <option value="$/mtrs/3" {{ (old('tipo', $mineral->tipo ?? '') === '$/mtrs/3') ? 'selected' : '' }}>$/mtrs/3</option>
+                                            <option value="$/mtrs3" {{ (old('tipo', $mineral->tipo ?? '') === '$/mtrs3') ? 'selected' : '' }}>$/mtrs3</option>
                                            
                                     </select>
                                 </div>
