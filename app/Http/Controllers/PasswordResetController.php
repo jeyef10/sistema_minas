@@ -18,6 +18,19 @@ class PasswordResetController extends Controller
         // Elimina cualquier token existente para este correo electrónico
         DB::table('password_resets')->where('email', $request->email)->delete();
 
+        $email = $request->email;
+
+            $existe = DB::table('users')
+                ->where('email', $email)
+                ->exists();
+
+            if ($existe === true) {
+                
+            } else {
+                return redirect()->back()->withErrors(['Error' => 'El correo no está no esta afiliado a niguna cuenta']);
+            }
+
+
         // Genera un nuevo token y lo inserta en la base de datos
         $token = Str::random(6);
         DB::table('password_resets')->insert([
@@ -36,6 +49,7 @@ class PasswordResetController extends Controller
         $email =  $request->email;
         return view('auth.reset-password-confirm', compact('email', 'token'))->with('message', '¡Le hemos enviado por correo electrónico el enlace para restablecer su contraseña!');
     }
+    
 
     public function reset(Request $request)
     {
