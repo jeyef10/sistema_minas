@@ -43,7 +43,7 @@
                         @csrf
                             
                         <div class="card-body">
-                            <h4 class="font-weight-bold text-primary" style="margin-left: 44%;">Datos Solicitante</h4>
+                            <h3 class="font-weight-bold text-primary" style="margin-left: 44%;">Datos Solicitante</h3>
                             <div class="row">
 
                                 <input type="hidden" id="tipo-natural" name="tipo" value="">
@@ -60,13 +60,37 @@
 
                                 <div class="col-4">
                                     <label for="persona" class="font-weight-bold text-primary">Solicitante</label>
-                                    <select class="select2-single form-control" id="persona" name="id_persona">
-                                        <option value="0">Seleccione una Persona</option>
-                                        {{-- @foreach($personas as $persona)
-                                            <option value="{{ $persona->id }}">{{ $persona->nombre }}  {{ $persona->apellido }} - {{ $persona->cedula }}</option>
-                                        @endforeach --}}
-                                    </select>
+                                    <div style="display: flex;">
+                                        <select class="select2-single form-control" id="persona" name="id_persona" >
+                                            <option value="0">Seleccione una Persona</option>
+                                            {{-- @foreach($personas as $persona)
+                                                <option value="{{ $persona->id }}">{{ $persona->nombre }}  {{ $persona->apellido }} - {{ $persona->cedula }}</option>
+                                            @endforeach --}}
+                                        </select>
+                                        <a class="btn btn-primary" href="{{ route('solicitante.create') }}" style="align-content: center; margin-left: 5%"> 
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                                            </svg>
+                                        </a>
+                                    </div>
                                 </div>
+
+                                {{-- <form action="{{ route('solicitante.create') }}" method="get" style="display:inline;">
+                                    <button type="submit" class="btn btn-primary btn-mb"> <span class="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+                                            <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                                            <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"/>
+                                        </svg>
+                                    </span>
+                                    <span class="text">Crear</span></button>
+                                </form> --}}
+
+                                {{-- <a class="btn btn-primary mb-1" href="{{ route('solicitante.create') }}"> 
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                                      </svg>
+                                </a> --}}
 
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">N° Minero</label>
@@ -74,7 +98,9 @@
                                 </div>
 
                                 
-                            </div>     
+                            </div>
+                        </div>
+                            
 
                                
 
@@ -110,7 +136,7 @@
             
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">N° de regalias</label>
-                                        <input type="number" class="form-control" id="num_minero" name="num_minero" style="background: white;" value="" placeholder="N° Minero" autocomplete="off" onkeypress="return solonum(event);" min="0">
+                                        <input type="number" class="form-control" id="num_minero" name="num_minero" style="background: white;" value="" placeholder="N° Regalías" autocomplete="off" onkeypress="return solonum(event);" min="0">
                                     </div>
 
                                     <div class="col-4">
@@ -166,12 +192,21 @@
                                         <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
                                      </div>
                                      <div class="col-4">
-                                        <label for="simpleDataInput">Fecha</label>
+                                     {{--    <label for="simpleDataInput">Fecha</label>
                                           <div class="input-group date">
                                             <div class="input-group-prepend">
                                               <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                             </div>
                                             <input type="text" class="form-control" value="01/06/2020" id="simpleDataInput">
+                                          </div> --}}
+                                          <div class="form-group" id="simple-date1">
+                                            <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha</label>
+                                              <div class="input-group date">
+                                                <div class="input-group-prepend">
+                                                  <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" value="01/06/2020" id="simpleDataInput">
+                                              </div>
                                           </div>
                                     </div>
                                     <div class="col-4">
@@ -254,6 +289,46 @@
                 </div>
             </div>    
     </div>
+
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
+
+ <script>
+        $(document).ready(function () {
+       
+          // Bootstrap Date Picker
+          $('#simple-date1 .input-group.date').datepicker({
+            format: 'dd/mm/yyyy',
+            todayBtn: 'linked',
+            todayHighlight: true,
+            autoclose: true,        
+          });
+    
+          $('#simple-date2 .input-group.date').datepicker({
+            startView: 1,
+            format: 'dd/mm/yyyy',        
+            autoclose: true,     
+            todayHighlight: true,   
+            todayBtn: 'linked',
+          });
+    
+          $('#simple-date3 .input-group.date').datepicker({
+            startView: 2,
+            format: 'dd/mm/yyyy',        
+            autoclose: true,     
+            todayHighlight: true,   
+            todayBtn: 'linked',
+          });
+    
+          $('#simple-date4 .input-daterange').datepicker({        
+            format: 'dd/mm/yyyy',        
+            autoclose: true,     
+            todayHighlight: true,   
+            todayBtn: 'linked',
+          });    
+    
+        });
+      </script>
 
     <script>
         function showHideForms() {

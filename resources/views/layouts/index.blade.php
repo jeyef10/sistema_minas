@@ -10,9 +10,18 @@
     <title>Inicio</title>
     <link href= "{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
     <link href= "{{asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('vendor/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css">
+
     <link href= "{{asset('css/ruang-admin.min.css')}}" rel="stylesheet">
     <link href= "{{asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <link href= "{{asset('vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/bootstrap-touchspin/css/jquery.bootstrap-touchspin.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/clock-picker/clockpicker.css') }}" rel="stylesheet">
+
+
     <script src="{{ asset ('js/validaciones.js') }}"></script>
+    <script src="{{ asset ('vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    
   </head>
 
   <body id="page-top">
@@ -193,6 +202,10 @@
     <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
     <script src="{{ asset ('js/main.js') }}"></script> 
+    <script src="{{ asset ('vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset ('vendor/select2/dist/js/select2.min.js') }}"></script>
+    <script src="{{ asset ('vendor/bootstrap-touchspin/js/jquery.bootstrap-touchspin.js') }}"></script>
+    <script src="{{ asset ('vendor/clock-picker/clockpicker.js') }}"></script>
 
     @yield('datatable')
 

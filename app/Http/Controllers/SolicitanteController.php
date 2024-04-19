@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class SolicitanteController extends Controller
 {
@@ -39,7 +40,8 @@ class SolicitanteController extends Controller
      */
     public function create()
     {
-        return view('solicitante.create');
+        // return view('solicitante.create');
+        return view('solicitante.create', ['previous_url' => url()->previous()]); // Al cargar esta vista se le envia la url anterior a la vista solicitante/create.blade.php.
     }
 
     /**
@@ -107,8 +109,10 @@ class SolicitanteController extends Controller
             $solicitante->save();
         }
 
+        return redirect($request->input('previous_url')); // Aqui redirije a la pagina en la que estabamos anteriormente.
+
         // Redirige al usuario a la página de solicitantes
-        return redirect('solicitante');
+        /* return redirect('solicitante'); */
     }
 
     /**

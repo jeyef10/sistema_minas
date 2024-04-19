@@ -42,6 +42,8 @@
                             
                             <div class="row">
 
+                                <input type="hidden" name="previous_url" value="{{ $previous_url }}">
+
                                 <input type="hidden" id="tipo-natural" name="tipo" value="">
 
                                 <div class="col-4">
@@ -86,6 +88,8 @@
                         <div class="card-body">
                             
                             <div class="row">
+
+                                <input type="hidden" name="previous_url" value="{{ $previous_url }}"> {{-- Agregamos este input tipo hidden para capturar la url anterior para asi pasarsela al controlador --}}
 
                                 <input type="hidden" id="tipo-jurídico" name="tipo" value="">
 

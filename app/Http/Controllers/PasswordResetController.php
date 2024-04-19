@@ -27,7 +27,7 @@ class PasswordResetController extends Controller
             if ($existe === true) {
                 
             } else {
-                return redirect()->back()->withErrors(['Error' => 'El correo no está no esta afiliado a niguna cuenta']);
+                return redirect()->back()->withErrors(['Error' => 'El correo no está registrado']);
             }
 
 
