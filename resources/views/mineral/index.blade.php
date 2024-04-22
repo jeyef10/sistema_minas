@@ -16,7 +16,12 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Gestión de Mineral</h2>
+
+                            <a href="{{ url('mineral/pdf') }}" class="btn btn-sm btn-danger" target="_blank">
+                        {{ ('PDF') }}
+                        </a>
+
+                        <h2 class="font-weight-bold text-primary" style="margin-left: 6%;">Gestión de Mineral</h2>
                             @can('crear-mineral')
                                 <form action="{{ route('mineral.create') }}" method="get" style="display:inline;">
                                     <button type="submit" class="btn btn-primary btn-mb"> <span class="">

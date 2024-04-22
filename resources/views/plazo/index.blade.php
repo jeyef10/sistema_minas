@@ -16,7 +16,12 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Gestión de Plazos de Vigencias</h2>
+
+                    <a href="{{ url('plazo/pdf') }}" class="btn btn-sm btn-danger" target="_blank">
+                        {{ ('PDF') }}
+                        </a>
+                        
+                        <h2 class="font-weight-bold text-primary" style="margin-left: 7%;">Gestión de Plazos de Vigencias</h2>
                             @can('crear-plazo')
                                 <form action="{{ route('plazo.create') }}" method="get" style="display:inline;">
                                     <button type="submit" class="btn btn-primary btn-mb"> <span class="">

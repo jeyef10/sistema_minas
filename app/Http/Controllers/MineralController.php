@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class MineralController extends Controller
 {
@@ -28,6 +29,14 @@ class MineralController extends Controller
     {
         $minerales = Minerales::all();
         return view('mineral.index',compact('minerales'));
+    }
+
+    public function pdf()
+    {
+          $minerales=Minerales::all();
+          $pdf=Pdf::loadView('mineral.pdf', compact('minerales'));
+          return $pdf->stream();
+
     }
 
     /**

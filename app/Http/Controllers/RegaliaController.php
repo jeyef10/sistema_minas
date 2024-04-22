@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class RegaliaController extends Controller
 {
@@ -28,6 +29,14 @@ class RegaliaController extends Controller
     {
         $regalias = Regalia::all();
         return view('regalia.index',compact('regalias'));
+    }
+    
+    public function pdf()
+    {
+          $regalias=Regalia::all();
+          $pdf=Pdf::loadView('regalia.pdf', compact('regalias'));
+          return $pdf->stream();
+
     }
 
     /**

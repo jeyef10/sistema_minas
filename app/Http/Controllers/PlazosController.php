@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PlazosController extends Controller
 {
@@ -30,6 +31,13 @@ class PlazosController extends Controller
         return view('plazo.index',compact('plazos'));
     }
 
+    public function pdf()
+    {
+          $plazos=Plazos::all();
+          $pdf=Pdf::loadView('plazo.pdf', compact('plazos'));
+          return $pdf->stream();
+
+    }
     /**
      * Show the form for creating a new resource.
      *
