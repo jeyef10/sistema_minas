@@ -554,10 +554,28 @@ function Mineral(obj) {
         
     }
 
-
-    if (nombre_division.length < 6){
+    if (/^([a-zA-Z0-9])\1+$/.test(nombre)) {
         Swal.fire({
-            title: 'División',
+            title: 'Nombre',
+            text: "El campo nombre no debe contener caracteres repetidos.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+       
+        obj.nombre.focus();
+        return false;
+    }
+
+
+    if (nombre.length < 2){
+        Swal.fire({
+            title: 'Nombre',
             text: "Faltan dígitos en este campo de texto.",
             icon: 'warning',
             confirmButtonColor: '#3085d6',
@@ -569,15 +587,15 @@ function Mineral(obj) {
         }
         })
        
-        obj.nombre_division.focus();
+        obj.nombre.focus();
         return (false);
     }
 
-    
-    if (/^([a-zA-Z0-9])\1+$/.test(nombre_division)) {
+    var categoria = obj.categoria.value;
+    if (!categoria){
         Swal.fire({
-            title: 'División',
-            text: "El campo de división no debe contener caracteres repetidos.",
+            title: 'Categoria',
+            text: "Debe de seleccionar una Categoria",
             icon: 'warning',
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -587,12 +605,11 @@ function Mineral(obj) {
             this.submit();
         }
         })
-       
-        obj.nombre_division.focus();
-        return false;
+        
+        obj.categoria.focus();
+        return (false);
     }
-  
-   
+
 }
 
 // Validar REGALIA

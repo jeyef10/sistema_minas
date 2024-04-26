@@ -47,51 +47,53 @@
 
                     </div>
 
-                                    {{-- TABLA PARA APROVECHAMIENTO --}}
+                                    {{-- ? TABLA PARA APROVECHAMIENTO --}}
 
                     <div class="table-responsive p-3" id="t_Aprovechamiento" style="display: none;">
                         <table class="table align-items-center table-flush" id="dataTable">
                             <thead class="thead-light">
                                 <tr>
                                     <th class="font-weight-bold text-Secondary">N°</th>
-                                    {{-- <th class="font-weight-bold text-Secondary">Tipo de licencia</th> --}}
-                                    <th class="font-weight-bold text-Secondary">Nombre Solicitante</th>
+                                    <th class="font-weight-bold text-Secondary">Fecha Solicitud</th>
+                                    <th class="font-weight-bold text-Secondary">Tipo</th>
+                                    <th class="font-weight-bold text-Secondary">Solicitante</th>
                                     <th class="font-weight-bold text-Secondary">Tasa</th>
                                     <th class="font-weight-bold text-Secondary">Volumen</th>
                                     <th class="font-weight-bold text-Secondary">Estatus</th>
-                                    <th class="font-weight-bold text-Secondary"><center>Acciones</center> </th>
-                                </tr>
+                                    <th class="font-weight-bold text-Secondary"><center>Acciones</center></th>
+                                  </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($solicitudes as $solicitud)
-                                    <tr>
-                                        <!-- <td class="font-weight-bold text-Secondary">{{ $solicitud->id}}</td> -->
+                                @foreach ($solicitudes as $solicitud)
+                                <tr>
+                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->id }}</td> <td class="font-weight-bold text-Secondary">{{ $solicitud->fecha->format('d/m/Y') }}</td> <td class="font-weight-bold text-Secondary">{{ $solicitud->tipo }}</td>
+                          
+                                     <!-- Verifica si el solicitante es una Persona Natural -->
+                                    @if ($solicitud->solicitanteEspecifico instanceof \App\Models\PersonaNatural)
+                                      <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->cedula }}</td>
+                                      <td class="font-weight-bold text-Secondary">No Aplica</td>
+                                      <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->nombre }} {{ $solicitud->solicitanteEspecifico->apellido }}</td>
+                                    
+                                      <!-- Verifica si el solicitante es una Persona Jurídica -->
+                                    @elseif ($solicitud->solicitanteEspecifico instanceof \App\Models\PersonaJuridica)
+                                      <td class="font-weight-bold text-Secondary">No Aplica</td>
+                                      <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->rif }}</td>
+                                      <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->nombre }}</td>
 
-                                        <!-- Muestra el tipo de solicitante (Natural o Jurídico) -->
-                                        <td class="font-weight-bold text-Secondary">{{ $solicitud->tipo }}</td>
+                                    @endif
+                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->num_minero }}</td>
+                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->mineral->nom_mineral }}</td>
+                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->tasa_regalias }}</td>
+                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->volumen }}</td>
+                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->plazo }}</td>
+                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->estatus }}</td>
 
-                                        <!-- Verifica si el solicitante es una Persona Natural -->
-                                        @if ($solicitud->solicitanteEspecifico instanceof \App\Models\PersonaNatural)
-                                            <!-- Si es una Persona Natural, muestra la cédula, el nombre y el apellido -->
-                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->cedula }}</td>
-                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
-                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->nombre }}</td>
-                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->apellido }}</td>
-                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
+                                    {{-- <td>
+                                      <a href="{{ route('solicitudes.show', $solicitud->id) }}" class="btn btn-sm btn-info">Ver</a>
+                                    </td> --}}
 
-                                        <!-- Verifica si el solicitante es una Persona Jurídica -->
-                                        @elseif ($solicitud->solicitanteEspecifico instanceof \App\Models\PersonaJuridica)
-                                            <!-- Si es una Persona Jurídica, muestra el rif, el nombre y el correo -->
-                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
-                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->rif }}</td>
-                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->nombre }}</td>
-                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
-                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->correo }}</td>
-                                        @endif
+                                  </tr>
 
-                                        <!-- Muestra el número minero del solicitante -->
-                                        <td class="font-weight-bold text-Secondary">{{ $solicitud->num_minero }}</td>
-                                        
                                         <td>
                                             @can('editar-solicitante')
                                                 <a class="btn btn-warning btn-sm" style="margin-left: 31%;" href="{{ route('solicitudes.edit',$solicitante->id) }}"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
@@ -108,12 +110,12 @@
                                             @endcan
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
 
-                        {{-- TABLA PARA PROCESAMIENTO --}}
+                        {{-- ! TABLA PARA PROCESAMIENTO --}}
 
                     <div class="table-responsive p-3" id="t_Procesamiento" style="display: none;">
                         <table class="table align-items-center table-flush" id="dataTable2">
@@ -181,7 +183,7 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 
     <script>
         function showHideForms() {

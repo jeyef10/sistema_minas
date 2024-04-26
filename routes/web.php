@@ -129,6 +129,9 @@ Route::get('/solicitudes',  [SolicitudesController::class,'index'])->name('solic
 Route::get('/solicitudes/create', [SolicitudesController::class, 'create'])->name('create')->middleware('auth');
 Route::get('/solicitudes/pdf',  [SolicitudesController::class,'pdf'])->name('solicitudes')->middleware('auth');
 Route::resource('solicitudes', SolicitudesController::class)->middleware('auth');
+Route::get('/municipios', [SolicitudesController::class, 'getMunicipios']);
+Route::get('/solicitudes/create/{municipioId}', [SolicitudesController::class, 'getParroquias']);
+Route::get('/solicitudes/create/fetch-solicitantes/{tipoSolicitante}', [SolicitudesController::class, 'fetchSolicitantesByTipo']);
 
 /* Ruta Bitacora*/
 Route::get('bitacora', [ReporteController::class, 'bitacora'])->name('bitacora')->middleware('auth');

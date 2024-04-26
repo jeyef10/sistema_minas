@@ -30,7 +30,7 @@
                                     <label  class="font-weight-bold text-primary">Tipo</label>
                                     <select class="select2-single form-control" name="tipo" id="tipo">
                                         <option value="0" disabled>Seleccione una Marca</option>
-                                            <option value="No Metálicos" {{ (old('tipo', $mineral->tipo ?? '') === 'No Metálicos') ? 'selected' : '' }}>No Metálicos</option>
+                                            <option value="No metálicos" {{ (old('tipo', $mineral->tipo ?? '') === 'No metálicos') ? 'selected' : '' }}>No metálicos</option>
                                             {{-- <option value="Metálicos" {{ (old('tipo', $mineral->tipo ?? '') === 'Metálicos') ? 'selected' : '' }}>Metálicos</option> --}}
                                     </select>
                                 </div>

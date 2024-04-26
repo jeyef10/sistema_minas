@@ -40,7 +40,7 @@
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Categoria</label>
                                     <select class="select2-single form-control" name="categoria" id="categoria">
-                                        <option value="0" selected="true" disabled>Seleccione una Mineral</option>
+                                        <option value="" selected="true" disabled>Seleccione una Mineral</option>
                                         <option value="Aprovechamiento">Aprovechamiento</option>
                                         <option value="Procesamiento">Procesamiento</option>
                                     </select>
