@@ -13,7 +13,7 @@
 
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
     
-                        <h2 class="font-weight-bold text-primary" style="margin-left: 44%;">Registrar Solicitudes</h2>
+                        <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Registrar Solicitudes</h2>
 
                     </div>
 
@@ -41,8 +41,6 @@
                         <div class="card-body">
                             <h3 class="font-weight-bold text-primary" style="margin-left: 44%;">Datos Solicitante</h3>
                             <div class="row">
-
-                                <input type="hidden" name="previous_url" value="{{ url()->previous() }}">
 
                                 <input type="hidden" id="tipo-natural" name="tipo" value="">
 
@@ -78,69 +76,123 @@
                             </div>
                         </div>
 
+                        <div class="card-body">
+                            <div class="row">
+                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                      <button class="btn btn-outline-primary mr-1 active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Recaudos</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                      <button class="btn btn-outline-primary mr-1" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Inspección</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                      <button class="btn btn-outline-primary mr-1" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Datos Solicitud</button>
+                                    </li>
+                                  </ul>
+                            </div>
+                        </div>
+
+                        <div class="tab-content" id="pills-tabContent">
+
+                                                        {{-- * TAB DE RECAUDOS --}}
+
+                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+                                <div class="card-body">
+                                    <h3 class="font-weight-bold text-primary mb1" style="margin-left: 44%;">Recaudos</h3>
+                                
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">Fotocopia de cédula de identidad del Solicitante</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">Acta Constitutiva de la empresa y sus respectivas modificaciones estatutarias</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">Documento de propiedad de terreno</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">Autorización del INTI (Terrenos del INTI)</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">Autorización de la Alcaldía (Terrenos Municipales)</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">Proyecto General de Licencia Minera</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">Indicación de la clase de mineral, superficie aproximada y linderos, acompañada del croquis</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">Autorización de ocupación de territorio</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">Autorización de afecctación de recursos naturales</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">Estudio de impacto ambiental</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">Siete (07) U.T.E (Inspección)</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">Tres (03) U.T.E (Trámites)</label>
+                                    </div>
+
+                                    <div class="col-4 mt-3">
+                                    <label  class="font-weight-bold text-primary">Observaciones</label>
+                                    <textarea name="obs_recaudos" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
+                                    </div>
+                                </div>
+                            </div>
+                        
+
+                                                {{-- ! TAB DE INSPECCIÓN --}}
+
+                        <div class="tab-pane fade show" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
                             <div class="card-body">
-                                <h3 class="font-weight-bold text-primary" style="margin-left: 44%;">Datos Solicitud</h3>
+                                    <h3 class="font-weight-bold text-primary mb1" style="margin-left: 44%;">Inspección</h3>
                                 <div class="row">
-    
-                                    <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">N°</label>
-                                        <input type="text" class="form-control" id="num_soli" name="num_soli" style="background: white;" value="" placeholder="Ingrese La Número" autocomplete="off" onkeypress="return solonum(event);">
-                                    </div>
-            
-                                    <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Tipo Mineral</label>
-                                        <select class="select2-single form-control" id="tipo_mineral" name="tipo_mineral">
-                                            <option value="0" selected="true">Seleccione un tipo</option>
-                                            {{-- @foreach($minerales as $mineral)
-                                                <option value="{{ $mineral->id }}">{{ $mineral->tipo }}</option>
-                                            @endforeach  --}}
-                                            <option value="No metálicos">No metálicos</option>
-                                        </select>
-                                    </div>
-            
-                                    <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Nombre Mineral</label>
-                                        <select class="select2-single form-control" id="nom_mineral" name="nom_mineral">
-                                            <option value="0">Seleccione un mineral</option>
-                                                @foreach($minerales as $mineral)
-                                                    @If ($mineral->tipo === 'No metálicos') 
-                                                        <option value="{{ $mineral->id }}">{{ $mineral->nombre }}</option>
-                                                    @endif
-                                                @endforeach
-                                        </select>                                   
-                                     </div>
-            
-                                    <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">N° de regalias</label>
-                                        <input type="number" class="form-control" id="num_minero" name="num_minero" style="background: white;" value="" placeholder="N° Regalías" autocomplete="off" onkeypress="return solonum(event);" min="0">
-                                    </div>
 
                                     <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Tasa de Regalías</label>
-                                        <select class="select2-single form-control" id="tasa_regalias" name="tasa_regalias">
-                                            <option value="0">Seleccione una tasa</option>
-                                            @foreach($regalias as $regalia)
-                                                <option value="{{ $regalia->id }}">{{ $regalia->monto }}  {{ $regalia->moneda_longitud}}</option>
-                                            @endforeach 
-                                        </select>                                   
-                                     </div>
-
-                                    <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Volumen (mtrs3)</label>
-                                        <input type="text" class="form-control" id="volumen" name="volumen" style="background: white;" value="" placeholder="Ingrese El Volumen" autocomplete="off" onkeypress="return solonum(event);">
+                                        <label  class="font-weight-bold text-primary">Comisionado</label>
+                                        <input type="text" class="form-control" id="comisionado" name="comisionado" style="background: white;" value="" placeholder="Ingrese El Nombre del Comisionado" autocomplete="off">
                                     </div>
 
-                                    <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Plazo de Vigencia</label>
-                                        <select class="select2-single form-control" id="vigencia" name="vigencia">
-                                            <option value="0">Seleccione un plazo</option>
-                                            @foreach($plazos as $plazo)
-                                                <option value="{{ $plazo->id }}">{{ $plazo->cantidad }}  {{ $plazo->medida_tiempo}}</option>
-                                            @endforeach 
-                                        </select>                                   
+                                    <div class="col-4">                                     
+                                        <div class="form-group" id="simple-date1">
+                                            <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha</label>
+                                            <div class="input-group date">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" value="01/06/2020" id="simpleDataInput">
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <div class="col-4">
+                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Municipio</label>
                                         <select class="select2-single form-control" id="municipio" name="municipio">
                                             <option value="0">Seleccione un municipio</option>
@@ -155,57 +207,152 @@
                                         <select class="select2-single form-control" id="parroquia" name="parroquia">
                                             <option value="0">Seleccione un parroquia</option>
                                         </select>                                   
-                                    </div>
-
-                                    <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Dirección</label>
-                                        <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
-                                    </div>
+                                    </div> 
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Observaciones</label>
                                         <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
                                     </div>
 
-                                    <div class="col-4">                                     
-                                        <div class="form-group" id="simple-date1">
-                                            <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha</label>
-                                            <div class="input-group date">
-                                                <div class="input-group-prepend">
-                                                  <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" value="01/06/2020" id="simpleDataInput">
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Estatus</label>
-                                        <select class="select2-single form-control" id="estatus" name="estatus">
-                                            <option value="0">Seleccione un estatus</option>
-                                            <option value="1">En proceso</option>
-                                            <option value="2">Aprobado</option>
-                                            <option value="3">Rechazado</option>
-                                            
-                                        </select>                                   
+                                        <label  class="font-weight-bold text-primary">Conclusión</label>
+                                        <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
                                     </div>
 
                                 </div>
                             </div>
+                        </div> 
 
-                            <br>
+                                            {{-- ? TAB DE SOLICITUD --}}
 
-                            <center>
-                                <button type="submit" class="btn btn-success btn-lg"><span class="icon text-white-60"><i class="fas fa-check"></i></span>
-                                <span class="text">Guardar</span>
-                                </button>
-                                <a  class="btn btn-info btn-lg" href="{{ url('solicitante/') }}"><span class="icon text-white-50">
-                                    <i class="fas fa-info-circle"></i>
-                                </span>
-                                <span class="text">Regresar</span></a>
-                            </center>
-                    </form>
+                            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
+                                <div class="card-body">
+                                    <h3 class="font-weight-bold text-primary" style="margin-left: 44%;">Datos Solicitud</h3>
+                                    <div class="row">
 
+                                        {{-- <input type="hidden" name="previous_url" value="{{ url()->previous() }}"> --}}
+                    
+                                        <div class="col-4">
+                                            <label  class="font-weight-bold text-primary">Tipo Mineral</label>
+                                            <select class="select2-single form-control" id="tipo_mineral" name="tipo_mineral">
+                                                <option value="0" selected="true">Seleccione un tipo</option>
+                                                {{-- @foreach($minerales as $mineral)
+                                                    <option value="{{ $mineral->id }}">{{ $mineral->tipo }}</option>
+                                                @endforeach   --}}
+                                                <option value="No metálicos">No metálicos</option>
+                                            </select>
+                                        </div>
+                
+                                        <div class="col-4">
+                                            <label  class="font-weight-bold text-primary">Nombre Mineral</label>
+                                            <select class="select2-single form-control" id="nom_mineral" name="nom_mineral">
+                                                <option value="0">Seleccione un mineral</option>
+                                                    @foreach($minerales as $mineral)
+                                                        @If ($mineral->tipo === 'No metálicos') 
+                                                            <option value="{{ $mineral->id }}">{{ $mineral->nombre }}</option>
+                                                        @endif
+                                                    @endforeach
+                                            </select>                                   
+                                        </div>
+                
+                                        <div class="col-4">
+                                            <label  class="font-weight-bold text-primary">N° de regalias</label>
+                                            <input type="number" class="form-control" id="num_minero" name="num_minero" style="background: white;" value="" placeholder="N° Regalías" autocomplete="off" onkeypress="return solonum(event);" min="0">
+                                        </div>
+    
+                                        <div class="col-4">
+                                            <label  class="font-weight-bold text-primary">Tasa de Regalías</label>
+                                            <select class="select2-single form-control" id="tasa_regalias" name="tasa_regalias">
+                                                <option value="0">Seleccione una tasa</option>
+                                                @foreach($regalias as $regalia)
+                                                    <option value="{{ $regalia->id }}">{{ $regalia->monto }}  {{ $regalia->moneda_longitud}}</option>
+                                                @endforeach 
+                                            </select>                                   
+                                        </div>
+    
+                                        <div class="col-4">
+                                            <label  class="font-weight-bold text-primary">Volumen (mtrs3)</label>
+                                            <input type="text" class="form-control" id="volumen" name="volumen" style="background: white;" value="" placeholder="Ingrese El Volumen" autocomplete="off" onkeypress="return solonum(event);">
+                                        </div>
+    
+                                        <div class="col-4">
+                                            <label  class="font-weight-bold text-primary">Plazo de Vigencia</label>
+                                            <select class="select2-single form-control" id="vigencia" name="vigencia">
+                                                <option value="0">Seleccione un plazo</option>
+                                                @foreach($plazos as $plazo)
+                                                    <option value="{{ $plazo->id }}">{{ $plazo->cantidad }}  {{ $plazo->medida_tiempo}}</option>
+                                                @endforeach 
+                                            </select>                                   
+                                        </div>
+    
+                                        <div class="col-4">
+                                            <label  class="font-weight-bold text-primary">Municipio</label>
+                                            <select class="select2-single form-control" id="municipio" name="municipio">
+                                                <option value="0">Seleccione un municipio</option>
+                                                @foreach($municipios as $municipio)
+                                                    <option value="{{ $municipio->id }}">{{ $municipio->nom_municipio }}</option>
+                                                @endforeach
+                                            </select>                                   
+                                        </div>
+    
+                                        <div class="col-4">
+                                            <label  class="font-weight-bold text-primary">Parroquia</label>
+                                            <select class="select2-single form-control" id="parroquia" name="parroquia">
+                                                <option value="0">Seleccione un parroquia</option>
+                                            </select>                                   
+                                        </div>
+    
+                                        <div class="col-4">
+                                            <label  class="font-weight-bold text-primary">Dirección / Lugar</label>
+                                            <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
+                                        </div>
+    
+                                        <div class="col-4">
+                                            <label  class="font-weight-bold text-primary">Observaciones</label>
+                                            <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
+                                        </div>
+    
+                                        <div class="col-4">                                     
+                                            <div class="form-group" id="simple-date1">
+                                                <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha</label>
+                                                <div class="input-group date">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                                    </div>
+                                                    <input type="text" class="form-control" value="01/06/2020" id="simpleDataInput">
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-4">
+                                            <label  class="font-weight-bold text-primary">Estatus</label>
+                                            <select class="select2-single form-control" id="estatus" name="estatus">
+                                                <option value="0">Seleccione un estatus</option>
+                                                <option value="1">En proceso</option>
+                                                <option value="2">Aprobado</option>
+                                                <option value="3">Rechazado</option>
+                                                
+                                            </select>                                   
+                                        </div>
+    
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        <br>
+
+                        <center>
+                            <button type="submit" class="btn btn-success btn-lg"><span class="icon text-white-60"><i class="fas fa-check"></i></span>
+                            <span class="text">Guardar</span>
+                            </button>
+                            <a  class="btn btn-info btn-lg" href="{{ url('solicitudes/') }}"><span class="icon text-white-50">
+                                <i class="fas fa-info-circle"></i>
+                            </span>
+                            <span class="text">Regresar</span></a>
+                        </center>
+                    </div>
+                </form>
+                
                     <form method="post" action="{{ route('solicitante.store') }}" enctype="multipart/form-data" onsubmit="return solicitante(this)" id="Jurídico" style="display: none;">
                         @csrf
                         <div class="card-body">
@@ -633,6 +780,30 @@
             }
         });
     });
+    </script>
+
+    {{-- ! FUNCION PARA FILTRAR MINERALES EN EL SELECT SEGUN EL TIPO DE SOLICITUD --}}
+
+    <script>
+        function filtrarMinerales() {
+            const categoriaSeleccionada = document.querySelector('input[name="tipo"]:checked').value;
+            const selectMinerales = document.getElementById('nom_mineral');
+
+            // Clear existing options
+            selectMinerales.innerHTML = '';
+
+            // Efficiently filter minerals based on category (assuming 'minerales' is an array)
+            const mineralesFiltrados = minerales.filter(mineral => mineral.categoria === categoriaSeleccionada);
+
+            // Populate the select with filtered minerals
+            mineralesFiltrados.forEach(mineral => {
+                const opcionMineral = document.createElement('option');
+                opcionMineral.value = mineral.id;
+                opcionMineral.text = mineral.nombre;
+                selectMinerales.add(opcionMineral);
+            });
+        }       
+
     </script>
 
 @endsection

@@ -33,6 +33,11 @@
 
                         <div class="row">
 
+                            <div class="custom-control custom-radio col-1">
+                                <input type="radio" id="todos" name="tipo" value="t_todos" class="custom-control-input">
+                                <label class="custom-control-label" for="todos">Todos</label>
+                            </div>
+
                             <div class="custom-control custom-radio col-2">
                                 <input type="radio" id="aprovechamiento" name="tipo" value="t_Aprovechamiento" class="custom-control-input">
                                 <label class="custom-control-label" for="aprovechamiento">Aprovechamiento</label>
@@ -47,18 +52,15 @@
 
                     </div>
 
-                                    {{-- ? TABLA PARA APROVECHAMIENTO --}}
+                                    {{-- ? TABLA PARA TODOS LOS SOLICITANTES --}}
 
-                    <div class="table-responsive p-3" id="t_Aprovechamiento" style="display: none;">
+                    <div class="table-responsive p-3" id="t_Aprovechamiento">
                         <table class="table align-items-center table-flush" id="dataTable">
                             <thead class="thead-light">
                                 <tr>
                                     <th class="font-weight-bold text-Secondary">N°</th>
-                                    <th class="font-weight-bold text-Secondary">Fecha Solicitud</th>
-                                    <th class="font-weight-bold text-Secondary">Tipo</th>
                                     <th class="font-weight-bold text-Secondary">Solicitante</th>
-                                    <th class="font-weight-bold text-Secondary">Tasa</th>
-                                    <th class="font-weight-bold text-Secondary">Volumen</th>
+                                    <th class="font-weight-bold text-Secondary">Fecha</th>
                                     <th class="font-weight-bold text-Secondary">Estatus</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center></th>
                                   </tr>
@@ -66,7 +68,9 @@
                             <tbody>
                                 @foreach ($solicitudes as $solicitud)
                                 <tr>
-                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->id }}</td> <td class="font-weight-bold text-Secondary">{{ $solicitud->fecha->format('d/m/Y') }}</td> <td class="font-weight-bold text-Secondary">{{ $solicitud->tipo }}</td>
+                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->id }}</td> 
+                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->fecha->format('d/m/Y') }}</td> 
+                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->tipo }}</td>
                           
                                      <!-- Verifica si el solicitante es una Persona Natural -->
                                     @if ($solicitud->solicitanteEspecifico instanceof \App\Models\PersonaNatural)
@@ -81,11 +85,10 @@
                                       <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->nombre }}</td>
 
                                     @endif
-                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->num_minero }}</td>
                                     <td class="font-weight-bold text-Secondary">{{ $solicitud->mineral->nom_mineral }}</td>
                                     <td class="font-weight-bold text-Secondary">{{ $solicitud->tasa_regalias }}</td>
                                     <td class="font-weight-bold text-Secondary">{{ $solicitud->volumen }}</td>
-                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->plazo }}</td>
+                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->plazo }}</td> 
                                     <td class="font-weight-bold text-Secondary">{{ $solicitud->estatus }}</td>
 
                                     {{-- <td>
@@ -95,97 +98,50 @@
                                   </tr>
 
                                         <td>
-                                            @can('editar-solicitante')
+                                            @can('editar-solicitud')
                                                 <a class="btn btn-warning btn-sm" style="margin-left: 31%;" href="{{ route('solicitudes.edit',$solicitante->id) }}"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                                     <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
                                                 </svg></a>
                                             @endcan
 
-                                            @can('borrar-solicitante')       
+                                            {{-- @can('borrar-solicitante')       
                                                 <form action="{{ route('solicitudes.destroy', $solicitante->id) }}" method="POST" class="sweetalert" style="display:inline;">
                                                     @csrf
                                                     {{ method_field('DELETE') }}
                                                     <button class="btn btn-danger btn-sm" type="submit" value=""><i class="fas fa-trash"></i></button>
                                                 </form> 
-                                            @endcan
+                                            @endcan --}}
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-
-                        {{-- ! TABLA PARA PROCESAMIENTO --}}
-
-                    <div class="table-responsive p-3" id="t_Procesamiento" style="display: none;">
-                        <table class="table align-items-center table-flush" id="dataTable2">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th class="font-weight-bold text-Secondary">N°</th>
-                                    {{-- <th class="font-weight-bold text-Secondary">Tipo de licencia</th> --}}
-                                    <th class="font-weight-bold text-Secondary">Nombre Solicitante</th>
-                                    <th class="font-weight-bold text-Secondary">Linderos</th>
-                                    <th class="font-weight-bold text-Secondary">Volumen</th>
-                                    <th class="font-weight-bold text-Secondary">Estatus</th>
-                                    <th class="font-weight-bold text-Secondary"><center>Acciones</center> </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{-- @foreach ($solicitudes as $solicitud)
-                                    <tr>
-                                        <!-- <td class="font-weight-bold text-Secondary">{{ $solicitud->id}}</td> -->
-
-                                        <!-- Muestra el tipo de solicitante (Natural o Jurídico) -->
-                                        <td class="font-weight-bold text-Secondary">{{ $solicitud->tipo }}</td>
-
-                                        <!-- Verifica si el solicitante es una Persona Natural -->
-                                        @if ($solicitud->solicitanteEspecifico instanceof \App\Models\PersonaNatural)
-                                            <!-- Si es una Persona Natural, muestra la cédula, el nombre y el apellido -->
-                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->cedula }}</td>
-                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
-                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->nombre }}</td>
-                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->apellido }}</td>
-                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
-
-                                        <!-- Verifica si el solicitante es una Persona Jurídica -->
-                                        @elseif ($solicitud->solicitanteEspecifico instanceof \App\Models\PersonaJuridica)
-                                            <!-- Si es una Persona Jurídica, muestra el rif, el nombre y el correo -->
-                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
-                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->rif }}</td>
-                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->nombre }}</td>
-                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
-                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->correo }}</td>
-                                        @endif
-
-                                        <!-- Muestra el número minero del solicitante -->
-                                        <td class="font-weight-bold text-Secondary">{{ $solicitud->num_minero }}</td>
-                                        
-                                        <td>
-                                            @can('editar-solicitante')
-                                                <a class="btn btn-warning btn-sm" style="margin-left: 31%;" href="{{ route('solicitudes.edit',$solicitante->id) }}"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                                    <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
-                                                </svg></a>
-                                            @endcan
-
-                                            @can('borrar-solicitante')       
-                                                <form action="{{ route('solicitudes.destroy', $solicitante->id) }}" method="POST" class="sweetalert" style="display:inline;">
-                                                    @csrf
-                                                    {{ method_field('DELETE') }}
-                                                    <button class="btn btn-danger btn-sm" type="submit" value=""><i class="fas fa-trash"></i></button>
-                                                </form> 
-                                            @endcan
-                                        </td>
-                                    </tr>
-                                @endforeach --}}
-                            </tbody>
-                        </table>
-                    </div>
+                    
                 </div>
             </div>
         </div>
     </div>
 
+                        {{-- ? FUNCIÓN PARA FILTRAR DATOS EN LA TABLA DE SOLICITUDES --}}
+
     <script>
+        $(document).ready(function() {
+            var table = $('#example').DataTable();
+
+            $('input[name="filter"]').change(function() {
+                var filterValue = $(this).val();
+
+                if (filterValue === 'todos') {
+                    table.search('').draw();
+                } else {
+                    table.search(filterValue).draw();
+                }
+            });
+        });
+    </script>
+
+    {{-- <script>
         function showHideForms() {
             // Selecciona los botones de radio con el nombre "tipo"
             const radios = document.querySelectorAll('input[type="radio"][name="tipo"]'); 
@@ -226,7 +182,7 @@
     
         // Añade el evento de carga a la ventana para ejecutar la función showHideForms cuando se carga la página
         window.addEventListener('DOMContentLoaded', showHideForms);
-    </script>
+    </script> --}}
 @endsection 
 
 @section('datatable')

@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Solicitudes;
+use App\Models\Solicitante;
+use App\Models\PersonaJuridica;
+use App\Models\PersonaNatural;
 use App\Models\Minerales;
 use App\Models\Plazos;
 use App\Models\Regalia;
 use App\Models\Municipio;
 use App\Models\Parroquia;
-use App\Models\Solicitante;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BitacoraController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
@@ -25,23 +27,10 @@ class SolicitudesController extends Controller
 
     public function index(Request $request)
     {
-        // $solicitudes = Solicitudes::with('solicitanteEspecifico')->get();
-        // return view('solicitudes.index', compact('solicitudes'));
-        // $solicitudes = Solicitudes::all(); 
 
-        // $solicitudesWithRequesters = Solicitudes::with('solicitanteEspecifico')->get();
-        // return view('solicitudes.index', compact('solicitudes'));
-
-        $solicitudes = Solicitudes::query();
-
-        // Filtrar por tipo de solicitante (natural o jurídico) si se especifica
-        if ($request->has('tipo_solicitante')) {
-            $tipoSolicitante = $request->input('tipo_solicitante');
-            $solicitudes->whereHas('solicitante', function ($query) use ($tipoSolicitante) {
-                $query->where('tipo', $tipoSolicitante);
-            });
-        }
+        $solicitudes = Solicitudes::with('solicitante','solicitanteEspecifico', 'mineral', 'regalia', 'plazo', 'municipio', 'parroquia')->get(); 
         return view('solicitudes.index', compact('solicitudes'));
+        
     }
 
     /**
@@ -58,7 +47,7 @@ class SolicitudesController extends Controller
         $municipios = Municipio::all();
         $parroquias = Parroquia::all();
 
-        return view('solicitudes.create', compact('plazos', 'minerales', 'regalias', 'solicitantes', 'municipios', 'parroquias'));
+        return view('solicitudes.create', compact('solicitantes', 'minerales', 'regalias', 'plazos', 'municipios', 'parroquias'));
     }
 
     public function getParroquias($municipioId)
@@ -87,18 +76,14 @@ class SolicitudesController extends Controller
     public function store(Request $request)
     {
         // Validar los datos de entrada
-        $validatedData = $request->validate([
+       $request = $request->validate([
         'id_solicitante' => 'required',
         'id_mineral' => 'required',
         'id_regalia' => 'required',
         'id_plazo' => 'required',
         'id_municipio' => 'required',
         'id_parroquia' => 'required',
-        'tipo_mineral' => 'required',
-        'nom_mineral' => 'required',
-        'tasa_regalias' => 'required',
         'num_regalias' => 'required',
-        'plazo' => 'required',
         'volumen' => 'required',
         'direccion' => 'required',
         'fecha' => 'required',
@@ -116,50 +101,42 @@ class SolicitudesController extends Controller
         // Crea un nuevo objeto Solicitudes
         $solicitud = new Solicitudes;
 
-        $solicitud->fecha = $validatedData['fecha'];
-        $solicitud->tipo = $validatedData['tipo'];
-        $solicitud->num_minero = $validatedData['num_minero'];
-        $solicitud->id_mineral = $validatedData['id_mineral'];
-        $solicitud->tasa_regalias = $validatedData['tasa_regalias']; 
-        $solicitud->volumen = $validatedData['volumen'];
-        $solicitud->plazo = $validatedData['plazo'];
-        $solicitud->estatus = $validatedData['estatus'];
+        $solicitud->fecha =$request['fecha'];
+        $solicitud->tipo =$request['tipo'];
+        $solicitud->num_minero =$request['num_minero'];
+        $solicitud->id_mineral =$request['id_mineral'];
+        $solicitud->id_regalia =$request['id_regalia'];
+        $solicitud->id_plazo =$request['id_plazo'];
+        $solicitud->id_municipio =$request['id_municipio'];
+        $solicitud->id_parroquia =$request['id_parroquia'];
+        $solicitud->observaciones =$request['observaciones'];
+        $solicitud->direccion =$request['direccion'];
+        $solicitud->volumen =$request['volumen'];
+        $solicitud->estatus =$request['estatus'];
+
+        $solicitud->save();
 
         // Crea la instancia del solicitante (PersonaNatural o PersonaJuridica)
-        $solicitanteData = $validatedData['datos_solicitante'];
-        if ($validatedData['tipo_solicitante'] === 'natural') {
+        $solicitanteData = $request['datos_solicitante'];
+        if ($request['tipo_solicitante'] == 'Natural') {
             $solicitante = new PersonaNatural;
             $solicitante->cedula = $solicitanteData['cedula'];
             $solicitante->nombre = $solicitanteData['nombre'];
             $solicitante->apellido = $solicitanteData['apellido'];
-            $solicitante->save();
         } else {
             $solicitante = new PersonaJuridica;
             $solicitante->rif = $solicitanteData['rif'];
             $solicitante->nombre = $solicitanteData['nombre_empresa'];
-            $solicitante->correo = $solicitanteData['correo'];
-            $solicitante->save();
+            $solicitante->correo = $solicitanteData['correo'];     
         }
+
+        $solicitud->save();
 
         $solicitud->solicitanteEspecifico()->associate($solicitante);
 
         $solicitud->save();
 
-        // Determinar el tipo de mensaje del solicitante
-        $requesterTypeMessage = '';
-        if ($validatedData['datos_solicitante']['tipo'] === 'natural') {
-            $requesterTypeMessage = 'Solicitud registrada para Persona Natural';
-        } else {
-            $requesterTypeMessage = 'Solicitud registrada para Persona Jurídica';
-        }
-
-        // Obtenga la URL anterior de la solicitud (si se proporciona)
-        $previousUrl = $request->input('previous_url');
-
-        // Redirigir nuevamente con un mensaje de éxito (si existe la URL anterior)
-        if ($previousUrl) {
-            return redirect($previousUrl)->with('success', $requesterTypeMessage);
-        }
+        return redirect('solicitud')->with('success', 'Solicitud creada exitosamente!');
 
     }
 

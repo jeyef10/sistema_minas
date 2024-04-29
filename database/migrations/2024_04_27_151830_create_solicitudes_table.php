@@ -21,12 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_plazo'); // Agregar columna de clave foránea
             $table->unsignedBigInteger('id_municipio'); // Agregar columna de clave foránea
             $table->unsignedBigInteger('id_parroquia'); // Agregar columna de clave foránea
-
-            $table->string('tipo_mineral');
-            $table->string('nom_mineral');
-            $table->string('tasa_reaglias');
             $table->integer('num_regalias');
-            $table->integer('plazo');
             $table->integer('volumen');
             $table->string('direccion');
             $table->string('fecha');

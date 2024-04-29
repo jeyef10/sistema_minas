@@ -68,7 +68,9 @@
                   <div class="bg-white py-2 collapse-inner rounded">
                     {{-- <h6 class="collapse-header">Forms</h6>
                     <a class="collapse-item" href="form_basics.html">Form Basics</a>--}}
-                    <a class="collapse-item" href="{{ url('solicitudes') }}">Solicitudes</a> 
+                    <a class="collapse-item" href="{{ url('solicitudes') }}">Solicitudes</a>
+                    <a class="collapse-item" href="{{ url('licencia') }}">Liciencias</a>
+                    <a class="collapse-item" href="{{ url('Pago') }}">Pago / Talonario</a>
                   </div>
                 </div>
               </li>
