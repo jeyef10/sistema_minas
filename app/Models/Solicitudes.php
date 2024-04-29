@@ -13,26 +13,26 @@ class Solicitudes extends Model
     protected $primaryKey = 'id';
     public $timestamps = true;
     protected $fillable = ['id_solicitante','id_mineral','id_regalia','id_plazo','id_municipio','id_parroquia',
-    'tipo_mineral','nom_mineral','tasa_reaglias','num_regalias', 'plazo', 'volumen', 'direccion', 'fecha', 'observaciones', 'estatus',];
+    'num_regalias', 'volumen', 'direccion', 'fecha', 'observaciones', 'estatus',];
 
     public function solicitante()
     {
-        return $this->belongsTo(Solicitante::class, 'id_solicitante');
+        return $this->morphTo(Solicitante::class, 'id_solicitante');
     }
 
     public function mineral()
     {
-        return $this->belongsTo(Mineral::class, 'id_mineral');
+        return $this->belongsTo(Minerales::class, 'id_mineral');
     }
 
-    public function tipoRegalia()
+    public function regalia()
     {
-        return $this->belongsTo(TipoRegalia::class, 'id_regalia');
+        return $this->belongsTo(Regalia::class, 'id_regalia');
     }
 
     public function plazo()
     {
-        return $this->belongsTo(Plazo::class, 'id_plazo');
+        return $this->belongsTo(Plazos::class, 'id_plazo');
     }
 
     public function municipio()
@@ -45,6 +45,7 @@ class Solicitudes extends Model
         return $this->belongsTo(Parroquia::class, 'id_parroquia');
     }
 
+    
 }
 
     
