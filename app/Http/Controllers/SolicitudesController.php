@@ -127,7 +127,7 @@ class SolicitudesController extends Controller
 
         // Crea la instancia del solicitante (PersonaNatural o PersonaJuridica)
         $solicitanteData = $validatedData['datos_solicitante'];
-        if ($validatedData['tipo_solicitante'] === 'natural') {
+        if ($validatedData['tipo_solicitante'] == 'Natural') {
             $solicitante = new PersonaNatural;
             $solicitante->cedula = $solicitanteData['cedula'];
             $solicitante->nombre = $solicitanteData['nombre'];
@@ -147,7 +147,7 @@ class SolicitudesController extends Controller
 
         // Determinar el tipo de mensaje del solicitante
         $requesterTypeMessage = '';
-        if ($validatedData['datos_solicitante']['tipo'] === 'natural') {
+        if ($validatedData['datos_solicitante']['tipo'] == 'Natural') {
             $requesterTypeMessage = 'Solicitud registrada para Persona Natural';
         } else {
             $requesterTypeMessage = 'Solicitud registrada para Persona Jurídica';

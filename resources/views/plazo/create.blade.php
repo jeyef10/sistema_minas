@@ -37,7 +37,7 @@
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Medida de tiempo</label>
                                     <select class="select2-single form-control" name="medida_tiempo" id="medida_tiempo">
-                                        <option value="0" disabled selected>Seleccione una medida de tiempo</option>
+                                        <option value="" disabled selected>Seleccione una medida de tiempo</option>
                                         <option value="año(s)">año(s)</option>
                                         <option value="mes(es)">mes(es)</option>
                                         <{{-- option value="Metálicos">Metálicos</option> --}}

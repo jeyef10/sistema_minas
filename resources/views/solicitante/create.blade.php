@@ -35,7 +35,7 @@
 
                     </div>
                     
-                    <form method="post" action="{{ route('solicitante.store') }}" enctype="multipart/form-data" onsubmit="return solicitante(this)" id="Natural" style="display: none;">
+                    <form method="post" action="{{ route('solicitante.store') }}" enctype="multipart/form-data" onsubmit="return Solicitante(this)" id="Natural" style="display: none;">
                         @csrf
                             
                         <div class="card-body">
@@ -83,7 +83,7 @@
                             </center>
                     </form>
 
-                    <form method="post" action="{{ route('solicitante.store') }}" enctype="multipart/form-data" onsubmit="return solicitante(this)" id="Jurídico" style="display: none;">
+                    <form method="post" action="{{ route('solicitante.store') }}" enctype="multipart/form-data" onsubmit="return Solicitante_juridico(this)" id="Jurídico" style="display: none;">
                         @csrf
                         <div class="card-body">
                             
@@ -100,17 +100,17 @@
         
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Nombre de la Empresa</label>
-                                    <input type="text" class="form-control" id="nombre" name="nombre" style="background: white;" value="" placeholder="Ingrese El Nombre" autocomplete="off">
+                                    <input type="text" class="form-control" id="nombre_empresa" name="nombre" style="background: white;" value="" placeholder="Ingrese El Nombre" autocomplete="off">
                                 </div>
         
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Correo Electrónico</label>
-                                    <input type="email" class="form-control" id="email" name="correo" style="background: white;" value="" placeholder="Ingrese El Correo" autocomplete="off">
+                                    <input type="email" class="form-control" id="email_empresa" name="correo" style="background: white;" value="" placeholder="Ingrese El Correo" autocomplete="off">
                                 </div>
         
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">N° Minero</label>
-                                    <input type="text" class="form-control" id="num_minero" name="num_minero" style="background: white;" value="" placeholder="N° Minero" autocomplete="off">
+                                    <input type="text" class="form-control" id="num_mineroj" name="num_minero" style="background: white;" value="" placeholder="N° Minero" autocomplete="off">
                                 </div>
 
                             </div>
