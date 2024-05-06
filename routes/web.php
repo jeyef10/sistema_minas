@@ -4,30 +4,18 @@ use App\Http\Controllers\AsignarController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\NominaController;
-use App\Http\Controllers\ValidarcedulaController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\UserSettingsController;
-use App\Http\Controllers\SedeController;
-use App\Http\Controllers\CargoController;
-use App\Http\Controllers\DivisionController;
-use App\Http\Controllers\MarcaController;
-use App\Http\Controllers\ModeloController;
-use App\Http\Controllers\PerifericosController;
-use App\Http\Controllers\PersonaController;
-use App\Http\Controllers\SistemaController;
-use App\Http\Controllers\EquiposController;
-use App\Http\Controllers\TipoPerifericoController;
-use App\Http\Controllers\EstadisticaController;
 use App\Models\Asignar;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ManualController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\SolicitanteController;
+use App\Http\Controllers\RecaudosController;
 use App\Http\Controllers\MineralController;
 use App\Http\Controllers\RegaliaController;
 use App\Http\Controllers\PlazosController;
@@ -100,6 +88,12 @@ Route::get('/solicitante/create', [SolicitanteController::class, 'create'])->nam
 Route::get('/solicitante/pdf',  [SolicitanteController::class,'pdf'])->name('solicitante')->middleware('auth');
 Route::resource('solicitante', SolicitanteController::class)->middleware('auth');
 
+/* Ruta Recaudo */
+Route::get('/recaudo',  [RecaudosController::class,'index'])->name('recaudo')->middleware('auth');
+Route::get('/recaudo/create', [RecaudosController::class, 'create'])->name('create')->middleware('auth');
+Route::get('/recaudo/pdf',  [RecaudosController::class,'pdf'])->name('recaudo')->middleware('auth');
+Route::resource('recaudo', RecaudosController::class)->middleware('auth');
+
 /* Ruta Mineral */
 Route::get('/mineral',  [MineralController::class,'index'])->name('mineral')->middleware('auth');
 Route::get('/mineral/create', [MineralController::class, 'create'])->name('create')->middleware('auth');
@@ -135,6 +129,9 @@ Route::get('/solicitudes/create/fetch-solicitantes/{tipoSolicitante}', [Solicitu
 
 /* Ruta Bitacora*/
 Route::get('bitacora', [ReporteController::class, 'bitacora'])->name('bitacora')->middleware('auth');
+
+/* Ruta Manual */
+Route::get('/manual',  [ManualController::class,'index'])->name('manual')->middleware('auth');
 
 /* Ruta Cargo 
 Route::get('/cargo',  [CargoController::class,'index'])->name('cargo')->middleware('auth');

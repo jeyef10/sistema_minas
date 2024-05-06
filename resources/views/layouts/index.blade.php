@@ -51,6 +51,8 @@
                 <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
                   <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="{{ url('solicitante') }}">Solicitante</a>
+                    <a class="collapse-item" href="{{ url('recaudo') }}">Recaudo</a>
+                    <a class="collapse-item" href="{{ url('comisionado') }}">Comisionado</a>
                     <a class="collapse-item" href="{{ url('mineral') }}">Mineral</a>
                     <a class="collapse-item" href="{{ url('regalia') }}">Tasa de Regalias</a>
                     <a class="collapse-item" href="{{ url('plazo') }}">Plazos de Vigencia</a>
@@ -70,7 +72,7 @@
                     <a class="collapse-item" href="form_basics.html">Form Basics</a>--}}
                     <a class="collapse-item" href="{{ url('solicitudes') }}">Solicitudes</a>
                     <a class="collapse-item" href="{{ url('licencia') }}">Liciencias</a>
-                    <a class="collapse-item" href="{{ url('Pago') }}">Pago / Talonario</a>
+                    {{-- <a class="collapse-item" href="{{ url('Pago') }}">Pago / Talonario</a> --}}
                   </div>
                 </div>
               </li>

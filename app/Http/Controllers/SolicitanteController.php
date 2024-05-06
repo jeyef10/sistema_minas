@@ -70,7 +70,7 @@ class SolicitanteController extends Controller
 
             // Asigna el ID del objeto Solicitante al solicitante_id del objeto PersonaNatural
             $personaNatural->solicitante_id = $solicitante->id; 
-
+            $personaNatural->id = $solicitante->id;
             // Asigna los valores del formulario de solicitud a las propiedades del objeto PersonaNatural
             $personaNatural->cedula = $request->cedula;
             $personaNatural->nombre = $request->nombre;

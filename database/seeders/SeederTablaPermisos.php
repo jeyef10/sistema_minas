@@ -35,7 +35,13 @@ class SeederTablaPermisos extends Seeder
              'ver-solicitante',
             'crear-solicitante',
             'editar-solicitante',
-            'borrar-solicitante', 
+            'borrar-solicitante',
+            
+            //Operaciones sobre tabla Recaudos
+            'ver-recaudo',
+            'crear-recaudo',
+            'editar-recaudo',
+            'borrar-recaudo',
 
             //Operaciones sobre tabla Minerales
              'ver-mineral',
@@ -61,35 +67,6 @@ class SeederTablaPermisos extends Seeder
             'editar-categoria',
             'borrar-categoria',
  
-            //Operaciones sobre tabla Talonario
-            'ver-talonario',
-            'crear-talonario',
-            'editar-talonario',
-            'borrar-talonario', 
-
-            /* //Operaciones sobre tabla Perifericos
-            'ver-periferico',
-            'crear-periferico',
-            'editar-periferico',
-            'borrar-periferico', */
-
-            //Operaciones sobre tabla Equipos
-            /* 'ver-equipo',
-            'crear-equipo',
-            'editar-equipo',
-            'borrar-equipo', */
-
-            //Operaciones sobre tabla Sistemas
-           /*  'ver-sistema',
-            'crear-sistema',
-            'editar-sistema',
-            'borrar-sistema', */
-
-             //Operaciones sobre tabla Tipo de Sistemas Operativos
-             /* 'ver-tipoperif',
-             'crear-tipoperif',
-             'editar-tipoperif',
-             'borrar-tipoperif' */
         ];
 
         foreach($permisos as $permiso) {
