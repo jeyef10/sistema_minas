@@ -26,7 +26,7 @@
                             <div class="row">
 
                             <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">Recaudo</label>
+                                    <label  class="font-weight-bold text-primary">Nombre</label>
                                     <input type="text" class="form-control" id="recaudo" name="nombre" style="background: white;" value="" placeholder="Ingrese un Recaudo" autocomplete="off" onkeypress="return soloLetras(event);">
                                 </div>
 

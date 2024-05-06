@@ -16,6 +16,11 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    
+                    <a href="{{ url('solicitante/pdf') }}" class="btn btn-sm btn-danger" target="_blank">
+                        {{ ('PDF') }}
+                        </a>
+
                         <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Gestión de Solicitante</h2>
                             @can('crear-solicitante')
                                 <form action="{{ route('solicitante.create') }}" method="get" style="display:inline;">
