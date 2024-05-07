@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>PDF Minerales</title>
+    <title>PDF Solicitante</title>
 </head>
 
 {{-- Estilo al PDF --}}
@@ -69,22 +69,44 @@ img {
         </div>
     
         
-        <h1>Listado de Minerales</h1><br>
+        <h1>Listado de Solicitantes</h1><br>
             <table class="table" cellpadding="1" cellspacing="1" width="100%" style="padding-bottom:0.4rem;font-size:0.6rem !important">
             <thead class="header">
                 <tr>
-                    <th>Lista</th>
+                    
+                    <th>Tipo de Solicitante</th>
+                    <th>Cédula</th>
+                    <th>Rif</th>
                     <th>Nombre</th>
-                   
+                    <th>Apellido</th>
+                    <th>Correo</th>
+                    
                     
                 </tr>
             </thead>
             <tbody>
-            @foreach ($recaudos as $recaudo)
+            @foreach ($solicitantes as $solicitante)
+        
+                
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $recaudo->nombre }}</td>
 
+                <td >{{ $solicitante->tipo }}</td>
+
+                @if ($solicitante->solicitanteEspecifico instanceof \App\Models\PersonaNatural)
+                <td >{{ $solicitante->solicitanteEspecifico->cedula }}</td>
+                <td >No Aplica</td>
+                <td >{{ $solicitante->solicitanteEspecifico->nombre }}</td>
+                <td >{{ $solicitante->solicitanteEspecifico->apellido }}</td>
+                <td >No Aplica</td>
+
+                @elseif ($solicitante->solicitanteEspecifico instanceof \App\Models\PersonaJuridica)
+                  
+                    <td >No Aplica</td>
+                    <td >{{ $solicitante->solicitanteEspecifico->rif }}</td>
+                    <td >{{ $solicitante->solicitanteEspecifico->nombre }}</td>
+                    <td >No Aplica</td>
+                    <td >{{ $solicitante->solicitanteEspecifico->correo }}</td>
+                @endif
                 </tr>
         @endforeach
             </tbody>

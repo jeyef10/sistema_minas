@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SolicitanteController extends Controller
 {
@@ -32,6 +33,14 @@ class SolicitanteController extends Controller
         $solicitantes = Solicitante::with('solicitanteEspecifico')->get();
         return view('solicitante.index', compact('solicitantes'));
     }
+
+    public function pdf()
+    {
+        $solicitantes = Solicitante::all();
+        $pdf=Pdf::loadView('solicitante.pdf', compact('solicitantes'));
+        return $pdf->stream();
+    }
+
 
     /**
      * Show the form for creating a new resource.
