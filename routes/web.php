@@ -16,11 +16,13 @@ use App\Http\Controllers\ManualController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\SolicitanteController;
 use App\Http\Controllers\RecaudosController;
+use App\Http\Controllers\ComisionadosController;
 use App\Http\Controllers\MineralController;
 use App\Http\Controllers\RegaliaController;
 use App\Http\Controllers\PlazosController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\SolicitudesController;
+
 
 
 
@@ -93,6 +95,12 @@ Route::get('/recaudo',  [RecaudosController::class,'index'])->name('recaudo')->m
 Route::get('/recaudo/create', [RecaudosController::class, 'create'])->name('create')->middleware('auth');
 Route::get('/recaudo/pdf',  [RecaudosController::class,'pdf'])->name('recaudo')->middleware('auth');
 Route::resource('recaudo', RecaudosController::class)->middleware('auth');
+
+/* Ruta Comisionado*/
+Route::get('/comisionado',  [ComisionadosController::class,'index'])->name('comisionado')->middleware('auth');
+Route::get('/comisionado/create', [ComisionadosController::class, 'create'])->name('create')->middleware('auth');
+Route::get('/comisionado/pdf',  [ComisionadosController::class,'pdf'])->name('comisionado')->middleware('auth');
+Route::resource('comisionado', ComisionadosController::class)->middleware('auth');
 
 /* Ruta Mineral */
 Route::get('/mineral',  [MineralController::class,'index'])->name('mineral')->middleware('auth');

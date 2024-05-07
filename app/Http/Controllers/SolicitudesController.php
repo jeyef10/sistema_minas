@@ -12,6 +12,10 @@ use App\Models\Plazos;
 use App\Models\Regalia;
 use App\Models\Municipio;
 use App\Models\Parroquia;
+use App\Models\Recaudos;
+use App\Models\SolicitudesRecaudos;
+use App\Models\Comisionados;
+use App\Models\SolicitudesComisionados;
 use App\Http\Controllers\BitacoraController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,8 +50,14 @@ class SolicitudesController extends Controller
         $regalias = Regalia::all();
         $municipios = Municipio::all();
         $parroquias = Parroquia::all();
+        $solicitudesrecaudos = SolicitudesRecaudos::all();
+        $recaudos = Recaudos::orderBy('nombre', 'asc')->get();
+        $solicitudescomisionados = SolicitudesComisionados::all();
+        $comisionados = Comisionados::all();
 
-        return view('solicitudes.create', compact('solicitantes', 'minerales', 'regalias', 'plazos', 'municipios', 'parroquias'));
+
+        return view('solicitudes.create', compact('solicitantes', 'minerales', 'regalias', 'plazos', 'municipios', 'parroquias', 'solicitudesrecaudos', 'recaudos',
+        'comisionados'));
     }
 
     public function getParroquias($municipioId)
@@ -115,42 +125,6 @@ class SolicitudesController extends Controller
         $solicitud->estatus =$request['estatus'];
 
         $solicitud->save();
-
-        // Crea la instancia del solicitante (PersonaNatural o PersonaJuridica)
-        $solicitanteData = $validatedData['datos_solicitante'];
-        if ($validatedData['tipo_solicitante'] === 'natural') {
-            $solicitante = new PersonaNatural;
-            $solicitante->cedula = $solicitanteData['cedula'];
-            $solicitante->nombre = $solicitanteData['nombre'];
-            $solicitante->apellido = $solicitanteData['apellido'];
-        } else {
-            $solicitante = new PersonaJuridica;
-            $solicitante->rif = $solicitanteData['rif'];
-            $solicitante->nombre = $solicitanteData['nombre_empresa'];
-            $solicitante->correo = $solicitanteData['correo'];     
-        }
-
-        $solicitud->save();
-
-        $solicitud->solicitanteEspecifico()->associate($solicitante);
-
-        $solicitud->save();
-
-        // Determinar el tipo de mensaje del solicitante
-        $requesterTypeMessage = '';
-        if ($validatedData['datos_solicitante']['tipo'] === 'natural') {
-            $requesterTypeMessage = 'Solicitud registrada para Persona Natural';
-        } else {
-            $requesterTypeMessage = 'Solicitud registrada para Persona Jurídica';
-        }
-
-        // Obtenga la URL anterior de la solicitud (si se proporciona)
-        $previousUrl = $request->input('previous_url');
-
-        // Redirigir nuevamente con un mensaje de éxito (si existe la URL anterior)
-        if ($previousUrl) {
-            return redirect($previousUrl)->with('success', $requesterTypeMessage);
-        }
 
     }
 

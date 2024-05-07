@@ -6,6 +6,17 @@
 
 @section('contenido')
 
+    @if ($errors->any())
+    <div class="alert alert-warning d-flex align-items-center alert-dismissible fade show" role="alert">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="alert"></button>
+    </div>
+    @endif
+
     <div class="container-fluid" id="container-wrapper">
         <div class="d-sm-flex align-items-center justify-content-between mb-4"></div>
             <div class="col-lg-12">
@@ -27,7 +38,7 @@
                             
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Nombre</label>
-                                    <input type="text" class="form-control" id="recaudo" name="nombre" style="background: white;" value="{{ isset($recaudo->nombre)?$recaudo->nombre:'' }}" placeholder="Ingrese El Nombre" autocomplete="off">
+                                    <input type="text" class="form-control" id="recaudo" name="nombre" style="background: white;" value="{{ isset($recaudo->nombre)?$recaudo->nombre:'' }}" placeholder="Ingrese El Nombre" autocomplete="off" onkeypress="return soloLetras(event);">
                                 </div>
         
                             </div>
@@ -40,7 +51,7 @@
                                 <button type="submit" class="btn btn-success btn-lg"><span class="icon text-white-60"><i class="fas fa-check"></i></span>
                                 <span class="text">Guardar</span>
                                 </button>
-                                <a  class="btn btn-info btn-lg" href="{{ url('mineral/') }}"><span class="icon text-white-50">
+                                <a  class="btn btn-info btn-lg" href="{{ url('recaudo/') }}"><span class="icon text-white-50">
                                     <i class="fas fa-info-circle"></i>
                                 </span>
                                 <span class="text">Regresar</span></a>

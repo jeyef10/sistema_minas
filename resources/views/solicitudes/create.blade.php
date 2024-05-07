@@ -99,66 +99,13 @@
                             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
                                 <div class="card-body">
                                     <h3 class="font-weight-bold text-primary mb1" style="margin-left: 44%;">Recaudos</h3>
-                                
-                                    <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">Fotocopia de cédula de identidad del Solicitante</label>
-                                    </div>
 
-                                    <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">Acta Constitutiva de la empresa y sus respectivas modificaciones estatutarias</label>
-                                    </div>
-
-                                    <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">Documento de propiedad de terreno</label>
-                                    </div>
-
-                                    <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">Autorización del INTI (Terrenos del INTI)</label>
-                                    </div>
-
-                                    <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">Autorización de la Alcaldía (Terrenos Municipales)</label>
-                                    </div>
-
-                                    <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">Proyecto General de Licencia Minera</label>
-                                    </div>
-
-                                    <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">Indicación de la clase de mineral, superficie aproximada y linderos, acompañada del croquis</label>
-                                    </div>
-
-                                    <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">Autorización de ocupación de territorio</label>
-                                    </div>
-
-                                    <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">Autorización de afecctación de recursos naturales</label>
-                                    </div>
-
-                                    <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">Estudio de impacto ambiental</label>
-                                    </div>
-
-                                    <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">Siete (07) U.T.E (Inspección)</label>
-                                    </div>
-
-                                    <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">Tres (03) U.T.E (Trámites)</label>
-                                    </div>
+                                    @foreach($recaudos as $value)
+                                        <div class="form-check">
+                                            <label class="form-check-label">{{ Form::checkbox('recaudos[]', $value->id, false, array('class' => 'form-check-input')) }}
+                                            {{ $value->nombre }}</label>
+                                        </div>
+                                    @endforeach  
 
                                     <div class="col-4 mt-3">
                                     <label  class="font-weight-bold text-primary">Observaciones</label>
@@ -176,23 +123,6 @@
                                 <div class="row">
 
                                     <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Comisionado</label>
-                                        <input type="text" class="form-control" id="comisionado" name="comisionado" style="background: white;" value="" placeholder="Ingrese El Nombre del Comisionado" autocomplete="off">
-                                    </div>
-
-                                    <div class="col-4">                                     
-                                        <div class="form-group" id="simple-date1">
-                                            <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha</label>
-                                            <div class="input-group date">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" value="01/06/2020" id="simpleDataInput">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Municipio</label>
                                         <select class="select2-single form-control" id="municipio" name="municipio">
                                             <option value="0">Seleccione un municipio</option>
@@ -210,13 +140,54 @@
                                     </div> 
 
                                     <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Comisionado asignado</label>
+                                        <input type="text" class="form-control" id="comisionado" name="comisionado" style="background: white;" value="" placeholder="Ingrese El Nombre del Comisionado" autocomplete="off">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Funcionario Acompañante</label>
+                                        <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
+                                    </div>
+
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Lugar</label>
+                                        <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
+                                    </div>
+
+                                    <div class="col-4">                                     
+                                        <div class="form-group" id="simple-date1">
+                                            <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha</label>
+                                            <div class="input-group date">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" value="01/06/2020" id="simpleDataInput">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Observaciones</label>
                                         <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
                                     </div>
 
                                     <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Conclusión</label>
+                                        <label  class="font-weight-bold text-primary">Conclusiones</label>
                                         <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
+                                    </div>
+
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Latitud</label>
+                                        <input type="text" class="form-control" id="latitud" name="latitud" style="background: white;" value="" placeholder="Ingrese la Latitud" autocomplete="off">                                  
+                                    </div>
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Longitud</label>
+                                        <input type="text" class="form-control" id="longitud" name="longitud" style="background: white;" value="" placeholder="Ingrese la Longitud" autocomplete="off">                                  
+                                    </div>
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Reseña Fotográfica</label>
+                                        {{-- <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>--}}
+                                        <input type="file" name="resenia" id="resenia" class="btn btn-outline-info">
                                     </div>
 
                                 </div>
@@ -259,31 +230,7 @@
                                             <label  class="font-weight-bold text-primary">N° de regalias</label>
                                             <input type="number" class="form-control" id="num_minero" name="num_minero" style="background: white;" value="" placeholder="N° Regalías" autocomplete="off" onkeypress="return solonum(event);" min="0">
                                         </div>
-    
-                                        <div class="col-4">
-                                            <label  class="font-weight-bold text-primary">Tasa de Regalías</label>
-                                            <select class="select2-single form-control" id="tasa_regalias" name="tasa_regalias">
-                                                <option value="0">Seleccione una tasa</option>
-                                                @foreach($regalias as $regalia)
-                                                    <option value="{{ $regalia->id }}">{{ $regalia->monto }}  {{ $regalia->moneda_longitud}}</option>
-                                                @endforeach 
-                                            </select>                                   
-                                        </div>
-    
-                                        <div class="col-4">
-                                            <label  class="font-weight-bold text-primary">Volumen (mtrs3)</label>
-                                            <input type="text" class="form-control" id="volumen" name="volumen" style="background: white;" value="" placeholder="Ingrese El Volumen" autocomplete="off" onkeypress="return solonum(event);">
-                                        </div>
-    
-                                        <div class="col-4">
-                                            <label  class="font-weight-bold text-primary">Plazo de Vigencia</label>
-                                            <select class="select2-single form-control" id="vigencia" name="vigencia">
-                                                <option value="0">Seleccione un plazo</option>
-                                                @foreach($plazos as $plazo)
-                                                    <option value="{{ $plazo->id }}">{{ $plazo->cantidad }}  {{ $plazo->medida_tiempo}}</option>
-                                                @endforeach 
-                                            </select>                                   
-                                        </div>
+
     
                                         <div class="col-4">
                                             <label  class="font-weight-bold text-primary">Municipio</label>
@@ -322,6 +269,31 @@
                                                     <input type="text" class="form-control" value="01/06/2020" id="simpleDataInput">
                                                 </div>
                                             </div>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <label  class="font-weight-bold text-primary">Tasa de Regalías</label>
+                                            <select class="select2-single form-control" id="tasa_regalias" name="tasa_regalias">
+                                                <option value="0">Seleccione una tasa</option>
+                                                @foreach($regalias as $regalia)
+                                                    <option value="{{ $regalia->id }}">{{ $regalia->monto }}  {{ $regalia->moneda_longitud}}</option>
+                                                @endforeach 
+                                            </select>                                   
+                                        </div>
+    
+                                        <div class="col-4">
+                                            <label  class="font-weight-bold text-primary">Volumen (mtrs3)</label>
+                                            <input type="text" class="form-control" id="volumen" name="volumen" style="background: white;" value="" placeholder="Ingrese El Volumen" autocomplete="off" onkeypress="return solonum(event);">
+                                        </div>
+    
+                                        <div class="col-4">
+                                            <label  class="font-weight-bold text-primary">Plazo de Vigencia</label>
+                                            <select class="select2-single form-control" id="vigencia" name="vigencia">
+                                                <option value="0">Seleccione un plazo</option>
+                                                @foreach($plazos as $plazo)
+                                                    <option value="{{ $plazo->id }}">{{ $plazo->cantidad }}  {{ $plazo->medida_tiempo}}</option>
+                                                @endforeach 
+                                            </select>                                   
                                         </div>
     
                                         <div class="col-4">

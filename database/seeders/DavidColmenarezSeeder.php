@@ -50,12 +50,14 @@ class DavidColmenarezSeeder extends Seeder
             'password' => ('david19'),
         ]);
 
-        // $rol = Role::create(['name'=>'Asistente']);
+        // $rol = Role::create(['name'=>'Administrador']);
 
         // $permisos = Permission::pluck('id', 'id')->all();
 
         // $rol->syncPermissions($permisos);
 
-         $usuario->assignRole('Administrador');
+        // $usuario->assignRole([$rol->id]);
+
+        $usuario->assignRole('Administrador');
     }
 }

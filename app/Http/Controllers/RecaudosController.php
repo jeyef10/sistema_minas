@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Recaudos;
+use App\Models\SolicitudesRecaudos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,6 +46,7 @@ class RecaudosController extends Controller
      */
     public function create()
     {
+        $solicitudesrecaudos = SolicitudesRecaudos::get();
         return view('recaudo.create');
     }
 
@@ -56,12 +58,20 @@ class RecaudosController extends Controller
      */
     public function store(Request $request)
     {
-        $datosRecaudos = request()->except('_token');
-        Recaudos::create($datosRecaudos);
-        // $bitacora = new BitacoraController;
-        // $bitacora->update();
 
-        return redirect ('recaudo');
+        $request->validate(
+            [
+            'nombre' => 'unique:recaudos,nombre'
+            ],
+            [
+            'nombre.unique' => 'Este recaudo ya existe.'
+            ]
+        );
+
+        $recaudos = Recaudos::create(['nombre' => $request->input('nombre')]);
+
+        return redirect()->route('recaudo.index');
+
     }
 
     /**
@@ -94,8 +104,17 @@ class RecaudosController extends Controller
      * @param  \App\Models\Recaudos  $recaudos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, recaudos $recaudos, $id)
     {
+        $request->validate(
+            [
+            'nombre' => 'unique:recaudos,nombre'
+            ],
+            [
+            'nombre.unique' => 'Este recaudo ya existe.'
+            ]
+        );
+        
         $datosRecaudos = request()->except('_token','_method');
         Recaudos::where('id','=',$id)->update($datosRecaudos);
         // $bitacora = new BitacoraController;

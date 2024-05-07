@@ -43,6 +43,12 @@ class SeederTablaPermisos extends Seeder
             'editar-recaudo',
             'borrar-recaudo',
 
+            //Operaciones sobre tabla Comisionados
+            'ver-comisionado',
+            'crear-comisionado',
+            'editar-comisionado',
+            'borrar-comisionado',
+
             //Operaciones sobre tabla Minerales
              'ver-mineral',
             'crear-mineral',
@@ -61,11 +67,11 @@ class SeederTablaPermisos extends Seeder
             'editar-plazo',
             'borrar-plazo',
 
-            //Operaciones sobre tabla MineralCategoria
-            'ver-categoria',
-            'crear-categoria',
-            'editar-categoria',
-            'borrar-categoria',
+            // //Operaciones sobre tabla MineralCategoria
+            // 'ver-categoria',
+            // 'crear-categoria',
+            // 'editar-categoria',
+            // 'borrar-categoria',
  
         ];
 
