@@ -43,7 +43,7 @@
                                     <th class="font-weight-bold text-Secondary">Cédula</th>
                                     <th class="font-weight-bold text-Secondary">Nombre</th>
                                     <th class="font-weight-bold text-Secondary">Apellido</th>
-                                    <th class="font-weight-bold text-Secondary">Municipio</th>
+                                    <th class="font-weight-bold text-Secondary">Municipio Asignado</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center> </th>
                                 </tr>
                             </thead>

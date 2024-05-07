@@ -40,8 +40,8 @@
                                 </div>
                                 
                                 <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">Municipio</label>
-                                    <select class="select2-single form-control" id="municipio" name="id_municipio">
+                                    <label  class="font-weight-bold text-primary">Municipio Asignado</label>
+                                    <select class="select2-single form-control" id="c_municipio" name="id_municipio">
                                         <option value="0">Seleccione un municipio</option>
                                         @foreach($municipios as $municipio)
                                             <option value="{{ $municipio->id }}">{{ $municipio->nom_municipio }}</option>
