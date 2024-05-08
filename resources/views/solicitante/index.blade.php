@@ -21,7 +21,7 @@
                         {{ ('PDF') }}
                         </a>
 
-                        <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Gestión de Solicitante</h2>
+                        <h2 class="font-weight-bold text-primary" style="margin-left: 7%;">Gestión de Solicitante</h2>
                             @can('crear-solicitante')
                                 <form action="{{ route('solicitante.create') }}" method="get" style="display:inline;">
                                     <button type="submit" class="btn btn-primary btn-mb"> <span class="">

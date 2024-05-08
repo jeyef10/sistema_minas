@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>PDF Recaudos</title>
+    <title>PDF Comisionado</title>
 </head>
 
 {{-- Estilo al PDF --}}
-
 <style>
 
 body{
@@ -61,30 +60,41 @@ img {
 {{-- Estilo al PDF --}}
 
 {{-- Index del PDF --}}
-    <body> 
+    <body>
+
         <div class="row">
-            <!-- <img class= "left" src="../public/img/escu.png" alt="">
-            <img class="right" src="../public/img/yara.png" alt="" > -->
             <img class="centro" src="../public/img/centro.png" alt="" >
         </div>
-    
-        
-        <h1>Listado de Minerales</h1><br>
+        <!-- {{-- <img class="left" src="../public/img/yaracuy.png" alt=""> --}}
+        <img src="../public/img/ce.png" alt=""> -->
+        <h1>Listado de Comisionado</h1><br>
             <table class="table" cellpadding="1" cellspacing="1" width="100%" style="padding-bottom:0.4rem;font-size:0.6rem !important">
             <thead class="header">
                 <tr>
                     <th>Lista</th>
+                    <th>Cédula</th>
                     <th>Nombre</th>
-                   
+                    <th>Apellido</th>
+                    <th>Municipio Asignado</th>
+                  
                     
                 </tr>
             </thead>
             <tbody>
-            @foreach ($recaudos as $recaudo)
+            @foreach ($comisionados as $comisionado)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $recaudo->nombre }}</td>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $comisionado->cedula }}</td>
+                <td>{{ $comisionado->nombres }}</td>
+                <td>{{ $comisionado->apellidos }}</td>
 
+                <td>
+                @if ($comisionado->municipio)
+                    {{$comisionado->municipio->nom_municipio }} @else
+                @endif
+                </td>
+                  
+                   
                 </tr>
         @endforeach
             </tbody>
