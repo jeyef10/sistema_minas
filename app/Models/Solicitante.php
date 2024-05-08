@@ -12,7 +12,7 @@ class Solicitante extends Model
     protected $table = 'solicitantes';
     protected $primaryKey = 'id';
     public $timestamps = true;
-    protected $fillable = ['num_minero', 'tipo', 'solicitante_especifico_id', 'solicitante_especifico_type'];
+    protected $fillable = ['tipo', 'solicitante_especifico_id', 'solicitante_especifico_type'];
 
     public function solicitanteEspecifico()
     {

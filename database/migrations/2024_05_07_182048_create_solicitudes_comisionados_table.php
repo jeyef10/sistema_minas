@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('latitud');
             $table->string('longitud');
             $table->binary('foto');
+            $table->string('estatus');
 
             // Establecer relación con la tabla de solicitudes
             $table->foreign('id_solicitud')->references('id')->on('solicitudes');

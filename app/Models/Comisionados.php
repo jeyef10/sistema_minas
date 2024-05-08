@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Municipio;
+use App\Models\Parroquia;
 
 class Comisionados extends Model
 {
@@ -12,11 +14,16 @@ class Comisionados extends Model
     protected $table = 'comisionados'; 
     protected $primaryKey = 'id';
     public $timestamps = true;
-    protected $fillable = ['cedula', 'nombres', 'apellidos', 'id_municipio'];
+    protected $fillable = ['cedula', 'nombres', 'apellidos', 'id_municipio', 'id_parroquia'];
 
     public function municipio()
     {
         return $this->belongsTo(Municipio::class, 'id_municipio');
+    }
+
+    public function parroquia()
+    {
+        return $this->belongsTo(Parroquia::class, 'id_parroquia');
     }
     
     public function solicitudescomisionados()

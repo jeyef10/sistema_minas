@@ -61,11 +61,6 @@
                                         <label  class="font-weight-bold text-primary">Apellido</label>
                                         <input type="text" class="form-control" id="apellido" name="apellido" style="background: white;" value="{{ $solicitante->solicitanteEspecifico->apellido }}" placeholder="Ingrese El Apellido" autocomplete="off">
                                     </div>
-            
-                                    <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">N° Minero</label>
-                                        <input type="text" class="form-control" id="num_minero" name="num_minero" style="background: white;" value="{{ $solicitante->num_minero }}" placeholder="N° Minero" autocomplete="off">
-                                    </div>
 
                                 </div>
 
@@ -109,11 +104,6 @@
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Correo Electrónico</label>
                                         <input type="email" class="form-control" id="email" name="correo" style="background: white;" value="{{ $solicitante->solicitanteEspecifico->correo }}" placeholder="Ingrese El Correo" autocomplete="off">
-                                    </div>
-            
-                                    <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">N° Minero</label>
-                                        <input type="text" class="form-control" id="num_minero" name="num_minero" style="background: white;" value="{{ $solicitante->num_minero }}" placeholder="N° Minero" autocomplete="off">
                                     </div>
 
                                 </div>

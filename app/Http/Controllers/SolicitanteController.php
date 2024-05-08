@@ -66,7 +66,6 @@ class SolicitanteController extends Controller
 
         // Asigna los valores del formulario de solicitud a las propiedades del objeto Solicitante
         $solicitante->tipo = $request->tipo;
-        $solicitante->num_minero = $request->num_minero;
 
         // Guarda el objeto Solicitante en la base de datos
         $solicitante->save(); 
@@ -162,7 +161,6 @@ class SolicitanteController extends Controller
 
         // Actualiza las propiedades del Solicitante con los valores del formulario de solicitud
         $solicitante->tipo = $request->tipo;
-        $solicitante->num_minero = $request->num_minero;
 
         // Guarda el Solicitante en la base de datos
         $solicitante->save();

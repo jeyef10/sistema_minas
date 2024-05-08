@@ -101,6 +101,8 @@ Route::get('/comisionado',  [ComisionadosController::class,'index'])->name('comi
 Route::get('/comisionado/create', [ComisionadosController::class, 'create'])->name('create')->middleware('auth');
 Route::get('/comisionado/pdf',  [ComisionadosController::class,'pdf'])->name('comisionado')->middleware('auth');
 Route::resource('comisionado', ComisionadosController::class)->middleware('auth');
+Route::get('/municipios', [ComisionadosController::class, 'getMunicipios']);
+Route::get('/comisionados/create/{municipioId}', [ComisionadosController::class, 'getParroquias']);
 
 /* Ruta Mineral */
 Route::get('/mineral',  [MineralController::class,'index'])->name('mineral')->middleware('auth');
@@ -134,6 +136,9 @@ Route::resource('solicitudes', SolicitudesController::class)->middleware('auth')
 Route::get('/municipios', [SolicitudesController::class, 'getMunicipios']);
 Route::get('/solicitudes/create/{municipioId}', [SolicitudesController::class, 'getParroquias']);
 Route::get('/solicitudes/create/fetch-solicitantes/{tipoSolicitante}', [SolicitudesController::class, 'fetchSolicitantesByTipo']);
+Route::get('/solicitudes/create/fetch-comisionados/{municipioId}/{parroquiaId}', [SolicitudesController::class, 'fetchComisionados']);
+// Route::get('/solicitudes/create/mostrarComisionados/{municipioId}/{parroquiaId}', [SolicitudesController::class, 'mostrarComisionados']);
+
 
 /* Ruta Bitacora*/
 Route::get('bitacora', [ReporteController::class, 'bitacora'])->name('bitacora')->middleware('auth');

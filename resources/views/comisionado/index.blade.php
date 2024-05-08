@@ -44,6 +44,7 @@
                                     <th class="font-weight-bold text-Secondary">Nombre</th>
                                     <th class="font-weight-bold text-Secondary">Apellido</th>
                                     <th class="font-weight-bold text-Secondary">Municipio</th>
+                                    <th class="font-weight-bold text-Secondary">Parroquia</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center> </th>
                                 </tr>
                             </thead>
@@ -58,6 +59,11 @@
                                         <td class="font-weight-bold text-Secondary">
                                             @if ($comisionado->municipio)
                                                 {{$comisionado->municipio->nom_municipio }} @else
+                                            @endif
+                                        </td>
+                                        <td class="font-weight-bold text-Secondary">
+                                            @if ($comisionado->parroquia)
+                                                {{$comisionado->parroquia->nom_parroquia }} @else
                                             @endif
                                         </td>
                                        

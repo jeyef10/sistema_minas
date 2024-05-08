@@ -60,11 +60,6 @@
                                     <label  class="font-weight-bold text-primary">Apellido</label>
                                     <input type="text" class="form-control" id="apellido" name="apellido" style="background: white;" value="" placeholder="Ingrese El Apellido" autocomplete="off">
                                 </div>
-        
-                                <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">N° Minero</label>
-                                    <input type="text" class="form-control" id="num_minero" name="num_minero" style="background: white;" value="" placeholder="N° Minero" autocomplete="off">
-                                </div>
 
                             </div>
 
@@ -106,11 +101,6 @@
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Correo Electrónico</label>
                                     <input type="email" class="form-control" id="email_empresa" name="correo" style="background: white;" value="" placeholder="Ingrese El Correo" autocomplete="off">
-                                </div>
-        
-                                <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">N° Minero</label>
-                                    <input type="text" class="form-control" id="num_mineroj" name="num_minero" style="background: white;" value="" placeholder="N° Minero" autocomplete="off">
                                 </div>
 
                             </div>
@@ -175,5 +165,7 @@
         // Añade el evento de carga a la ventana para ejecutar la función showHideForms cuando se carga la página
         window.addEventListener('DOMContentLoaded', showHideForms);
     </script>
+
+    
   
 @endsection

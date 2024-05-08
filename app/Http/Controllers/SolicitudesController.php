@@ -77,6 +77,15 @@ class SolicitudesController extends Controller
         return response()->json($solicitantes);
     }
 
+    public function fetchComisionados(Request $request, $comisionados)
+    {
+        $comisionados = Comisionado::where('id_municipio', $municipioId)
+            ->where('id_parroquia', $parroquiaId)
+            ->get();
+
+        return response()->json($comisionados);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

@@ -41,11 +41,18 @@
                                 
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Municipio</label>
-                                    <select class="select2-single form-control" id="municipio" name="id_municipio">
+                                    <select class="select2-single form-control" id="municipio" name="municipio">
                                         <option value="0">Seleccione un municipio</option>
                                         @foreach($municipios as $municipio)
                                             <option value="{{ $municipio->id }}">{{ $municipio->nom_municipio }}</option>
                                         @endforeach
+                                    </select>                                   
+                                </div>
+
+                                <div class="col-4">
+                                    <label  class="font-weight-bold text-primary">Parroquia</label>
+                                    <select class="select2-single form-control" id="parroquia" name="parroquia">
+                                        <option value="0">Seleccione un parroquia</option>
                                     </select>                                   
                                 </div>
                                 
@@ -67,6 +74,36 @@
                     </form>
                 </div>
             </div>    
-    </div>  
+    </div>
+
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    
+    {{-- * FUNCION PARA MOSTRAR PARROQUIAS EN Comisionado  --}}
+
+    <script>
+        $(document).ready(function() {
+        $('#municipio').change(function() {
+            var municipioId = $(this).val(); // Get the selected municipio ID
+
+            if (municipioId) { // If a municipio is selected
+                $.ajax({
+                    url: '/comisionados/create/' + municipioId, // Replace with your actual route URL
+                    method: 'GET',
+                    success: function(data) {
+                        console.log(data)
+                        var options = '<option value="">Seleccione una parroquia</option>';
+                        $.each(data, function(key, value) {
+                            options += '<option value="' + key + '">' + value + '</option>';
+                        });
+
+                        $('#parroquia').html(options); // Update the 'Parroquia' select with new options
+                    }
+                });
+            } else {
+                $('#parroquia').html('<option value="">Seleccione una parroquia</option>'); // Clear 'Parroquia' select
+            }
+        });
+    });
+    </script>
 
 @endsection

@@ -16,13 +16,6 @@ class Parroquia extends Model
     public $timestamps = true;
     protected $fillable = ['id_parroquia', 'id_municipio', 'nom_parroquia'];
 
-    // Relación con municipios
-    // public function municipio()
-    // {
-    //     return $this->belongsToMany(Municipio::class, 'id', 'nom_municipio');
-    // }
-
-    
 
     public function parroquia()
     {

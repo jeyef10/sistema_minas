@@ -67,11 +67,6 @@
                                         </a>
                                     </div>
                                 </div>
-
-                                <div class="col-3">
-                                    <label  class="font-weight-bold text-primary">N° Minero</label>
-                                    <input type="text" class="form-control" id="num_minero" name="num_minero" style="background: white;" value="" placeholder="N° Minero" autocomplete="off" readonly>
-                                </div>
                   
                             </div>
                         </div>
@@ -140,8 +135,10 @@
                                     </div> 
 
                                     <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Comisionado asignado</label>
-                                        <input type="text" class="form-control" id="comisionado" name="comisionado" style="background: white;" value="" placeholder="Ingrese El Nombre del Comisionado" autocomplete="off">
+                                        <label for="comisionado" class="font-weight-bold text-primary">Comisionado asignado</label>
+                                        <select class="select2-single form-control" id="comisionado" name="comisionado">
+                                            <option value="0">Seleccione un comisionado</option>
+                                        </select>
                                     </div>
 
                                     <div class="col-4">
@@ -180,14 +177,27 @@
                                         <label  class="font-weight-bold text-primary">Latitud</label>
                                         <input type="text" class="form-control" id="latitud" name="latitud" style="background: white;" value="" placeholder="Ingrese la Latitud" autocomplete="off">                                  
                                     </div>
+
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Longitud</label>
                                         <input type="text" class="form-control" id="longitud" name="longitud" style="background: white;" value="" placeholder="Ingrese la Longitud" autocomplete="off">                                  
                                     </div>
+
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Reseña Fotográfica</label>
                                         {{-- <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>--}}
                                         <input type="file" name="resenia" id="resenia" class="btn btn-outline-info">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Estatus</label>
+                                        <select class="select2-single form-control" id="estatus" name="estatus">
+                                            <option value="0">Seleccione un estatus</option>
+                                            <option value="1">En proceso</option>
+                                            <option value="2">Aprobado</option>
+                                            <option value="3">Rechazado</option>
+                                            
+                                        </select>                                   
                                     </div>
 
                                 </div>
@@ -231,7 +241,6 @@
                                             <input type="number" class="form-control" id="num_minero" name="num_minero" style="background: white;" value="" placeholder="N° Regalías" autocomplete="off" onkeypress="return solonum(event);" min="0">
                                         </div>
 
-    
                                         <div class="col-4">
                                             <label  class="font-weight-bold text-primary">Municipio</label>
                                             <select class="select2-single form-control" id="municipio" name="municipio">
@@ -305,6 +314,11 @@
                                                 <option value="3">Rechazado</option>
                                                 
                                             </select>                                   
+                                        </div>
+                                        
+                                        <div class="col-3">
+                                            <label  class="font-weight-bold text-primary">N° Minero</label>
+                                            <input type="text" class="form-control" id="num_minero" name="num_minero" style="background: white;" value="" placeholder="N° Minero" autocomplete="off" readonly>
                                         </div>
     
                                     </div>
@@ -573,67 +587,112 @@
         window.addEventListener('DOMContentLoaded', showHideForms);
     </script>
 
-    {{-- ! FUNCION PARA MOSTRAR SOLICITANTES SEGUN SU TIPO APROVECHAMIENTO --}}
+    {{-- * FUNCION PARA MOSTRAR COMISIONADOS SEGUN SU MUNICIPIO Y PARROQUIA --}}
 
     <script>
-       $('#tipo_solicitante').change(function() {
-        var tipoSolicitante = $(this).val(); // Get selected tipoSolicitante
+        $('#municipio').change(function() {
+        var municipioId = $(this).val(); // Get selected municipio ID
 
-        if (tipoSolicitante) {
+        if (municipioId) {
             $.ajax({
-            url: '/solicitudes/create/fetch-solicitantes/' + tipoSolicitante, // Replace with your actual API URL
+            url: '/solicitudes/create/fetch-comisionados/'  + municipioId + '/' + parroquiaId, // Replace with your actual API URL
             method: 'GET',
             success: function(data) {
-                // Assuming data is an array of solicitante objects
-                var options = '<option value="">Seleccione una Persona</option>';
-                var numMineroInput = $('#num_minero'); // Get the num_minero input element
-                
-                // numMineroInput = ' ';
+                // Assuming data is an array of comisionado objects
+                var options = '<option value="">Seleccione un Comisionado</option>';
+                // var parroquiaInput = $('#parroquia'); // Get the parroquia select element
 
-                data.forEach(function(solicitante) {
-                if (solicitante.solicitante_especifico || solicitante) {
-                    options += '<option value="' + solicitante.id + '">' +
-                    (solicitante.solicitante_especifico.cedula || '') + ' ' +
-                    (solicitante.solicitante_especifico.rif || '') + ' - ' +
-                    (solicitante.solicitante_especifico.nombre || '') + ' ' +
-                    (solicitante.solicitante_especifico.apellido || '') + '</option>';
-                }
+                data.forEach(function(comisionado) {
+                options += '<option value="' + comisionado.id + '">' +
+                    (comisionado.cedula || '') + ' - ' +
+                    (comisionado.nombres || '') + ' ' +
+                    (comisionado.apellidos || '') + '</option>';
                 });
 
-                $('#solicitante').html(options); // Update the 'Solicitante' select with new options
+                $('#comisionado').html(options); // Update the 'Comisionado' select with new options
 
-                // Update num_minero input when option is selected
-                $('#solicitante').change(function() {
-                var selectedSolicitante = $(this).val();
-                if (selectedSolicitante) {
-                    var selectedSolicitanteData = data.find(function(solicitante) {
-                    return solicitante.id == selectedSolicitante;
-                    });
-
-                    if (selectedSolicitanteData) {
-                    numMineroInput.val(selectedSolicitanteData.num_minero);
-                    } else {
-                    // This could happen if no matching solicitante is found
-                    console.warn('No matching solicitante found for ID:', selectedSolicitante);
-                    }
-                } else {
-                    // This block executes if no solicitante is selected
-                    numMineroInput.val('');  // Clear num_minero input
-                }
-                });
-                // Trigger nested change event listener on programmatically updated solicitante
-                $('#solicitante').trigger('change');
+                // Update parroquia select based on selected municipio (optional)
+                // You might need to implement logic to fetch parroquias based on municipio
+                parroquiaInput.empty(); // Clear parroquia options
+                parroquiaInput.append('<option value="">Seleccione una Parroquia</option>');
             },
             error: function(error) {
-                console.error('Error fetching solicitantes:', error);
+                console.error('Error fetching comisionados:', error);
                 // Handle AJAX error (e.g., network error, server error)
             }
             });
         } else {
-            $('#solicitante').html('<option value="">Seleccione una Persona</option>'); // Clear 'Solicitante' select
+            $('#comisionado').html('<option value="">Seleccione un Comisionado</option>'); // Clear 'Comisionado' select
+            // Clear parroquia options as well (optional)
+            parroquiaInput.empty();
+            parroquiaInput.append('<option value="">Seleccione una Parroquia</option>');
         }
         });
+
+
     </script>
+
+    {{-- ! FUNCION PARA MOSTRAR SOLICITANTES SEGUN SU TIPO APROVECHAMIENTO --}}
+
+    <script>
+        $('#tipo_solicitante').change(function() {
+         var tipoSolicitante = $(this).val(); // Get selected tipoSolicitante
+ 
+         if (tipoSolicitante) {
+             $.ajax({
+             url: '/solicitudes/create/fetch-solicitantes/' + tipoSolicitante, // Replace with your actual API URL
+             method: 'GET',
+             success: function(data) {
+                 // Assuming data is an array of solicitante objects
+                 var options = '<option value="">Seleccione una Persona</option>';
+                 // var numMineroInput = $('#num_minero'); // Get the num_minero input element
+                 
+                 // numMineroInput = ' ';
+ 
+                 data.forEach(function(solicitante) {
+                 if (solicitante.solicitante_especifico || solicitante) {
+                     options += '<option value="' + solicitante.id + '">' +
+                     (solicitante.solicitante_especifico.cedula || '') + ' ' +
+                     (solicitante.solicitante_especifico.rif || '') + ' - ' +
+                     (solicitante.solicitante_especifico.nombre || '') + ' ' +
+                     (solicitante.solicitante_especifico.apellido || '') + '</option>';
+                 }
+                 });
+ 
+                 $('#solicitante').html(options); // Update the 'Solicitante' select with new options
+ 
+                 // Update num_minero input when option is selected
+                 $('#solicitante').change(function() {
+                 var selectedSolicitante = $(this).val();
+                 if (selectedSolicitante) {
+                     var selectedSolicitanteData = data.find(function(solicitante) {
+                     return solicitante.id == selectedSolicitante;
+                     });
+ 
+                     if (selectedSolicitanteData) {
+                     numMineroInput.val(selectedSolicitanteData.num_minero);
+                     } else {
+                     // This could happen if no matching solicitante is found
+                     console.warn('No matching solicitante found for ID:', selectedSolicitante);
+                     }
+                 } else {
+                     // This block executes if no solicitante is selected
+                     numMineroInput.val('');  // Clear num_minero input
+                 }
+                 });
+                 // Trigger nested change event listener on programmatically updated solicitante
+                 $('#solicitante').trigger('change');
+             },
+             error: function(error) {
+                 console.error('Error fetching solicitantes:', error);
+                 // Handle AJAX error (e.g., network error, server error)
+             }
+             });
+         } else {
+             $('#solicitante').html('<option value="">Seleccione una Persona</option>'); // Clear 'Solicitante' select
+         }
+         });
+     </script>
 
 
     {{-- * FUNCION PARA MOSTRAR PARROQUIAS EN APROVECHAMIENTO  --}}

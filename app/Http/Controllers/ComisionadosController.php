@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comisionados;
 use App\Models\Municipio;
+use App\Models\Parroquia;
 use App\Models\SolicitudesComisionados;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -29,9 +30,7 @@ class ComisionadosController extends Controller
      */
     public function index()
     {
-        // $comisionados = Comisionados::all();
-        // $municipios = Municipio::all();
-        $comisionados = Comisionados::with('municipio')->get();
+        $comisionados = Comisionados::with('municipio', 'parroquia')->get();
         return view('comisionado.index',compact('comisionados'));
     }
 
@@ -49,9 +48,16 @@ class ComisionadosController extends Controller
      */
     public function create()
     {
+        $municipios = Municipio::all();
+        $parroquias = Parroquia::all();
         $solicitudescomisionados = SolicitudesComisionados::get();
-        $municipios = Municipio::all(); 
-        return view('comisionado.create', compact('solicitudescomisionados','municipios'));
+        return view('comisionado.create', compact('solicitudescomisionados','municipios','parroquias'));
+    }
+
+    public function getParroquias($municipioId)
+    {
+        $parroquias = Parroquia::where('id_municipio', $municipioId)->pluck('nom_parroquia', 'id');
+        return response()->json($parroquias);
     }
 
     /**
@@ -72,6 +78,8 @@ class ComisionadosController extends Controller
         );
 
         $datosComisionados = $request->except('_token');
+        $datosComisionados['id_municipio'] = $request->input('municipio');
+        $datosComisionados['id_parroquia'] = $request->input('parroquia');
         Comisionados::create($datosComisionados);
 
         return redirect()->route('comisionado.index');
@@ -94,10 +102,12 @@ class ComisionadosController extends Controller
      * @param  \App\Models\Comisionados  $comisionados
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(comisionados $comisionados, $id)
     {
-        $comisionados = Comisionados::find($id);
-        return view('comisionado.edit',compact('comisionados'));
+        $comisionado = Comisionados::find($id);
+        $municipios = Municipio::all();
+        $parroquias = Parroquia::all();
+        return view('comisionado.edit',compact('comisionado', 'municipios', 'parroquias'));
     }
 
     /**
@@ -107,9 +117,25 @@ class ComisionadosController extends Controller
      * @param  \App\Models\Comisionados  $comisionados
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comisionados $comisionados)
+    public function update(Request $request, Comisionados $comisionados, $id)
     {
-        //
+        $request->validate([
+            'cedula' => 'unique:comisionados,cedula,' . $id 
+        ], [
+            'cedula.unique' => 'Está cédula ya existe en la base de datos.'
+        ]);
+        
+       $comisionado = Comisionados::find($id);
+
+       $comisionado->cedula = $request->input('cedula');
+       $comisionado->nombres = $request->input('nombres');
+       $comisionado->apellidos = $request->input('apellidos');
+       $comisionado->id_municipio = $request->input('id_municipio');
+       $comisionado->id_parroquia = $request->input('id_parroquia');
+       
+       $comisionado->save();
+
+        return redirect ('comisionado');
     }
 
     /**

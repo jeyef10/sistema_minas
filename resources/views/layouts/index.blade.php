@@ -157,6 +157,13 @@
                           Gestion de Perfil
                         </a>
 
+                        @can('ver-rol')
+                        <a class="dropdown-item" href="{{ url('roles') }}">
+                          <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                          Roles
+                        </a>                
+                        @endcan
+
                         @can('ver-usuario')
                         <a class="dropdown-item" href="/usuarios">
                           <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -164,14 +171,7 @@
                         </a>
                         @endcan
 
-                        @can('ver-rol')
-                        <a class="dropdown-item" href="{{ url('roles') }}">
-                          <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                          Roles
-                        </a>                
                         <div class="dropdown-divider"></div>
-                        @endcan
-
                         <a class="dropdown-item" href="/logout">
                           <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                           Cerrar Sesión

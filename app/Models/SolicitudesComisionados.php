@@ -13,7 +13,7 @@ class SolicitudesComisionados extends Model
     protected $primaryKey = 'id';
     public $timestamps = true;
     protected $fillable = ['id_solicitud', 'id_comisionado', 'funcionario_acomp', 'direccion_lugar','observaciones','conclusiones','latitud','longitud',
-    'foto',];
+    'foto','estatus'];
 
     public function comisionado()
     {

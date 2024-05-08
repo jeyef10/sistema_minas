@@ -45,7 +45,6 @@
                                     <th class="font-weight-bold text-Secondary">Nombre</th>
                                     <th class="font-weight-bold text-Secondary">Apellido</th>
                                     <th class="font-weight-bold text-Secondary">Correo</th>
-                                    <th class="font-weight-bold text-Secondary">N° Minero</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center> </th>
                                 </tr>
                             </thead>
@@ -75,9 +74,6 @@
                                             <td class="font-weight-bold text-Secondary">No Aplica</td>
                                             <td class="font-weight-bold text-Secondary">{{ $solicitante->solicitanteEspecifico->correo }}</td>
                                         @endif
-
-                                        <!-- Muestra el número minero del solicitante -->
-                                        <td class="font-weight-bold text-Secondary">{{ $solicitante->num_minero }}</td>
                                         
                                         <td>
                                             @can('editar-solicitante')
