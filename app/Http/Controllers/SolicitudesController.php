@@ -7,15 +7,15 @@ use App\Models\Solicitudes;
 use App\Models\Solicitante;
 use App\Models\PersonaJuridica;
 use App\Models\PersonaNatural;
-use App\Models\Minerales;
-use App\Models\Plazos;
-use App\Models\Regalia;
-use App\Models\Municipio;
-use App\Models\Parroquia;
+// use App\Models\Minerales;
+// use App\Models\Plazos;
+// use App\Models\Regalia;
+// use App\Models\Municipio;
+// use App\Models\Parroquia;
 use App\Models\Recaudos;
 use App\Models\SolicitudesRecaudos;
-use App\Models\Comisionados;
-use App\Models\SolicitudesComisionados;
+// use App\Models\Comisionados;
+// use App\Models\SolicitudesComisionados;
 use App\Http\Controllers\BitacoraController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +32,7 @@ class SolicitudesController extends Controller
     public function index(Request $request)
     {
 
-        $solicitudes = Solicitudes::with('solicitante','solicitanteEspecifico', 'mineral', 'regalia', 'plazo', 'municipio', 'parroquia')->get(); 
+        $solicitudes = Solicitudes::with('solicitante','solicitanteEspecifico','recaudo')->get(); 
         return view('solicitudes.index', compact('solicitudes'));
         
     }
@@ -45,26 +45,17 @@ class SolicitudesController extends Controller
     public function create()
     {   
         $solicitantes = Solicitante::all();
-        $minerales = Minerales::all();
-        $plazos = Plazos::all();
-        $regalias = Regalia::all();
-        $municipios = Municipio::all();
-        $parroquias = Parroquia::all();
-        $solicitudesrecaudos = SolicitudesRecaudos::all();
         $recaudos = Recaudos::orderBy('nombre', 'asc')->get();
-        $solicitudescomisionados = SolicitudesComisionados::all();
-        $comisionados = Comisionados::all();
+        $solicitudesrecaudos = SolicitudesRecaudos::all();
 
-
-        return view('solicitudes.create', compact('solicitantes', 'minerales', 'regalias', 'plazos', 'municipios', 'parroquias', 'solicitudesrecaudos', 'recaudos',
-        'comisionados'));
+        return view('solicitudes.create', compact('solicitantes', 'solicitudesrecaudos', 'recaudos',));
     }
 
-    public function getParroquias($municipioId)
-    {
-        $parroquias = Parroquia::where('id_municipio', $municipioId)->pluck('nom_parroquia', 'id');
-        return response()->json($parroquias);
-    }
+    // public function getParroquias($municipioId)
+    // {
+    //     $parroquias = Parroquia::where('id_municipio', $municipioId)->pluck('nom_parroquia', 'id');
+    //     return response()->json($parroquias);
+    // }
 
     public function fetchSolicitantesByTipo(Request $request, $tipoSolicitante)
     {
@@ -77,14 +68,14 @@ class SolicitudesController extends Controller
         return response()->json($solicitantes);
     }
 
-    public function fetchComisionados(Request $request, $comisionados)
-    {
-        $comisionados = Comisionado::where('id_municipio', $municipioId)
-            ->where('id_parroquia', $parroquiaId)
-            ->get();
+    // public function fetchComisionados(Request $request, $comisionados)
+    // {
+    //     $comisionados = Comisionado::where('id_municipio', $municipioId)
+    //         ->where('id_parroquia', $parroquiaId)
+    //         ->get();
 
-        return response()->json($comisionados);
-    }
+    //     return response()->json($comisionados);
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -94,48 +85,28 @@ class SolicitudesController extends Controller
      */
     public function store(Request $request)
     {
-        // Validar los datos de entrada
-       $request = $request->validate([
-        'id_solicitante' => 'required',
-        'id_mineral' => 'required',
-        'id_regalia' => 'required',
-        'id_plazo' => 'required',
-        'id_municipio' => 'required',
-        'id_parroquia' => 'required',
-        'num_regalias' => 'required',
-        'volumen' => 'required',
-        'direccion' => 'required',
-        'fecha' => 'required',
-        'observaciones' => 'nullable',
-        'estatus' => 'required',
-        'tipo_solicitante' => 'required|in:natural,juridica', // Validar tipo de solicitante
-        'datos_solicitante.cedula' => 'required|string|min:8|max:10', // Validar datos del solicitante (cedula para natural)
-        'datos_solicitante.nombre' => 'required|string|max:255', // Validar datos del solicitante (nombre para natural)
-        'datos_solicitante.apellido' => 'required|string|max:255', // Validar datos del solicitante (apellido para natural)
-        'datos_solicitante.rif' => 'required|string|min:8|max:12', // Validar datos del solicitante (rif para juridica)
-        'datos_solicitante.nombre_empresa' => 'required|string|max:255', // Validar datos del solicitante (nombre empresa para juridica)
-        'datos_solicitante.correo' => 'required|email', // Validar datos del solicitante (correo para juridica)
-    ]);
+        // Validar los datos del formulario
+        $request->validate([
+            'id_solicitante' => 'required|exists:solicitantes,id',
+            'fecha' => 'required|string',
+            // Agrega aquí las validaciones para otros campos si es necesario
+        ]);
 
-        // Crea un nuevo objeto Solicitudes
-        $solicitud = new Solicitudes;
-
-        $solicitud->fecha =$request['fecha'];
-        $solicitud->tipo =$request['tipo'];
-        $solicitud->num_minero =$request['num_minero'];
-        $solicitud->id_mineral =$request['id_mineral'];
-        $solicitud->id_regalia =$request['id_regalia'];
-        $solicitud->id_plazo =$request['id_plazo'];
-        $solicitud->id_municipio =$request['id_municipio'];
-        $solicitud->id_parroquia =$request['id_parroquia'];
-        $solicitud->observaciones =$request['observaciones'];
-        $solicitud->direccion =$request['direccion'];
-        $solicitud->volumen =$request['volumen'];
-        $solicitud->estatus =$request['estatus'];
+        // Crear una nueva solicitud
+        $solicitud = new Solicitud();
+        $solicitud->id_solicitante = $request->input('id_solicitante');
+        $solicitud->fecha = $request->input('fecha');
 
         $solicitud->save();
 
+        // Guardar la relación con los recaudos (tabla puente)
+        if ($request->has('recaudos')) {
+            $solicitud->recaudos()->attach($request->input('recaudos'));
+        }
+
+        return redirect('solicitudes');
     }
+
 
 
     /**

@@ -61,7 +61,6 @@
                                     <th class="font-weight-bold text-Secondary">N°</th>
                                     <th class="font-weight-bold text-Secondary">Solicitante</th>
                                     <th class="font-weight-bold text-Secondary">Fecha</th>
-                                    <th class="font-weight-bold text-Secondary">Estatus</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center></th>
                                   </tr>
                             </thead>
@@ -85,11 +84,11 @@
                                       <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->nombre }}</td>
 
                                     @endif
-                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->mineral->nom_mineral }}</td>
+                                    {{-- <td class="font-weight-bold text-Secondary">{{ $solicitud->mineral->nom_mineral }}</td>
                                     <td class="font-weight-bold text-Secondary">{{ $solicitud->tasa_regalias }}</td>
                                     <td class="font-weight-bold text-Secondary">{{ $solicitud->volumen }}</td>
                                     <td class="font-weight-bold text-Secondary">{{ $solicitud->plazo }}</td> 
-                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->estatus }}</td>
+                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->estatus }}</td> --}}
 
                                     {{-- <td>
                                       <a href="{{ route('solicitudes.show', $solicitud->id) }}" class="btn btn-sm btn-info">Ver</a>
