@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\BitacoraController;
 
 class MineralController extends Controller
 {
@@ -59,8 +60,8 @@ class MineralController extends Controller
     {
         $datosMinerales = request()->except('_token');
         Minerales::create($datosMinerales);
-        // $bitacora = new BitacoraController;
-        // $bitacora->update();
+        $bitacora = new BitacoraController;
+        $bitacora->update();
 
         return redirect ('mineral');
     }
@@ -100,8 +101,8 @@ class MineralController extends Controller
     {
         $datosMinerales = request()->except('_token','_method');
         Minerales::where('id','=',$id)->update($datosMinerales);
-        // $bitacora = new BitacoraController;
-        // $bitacora->update();
+        $bitacora = new BitacoraController;
+        $bitacora->update();
 
         return redirect ('mineral');
     }
@@ -115,8 +116,8 @@ class MineralController extends Controller
     public function destroy($id)
     {
         Minerales::destroy($id);
-        // $bitacora = new BitacoraController;
-        // $bitacora->update();
+        $bitacora = new BitacoraController;
+        $bitacora->update();
         return redirect('mineral')->with('eliminar', 'ok');
     }
 }

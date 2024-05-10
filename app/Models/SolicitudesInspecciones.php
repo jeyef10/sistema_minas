@@ -9,11 +9,10 @@ class SolicitudesComisionados extends Model
 {
     use HasFactory;
 
-    protected $table = 'solicitudes_comisionados'; 
+    protected $table = 'solicitudes_inspecciones'; 
     protected $primaryKey = 'id';
     public $timestamps = true;
-    protected $fillable = ['id_solicitud', 'id_comisionado', 'funcionario_acomp', 'direccion_lugar','observaciones','conclusiones','latitud','longitud',
-    'foto','estatus'];
+    protected $fillable = ['id_solicitud', 'id_comisionado',];
 
     public function comisionado()
     {

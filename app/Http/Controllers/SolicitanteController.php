@@ -12,6 +12,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\BitacoraController;
 
 class SolicitanteController extends Controller
 {
@@ -61,6 +62,17 @@ class SolicitanteController extends Controller
      */
     public function store(Request $request)
     {     
+        $request->validate(
+            [
+            'cedula' => 'unique:personas_naturales,cedula',
+            'rif' => 'unique:personas_juridicas,rif',
+            ],
+            [
+            'cedula.unique' => 'Está cedula ya existe en la base de datos.',
+            'rif.unique' => 'Este rif ya existe en la base de datos.'
+            ]
+        );
+
         // Crea un nuevo objeto Solicitante
         $solicitante = new Solicitante;
 
@@ -68,7 +80,9 @@ class SolicitanteController extends Controller
         $solicitante->tipo = $request->tipo;
 
         // Guarda el objeto Solicitante en la base de datos
-        $solicitante->save(); 
+        $solicitante->save();
+        $bitacora = new BitacoraController;
+        $bitacora->update(); 
 
         // Verifica si el tipo de solicitante es 'Natural'
         if ($request->tipo == 'Natural') {
@@ -92,6 +106,7 @@ class SolicitanteController extends Controller
 
             // Guarda el objeto Solicitante en la base de datos
             $solicitante->save();
+            
         } 
         // Verifica si el tipo de solicitante es 'Jurídico'
         else if ($request->tipo == 'Jurídico') {
@@ -116,6 +131,8 @@ class SolicitanteController extends Controller
             // Guarda el objeto Solicitante en la base de datos
             $solicitante->save();
         }
+        $bitacora = new BitacoraController;
+        $bitacora->update();
 
         return redirect($request->input('previous_url')); // Aqui redirije a la pagina en la que estabamos anteriormente.
 
@@ -164,6 +181,8 @@ class SolicitanteController extends Controller
 
         // Guarda el Solicitante en la base de datos
         $solicitante->save();
+        $bitacora = new BitacoraController;
+        $bitacora->update();
 
         // Verifica si solicitanteEspecifico es una PersonaNatural
         if ($solicitante->solicitanteEspecifico instanceof \App\Models\PersonaNatural) {
@@ -188,6 +207,8 @@ class SolicitanteController extends Controller
             $solicitante->solicitanteEspecifico->save();
         }
 
+        $bitacora = new BitacoraController;
+        $bitacora->update();
         // Redirige al usuario a la página de solicitantes
         return redirect('solicitante');
     }
@@ -211,11 +232,10 @@ class SolicitanteController extends Controller
         // Elimina el Solicitante de la base de datos
         $solicitante->delete();
 
+        $bitacora = new BitacoraController;
+        $bitacora->update();
         // Redirige al usuario a la página de solicitantes
         return redirect('solicitante')->with('eliminar', 'ok');
-
-        // $bitacora = new BitacoraController;
-        // $bitacora->update();
 
     }
 }

@@ -7,15 +7,8 @@ use App\Models\Solicitudes;
 use App\Models\Solicitante;
 use App\Models\PersonaJuridica;
 use App\Models\PersonaNatural;
-// use App\Models\Minerales;
-// use App\Models\Plazos;
-// use App\Models\Regalia;
-// use App\Models\Municipio;
-// use App\Models\Parroquia;
 use App\Models\Recaudos;
 use App\Models\SolicitudesRecaudos;
-// use App\Models\Comisionados;
-// use App\Models\SolicitudesComisionados;
 use App\Http\Controllers\BitacoraController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,8 +25,8 @@ class SolicitudesController extends Controller
     public function index(Request $request)
     {
 
-        $solicitudes = Solicitudes::with('solicitante','solicitanteEspecifico','recaudo')->get(); 
-        return view('solicitudes.index');
+        // $solicitudes = Solicitudes::with('solicitante','solicitanteEspecifico','recaudo')->get(); 
+        // return view('solicitudes.index');
         
     }
 
@@ -90,18 +83,21 @@ class SolicitudesController extends Controller
         $solicitud = new Solicitudes();
         $solicitud->id_solicitante = $request->input('solicitante_especifico_id');
         $solicitud->fecha = $request->input('simpleDataInput');
-       
-        $solicitud->save();
 
-        // Guardar la relación con los recaudos (tabla puente)
-        $puente = new SolicitudesRecaudos();
-     
-        $puente->id_recaudos = $request->input('recaudos');
-        $puente->id_solicitud = 1;
-    
-      
-        return response($puente);
-        return redirect('solicitudes');
+        $solicitud->save();// Guardar la instancia de la tabla solicitudes
+        
+        // Obtener los IDs de recaudos seleccionados (debe ser un array)
+        $recaudosSeleccionados = $request->input('recaudos');
+
+        // Crear registros en la tabla puente para cada recaudo seleccionado
+        foreach ($recaudosSeleccionados as $recaudo) {
+            $puente = new SolicitudesRecaudos();
+            $puente->id_recaudo = $recaudo;
+            $puente->id_solicitud = $solicitud->id;
+            $puente->save();// Guardar la instancia de la tabla puente (solicitudes_recaudos)
+        }
+
+        return redirect('inspeccion');
     }
 
 

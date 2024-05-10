@@ -6,6 +6,17 @@
 
 @section('contenido')
 
+    @if ($errors->any())
+        <div class="alert alert-warning d-flex align-items-center alert-dismissible fade show" role="alert">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
+
     <div class="container-fluid" id="container-wrapper">
         <div class="d-sm-flex align-items-center justify-content-between mb-4"></div>
             <div class="col-lg-12">

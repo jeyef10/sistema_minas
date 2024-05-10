@@ -22,6 +22,7 @@ use App\Http\Controllers\RegaliaController;
 use App\Http\Controllers\PlazosController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\SolicitudesController;
+use App\Http\Controllers\InspeccionesController;
 
 
 
@@ -129,15 +130,12 @@ Route::get('/categoria/pdf',  [CategoriaController::class,'pdf'])->name('categor
 Route::resource('categoria', CategoriaController::class)->middleware('auth');
 
 /* Ruta Solicitudes */
-Route::get('/solicitudes',  [SolicitudesController::class,'index'])->name('solicitudes')->middleware('auth');
 Route::get('/solicitudes/create', [SolicitudesController::class, 'create'])->name('create')->middleware('auth');
-Route::get('/solicitudes/pdf',  [SolicitudesController::class,'pdf'])->name('solicitudes')->middleware('auth');
 Route::resource('solicitudes', SolicitudesController::class)->middleware('auth');
-Route::get('/municipios', [SolicitudesController::class, 'getMunicipios']);
-Route::get('/solicitudes/create/{municipioId}', [SolicitudesController::class, 'getParroquias']);
 Route::get('/solicitudes/create/fetch-solicitantes/{tipoSolicitante}', [SolicitudesController::class, 'fetchSolicitantesByTipo']);
-Route::get('/solicitudes/create/fetch-comisionados/{municipioId}/{parroquiaId}', [SolicitudesController::class, 'fetchComisionados']);
-// Route::get('/solicitudes/create/mostrarComisionados/{municipioId}/{parroquiaId}', [SolicitudesController::class, 'mostrarComisionados']);
+
+/* Ruta Inspección */
+Route::get('/inspeccion',  [InspeccionesController::class,'index'])->name('inspeccion')->middleware('auth');
 
 
 /* Ruta Bitacora*/
@@ -145,6 +143,13 @@ Route::get('bitacora', [ReporteController::class, 'bitacora'])->name('bitacora')
 
 /* Ruta Manual */
 Route::get('/manual',  [ManualController::class,'index'])->name('manual')->middleware('auth');
+
+// Route::get('/municipios', [SolicitudesController::class, 'getMunicipios']);
+// Route::get('/solicitudes/create/{municipioId}', [SolicitudesController::class, 'getParroquias']);
+// Route::get('/solicitudes/create/fetch-comisionados/{municipioId}/{parroquiaId}', [SolicitudesController::class, 'fetchComisionados']);
+// Route::get('/solicitudes/create/mostrarComisionados/{municipioId}/{parroquiaId}', [SolicitudesController::class, 'mostrarComisionados']);
+
+
 
 /* Ruta Cargo 
 Route::get('/cargo',  [CargoController::class,'index'])->name('cargo')->middleware('auth');

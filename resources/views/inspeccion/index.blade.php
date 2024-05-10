@@ -1,6 +1,6 @@
 @extends('layouts.index')
 
-<title>@yield('title') Solicitudes</title>
+<title>@yield('title') Inspecciones</title>
 
 @section('css-datatable')
         <link href="{{ asset ('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
@@ -16,8 +16,8 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Gestión de Solicitudes</h2>
-                            @can('crear-solicitante')
+                        <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Gestión de Inspecciones</h2>
+                            {{-- @can('crear-solicitante')
                                 <form action="{{ route('solicitudes.create') }}" method="get" style="display:inline;">
                                     <button type="submit" class="btn btn-primary btn-mb"> <span class="">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
@@ -27,7 +27,7 @@
                                     </span>
                                     <span class="text">Crear</span></button>
                                 </form>
-                            @endcan
+                            @endcan --}}
                     </div>
                     <div class="card-body">
 
@@ -59,7 +59,7 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th class="font-weight-bold text-Secondary">N°</th>
-                                    <th class="font-weight-bold text-Secondary">Solicitante</th>
+                                    <th class="font-weight-bold text-Secondary">(Solicitante, Cédula, Nombre, Apellido)</th>
                                     <th class="font-weight-bold text-Secondary">Fecha</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center></th>
                                   </tr>
@@ -67,11 +67,28 @@
                             <tbody>
                                 @foreach ($solicitudes as $solicitud)
                                 <tr>
-                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->id }}</td> 
-                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->fecha->format('d/m/Y') }}</td> 
-                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->tipo }}</td>
-                          
+                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->id }}</td>
+{{-- {{ $asignacionesGrupo->first()->periferico->tipo_periferico->tipo }}, {{ $asignacionesGrupo->first()->periferico->marca->nombre_marca }}, {{ $asignacionesGrupo->first()->periferico->modelo->nombre_modelo }}, {{ $asignacionesGrupo->first()->periferico->serial }}, {{ $asignacionesGrupo->first()->periferico->serialA }}</td>                                      --}}
                                      <!-- Verifica si el solicitante es una Persona Natural -->
+                                     @if ($solicitud->solicitanteEspecifico instanceof \App\Models\PersonaNatural)
+                                     <td class="font-weight-bold text-Secondary">
+                                        {{ $solicitud->first()->solicitanteEspecifico->cedula }} 
+                                        {{ $solicitud->first()->solicitanteEspecifico->nombre }}, 
+                                        {{ $solicitud->first()->solicitanteEspecifico->apellido }}, 
+                                    </td>
+                                     {{-- <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->apellido }} </td>
+                                        <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->cedula }} </td> --}}
+                                     <!-- Verifica si el solicitante es una Persona Jurídica -->
+                                   @elseif ($solicitud->solicitanteEspecifico instanceof \App\Models\PersonaJuridica)
+                                     <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->nombre }}</td>
+
+                                   @endif
+                                    
+                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->fecha }}</td> 
+
+                                    {{-- ! APARTE --}}
+                          
+                                     {{-- <!-- Verifica si el solicitante es una Persona Natural -->
                                     @if ($solicitud->solicitanteEspecifico instanceof \App\Models\PersonaNatural)
                                       <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->cedula }}</td>
                                       <td class="font-weight-bold text-Secondary">No Aplica</td>
@@ -83,16 +100,13 @@
                                       <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->rif }}</td>
                                       <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->nombre }}</td>
 
-                                    @endif
-                                    {{-- <td class="font-weight-bold text-Secondary">{{ $solicitud->mineral->nom_mineral }}</td>
-                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->tasa_regalias }}</td>
-                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->volumen }}</td>
-                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->plazo }}</td> 
-                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->estatus }}</td> --}}
+                                    @endif --}}
 
-                                    {{-- <td>
+                                    {{-- * ESTO SE QUEDA --}}
+
+                                     <td>
                                       <a href="{{ route('solicitudes.show', $solicitud->id) }}" class="btn btn-sm btn-info">Ver</a>
-                                    </td> --}}
+                                    </td> 
 
                                   </tr>
 
@@ -103,13 +117,6 @@
                                                 </svg></a>
                                             @endcan
 
-                                            {{-- @can('borrar-solicitante')       
-                                                <form action="{{ route('solicitudes.destroy', $solicitante->id) }}" method="POST" class="sweetalert" style="display:inline;">
-                                                    @csrf
-                                                    {{ method_field('DELETE') }}
-                                                    <button class="btn btn-danger btn-sm" type="submit" value=""><i class="fas fa-trash"></i></button>
-                                                </form> 
-                                            @endcan --}}
                                         </td>
                                     </tr>
                                 @endforeach

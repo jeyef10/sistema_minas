@@ -18,14 +18,10 @@ return new class extends Migration
             $table->string('cedula');
             $table->string('nombres');
             $table->string('apellidos');
-            $table->bigInteger('id_municipio')->nullable(); // Allow null values for id_municipio
-            $table->bigInteger('id_parroquia')->nullable();
+            $table->bigInteger('id_municipio')->nullable(); 
 
             // Establecer relación con la tabla de municipios
             $table->foreign('id_municipio')->references('id')->on('municipios');
-
-            // Establecer relación con la tabla de parroquias
-            $table->foreign('id_parroquia')->references('id')->on('parroquias');
 
             $table->timestamps();
 

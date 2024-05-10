@@ -17,7 +17,6 @@
 
                     </div>
                 
-
                     <form method="post" action="{{ route('roles.store') }}" enctype="multipart/form-data" onsubmit="return roles(this)">
                         @csrf
                             

@@ -49,14 +49,14 @@
                                     </select>
                                 </div>
                                 
-                                <div class="col-4">
+                                {{-- <div class="col-4">
                                     <label class="font-weight-bold text-primary">Parroquia</label>
                                     <select class="select2-single form-control" id="parroquia" name="id_parroquia">
                                         @foreach ($parroquias as $parroquia)
                                         <option value="{{ $parroquia->id }}" @selected($comisionado->id_parroquia == $parroquia->id)>{{ $parroquia->nom_parroquia }}</option>
                                         @endforeach
                                     </select>
-                                </div>
+                                </div> --}}
                                        
                             </div>
 
@@ -78,11 +78,11 @@
             </div>    
     </div>
 
-    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    {{-- <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script> --}}
     
     {{-- * FUNCION PARA MOSTRAR PARROQUIAS EN Comisionado  --}}
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
         $('#municipio').change(function() {
             var municipioId = $(this).val(); // Get the selected municipio ID
@@ -106,7 +106,7 @@
             }
         });
     });
-    </script>
+    </script> --}}
     
 
 @endsection
