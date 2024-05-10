@@ -33,7 +33,7 @@ class SolicitudesController extends Controller
     {
 
         $solicitudes = Solicitudes::with('solicitante','solicitanteEspecifico','recaudo')->get(); 
-        return view('solicitudes.index', compact('solicitudes'));
+        return view('solicitudes.index');
         
     }
 
@@ -85,25 +85,22 @@ class SolicitudesController extends Controller
      */
     public function store(Request $request)
     {
-        // Validar los datos del formulario
-        $request->validate([
-            'id_solicitante' => 'required|exists:solicitantes,id',
-            'fecha' => 'required|string',
-            // Agrega aquí las validaciones para otros campos si es necesario
-        ]);
-
+    
         // Crear una nueva solicitud
-        $solicitud = new Solicitud();
-        $solicitud->id_solicitante = $request->input('id_solicitante');
-        $solicitud->fecha = $request->input('fecha');
-
+        $solicitud = new Solicitudes();
+        $solicitud->id_solicitante = $request->input('solicitante_especifico_id');
+        $solicitud->fecha = $request->input('simpleDataInput');
+       
         $solicitud->save();
 
         // Guardar la relación con los recaudos (tabla puente)
-        if ($request->has('recaudos')) {
-            $solicitud->recaudos()->attach($request->input('recaudos'));
-        }
-
+        $puente = new SolicitudesRecaudos();
+     
+        $puente->id_recaudos = $request->input('recaudos');
+        $puente->id_solicitud = 1;
+    
+      
+        return response($puente);
         return redirect('solicitudes');
     }
 

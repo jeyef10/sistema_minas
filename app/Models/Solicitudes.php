@@ -19,6 +19,10 @@ class Solicitudes extends Model
         return $this->morphTo(Solicitante::class, 'id_solicitante');
     }
 
+    public function solicitudesrecaudos()
+    {
+        return $this->belongsTo(SolicitudesRecaudos::class, 'id_solicitud', 'id', 'id_recaudo');
+    }
     // public function mineral()
     // {
     //     return $this->belongsTo(Minerales::class, 'id_mineral');

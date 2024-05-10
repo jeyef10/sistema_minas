@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('solicitantes', function (Blueprint $table) {
             $table->id(); 
-            $table->string('tipo')->nullable();           
+            $table->string('tipo');           
             $table->unsignedBigInteger('solicitante_especifico_id')->nullable(); // Cambia a snake case
             $table->string('solicitante_especifico_type')->nullable(); // Cambia a snake case
             $table->timestamps();

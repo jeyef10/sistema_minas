@@ -35,70 +35,9 @@
 
                     </div>
                     
-                    {{-- <form method="post" action="{{ route('solicitudes.store') }}" enctype="multipart/form-data" onsubmit="return solicitante(this)" id="Natural" style="display: none;">
-                        @csrf
-                            
-                        <div class="card-body">
-                            <h3 class="font-weight-bold text-primary" style="margin-left: 44%;">Datos Solicitante</h3>
-                            <div class="row">
+                  
 
-                                <input type="hidden" id="tipo-natural" name="tipo" value="">
-
-                                <div class="col-4">
-                                    <label for="persona" class="font-weight-bold text-primary">Tipo de Solicitante</label>
-                                    <select class="select2-single form-control" id="tipo_solicitante" name="solicitante">
-                                        <option value="0">Seleccione un tipo de Solicitante</option>
-                                        <option value="Natural">Natural</option>
-                                        <option value="Jurídico">Jurídico</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-5">
-                                    <label for="persona" class="font-weight-bold text-primary">Solicitante</label>
-                                    <div style="display: flex;">
-                                        <select class="select2-single form-control" id="solicitante" name="solicitante_especifico_id" >
-                                            <option value="0">Seleccione una Persona</option>
-                                        </select>
-                                        
-                                    </div>
-                                </div>
-
-                                <div class="card-body">
-                                    <div class="row">
-                                        <h3 class="font-weight-bold text-primary mb1" style="margin-left: 44%;">Recaudos</h3>
-    
-                                        @foreach($recaudos as $value)
-                                            <div class="form-check">
-                                                <label class="form-check-label">{{ Form::checkbox('recaudos[]', $value->id, false, array('class' => 'form-check-input')) }}
-                                                {{ $value->nombre }}</label>
-                                            </div>
-                                        @endforeach  
-    
-                                        <div class="col-4 mt-3">
-                                        <label  class="font-weight-bold text-primary">Observaciones</label>
-                                        <textarea name="obs_recaudos" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
-                                        </div>
-                                    </div>
-                                </div>
-    
-                                <br>
-    
-                            <center>
-                                <button type="submit" class="btn btn-success btn-lg"><span class="icon text-white-60"><i class="fas fa-check"></i></span>
-                                <span class="text">Guardar</span>
-                                </button>
-                                <a  class="btn btn-info btn-lg" href="{{ url('solicitudes/') }}"><span class="icon text-white-50">
-                                    <i class="fas fa-info-circle"></i>
-                                </span>
-                                <span class="text">Regresar</span></a>
-                            </center>
-                         </form>
-
-                    </div>
-                </div>
-            </div> --}}
-
-            <form method="post" action="{{ route('solicitante.store') }}" enctype="multipart/form-data" onsubmit="return solicitante(this)" id="Jurídico" style="display: none;">
+            <form method="post" action="{{ route('solicitudes.store') }}" enctype="multipart/form-data" onsubmit="return solicitante(this)" id="Jurídico" style="display: none;">
                         @csrf
                         <div class="card-body">
                             
@@ -157,7 +96,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control" value="01/06/2020" id="simpleDataInput">
+                                                <input type="text" class="form-control" value="01/06/2020" id="simpleDataInput" name = "simpleDataInput">
                                             </div>
                                         </div>
                                     </div>
@@ -437,7 +376,7 @@
                     </div>
                 </form> --}}
                 
-                    {{-- <form method="post" action="{{ route('solicitante.store') }}" enctype="multipart/form-data" onsubmit="return solicitante(this)" id="Jurídico" style="display: none;">
+                    {{-- <form method="post" action="{{ route('solicitudes.store') }}" enctype="multipart/form-data" onsubmit="return solicitante(this)" id="Jurídico" style="display: none;">
                         @csrf
                         <div class="card-body">
                             
