@@ -584,23 +584,23 @@ function Solicitante(obj) {
        obj.nombre.focus();
        return false;
    }
-   if (!/^[A-Z][a-z]+$/.test(nombre  )) {
-       Swal.fire({
-           title: 'Solicitante',
-           text: "El nombre   debe comenzar con una letra mayúscula y las demás en minúscula.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+//    if (!/^[A-Z][a-z]+$/.test(nombre  )) {
+//        Swal.fire({
+//            title: 'Solicitante',
+//            text: "El nombre   debe comenzar con una letra mayúscula y las demás en minúscula.",
+//            icon: 'warning',
+//            confirmButtonColor: '#3085d6',
+//            cancelButtonColor: '#d33',
+//            }).then((result) => {
+//        if (result.isConfirmed) {
 
-           this.submit();
-       }
-       })
+//            this.submit();
+//        }
+//        })
       
-       obj.nombre.focus();
-       return false;
-   }
+//        obj.nombre.focus();
+//        return false;
+//    }
 
    var apellido = obj.apellido.value;
    if (!apellido) {
@@ -690,93 +690,93 @@ function Solicitante(obj) {
        return false;
    }
   
-   var num_minero= obj.num_minero.value;
-   if (!num_minero) {
-       Swal.fire({
-           title: 'Solicitante',
-           text: "Debe de ingresar el N° Minero.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+//    var num_minero= obj.num_minero.value;
+//    if (!num_minero) {
+//        Swal.fire({
+//            title: 'Solicitante',
+//            text: "Debe de ingresar el N° Minero.",
+//            icon: 'warning',
+//            confirmButtonColor: '#3085d6',
+//            cancelButtonColor: '#d33',
+//            }).then((result) => {
+//        if (result.isConfirmed) {
 
-           this.submit();
-       }
-       })
+//            this.submit();
+//        }
+//        })
        
-       obj.num_minero.focus();
-       return false;
-   }
-   if (num_minero.length < 5){
-       Swal.fire({
-           title: 'Solicitante',
-           text: "Faltan dígitos en este campo de N° Minero.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+//        obj.num_minero.focus();
+//        return false;
+//    }
+//    if (num_minero.length < 5){
+//        Swal.fire({
+//            title: 'Solicitante',
+//            text: "Faltan dígitos en este campo de N° Minero.",
+//            icon: 'warning',
+//            confirmButtonColor: '#3085d6',
+//            cancelButtonColor: '#d33',
+//            }).then((result) => {
+//        if (result.isConfirmed) {
 
-           this.submit();
-       }
-       })
+//            this.submit();
+//        }
+//        })
        
-       obj.num_minero.focus();
-       return (false);
-   }
-   if (num_minero.trim() == "") {
-       Swal.fire({
-           title: 'Solicitante',
-           text: "El campo de N° Minero no debe contener espacios en blancos.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+//        obj.num_minero.focus();
+//        return (false);
+//    }
+//    if (num_minero.trim() == "") {
+//        Swal.fire({
+//            title: 'Solicitante',
+//            text: "El campo de N° Minero no debe contener espacios en blancos.",
+//            icon: 'warning',
+//            confirmButtonColor: '#3085d6',
+//            cancelButtonColor: '#d33',
+//            }).then((result) => {
+//        if (result.isConfirmed) {
 
-           this.submit();
-       }
-       })
+//            this.submit();
+//        }
+//        })
        
-       obj.num_minero.focus();
-       return false;
-   }
-   if (/^([a-zA-Z0-9])\1+$/.test(num_minero)) {
-       Swal.fire({
-           title: 'Solictante',
-           text: "El campo de N° Minero no debe contener caracteres repetidos.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+//        obj.num_minero.focus();
+//        return false;
+//    }
+//    if (/^([a-zA-Z0-9])\1+$/.test(num_minero)) {
+//        Swal.fire({
+//            title: 'Solictante',
+//            text: "El campo de N° Minero no debe contener caracteres repetidos.",
+//            icon: 'warning',
+//            confirmButtonColor: '#3085d6',
+//            cancelButtonColor: '#d33',
+//            }).then((result) => {
+//        if (result.isConfirmed) {
 
-           this.submit();
-       }
-       })
+//            this.submit();
+//        }
+//        })
        
-       obj.num_minero.focus();
-       return false;
-   }
-   if (/^[A-ZÀÁÉÈÍÓÚÜÑñ]{6,}-[0-9]+$/.test(num_minero)) { //falta acomodar
-       Swal.fire({
-            title: 'Solicitante',
-            text:  "El N° Minero debe comenzar en letras mayúscula seguido de guión y lo demás en número.",
-           icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+//        obj.num_minero.focus();
+//        return false;
+//    }
+//    if (/^[A-ZÀÁÉÈÍÓÚÜÑñ]{6,}-[0-9]+$/.test(num_minero)) { //falta acomodar
+//        Swal.fire({
+//             title: 'Solicitante',
+//             text:  "El N° Minero debe comenzar en letras mayúscula seguido de guión y lo demás en número.",
+//            icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
      
-            this.submit();
-       }
-        })
+//             this.submit();
+//        }
+//         })
          
-        obj.num_minero.focus();
-        return false;
+//         obj.num_minero.focus();
+//         return false;
  
-   }
+//    }
 
 }
 
