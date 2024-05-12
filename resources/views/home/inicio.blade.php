@@ -10,6 +10,42 @@
 
         <div class="row mb-3">
 
+                                                              <!-- dasboard persona natural-->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1">Persona Natural</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ ($count_natural) }}</div>
+                    
+                  </div>
+                  <div class="col-auto">
+                  <i class="fas fa-users fa-2x text-info"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+                                                              <!-- dasboard persona jurídico-->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1">Persona Juridica</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ ($count_juridico) }}</div>
+                    
+                  </div>
+                  <div class="col-auto">
+                  <i class="fas fa-users fa-2x text-info"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
                                                                 <!-- dasboard solicitante-->
           <div class="col-xl-3 col-md-6 mb-4">
             <div class="card h-100">
@@ -27,6 +63,7 @@
               </div>
             </div>
           </div>
+
                                                                 <!--dasboard recaudo-->
           <div class="col-xl-3 col-md-6 mb-4">
             <div class="card h-100">
@@ -62,6 +99,7 @@
               </div>
             </div>
           </div>
+
                                                                 <!-- dasboard minerales -->
           <div class="col-xl-3 col-md-6 mb-4">
             <div class="card h-100">
@@ -80,8 +118,6 @@
             </div>
           </div>
 
-
-          
                                                                     <!-- dasboard Tasa de ragalias -->
           <div class="col-xl-3 col-md-6 mb-4">
             <div class="card h-100">
@@ -100,8 +136,6 @@
             </div>
           </div>
 
-
-
                                                                <!-- dasboard Plazos de Vigencia-->
              <div class="col-xl-3 col-md-6 mb-4">
             <div class="card h-100">
@@ -119,11 +153,6 @@
               </div>
             </div>
           </div> 
-
-
-
-
-
 
       </div>
   </div>

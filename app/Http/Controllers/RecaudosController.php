@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Http\Controllers\BitacoraController;
+// use App\Http\Controllers\BitacoraController;
 
 class RecaudosController extends Controller
 {
@@ -70,8 +70,8 @@ class RecaudosController extends Controller
         );
 
         $recaudos = Recaudos::create(['nombre' => $request->input('nombre')]);
-        $bitacora = new BitacoraController;
-        $bitacora->update();
+        // $bitacora = new BitacoraController;
+        // $bitacora->update();
 
         return redirect()->route('recaudo.index');
 
@@ -120,8 +120,8 @@ class RecaudosController extends Controller
         
         $datosRecaudos = request()->except('_token','_method');
         Recaudos::where('id','=',$id)->update($datosRecaudos);
-        $bitacora = new BitacoraController;
-        $bitacora->update();
+        // $bitacora = new BitacoraController;
+        // $bitacora->update();
 
         return redirect ('recaudo');
     }
@@ -135,8 +135,8 @@ class RecaudosController extends Controller
     public function destroy($id)
     {
         Recaudos::destroy($id);
-        $bitacora = new BitacoraController;
-        $bitacora->update();
+        // $bitacora = new BitacoraController;
+        // $bitacora->update();
         return redirect('recaudo')->with('eliminar', 'ok');
     }
 }

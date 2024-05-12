@@ -4,15 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Comisionados;
 use App\Models\Municipio;
-use App\Models\Parroquia;
-use App\Models\SolicitudesComisionados;
+use App\Models\SolicitudesInspecciones;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Http\Controllers\BitacoraController;
+// use App\Http\Controllers\BitacoraController;
 
 class ComisionadosController extends Controller
 {
@@ -31,7 +30,7 @@ class ComisionadosController extends Controller
      */
     public function index()
     {
-        $comisionados = Comisionados::with('municipio', 'parroquia')->get();
+        $comisionados = Comisionados::with('municipio')->get();
         return view('comisionado.index',compact('comisionados'));
     }
 
@@ -50,16 +49,15 @@ class ComisionadosController extends Controller
     public function create()
     {
         $municipios = Municipio::all();
-        $parroquias = Parroquia::all();
-        $solicitudescomisionados = SolicitudesComisionados::get();
-        return view('comisionado.create', compact('solicitudescomisionados','municipios','parroquias'));
+        $solicitudesinspecciones = SolicitudesInspecciones::get();
+        return view('comisionado.create', compact('solicitudesinspecciones','municipios'));
     }
 
-    public function getParroquias($municipioId)
-    {
-        $parroquias = Parroquia::where('id_municipio', $municipioId)->pluck('nom_parroquia', 'id');
-        return response()->json($parroquias);
-    }
+    // public function getParroquias($municipioId)
+    // {
+    //     $parroquias = Parroquia::where('id_municipio', $municipioId)->pluck('nom_parroquia', 'id');
+    //     return response()->json($parroquias);
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -80,11 +78,11 @@ class ComisionadosController extends Controller
 
         $datosComisionados = $request->except('_token');
         $datosComisionados['id_municipio'] = $request->input('municipio');
-        $datosComisionados['id_parroquia'] = $request->input('parroquia');
+        // $datosComisionados['id_parroquia'] = $request->input('parroquia');
         Comisionados::create($datosComisionados);
 
-        $bitacora = new BitacoraController;
-        $bitacora->update();
+        // $bitacora = new BitacoraController;
+        // $bitacora->update();
 
         return redirect()->route('comisionado.index');
     }
@@ -110,8 +108,7 @@ class ComisionadosController extends Controller
     {
         $comisionado = Comisionados::find($id);
         $municipios = Municipio::all();
-        $parroquias = Parroquia::all();
-        return view('comisionado.edit',compact('comisionado', 'municipios', 'parroquias'));
+        return view('comisionado.edit',compact('comisionado', 'municipios'));
     }
 
     /**
@@ -135,12 +132,11 @@ class ComisionadosController extends Controller
        $comisionado->nombres = $request->input('nombres');
        $comisionado->apellidos = $request->input('apellidos');
        $comisionado->id_municipio = $request->input('id_municipio');
-       $comisionado->id_parroquia = $request->input('id_parroquia');
        
        $comisionado->save();
 
-        $bitacora = new BitacoraController;
-        $bitacora->update();
+        // $bitacora = new BitacoraController;
+        // $bitacora->update();
 
         return redirect ('comisionado');
     }
@@ -154,8 +150,8 @@ class ComisionadosController extends Controller
     public function destroy($id)
     {
        Comisionados::destroy($id);
-        $bitacora = new BitacoraController;
-        $bitacora->update();
+        // $bitacora = new BitacoraController;
+        // $bitacora->update();
         return redirect('comisionado')->with('eliminar', 'ok');
     }
 }

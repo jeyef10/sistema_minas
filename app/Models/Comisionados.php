@@ -14,20 +14,15 @@ class Comisionados extends Model
     protected $table = 'comisionados'; 
     protected $primaryKey = 'id';
     public $timestamps = true;
-    protected $fillable = ['cedula', 'nombres', 'apellidos', 'id_municipio', 'id_parroquia'];
+    protected $fillable = ['cedula', 'nombres', 'apellidos', 'id_municipio'];
 
     public function municipio()
     {
         return $this->belongsTo(Municipio::class, 'id_municipio');
     }
-
-    public function parroquia()
-    {
-        return $this->belongsTo(Parroquia::class, 'id_parroquia');
-    }
     
-    public function solicitudescomisionados()
+    public function solicitudesinspecciones()
     {
-        return $this->hasMany(SolicitudesComisionados::class, 'id_solicitud', 'id', 'id_comisionado');
+        return $this->hasMany(SolicitudesInspecciones::class, 'id_solicitud', 'id', 'id_comisionado');
     }
 }

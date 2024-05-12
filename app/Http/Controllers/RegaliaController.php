@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Http\Controllers\BitacoraController;
+// use App\Http\Controllers\BitacoraController;
 
 class RegaliaController extends Controller
 {
@@ -60,8 +60,8 @@ class RegaliaController extends Controller
     {
         $datosRegalias= request()->except('_token');
         Regalia::create($datosRegalias);
-        $bitacora = new BitacoraController;
-        $bitacora->update();
+        // $bitacora = new BitacoraController;
+        // $bitacora->update();
 
         return redirect ('regalia');
     }
@@ -101,8 +101,8 @@ class RegaliaController extends Controller
     {
         $datosRegalias = request()->except('_token','_method');
         Regalia::where('id','=',$id)->update($datosRegalias);
-        $bitacora = new BitacoraController;
-        $bitacora->update();
+        // $bitacora = new BitacoraController;
+        // $bitacora->update();
 
         return redirect ('regalia');
     }
@@ -116,8 +116,8 @@ class RegaliaController extends Controller
     public function destroy($id)
     {
        Regalia::destroy($id);
-        $bitacora = new BitacoraController;
-        $bitacora->update();
+        // $bitacora = new BitacoraController;
+        // $bitacora->update();
         return redirect('regalia')->with('eliminar', 'ok');
     }
 }

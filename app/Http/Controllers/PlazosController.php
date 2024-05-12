@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Http\Controllers\BitacoraController;
+// use App\Http\Controllers\BitacoraController;
 
 class PlazosController extends Controller
 {
@@ -59,8 +59,8 @@ class PlazosController extends Controller
     {
         $datosPlazos= request()->except('_token');
         plazos::create($datosPlazos);
-        $bitacora = new BitacoraController;
-        $bitacora->update();
+        // $bitacora = new BitacoraController;
+        // $bitacora->update();
 
         return redirect ('plazo');
     }
@@ -100,8 +100,8 @@ class PlazosController extends Controller
     {
         $datosPlazos = request()->except('_token','_method');
         Plazos::where('id','=',$id)->update($datosPlazos);
-        $bitacora = new BitacoraController;
-        $bitacora->update();
+        // $bitacora = new BitacoraController;
+        // $bitacora->update();
 
         return redirect ('plazo');
     }
@@ -115,8 +115,8 @@ class PlazosController extends Controller
     public function destroy($id)
     {
         Plazos::destroy($id);
-        $bitacora = new BitacoraController;
-        $bitacora->update();
+        // $bitacora = new BitacoraController;
+        // $bitacora->update();
         return redirect('plazo')->with('eliminar', 'ok');
     }
 }

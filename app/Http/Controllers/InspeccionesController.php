@@ -21,13 +21,8 @@ class InspeccionesController extends Controller
      */
     public function index()
     {
-        $solicitudes = Solicitudes::with('solicitante','solicitanteEspecifico', 'recaudo')->get(); 
-       
-        $soliAgrupadas = $solicitudes->groupBy(function($solicitud) {
-            // Agrupa por la identificación de solicitante y solicitud.
-            return $solicitud->solicitante_especifico_id . '-' . $solicitud->id;
-        });
-    
+         $solicitudes = Solicitudes::all('solicitante','recaudo')->get(); 
+        //  return view('solicitudes.index');
         
         return view('inspeccion.index', compact('solicitudes'));
     }
