@@ -922,7 +922,7 @@ if (/^([a-zA-Z0-9])\1+$/.test(rif)) {
        obj.nombre.focus();
        return false;
    }
-   if (!/^[A-Z][a-z]+$/.test(nombre_empresa  )) {
+   /* if (!/^[A-Z][a-z]+$/.test(nombre_empresa  )) {
        Swal.fire({
            title: 'Solicitante',
            text: "El nombre debe comenzar con una letra mayúscula y las demás en minúscula.",
@@ -938,7 +938,7 @@ if (/^([a-zA-Z0-9])\1+$/.test(rif)) {
        
        obj.nombre_empresa.focus();
        return false;
-   }
+   } */
 
    var email_empresa= obj.email_empresa.value;
    if (!email_empresa) {

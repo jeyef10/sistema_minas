@@ -135,8 +135,10 @@ Route::resource('solicitudes', SolicitudesController::class)->middleware('auth')
 Route::get('/solicitudes/create/fetch-solicitantes/{tipoSolicitante}', [SolicitudesController::class, 'fetchSolicitantesByTipo']);
 
 /* Ruta Inspección */
-Route::get('/inspeccion',  [InspeccionesController::class,'index'])->name('inspeccion')->middleware('auth');
-
+Route::get('/inspeccion', [InspeccionesController::class,'index'])->name('inspeccion')->middleware('auth');
+Route::get('/inspeccion/create', [InspeccionesController::class, 'create'])->name('create')->middleware('auth');
+Route::resource('inspeccion', InspeccionesController::class)->middleware('auth');
+Route::get('/inspeccion/create/fetchComisionados/{municipioId}', [InspeccionesController::class, 'fetchComisionados']);
 
 /* Ruta Bitacora*/
 Route::get('bitacora', [ReporteController::class, 'bitacora'])->name('bitacora')->middleware('auth');

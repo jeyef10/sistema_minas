@@ -134,10 +134,20 @@ class SolicitanteController extends Controller
         // $bitacora = new BitacoraController;
         // $bitacora->update();
 
-        return redirect($request->input('previous_url')); // Aqui redirije a la pagina en la que estabamos anteriormente.
+        try {
+        
+            return redirect($request->input('previous_url'));
+    
+            } catch (QueryException $exception) {
+                $errorMessage = 'Error: Está cedula ya existe en la base de datos.';
+                return redirect()->back()->withErrors($errorMessage);
+            }
+
+         // Aqui redirije a la pagina en la que estabamos anteriormente.
 
         // Redirige al usuario a la página de solicitantes
         /* return redirect('solicitante'); */
+        
     }
 
     /**
@@ -207,10 +217,19 @@ class SolicitanteController extends Controller
             $solicitante->solicitanteEspecifico->save();
         }
 
+        try {
+        
+        return redirect('solicitante');
+
+        } catch (QueryException $exception) {
+            $errorMessage = 'Error: No se puede eliminar la persona debido a que tiene un equipo y perifericos asignados.';
+            return redirect()->back()->withErrors($errorMessage);
+        }
+
         // $bitacora = new BitacoraController;
         // $bitacora->update();
         // Redirige al usuario a la página de solicitantes
-        return redirect('solicitante');
+        
     }
 
     /**

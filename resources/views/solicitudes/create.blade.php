@@ -13,13 +13,13 @@
 
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
     
-                        <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Registrar Solicitudes</h2>
+                        <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Recepción de Recaudos</h2>
 
                     </div>
 
                     <div class="card-body">
 
-                        <div class="row">
+                        {{-- <div class="row">
 
                             <div class="custom-control custom-radio col-2">
                                 <input type="radio" id="natural" name="tipo" value="Natural" class="custom-control-input">
@@ -31,13 +31,13 @@
                                 <label class="custom-control-label" for="juridico">Procesamiento</label>
                             </div>
 
-                        </div>
+                        </div> --}}
 
                     </div>
                     
                                                 {{-- * FORMULARIO APROVECHAMIENTO DE SOLICITUDES RECAUDOS --}}
 
-            <form method="post" action="{{ route('solicitudes.store') }}" enctype="multipart/form-data" onsubmit="return solicitante(this)" id="Natural" style="display: none;">
+            <form method="post" action="{{ route('solicitudes.store') }}" enctype="multipart/form-data" onsubmit="return solicitante(this)" id="" style="">
                         @csrf
                         <div class="card-body">
                             
@@ -126,7 +126,7 @@
 
                                                     {{-- * FORMULARIO PROCESAMIENTO DE SOLICITUDES RECAUDOS --}}
 
-            <form method="post" action="{{ route('solicitudes.store') }}" enctype="multipart/form-data" onsubmit="return solicitante(this)" id="Jurídico" style="display: none;">
+            {{-- <form method="post" action="{{ route('solicitudes.store') }}" enctype="multipart/form-data" onsubmit="return solicitante(this)" id="Jurídico" style="display: none;">
                     @csrf
                     <div class="card-body">
                         
@@ -158,7 +158,7 @@
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                                                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
                                                 </svg>
-                                            </a> --}}
+                                            </a> 
                                         </div>
                                     </div>
                                     
@@ -209,7 +209,7 @@
                             <span class="text">Regresar</span></a>
                         </center>
 
-                </form>
+                </form> --}}
             </div>
         </div>    
     </div> 

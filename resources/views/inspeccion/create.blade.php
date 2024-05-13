@@ -17,7 +17,7 @@
 
                     </div>
 
-                    <div class="card-body">
+                    {{-- <div class="card-body">
 
                         <div class="row">
 
@@ -33,13 +33,13 @@
 
                         </div>
 
-                    </div> 
+                    </div>  --}}
  
-        <form method="post" action="{{ route('inspecciones.store') }}" enctype="multipart/form-data" onsubmit="return Inspeccion(this)" id="Natural" style="display: none;">
+        <form method="post" action="{{ route('inspeccion.store') }}" enctype="multipart/form-data" onsubmit="return Inspeccion(this)" id="Natural" style="">
                         @csrf
                     
                             <div class="card-body">
-                                    <h3 class="font-weight-bold text-primary mb1" style="margin-left: 44%;">Inspección</h3>
+{{--                                     <h3 class="font-weight-bold text-primary mb1" style="margin-left: 44%;">Inspección</h3> --}}
                                 <div class="row">
 
                                     <div class="col-4">
@@ -52,12 +52,12 @@
                                         </select>                                   
                                     </div>
 
-                                    <div class="col-4">
+                                    {{-- <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Parroquia</label>
                                         <select class="select2-single form-control" id="parroquia" name="parroquia">
                                             <option value="0">Seleccione un parroquia</option>
                                         </select>                                   
-                                    </div> 
+                                    </div>  --}}
 
                                     <div class="col-4">
                                         <label for="comisionado" class="font-weight-bold text-primary">Comisionado asignado</label>
@@ -74,18 +74,6 @@
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Lugar</label>
                                         <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
-                                    </div>
-
-                                    <div class="col-4">                                     
-                                        <div class="form-group" id="simple-date1">
-                                            <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha</label>
-                                            <div class="input-group date">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" value="01/06/2020" id="simpleDataInput">
-                                            </div>
-                                        </div>
                                     </div>
 
                                     <div class="col-4">
@@ -112,6 +100,18 @@
                                         <label  class="font-weight-bold text-primary">Reseña Fotográfica</label>
                                         <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>
                                         <input type="file" name="resenia" id="resenia" class="btn btn-outline-info">
+                                    </div>
+
+                                    <div class="col-4">                                     
+                                        <div class="form-group" id="simple-date1">
+                                            <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha</label>
+                                            <div class="input-group date">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" value="01/06/2020" id="simpleDataInput">
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="col-4">
@@ -190,7 +190,7 @@
 
     {{-- ! FUNCION PARA MOSTRAR Y OCULTAR FORMULARIOS --}}
 
-    <script>
+   {{--  <script>
         function showHideForms() {
             // Selecciona los botones de radio con el nombre "tipo"
             const radios = document.querySelectorAll('input[type="radio"][name="tipo"]'); 
@@ -230,9 +230,9 @@
     
         // Añade el evento de carga a la ventana para ejecutar la función showHideForms cuando se carga la página
         window.addEventListener('DOMContentLoaded', showHideForms);
-    </script>
+    </script> --}}
 
-    {{-- * FUNCION PARA MOSTRAR COMISIONADOS SEGUN SU MUNICIPIO Y PARROQUIA --}}
+    {{-- * FUNCION PARA MOSTRAR COMISIONADOS SEGUN SU MUNICIPIO --}}
 
     <script>
         $('#municipio').change(function() {
@@ -240,9 +240,11 @@
 
         if (municipioId) {
             $.ajax({
-            url: '/solicitudes/create/fetch-comisionados/'  + municipioId + '/' + parroquiaId, // Replace with your actual API URL
+            url: '/inspeccion/create/fetchComisionados/'  + municipioId, // Replace with your actual API URL
             method: 'GET',
             success: function(data) {
+
+               
                 // Assuming data is an array of comisionado objects
                 var options = '<option value="">Seleccione un Comisionado</option>';
                 // var parroquiaInput = $('#parroquia'); // Get the parroquia select element
@@ -255,11 +257,6 @@
                 });
 
                 $('#comisionado').html(options); // Update the 'Comisionado' select with new options
-
-                // Update parroquia select based on selected municipio (optional)
-                // You might need to implement logic to fetch parroquias based on municipio
-                parroquiaInput.empty(); // Clear parroquia options
-                parroquiaInput.append('<option value="">Seleccione una Parroquia</option>');
             },
             error: function(error) {
                 console.error('Error fetching comisionados:', error);
@@ -268,9 +265,6 @@
             });
         } else {
             $('#comisionado').html('<option value="">Seleccione un Comisionado</option>'); // Clear 'Comisionado' select
-            // Clear parroquia options as well (optional)
-            parroquiaInput.empty();
-            parroquiaInput.append('<option value="">Seleccione una Parroquia</option>');
         }
         });
 
@@ -279,7 +273,7 @@
 
     {{-- * FUNCION PARA MOSTRAR PARROQUIAS EN APROVECHAMIENTO  --}}
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
         $('#municipio').change(function() {
             var municipioId = $(this).val(); // Get the selected municipio ID
@@ -303,7 +297,7 @@
             }
         });
     });
-    </script>
+    </script> --}}
 
     {{-- * FUNCION PARA MOSTRAR PARROQUIAS EN PROCESAMIENTO  --}}
 

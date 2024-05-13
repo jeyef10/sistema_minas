@@ -65,12 +65,12 @@
             
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Nombre</label>
-                                        <input type="text" class="form-control" id="nombre" name="nombre" style="background: white;" value="{{ $solicitante->solicitanteEspecifico->nombre }}" placeholder="Ingrese El Nombre" autocomplete="off">
+                                        <input type="text" class="form-control" id="nombre" name="nombre" style="background: white;" value="{{ $solicitante->solicitanteEspecifico->nombre }}" placeholder="Ingrese El Nombre" autocomplete="off" oninput="capitalizarInput('nombre')">
                                     </div>
             
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Apellido</label>
-                                        <input type="text" class="form-control" id="apellido" name="apellido" style="background: white;" value="{{ $solicitante->solicitanteEspecifico->apellido }}" placeholder="Ingrese El Apellido" autocomplete="off">
+                                        <input type="text" class="form-control" id="apellido" name="apellido" style="background: white;" value="{{ $solicitante->solicitanteEspecifico->apellido }}" placeholder="Ingrese El Apellido" autocomplete="off" oninput="capitalizarInput('apellido')">
                                     </div>
 
                                 </div>
@@ -109,7 +109,7 @@
             
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Nombre de la Empresa</label>
-                                        <input type="text" class="form-control" id="nombre" name="nombre" style="background: white;" value="{{ $solicitante->solicitanteEspecifico->nombre }}" placeholder="Ingrese El Nombre" autocomplete="off">
+                                        <input type="text" class="form-control" id="nombre_empresa" name="nombre" style="background: white;" value="{{ $solicitante->solicitanteEspecifico->nombre }}" placeholder="Ingrese El Nombre" autocomplete="off" oninput="capitalizarInput('nombre_empresa')">
                                     </div>
             
                                     <div class="col-4">
@@ -188,5 +188,16 @@
         // Añade el evento de carga a la ventana para ejecutar la función showHideForms cuando se carga la página
         window.addEventListener('DOMContentLoaded', showHideForms);
     </script>
+
+<script>
+    function capitalizarPrimeraLetra(texto) {
+        return texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
+    }
+
+    function capitalizarInput(idInput) {
+        const inputElement = document.getElementById(idInput);
+        inputElement.value = capitalizarPrimeraLetra(inputElement.value);
+    }
+</script>
   
 @endsection
