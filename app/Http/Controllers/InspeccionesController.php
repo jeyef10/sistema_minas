@@ -21,9 +21,13 @@ class InspeccionesController extends Controller
      */
     public function index()
     {
-         $solicitudes = Solicitudes::all('solicitante','recaudo')->get(); 
-        //  return view('solicitudes.index');
-        
+        $solicitudes = Solicitudes::with('solicitante','recaudo')->get();
+
+        // $solicitudesAgrupadas =$solicitudes->groupBy(function($solicitudes) {
+        //     // Agrupa por la identificación de la persona y del equipo.
+        //     return $solicitudes->id_solicitante . 'id' . $solicitudes->id_recaudo;
+        // });
+
         return view('inspeccion.index', compact('solicitudes'));
     }
 
@@ -35,6 +39,21 @@ class InspeccionesController extends Controller
     public function create()
     {
         //
+    }
+
+    public function getParroquias($municipioId)
+    {
+        $parroquias = Parroquia::where('id_municipio', $municipioId)->pluck('nom_parroquia', 'id');
+        return response()->json($parroquias);
+    }
+
+    public function fetchComisionados(Request $request, $comisionados)
+    {
+        $comisionados = Comisionado::where('id_municipio', $municipioId)
+            ->where('id_parroquia', $parroquiaId)
+            ->get();
+
+        return response()->json($comisionados);
     }
 
     /**

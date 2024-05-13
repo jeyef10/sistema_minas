@@ -33,7 +33,7 @@
 
                         <div class="row">
 
-                            <div class="custom-control custom-radio col-1">
+                            {{-- <div class="custom-control custom-radio col-1">
                                 <input type="radio" id="todos" name="tipo" value="t_todos" class="custom-control-input">
                                 <label class="custom-control-label" for="todos">Todos</label>
                             </div>
@@ -46,7 +46,7 @@
                             <div class="custom-control custom-radio col-1">
                                 <input type="radio" id="procesamiento" name="tipo" value="t_Procesamiento" class="custom-control-input">
                                 <label class="custom-control-label" for="procesamiento">Procesamiento</label>
-                            </div>
+                            </div> --}}
 
                         </div>
 
@@ -58,8 +58,12 @@
                         <table class="table align-items-center table-flush" id="dataTable">
                             <thead class="thead-light">
                                 <tr>
-                                    <th class="font-weight-bold text-Secondary">N°</th>
-                                    <th class="font-weight-bold text-Secondary">(Solicitante, Cédula, Nombre, Apellido)</th>
+                                    <th class="font-weight-bold text-Secondary">Solicitante</th>
+                                    <th class="font-weight-bold text-Secondary">Cédula</th>
+                                    <th class="font-weight-bold text-Secondary">Rif</th>
+                                    <th class="font-weight-bold text-Secondary">Nombre</th>
+                                    <th class="font-weight-bold text-Secondary">Apellido</th>
+                                    <th class="font-weight-bold text-Secondary">Correo</th>
                                     <th class="font-weight-bold text-Secondary">Fecha</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center></th>
                                   </tr>
@@ -67,57 +71,49 @@
                             <tbody>
                                 @foreach ($solicitudes as $solicitud)
                                 <tr>
-                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->id }}</td>
-{{-- {{ $asignacionesGrupo->first()->periferico->tipo_periferico->tipo }}, {{ $asignacionesGrupo->first()->periferico->marca->nombre_marca }}, {{ $asignacionesGrupo->first()->periferico->modelo->nombre_modelo }}, {{ $asignacionesGrupo->first()->periferico->serial }}, {{ $asignacionesGrupo->first()->periferico->serialA }}</td>                                      --}}
-                                     <!-- Verifica si el solicitante es una Persona Natural -->
-                                     @if ($solicitud->solicitanteEspecifico instanceof \App\Models\PersonaNatural)
-                                     <td class="font-weight-bold text-Secondary">
-                                        {{ $solicitud->first()->solicitanteEspecifico->cedula }} 
-                                        {{ $solicitud->first()->solicitanteEspecifico->nombre }}, 
-                                        {{ $solicitud->first()->solicitanteEspecifico->apellido }}, 
-                                    </td>
-                                     {{-- <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->apellido }} </td>
-                                        <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->cedula }} </td> --}}
-                                     <!-- Verifica si el solicitante es una Persona Jurídica -->
-                                   @elseif ($solicitud->solicitanteEspecifico instanceof \App\Models\PersonaJuridica)
-                                     <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->nombre }}</td>
+                                   
+                                    <!-- <td class="font-weight-bold text-Secondary">{{ $solicitud->id}}</td> -->
 
-                                   @endif
-                                    
-                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->fecha }}</td> 
+                                        <!-- Muestra el tipo de solicitante (Natural o Jurídico) -->
+                                        <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitante->tipo }}</td>
 
-                                    {{-- ! APARTE --}}
-                          
-                                     {{-- <!-- Verifica si el solicitante es una Persona Natural -->
-                                    @if ($solicitud->solicitanteEspecifico instanceof \App\Models\PersonaNatural)
-                                      <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->cedula }}</td>
-                                      <td class="font-weight-bold text-Secondary">No Aplica</td>
-                                      <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->nombre }} {{ $solicitud->solicitanteEspecifico->apellido }}</td>
-                                    
-                                      <!-- Verifica si el solicitante es una Persona Jurídica -->
-                                    @elseif ($solicitud->solicitanteEspecifico instanceof \App\Models\PersonaJuridica)
-                                      <td class="font-weight-bold text-Secondary">No Aplica</td>
-                                      <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->rif }}</td>
-                                      <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->nombre }}</td>
+                                        <!-- Verifica si el solicitante es una Persona Natural -->
+                                        @if ($solicitud->solicitante->solicitanteEspecifico instanceof \App\Models\PersonaNatural)
+                                            <!-- Si es una Persona Natural, muestra la cédula, el nombre y el apellido -->
+                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitante->solicitanteEspecifico->cedula }}</td>
+                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
+                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitante->solicitanteEspecifico->nombre }}</td>
+                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitante->solicitanteEspecifico->apellido }}</td>
+                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
 
-                                    @endif --}}
+                                        <!-- Verifica si el solicitante es una Persona Jurídica -->
+                                        @elseif ($solicitud->solicitante->solicitanteEspecifico instanceof \App\Models\PersonaJuridica)
+                                            <!-- Si es una Persona Jurídica, muestra el rif, el nombre y el correo -->
+                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
+                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitante->solicitanteEspecifico->rif }}</td>
+                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitante->solicitanteEspecifico->nombre }}</td>
+                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
+                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitante->solicitanteEspecifico->correo }}</td>
+                                        @endif
 
-                                    {{-- * ESTO SE QUEDA --}}
-
-                                     <td>
-                                      <a href="{{ route('solicitudes.show', $solicitud->id) }}" class="btn btn-sm btn-info">Ver</a>
-                                    </td> 
-
-                                  </tr>
+                                        <td class="font-weight-bold text-Secondary">{{ $solicitud->fecha }}</td>   
 
                                         <td>
-                                            @can('editar-solicitud')
-                                                <a class="btn btn-warning btn-sm" style="margin-left: 31%;" href="{{ route('solicitudes.edit',$solicitante->id) }}"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                                    <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
-                                                </svg></a>
-                                            @endcan
+                                            {{-- <form action="{{ route('inspeccion.create') }}" method="get" style="display:inline;">
+                                                <button class="btn btn-outline-success mb-1" type="submit" value="" style="width=14; height=14;">Inspeccionar</button>
+                                            </form>  --}}
 
+                                            <a class="btn btn-warning btn-sm" title="Desea Editar la Solicitud" href="{{ route('solicitudes.edit',$solicitud->id) }}"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
+                                            </svg></a>
+
+                                            <a class="btn btn-info btn-sm" title="Ver Los Recaudos" href="{{ route('solicitudes.show', $solicitud->id) }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layout-text-window-reverse" viewBox="0 0 16 16">
+                                                <path d="M13 6.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5m0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5m-.5 2.5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/>
+                                                <path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zM2 1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1zM1 4v10a1 1 0 0 0 1 1h2V4zm4 0v11h9a1 1 0 0 0 1-1V4z"/>
+                                            </svg></a>
+                                            
                                         </td>
+
                                     </tr>
                                 @endforeach
                             </tbody>
