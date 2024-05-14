@@ -57,13 +57,34 @@ class MineralController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
+
+
     {
+        $request->validate(
+            [
+            'nombre' => 'unique:minerales,nombre'
+            ],
+            [
+            'nombre.unique' => 'Este mineral ya existe.'
+            ]
+        );
+
         $datosMinerales = request()->except('_token');
         Minerales::create($datosMinerales);
         // $bitacora = new BitacoraController;
         // $bitacora->update();
 
-        return redirect ('mineral');
+        
+
+         
+        try {
+        
+            return redirect ('mineral');
+    
+            } catch (QueryException $exception) {
+                $errorMessage = 'Error: Este mineral ya existe en la base de datos.';
+                return redirect()->back()->withErrors($errorMessage);
+            }
     }
 
     /**

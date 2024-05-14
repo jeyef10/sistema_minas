@@ -57,12 +57,30 @@ class PlazosController extends Controller
      */
     public function store(Request $request)
     {
+      
+        $request->validate(
+            [
+            'medida_tiempo' => 'unique:plazos,medida_tiempo'
+            ],
+            [
+            'medida_tiempo.unique' => 'Este plazo ya existe.'
+            ]
+        );
+
         $datosPlazos= request()->except('_token');
         plazos::create($datosPlazos);
         // $bitacora = new BitacoraController;
         // $bitacora->update();
 
-        return redirect ('plazo');
+        
+        try {
+        
+            return redirect ('plazo');
+    
+            } catch (QueryException $exception) {
+                $errorMessage = 'Error: Está cedula ya existe en la base de datos.';
+                return redirect()->back()->withErrors($errorMessage);
+            }
     }
 
     /**

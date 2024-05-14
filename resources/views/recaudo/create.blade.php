@@ -6,7 +6,7 @@
 
 @section('contenido')
 
-    @if ($errors->any())
+    <!-- @if ($errors->any())
         <div class="alert alert-warning d-flex align-items-center alert-dismissible fade show" role="alert">
             <ul>
                 @foreach ($errors->all() as $error)
@@ -16,7 +16,7 @@
             <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="alert"></button>
         </div>
     @endif
-    
+     -->
     <div class="container-fluid" id="container-wrapper">
         <div class="d-sm-flex align-items-center justify-content-between mb-4"></div>
             <div class="col-lg-12">
@@ -58,6 +58,26 @@
                     </form>
                 </div>
             </div>    
-    </div>  
+    </div> 
+    
+    @if ($errors->any())
+    <script>
+        var errorMessage = @json($errors->first());
+        Swal.fire({
+                            title: 'Recaudo',
+                            text: " Esta Recaudo Ya Existe.",
+                            icon: 'warning',
+                            showconfirmButton: true,
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: '¡OK!',
+                            
+                            }).then((result) => {
+                        if (result.isConfirmed) {
+
+                            this.submit();
+                        }
+                        })
+    </script>
+@endif
 
 @endsection

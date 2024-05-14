@@ -73,7 +73,16 @@ class RecaudosController extends Controller
         // $bitacora = new BitacoraController;
         // $bitacora->update();
 
-        return redirect()->route('recaudo.index');
+        
+
+        try {
+        
+            return redirect()->route('recaudo.index');
+    
+            } catch (QueryException $exception) {
+                $errorMessage = 'Error: Está cedula ya existe en la base de datos.';
+                return redirect()->back()->withErrors($errorMessage);
+            }
 
     }
 

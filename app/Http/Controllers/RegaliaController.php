@@ -58,6 +58,16 @@ class RegaliaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate(
+            [
+            'monto' => 'unique:regalias'
+            ],
+            [
+            'monto.unique' => 'Este monto ya existe.'
+            ]
+        );
+
+        
         $datosRegalias= request()->except('_token');
         Regalia::create($datosRegalias);
         // $bitacora = new BitacoraController;

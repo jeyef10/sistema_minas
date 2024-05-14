@@ -64,12 +64,8 @@
         
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Nombre</label>
-<<<<<<< HEAD
-                                    <input type="text" class="form-control" id="nombre" name="nombre" style="background: white;" value="" placeholder="Ingrese El Nombre" oninput="convertirTexto()" autocomplete="off">
-=======
                                     <input type="text" class="form-control" id="nombre" name="nombre" style="background: white;" value="" placeholder="Ingrese El Nombre" autocomplete="off" oninput="capitalizarInput('nombre')">
                                     
->>>>>>> ce71418a12c807774ffc62d3f3dc583f9ff1bebc
                                 </div>
         
                                 <div class="col-4">

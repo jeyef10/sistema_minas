@@ -65,5 +65,24 @@
                 </div>
             </div>    
     </div>  
+   
+    @if ($errors->any())
+    <script>
+        var errorMessage = @json($errors->first());
+        Swal.fire({
+                            title: 'Mineral',
+                            text: " Este Mineral Ya Existe.",
+                            icon: 'warning',
+                            showconfirmButton: true,
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: '¡OK!',
+                            
+                            }).then((result) => {
+                        if (result.isConfirmed) {
 
+                            this.submit();
+                        }
+                        })
+    </script>
+@endif
 @endsection
