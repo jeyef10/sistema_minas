@@ -16,37 +16,18 @@ class Solicitudes extends Model
 
     public function solicitante()
     {
-        return $this->morphTo(Solicitante::class, 'id_solicitante');
+        return $this->belongsTo(Solicitante::class, 'id_solicitante');
     }
 
     public function solicitudesrecaudos()
     {
         return $this->belongsTo(SolicitudesRecaudos::class, 'id_solicitud', 'id', 'id_recaudo');
     }
-    // public function mineral()
-    // {
-    //     return $this->belongsTo(Minerales::class, 'id_mineral');
-    // }
 
-    // public function regalia()
-    // {
-    //     return $this->belongsTo(Regalia::class, 'id_regalia');
-    // }
-
-    // public function plazo()
-    // {
-    //     return $this->belongsTo(Plazos::class, 'id_plazo');
-    // }
-
-    // public function municipio()
-    // {
-    //     return $this->belongsTo(Municipio::class, 'id_municipio');
-    // }
-
-    // public function parroquia()
-    // {
-    //     return $this->belongsTo(Parroquia::class, 'id_parroquia');
-    // }
+    public function recaudo()
+    {
+        return $this->belongsTo(Recaudos::class, 'id_recaudo', 'id', 'nombre');
+    }
 
     
 }

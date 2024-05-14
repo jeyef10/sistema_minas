@@ -33,7 +33,7 @@
 
                         <div class="row">
 
-                            <div class="custom-control custom-radio col-1">
+                            {{-- <div class="custom-control custom-radio col-1">
                                 <input type="radio" id="todos" name="tipo" value="t_todos" class="custom-control-input">
                                 <label class="custom-control-label" for="todos">Todos</label>
                             </div>
@@ -46,7 +46,7 @@
                             <div class="custom-control custom-radio col-1">
                                 <input type="radio" id="procesamiento" name="tipo" value="t_Procesamiento" class="custom-control-input">
                                 <label class="custom-control-label" for="procesamiento">Procesamiento</label>
-                            </div>
+                            </div> --}}
 
                         </div>
 
@@ -58,8 +58,12 @@
                         <table class="table align-items-center table-flush" id="dataTable">
                             <thead class="thead-light">
                                 <tr>
-                                    <th class="font-weight-bold text-Secondary">N°</th>
-                                    <th class="font-weight-bold text-Secondary">(Solicitante, Cédula, Nombre, Apellido)</th>
+                                    <th class="font-weight-bold text-Secondary">Solicitante</th>
+                                    <th class="font-weight-bold text-Secondary">Cédula</th>
+                                    <th class="font-weight-bold text-Secondary">Rif</th>
+                                    <th class="font-weight-bold text-Secondary">Nombre</th>
+                                    <th class="font-weight-bold text-Secondary">Apellido</th>
+                                    <th class="font-weight-bold text-Secondary">Correo</th>
                                     <th class="font-weight-bold text-Secondary">Fecha</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center></th>
                                   </tr>
@@ -67,57 +71,49 @@
                             <tbody>
                                 @foreach ($solicitudes as $solicitud)
                                 <tr>
-                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->id }}</td>
-{{-- {{ $asignacionesGrupo->first()->periferico->tipo_periferico->tipo }}, {{ $asignacionesGrupo->first()->periferico->marca->nombre_marca }}, {{ $asignacionesGrupo->first()->periferico->modelo->nombre_modelo }}, {{ $asignacionesGrupo->first()->periferico->serial }}, {{ $asignacionesGrupo->first()->periferico->serialA }}</td>                                      --}}
-                                     <!-- Verifica si el solicitante es una Persona Natural -->
-                                     @if ($solicitud->solicitanteEspecifico instanceof \App\Models\PersonaNatural)
-                                     <td class="font-weight-bold text-Secondary">
-                                        {{ $solicitud->first()->solicitanteEspecifico->cedula }} 
-                                        {{ $solicitud->first()->solicitanteEspecifico->nombre }}, 
-                                        {{ $solicitud->first()->solicitanteEspecifico->apellido }}, 
-                                    </td>
-                                     {{-- <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->apellido }} </td>
-                                        <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->cedula }} </td> --}}
-                                     <!-- Verifica si el solicitante es una Persona Jurídica -->
-                                   @elseif ($solicitud->solicitanteEspecifico instanceof \App\Models\PersonaJuridica)
-                                     <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->nombre }}</td>
+                                   
+                                    <!-- <td class="font-weight-bold text-Secondary">{{ $solicitud->id}}</td> -->
 
-                                   @endif
-                                    
-                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->fecha }}</td> 
+                                        <!-- Muestra el tipo de solicitante (Natural o Jurídico) -->
+                                        <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitante->tipo }}</td>
 
-                                    {{-- ! APARTE --}}
-                          
-                                     {{-- <!-- Verifica si el solicitante es una Persona Natural -->
-                                    @if ($solicitud->solicitanteEspecifico instanceof \App\Models\PersonaNatural)
-                                      <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->cedula }}</td>
-                                      <td class="font-weight-bold text-Secondary">No Aplica</td>
-                                      <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->nombre }} {{ $solicitud->solicitanteEspecifico->apellido }}</td>
-                                    
-                                      <!-- Verifica si el solicitante es una Persona Jurídica -->
-                                    @elseif ($solicitud->solicitanteEspecifico instanceof \App\Models\PersonaJuridica)
-                                      <td class="font-weight-bold text-Secondary">No Aplica</td>
-                                      <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->rif }}</td>
-                                      <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitanteEspecifico->nombre }}</td>
+                                        <!-- Verifica si el solicitante es una Persona Natural -->
+                                        @if ($solicitud->solicitante->solicitanteEspecifico instanceof \App\Models\PersonaNatural)
+                                            <!-- Si es una Persona Natural, muestra la cédula, el nombre y el apellido -->
+                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitante->solicitanteEspecifico->cedula }}</td>
+                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
+                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitante->solicitanteEspecifico->nombre }}</td>
+                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitante->solicitanteEspecifico->apellido }}</td>
+                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
 
-                                    @endif --}}
+                                        <!-- Verifica si el solicitante es una Persona Jurídica -->
+                                        @elseif ($solicitud->solicitante->solicitanteEspecifico instanceof \App\Models\PersonaJuridica)
+                                            <!-- Si es una Persona Jurídica, muestra el rif, el nombre y el correo -->
+                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
+                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitante->solicitanteEspecifico->rif }}</td>
+                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitante->solicitanteEspecifico->nombre }}</td>
+                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
+                                            <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitante->solicitanteEspecifico->correo }}</td>
+                                        @endif
 
-                                    {{-- * ESTO SE QUEDA --}}
-
-                                     <td>
-                                      <a href="{{ route('solicitudes.show', $solicitud->id) }}" class="btn btn-sm btn-info">Ver</a>
-                                    </td> 
-
-                                  </tr>
+                                        <td class="font-weight-bold text-Secondary">{{ $solicitud->fecha }}</td>   
 
                                         <td>
-                                            @can('editar-solicitud')
-                                                <a class="btn btn-warning btn-sm" style="margin-left: 31%;" href="{{ route('solicitudes.edit',$solicitante->id) }}"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                                    <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
-                                                </svg></a>
-                                            @endcan
+                                            <a class="btn btn-secondary btn-sm" title="Inspeccionar" href="{{ route('inspeccion.create') }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-incognito" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="m4.736 1.968-.892 3.269-.014.058C2.113 5.568 1 6.006 1 6.5 1 7.328 4.134 8 8 8s7-.672 7-1.5c0-.494-1.113-.932-2.83-1.205l-.014-.058-.892-3.27c-.146-.533-.698-.849-1.239-.734C9.411 1.363 8.62 1.5 8 1.5s-1.411-.136-2.025-.267c-.541-.115-1.093.2-1.239.735m.015 3.867a.25.25 0 0 1 .274-.224c.9.092 1.91.143 2.975.143a30 30 0 0 0 2.975-.143.25.25 0 0 1 .05.498c-.918.093-1.944.145-3.025.145s-2.107-.052-3.025-.145a.25.25 0 0 1-.224-.274M3.5 10h2a.5.5 0 0 1 .5.5v1a1.5 1.5 0 0 1-3 0v-1a.5.5 0 0 1 .5-.5m-1.5.5q.001-.264.085-.5H2a.5.5 0 0 1 0-1h3.5a1.5 1.5 0 0 1 1.488 1.312 3.5 3.5 0 0 1 2.024 0A1.5 1.5 0 0 1 10.5 9H14a.5.5 0 0 1 0 1h-.085q.084.236.085.5v1a2.5 2.5 0 0 1-5 0v-.14l-.21-.07a2.5 2.5 0 0 0-1.58 0l-.21.07v.14a2.5 2.5 0 0 1-5 0zm8.5-.5h2a.5.5 0 0 1 .5.5v1a1.5 1.5 0 0 1-3 0v-1a.5.5 0 0 1 .5-.5"/>
+                                            </svg></a>
 
+                                            <a class="btn btn-warning btn-sm" title="Desea Editar la Solicitud" href="{{ route('solicitudes.edit',$solicitud->id) }}"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
+                                            </svg></a>
+
+                                            <a class="btn btn-info btn-sm" title="Ver Los Recaudos" href="{{ route('solicitudes.show', $solicitud->id) }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layout-text-window-reverse" viewBox="0 0 16 16">
+                                                <path d="M13 6.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5m0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5m-.5 2.5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/>
+                                                <path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zM2 1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1zM1 4v10a1 1 0 0 0 1 1h2V4zm4 0v11h9a1 1 0 0 0 1-1V4z"/>
+                                            </svg></a>
+                                            
                                         </td>
+
                                     </tr>
                                 @endforeach
                             </tbody>

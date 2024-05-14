@@ -19,4 +19,11 @@ class Municipio extends Model
     {
         return $this->hasmany(Parroquia::class, 'id_municipio');
     }
+
+    public function municipio_comisinado()
+    {
+        return $this->hasmany(Comisionados::class, 'id_municipio');
+    }
+
+
 }

@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Inspecciones;
 use App\Models\Solicitudes;
+use App\Models\Municipio;
+use App\Models\Comisionados;
 use App\Models\SolicitudesRecaudos;
-use App\Models\Solicitante;
-use App\Models\PersonaNatural;
-use App\Models\PersonaJuridica;
-use App\Models\Recaudos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -21,9 +19,13 @@ class InspeccionesController extends Controller
      */
     public function index()
     {
-         $solicitudes = Solicitudes::all('solicitante','recaudo')->get(); 
-        //  return view('solicitudes.index');
-        
+        $solicitudes = Solicitudes::with('solicitante','recaudo')->get();
+
+        // $solicitudesAgrupadas =$solicitudes->groupBy(function($solicitudes) {
+        //     // Agrupa por la identificación de la persona y del equipo.
+        //     return $solicitudes->id_solicitante . 'id' . $solicitudes->id_recaudo;
+        // });
+
         return view('inspeccion.index', compact('solicitudes'));
     }
 
@@ -34,7 +36,25 @@ class InspeccionesController extends Controller
      */
     public function create()
     {
-        //
+        $solicitudes = Solicitudes::all();
+        $solicitudesrecaudos = SolicitudesRecaudos::all();
+        $municipios = Municipio::all();
+        $comisionados = Comisionados::all();
+
+        return view('inspeccion.create', compact('solicitudes', 'solicitudesrecaudos', 'municipios', 'comisionados'));
+    }
+
+    /* public function getParroquias($municipioId)
+    {
+        $parroquias = Parroquia::where('id_municipio', $municipioId)->pluck('nom_parroquia', 'id');
+        return response()->json($parroquias);
+    } */
+
+    public function fetchComisionados(Request $request, $municipioId)
+    {
+        $municipiocomisionados = Comisionados::where('id_municipio', $municipioId)->get();
+    
+        return response()->json($municipiocomisionados);
     }
 
     /**

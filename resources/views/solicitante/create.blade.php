@@ -6,7 +6,7 @@
 
 @section('contenido')
 
-    @if ($errors->any())
+   {{--  @if ($errors->any())
         <div class="alert alert-warning d-flex align-items-center alert-dismissible fade show" role="alert">
             <ul>
                 @foreach ($errors->all() as $error)
@@ -15,7 +15,7 @@
             </ul>
             <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="alert"></button>
         </div>
-    @endif
+    @endif --}}
 
     <div class="container-fluid" id="container-wrapper">
         <div class="d-sm-flex align-items-center justify-content-between mb-4"></div>
@@ -33,7 +33,7 @@
                         <div class="row">
 
                             <div class="custom-control custom-radio col-1">
-                                <input type="radio" id="natural" name="tipo" value="Natural" class="custom-control-input">
+                                <input type="radio" id="natural" name="tipo" value="Natural" class="custom-control-input" checked>
                                 <label class="custom-control-label" for="natural">Natural</label>
                             </div>
 
@@ -46,7 +46,7 @@
 
                     </div>
                     
-                    <form method="post" action="{{ route('solicitante.store') }}" enctype="multipart/form-data" onsubmit="return Solicitante(this)" id="Natural" style="display: none;">
+                    <form method="post" action="{{ route('solicitante.store') }}" enctype="multipart/form-data" onsubmit="return Solicitante(this)" id="Natural" style="">
                         @csrf
                             
                         <div class="card-body">
@@ -64,12 +64,18 @@
         
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Nombre</label>
+<<<<<<< HEAD
                                     <input type="text" class="form-control" id="nombre" name="nombre" style="background: white;" value="" placeholder="Ingrese El Nombre" oninput="convertirTexto()" autocomplete="off">
+=======
+                                    <input type="text" class="form-control" id="nombre" name="nombre" style="background: white;" value="" placeholder="Ingrese El Nombre" autocomplete="off" oninput="capitalizarInput('nombre')">
+                                    
+>>>>>>> ce71418a12c807774ffc62d3f3dc583f9ff1bebc
                                 </div>
         
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Apellido</label>
-                                    <input type="text" class="form-control" id="apellido" name="apellido" style="background: white;" value="" placeholder="Ingrese El Apellido" autocomplete="off">
+                                    <input type="text" class="form-control" id="apellido" name="apellido" style="background: white;" value="" placeholder="Ingrese El Apellido" autocomplete="off" oninput="capitalizarInput('apellido')">
+                                   
                                 </div>
 
                             </div>
@@ -106,7 +112,7 @@
         
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Nombre de la Empresa</label>
-                                    <input type="text" class="form-control" id="nombre_empresa" name="nombre" style="background: white;" value="" placeholder="Ingrese El Nombre" autocomplete="off">
+                                    <input type="text" class="form-control" id="nombre_empresa" name="nombre" style="background: white;" value="" placeholder="Ingrese El Nombre" autocomplete="off" oninput="capitalizarInput('nombre_empresa')">
                                 </div>
         
                                 <div class="col-4">
@@ -136,6 +142,54 @@
     </div>
 
     <script>
+        function showHideForms() {
+        // Selecciona los botones de radio con el nombre "tipo"
+        const radios = document.querySelectorAll('input[type="radio"][name="tipo"]'); 
+
+        // Selecciona los formularios con los ID "Natural" y "Jurídico"
+        const forms = document.querySelectorAll('#Natural, #Jurídico'); 
+
+        // Inicialmente oculta ambos formularios
+        /* forms[0].style.display = 'none';
+        forms[1].style.display = 'none'; */
+
+        // Muestra el formulario "Natural" por defecto
+        const defaultForm = document.querySelector('#Natural');
+        defaultForm.style.display = 'block';
+
+        // Añade un evento de cambio a los botones de radio
+        radios.forEach(radio => {
+            radio.addEventListener('change', (event) => {
+
+                // Obtiene el ID del formulario a mostrar
+                const selectedFormId = event.target.value; 
+
+                // Recorre todos los formularios
+                for (const form of forms) {
+
+                    // Si el ID del formulario coincide con el ID seleccionado, muestra el formulario
+                    if (form.id === selectedFormId) {
+                        form.style.display = 'block';
+
+                        // Establece el valor del campo de tipo en el formulario seleccionado
+                        document.querySelector(`#tipo-${selectedFormId.toLowerCase()}`).value = selectedFormId;
+                    } else {
+                        
+                        // Si no coincide, oculta el formulario
+                        form.style.display = 'none';
+                    }
+                }
+            });
+        });
+    }
+
+    // Añade el evento de carga a la ventana para ejecutar la función showHideForms cuando se carga la página
+    window.addEventListener('DOMContentLoaded', showHideForms);
+    </script>
+
+                                                                                {{-- POR SI ACASO JODEN MAS --}}
+
+    {{-- <script>
         function showHideForms() {
             // Selecciona los botones de radio con el nombre "tipo"
             const radios = document.querySelectorAll('input[type="radio"][name="tipo"]'); 
@@ -175,8 +229,37 @@
     
         // Añade el evento de carga a la ventana para ejecutar la función showHideForms cuando se carga la página
         window.addEventListener('DOMContentLoaded', showHideForms);
-    </script>
+    </script> --}}
 
-    
+<script>
+    function capitalizarPrimeraLetra(texto) {
+        return texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
+    }
+
+    function capitalizarInput(idInput) {
+        const inputElement = document.getElementById(idInput);
+        inputElement.value = capitalizarPrimeraLetra(inputElement.value);
+    }
+</script>
+
+@if ($errors->any())
+    <script>
+        var errorMessage = @json($errors->first());
+        Swal.fire({
+                            title: 'Solicitante',
+                            text: " Esta Cédula/Rif Ya Existe.",
+                            icon: 'warning',
+                            showconfirmButton: true,
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: '¡OK!',
+                            
+                            }).then((result) => {
+                        if (result.isConfirmed) {
+
+                            this.submit();
+                        }
+                        })
+    </script>
+@endif
   
 @endsection

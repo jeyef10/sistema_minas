@@ -24,10 +24,7 @@ class SolicitudesController extends Controller
 
     public function index(Request $request)
     {
-
-        // $solicitudes = Solicitudes::with('solicitante','solicitanteEspecifico','recaudo')->get(); 
-        // return view('solicitudes.index');
-        
+       // 
     }
 
     /**
@@ -44,12 +41,6 @@ class SolicitudesController extends Controller
         return view('solicitudes.create', compact('solicitantes', 'solicitudesrecaudos', 'recaudos',));
     }
 
-    // public function getParroquias($municipioId)
-    // {
-    //     $parroquias = Parroquia::where('id_municipio', $municipioId)->pluck('nom_parroquia', 'id');
-    //     return response()->json($parroquias);
-    // }
-
     public function fetchSolicitantesByTipo(Request $request, $tipoSolicitante)
     {
         $solicitantes = Solicitante::where('tipo', $tipoSolicitante)->get();
@@ -60,15 +51,6 @@ class SolicitudesController extends Controller
 
         return response()->json($solicitantes);
     }
-
-    // public function fetchComisionados(Request $request, $comisionados)
-    // {
-    //     $comisionados = Comisionado::where('id_municipio', $municipioId)
-    //         ->where('id_parroquia', $parroquiaId)
-    //         ->get();
-
-    //     return response()->json($comisionados);
-    // }
 
     /**
      * Store a newly created resource in storage.
@@ -108,9 +90,27 @@ class SolicitudesController extends Controller
      * @param  \App\Models\Solicitudes  $solicitudes
      * @return \Illuminate\Http\Response
      */
-    public function show(Solicitudes $solicitudes)
+    public function show($id)
     {
-        //
+        // Obtener la solicitud con el ID especificado
+        $solicitud = Solicitudes::find($id);
+
+        // Verificar si la solicitud existe
+        if (!$solicitud) {
+            return redirect('inspeccion')->with('error', 'Solicitud no encontrada');
+        }
+
+        // Obtener los IDs de recaudos asociados a la solicitud
+        $recaudos = SolicitudesRecaudos::where('id_solicitud', $solicitud->id)->pluck('id_recaudo');
+
+        // Obtener los recaudos completos con los id obtenidos
+        $recaudos = Recaudos::whereIn('id', $recaudos)->get();
+
+        // Devolver la vista con la solicitud y sus recaudos asociados
+        return view('inspeccion.show', [
+            'solicitud' => $solicitud,
+            'recaudos' => $recaudos
+        ]);
     }
 
     /**
@@ -119,9 +119,10 @@ class SolicitudesController extends Controller
      * @param  \App\Models\Solicitudes  $solicitudes
      * @return \Illuminate\Http\Response
      */
-    public function edit(Solicitudes $solicitudes)
+    public function edit($id)
     {
-        //
+        $solicitudes = Solicitudes::findOrFail($id);
+        return view('solicitudes.edit' , compact('solicitudes'));
     }
 
     /**
@@ -131,9 +132,27 @@ class SolicitudesController extends Controller
      * @param  \App\Models\Solicitudes  $solicitudes
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Solicitudes $solicitudes)
+    public function update(Request $request, $id)
     {
-        //
+        // Obtener la solicitud por ID
+        $solicitud = Solicitudes::findOrFail($id);
+
+        // Actualizar los campos según los datos del formulario
+        $solicitud->id_solicitante = $request->input('solicitante_especifico_id');
+        $solicitud->fecha = $request->input('simpleDataInput');
+        $solicitud->save();
+
+        // Actualizar los registros en la tabla puente (solicitudes_recaudos)
+        $recaudosSeleccionados = $request->input('recaudos');
+        SolicitudesRecaudos::where('id_solicitud', $id)->delete(); // Eliminar registros anteriores
+        foreach ($recaudosSeleccionados as $recaudo) {
+            $puente = new SolicitudesRecaudos();
+            $puente->id_recaudo = $recaudo;
+            $puente->id_solicitud = $solicitud->id;
+            $puente->save();
+        }
+
+        return redirect('inspeccion', ['id' => $solicitud->id]);
     }
 
     /**

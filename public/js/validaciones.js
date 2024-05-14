@@ -672,23 +672,23 @@ function Solicitante(obj) {
        obj.apellido.focus();
        return false;
    }
-   if (!/^[A-Z][a-z]+$/.test(apellido)) {
-       Swal.fire({
-           title: 'Solicitante',
-           text: "El apellido debe comenzar con una letra mayúscula y las demás en minúscula.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+//    if (!/^[A-Z][a-z]+$/.test(apellido)) {
+//        Swal.fire({
+//            title: 'Solicitante',
+//            text: "El apellido debe comenzar con una letra mayúscula y las demás en minúscula.",
+//            icon: 'warning',
+//            confirmButtonColor: '#3085d6',
+//            cancelButtonColor: '#d33',
+//            }).then((result) => {
+//        if (result.isConfirmed) {
 
-           this.submit();
-       }
-       })
+//            this.submit();
+//        }
+//        })
       
-       obj.apellido.focus();
-       return false;
-   }
+//        obj.apellido.focus();
+//        return false;
+//    }
   
 //    var num_minero= obj.num_minero.value;
 //    if (!num_minero) {
@@ -922,7 +922,7 @@ if (/^([a-zA-Z0-9])\1+$/.test(rif)) {
        obj.nombre.focus();
        return false;
    }
-   if (!/^[A-Z][a-z]+$/.test(nombre_empresa  )) {
+   /* if (!/^[A-Z][a-z]+$/.test(nombre_empresa  )) {
        Swal.fire({
            title: 'Solicitante',
            text: "El nombre debe comenzar con una letra mayúscula y las demás en minúscula.",
@@ -938,7 +938,7 @@ if (/^([a-zA-Z0-9])\1+$/.test(rif)) {
        
        obj.nombre_empresa.focus();
        return false;
-   }
+   } */
 
    var email_empresa= obj.email_empresa.value;
    if (!email_empresa) {
