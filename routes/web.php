@@ -8,7 +8,7 @@ use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\logoutController;
 use App\Http\Controllers\UserSettingsController;
 use App\Models\Asignar;
 use App\Http\Controllers\ReporteController;
@@ -79,7 +79,7 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::get('/home', [HomeController::class, 'index'])->middleware('auth');
 
 /* Ruta Logout o Cierre de Sesión */
-Route::get('/logout', [LogoutController::class, 'logout']);
+Route::get('/logout', [logoutController::class, 'logout']);
 
 /* Ruta Perfil Usuario */
 Route::get('/Perfil',  [UserSettingsController::class,'Perfil'])->name('Perfil')->middleware('auth');
