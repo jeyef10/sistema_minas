@@ -12,14 +12,12 @@
                 <div class="card mb-4">
 
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-    
                         <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Recepción de Recaudos</h2>
-
                     </div>
 
-                    <div class="card-body">
+                    <!-- <div class="card-body">
 
-                        {{-- <div class="row">
+                        <div class="row">
 
                             <div class="custom-control custom-radio col-2">
                                 <input type="radio" id="natural" name="tipo" value="Natural" class="custom-control-input">
@@ -31,9 +29,9 @@
                                 <label class="custom-control-label" for="juridico">Procesamiento</label>
                             </div>
 
-                        </div> --}}
+                        </div> 
 
-                    </div>
+                    </div> -->
                     
                                                 {{-- * FORMULARIO APROVECHAMIENTO DE SOLICITUDES RECAUDOS --}}
 
@@ -43,37 +41,31 @@
                             
                             <div class="row">
 
-                                <div class="card-body">
-                                    <h3 class="font-weight-bold text-primary" style="margin-left: 44%;">Datos Solicitante</h3>
-                                    <div class="row">
-        
-                                        <input type="hidden" id="tipo-natural" name="tipo" value="">
-        
-                                        <div class="col-4">
-                                            <label for="persona" class="font-weight-bold text-primary">Tipo de Solicitante</label>
-                                            <select class="select2-single form-control" id="tipo_solicitante" name="solicitante">
-                                                <option value="0">Seleccione un tipo de Solicitante</option>
-                                                <option value="Natural">Natural</option>
-                                                <option value="Jurídico">Jurídico</option>
-                                            </select>
-                                        </div>
-        
-                                        <div class="col-5">
-                                            <label for="persona" class="font-weight-bold text-primary">Solicitante</label>
-                                            <div style="display: flex;">
-                                                <select class="select2-single form-control" id="solicitante" name="solicitante_especifico_id" >
-                                                    <option value="0">Seleccione una Persona</option>
-                                                </select>
-        
-                                                {{-- <a class="btn btn-primary" href="{{ route('solicitante.create') }}" style="align-content: center; margin-left: 5%"> 
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
-                                                    </svg>
-                                                </a> --}}
-                                            </div>
-                                        </div>
+                                <div class="col-4">
+                                    <label for="persona" class="font-weight-bold text-primary">Tipo de Solicitante</label>
+                                    <select class="select2-single form-control" id="tipo_solicitante" name="solicitante">
+                                        <option value="0">Seleccione un tipo de Solicitante</option>
+                                        <option value="Natural">Natural</option>
+                                        <option value="Jurídico">Jurídico</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-5">
+                                    <label for="persona" class="font-weight-bold text-primary">Solicitante</label>
+                                    <div style="display: flex;">
+                                        <select class="select2-single form-control" id="solicitante" name="solicitante_especifico_id" >
+                                            <option value="0">Seleccione una Persona</option>
+                                        </select>
+
+                                        {{-- <a class="btn btn-primary" href="{{ route('solicitante.create') }}" style="align-content: center; margin-left: 5%"> 
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                                            </svg>
+                                        </a> --}}
                                     </div>
-                                </div> 
+                                </div>
+                            </div>
+                        </div> 
                                 
                         <div class="card-body">
                                 <h3 class="font-weight-bold text-primary" style="margin-left: 44%;">Datos Recaudos</h3>
@@ -108,8 +100,6 @@
                                 </div>
                             </div>
 
-                        </div>
-                    </div>
                             <br>
 
                             <center>
@@ -121,215 +111,10 @@
                                 </span>
                                 <span class="text">Regresar</span></a>
                             </center>
-                </form>
-
-
-                                                    {{-- * FORMULARIO PROCESAMIENTO DE SOLICITUDES RECAUDOS --}}
-
-            {{-- <form method="post" action="{{ route('solicitudes.store') }}" enctype="multipart/form-data" onsubmit="return solicitante(this)" id="Jurídico" style="display: none;">
-                    @csrf
-                    <div class="card-body">
-                        
-                        <div class="row">
-
-                            <div class="card-body">
-                                <h3 class="font-weight-bold text-primary" style="margin-left: 44%;">Datos Solicitante</h3>
-                                <div class="row">
-
-                                    <input type="hidden" id="tipo-juridico" name="tipo" value="">
-
-                                    <div class="col-4">
-                                        <label for="persona" class="font-weight-bold text-primary">Tipo de Solicitante</label>
-                                        <select class="select2-single form-control" id="tipo_solicitante_p" name="solicitante">
-                                            <option value="0">Seleccione un tipo de Solicitante</option>
-                                            <option value="Natural">Natural</option>
-                                            <option value="Jurídico">Jurídico</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-5">
-                                        <label for="persona" class="font-weight-bold text-primary">Solicitante</label>
-                                        <div style="display: flex;">
-                                            <select class="select2-single form-control" id="solicitante_p" name="solicitante_especifico_id" >
-                                                <option value="0">Seleccione una Persona</option>
-                                            </select>
-
-                                                {{-- <a class="btn btn-primary" href="{{ route('solicitante.create') }}" style="align-content: center; margin-left: 5%"> 
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
-                                                </svg>
-                                            </a> 
-                                        </div>
-                                    </div>
-                                    
-                    
-                                </div>
-                            </div> 
-                            
-                        <div class="card-body">
-                                <h3 class="font-weight-bold text-primary" style="margin-left: 44%;">Datos Recaudos</h3>
-                            <div class="row">
-
-                                <div class="col-4">
-                                    @foreach($recaudos as $value)
-                                        <div class="form-check">
-                                            <label class="form-check-label">{{ Form::checkbox('recaudos[]', $value->id, false, array('class' => 'form-check-input')) }}
-                                            {{ $value->nombre }}</label>
-                                        </div>
-                                    @endforeach 
-                                </div>
-
-                                <div class="col-4">                                     
-                                    <div class="form-group" id="simple-date1">
-                                        <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha</label>
-                                        <div class="input-group date">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                            </div>
-                                            <input type="text" class="form-control" value="01/06/2020" id="simpleDataInput" name = "simpleDataInput">
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
+                    </form>
                 </div>
-
-                        <br>
-
-                        <center>
-                            <button type="submit" class="btn btn-success btn-lg"><span class="icon text-white-60"><i class="fas fa-check"></i></span>
-                            <span class="text">Guardar</span>
-                            </button>
-                            <a  class="btn btn-info btn-lg" href="{{ url('solicitante/') }}"><span class="icon text-white-50">
-                                <i class="fas fa-info-circle"></i>
-                            </span>
-                            <span class="text">Regresar</span></a>
-                        </center>
-
-                </form> --}}
-            </div>
-        </div>    
-    </div> 
-
-                        {{-- <div class="card-body">
-                            <div class="row">
-                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                                    <li class="nav-item" role="presentation">
-                                      <button class="btn btn-outline-primary mr-1 active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Recaudos</button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                      <button class="btn btn-outline-primary mr-1" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Inspección</button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                      <button class="btn btn-outline-primary mr-1" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Datos Solicitud</button>
-                                    </li>
-                                  </ul>
-                            </div>
-                        </div>
-
-                        <div class="tab-content" id="pills-tabContent"> --}}
-
-                                                        {{-- * TAB DE RECAUDOS --}}
-                    {{-- <form method="post" action="{{ route('solicitudes.store') }}" enctype="multipart/form-data" onsubmit="return solicitante(this)" id="Natural" style="display: none;">
-                        @csrf --}}
-                        
-
-                                                {{-- ! TAB DE INSPECCIÓN --}}
-
-                        {{-- <div class="tab-pane fade show" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
-                            <div class="card-body">
-                                    <h3 class="font-weight-bold text-primary mb1" style="margin-left: 44%;">Inspección</h3>
-                                <div class="row">
-
-                                    <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Municipio</label>
-                                        <select class="select2-single form-control" id="municipio" name="municipio">
-                                            <option value="0">Seleccione un municipio</option>
-                                            @foreach($municipios as $municipio)
-                                                <option value="{{ $municipio->id }}">{{ $municipio->nom_municipio }}</option>
-                                            @endforeach
-                                        </select>                                   
-                                    </div>
-
-                                    <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Parroquia</label>
-                                        <select class="select2-single form-control" id="parroquia" name="parroquia">
-                                            <option value="0">Seleccione un parroquia</option>
-                                        </select>                                   
-                                    </div> 
-
-                                    <div class="col-4">
-                                        <label for="comisionado" class="font-weight-bold text-primary">Comisionado asignado</label>
-                                        <select class="select2-single form-control" id="comisionado" name="comisionado">
-                                            <option value="0">Seleccione un comisionado</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Funcionario Acompañante</label>
-                                        <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
-                                    </div>
-
-                                    <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Lugar</label>
-                                        <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
-                                    </div>
-
-                                    <div class="col-4">                                     
-                                        <div class="form-group" id="simple-date1">
-                                            <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha</label>
-                                            <div class="input-group date">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" value="01/06/2020" id="simpleDataInput">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Observaciones</label>
-                                        <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
-                                    </div>
-
-                                    <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Conclusiones</label>
-                                        <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
-                                    </div>
-
-                                    <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Latitud</label>
-                                        <input type="text" class="form-control" id="latitud" name="latitud" style="background: white;" value="" placeholder="Ingrese la Latitud" autocomplete="off">                                  
-                                    </div>
-
-                                    <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Longitud</label>
-                                        <input type="text" class="form-control" id="longitud" name="longitud" style="background: white;" value="" placeholder="Ingrese la Longitud" autocomplete="off">                                  
-                                    </div> --}}
-
-                                    {{-- <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Reseña Fotográfica</label> --}}
-                                        {{-- <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>--}}
-                                        {{-- <input type="file" name="resenia" id="resenia" class="btn btn-outline-info">
-                                    </div>
-
-                                    <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Estatus</label>
-                                        <select class="select2-single form-control" id="estatus" name="estatus">
-                                            <option value="0">Seleccione un estatus</option>
-                                            <option value="1">En proceso</option>
-                                            <option value="2">Aprobado</option>
-                                            <option value="3">Rechazado</option>
-                                            
-                                        </select>                                   
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>  --}}
+            </div>      
+        </div> 
 
                                             {{-- ? TAB DE SOLICITUD --}}
 

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
-// use App\Http\Controllers\BitacoraController;
+use App\Http\Controllers\BitacoraController;
 
 class ComisionadosController extends Controller
 {
@@ -81,10 +81,8 @@ class ComisionadosController extends Controller
         // $datosComisionados['id_parroquia'] = $request->input('parroquia');
         Comisionados::create($datosComisionados);
 
-        // $bitacora = new BitacoraController;
-        // $bitacora->update();
-
-        
+        $bitacora = new BitacoraController;
+        $bitacora->update();
 
         try {
         
@@ -142,12 +140,19 @@ class ComisionadosController extends Controller
        $comisionado->apellidos = $request->input('apellidos');
        $comisionado->id_municipio = $request->input('id_municipio');
        
-       $comisionado->save();
+        $comisionado->save();
 
-        // $bitacora = new BitacoraController;
-        // $bitacora->update();
+        $bitacora = new BitacoraController;
+        $bitacora->update();
 
-        return redirect ('comisionado');
+        try {
+        
+            return redirect ('comisionado');
+    
+            } catch (QueryException $exception) {
+                $errorMessage = 'Error: Está cedula ya existe en la base de datos.';
+                return redirect()->back()->withErrors($errorMessage);
+            }
     }
 
     /**
@@ -159,8 +164,12 @@ class ComisionadosController extends Controller
     public function destroy($id)
     {
        Comisionados::destroy($id);
-        // $bitacora = new BitacoraController;
-        // $bitacora->update();
+        $bitacora = new BitacoraController;
+        $bitacora->update();
         return redirect('comisionado')->with('eliminar', 'ok');
     }
 }
+
+
+
+        

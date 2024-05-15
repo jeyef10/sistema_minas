@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
-// use App\Http\Controllers\BitacoraController;
+use App\Http\Controllers\BitacoraController;
 
 class PlazosController extends Controller
 {
@@ -58,19 +58,19 @@ class PlazosController extends Controller
     public function store(Request $request)
     {
       
-        $request->validate(
-            [
-            'medida_tiempo' => 'unique:plazos,medida_tiempo'
-            ],
-            [
-            'medida_tiempo.unique' => 'Este plazo ya existe.'
-            ]
-        );
+        // $request->validate(
+        //     [
+        //     'cantidad' => 'unique:plazos,cantidad'
+        //     ],
+        //     [
+        //     'cantidad.unique' => 'Este plazo ya existe.'
+        //     ]
+        // );
 
         $datosPlazos= request()->except('_token');
         plazos::create($datosPlazos);
-        // $bitacora = new BitacoraController;
-        // $bitacora->update();
+        $bitacora = new BitacoraController;
+        $bitacora->update();
 
         
         try {
@@ -78,7 +78,7 @@ class PlazosController extends Controller
             return redirect ('plazo');
     
             } catch (QueryException $exception) {
-                $errorMessage = 'Error: Está cedula ya existe en la base de datos.';
+                $errorMessage = 'Error: .';
                 return redirect()->back()->withErrors($errorMessage);
             }
     }
@@ -114,14 +114,30 @@ class PlazosController extends Controller
      * @param  \App\Models\Plazos  $plazos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, plazos $plazos, $id)
     {
+        // $request->validate(
+        //     [
+        //     'cantidad' => 'unique:plazos,cantidad'
+        //     ],
+        //     [
+        //     'cantidad.unique' => 'Este plazo ya existe.'
+        //     ]
+        // );
+
         $datosPlazos = request()->except('_token','_method');
         Plazos::where('id','=',$id)->update($datosPlazos);
-        // $bitacora = new BitacoraController;
-        // $bitacora->update();
+        $bitacora = new BitacoraController;
+        $bitacora->update();
 
-        return redirect ('plazo');
+        try {
+        
+            return redirect ('plazo');
+    
+            } catch (QueryException $exception) {
+                $errorMessage = 'Error: .';
+                return redirect()->back()->withErrors($errorMessage);
+            }
     }
 
     /**
@@ -133,8 +149,8 @@ class PlazosController extends Controller
     public function destroy($id)
     {
         Plazos::destroy($id);
-        // $bitacora = new BitacoraController;
-        // $bitacora->update();
+        $bitacora = new BitacoraController;
+        $bitacora->update();
         return redirect('plazo')->with('eliminar', 'ok');
     }
 }

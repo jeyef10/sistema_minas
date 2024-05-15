@@ -79,6 +79,9 @@ class SolicitudesController extends Controller
             $puente->save();// Guardar la instancia de la tabla puente (solicitudes_recaudos)
         }
 
+        $bitacora = new BitacoraController;
+        $bitacora->update();
+
         return redirect('inspeccion');
     }
 
@@ -151,6 +154,9 @@ class SolicitudesController extends Controller
             $puente->id_solicitud = $solicitud->id;
             $puente->save();
         }
+
+        $bitacora = new BitacoraController;
+        $bitacora->update();
 
         return redirect('inspeccion', ['id' => $solicitud->id]);
     }

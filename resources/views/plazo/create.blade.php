@@ -74,7 +74,7 @@
     </div>  
 
  
-    @if ($errors->any())
+    <!-- @if ($errors->any())
     <script>
         var errorMessage = @json($errors->first());
         Swal.fire({
@@ -92,6 +92,6 @@
                         }
                         })
     </script>
-@endif
+@endif -->
 
 @endsection

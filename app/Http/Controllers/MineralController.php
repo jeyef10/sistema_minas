@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
-// use App\Http\Controllers\BitacoraController;
+use App\Http\Controllers\BitacoraController;
 
 class MineralController extends Controller
 {
@@ -57,8 +57,6 @@ class MineralController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-
-
     {
         $request->validate(
             [
@@ -71,11 +69,8 @@ class MineralController extends Controller
 
         $datosMinerales = request()->except('_token');
         Minerales::create($datosMinerales);
-        // $bitacora = new BitacoraController;
-        // $bitacora->update();
-
-        
-
+        $bitacora = new BitacoraController;
+        $bitacora->update();
          
         try {
         
@@ -118,14 +113,31 @@ class MineralController extends Controller
      * @param  \App\Models\Mineral  $mineral
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, minerales $minerales,  $id)
     {
+        $request->validate(
+            [
+            'nombre' => 'unique:minerales,nombre'
+            ],
+            [
+            'nombre.unique' => 'Este mineral ya existe.'
+            ]
+        );
+
         $datosMinerales = request()->except('_token','_method');
         Minerales::where('id','=',$id)->update($datosMinerales);
-        // $bitacora = new BitacoraController;
-        // $bitacora->update();
+        $bitacora = new BitacoraController;
+        $bitacora->update();
 
-        return redirect ('mineral');
+
+        try {
+        
+            return redirect ('mineral');
+    
+            } catch (QueryException $exception) {
+                $errorMessage = 'Error: Este mineral ya existe en la base de datos.';
+                return redirect()->back()->withErrors($errorMessage);
+            }
     }
 
     /**
@@ -137,8 +149,8 @@ class MineralController extends Controller
     public function destroy($id)
     {
         Minerales::destroy($id);
-        // $bitacora = new BitacoraController;
-        // $bitacora->update();
+        $bitacora = new BitacoraController;
+        $bitacora->update();
         return redirect('mineral')->with('eliminar', 'ok');
     }
 }

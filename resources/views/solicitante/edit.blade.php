@@ -199,5 +199,25 @@
         inputElement.value = capitalizarPrimeraLetra(inputElement.value);
     }
 </script>
+
+@if ($errors->any())
+    <script>
+        var errorMessage = @json($errors->first());
+        Swal.fire({
+                title: 'Solicitante',
+                text: " Esta Cédula/Rif Ya Existe.",
+                icon: 'warning',
+                showconfirmButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: '¡OK!',
+                
+                }).then((result) => {
+            if (result.isConfirmed) {
+
+                this.submit();
+            }
+            })
+    </script>
+@endif
   
 @endsection

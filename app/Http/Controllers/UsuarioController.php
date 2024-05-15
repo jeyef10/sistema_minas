@@ -62,7 +62,11 @@ class UsuarioController extends Controller
             'username' => 'required',
             'password' => 'required|same:confirm_password',
             'roles' => 'required'
-        ]);
+            ],
+            [
+            'email.unique' => 'Este Email ya existe.'
+            ]
+        );
     
         $input = $request->all();
         // $input['password'] = Hash::make($input['password']);
@@ -71,8 +75,15 @@ class UsuarioController extends Controller
         $user->assignRole($request->input('roles'));
         $bitacora = new BitacoraController;
         $bitacora->update();
-    
+
+        try {
+        
         return redirect()->route('usuarios.index');
+    
+        } catch (QueryException $exception) {
+            $errorMessage = 'Error: Está cedula ya existe en la base de datos.';
+            return redirect()->back()->withErrors($errorMessage);
+        }
     }
 
     /**
@@ -115,7 +126,11 @@ class UsuarioController extends Controller
             'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'same:confirm-password',
             'roles' => 'required'
-        ]);
+            ],
+            [
+            'email.unique' => 'Este Email ya existe.'
+            ]
+        );
     
         $input = $request->all();
         if(!empty($input['password'])){ 
@@ -132,8 +147,17 @@ class UsuarioController extends Controller
         $user->assignRole($request->input('roles'));
         $bitacora = new BitacoraController;
         $bitacora->update();
-    
+
+        try {
+        
         return redirect()->route('usuarios.index');
+    
+        } catch (QueryException $exception) {
+            $errorMessage = 'Error: Está cedula ya existe en la base de datos.';
+            return redirect()->back()->withErrors($errorMessage);
+        }
+    
+        
     }
 
     /**

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 //agregamos
 use Spatie\Permission\Models\Role;
-// use App\Http\Controllers\BitacoraController;
+use App\Http\Controllers\BitacoraController;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
 
@@ -61,11 +61,9 @@ class RolController extends Controller
     
         $role = Role::create(['name' => $request->input('name')]);
         $role->syncPermissions($request->input('permission'));
-        // $bitacora = new BitacoraController;
-        // $bitacora->update();
+        $bitacora = new BitacoraController;
+        $bitacora->update();
         
-
-
         try {
         
             return redirect()->route('roles.index');
@@ -122,10 +120,18 @@ class RolController extends Controller
         $role->save();
     
         $role->syncPermissions($request->input('permission'));
-        // $bitacora = new BitacoraController;
-        // $bitacora->update();
+        $bitacora = new BitacoraController;
+        $bitacora->update();
+
+        try {
+        
+            return redirect()->route('roles.index');
     
-        return redirect()->route('roles.index');  
+            } catch (QueryException $exception) {
+                $errorMessage = 'Error: Está rol ya existe en la base de datos.';
+                return redirect()->back()->withErrors($errorMessage);
+            }
+     
     }
 
     /**
@@ -137,8 +143,8 @@ class RolController extends Controller
     public function destroy($id)
     {
         DB::table("roles")->where('id',$id)->delete();
-        // $bitacora = new BitacoraController;
-        // $bitacora->update();
+        $bitacora = new BitacoraController;
+        $bitacora->update();
         return redirect()->route('roles.index')->with('eliminar', 'ok'); 
     }
 }
