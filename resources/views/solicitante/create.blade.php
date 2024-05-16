@@ -3,6 +3,15 @@
 <title>@yield('title') Registrar Solicitante</title>
 <script src="{{ asset('js/validaciones.js') }}"></script>
 <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
+<style>
+    .formulario {
+        display: none; /* Inicialmente ocultos */
+    }
+
+    .formulario.active {
+        display: block;
+    }
+</style>
 
 @section('contenido')
 
@@ -35,7 +44,7 @@
 
                     </div>
                     
-                    <form method="post" action="{{ route('solicitante.store') }}" enctype="multipart/form-data" onsubmit="return Solicitante(this)" id="Natural" style="">
+                    <form method="post" action="{{ route('solicitante.store') }}" enctype="multipart/form-data" onsubmit="return Solicitante(this)" id="Natural" style="" class="formulario active">
                         @csrf
                             
                         <div class="card-body">
@@ -80,7 +89,7 @@
                             </center>
                     </form>
 
-                    <form method="post" action="{{ route('solicitante.store') }}" enctype="multipart/form-data" onsubmit="return Solicitante_juridico(this)" id="Jurídico" style="display: none;">
+                    <form method="post" action="{{ route('solicitante.store') }}" enctype="multipart/form-data" onsubmit="return Solicitante_juridico(this)" id="Jurídico" style="" class="formulario inactive">
                         @csrf
                         <div class="card-body">
                             
@@ -122,54 +131,73 @@
                             </center>
 
                     </form>
+
                 </div>
             </div>    
     </div>
 
     <script>
         function showHideForms() {
-        // Selecciona los botones de radio con el nombre "tipo"
-        const radios = document.querySelectorAll('input[type="radio"][name="tipo"]'); 
+            // Selecciona todos los radio buttons con el nombre "tipo"
+            const radios = document.querySelectorAll('input[type="radio"][name="tipo"]');
 
-        // Selecciona los formularios con los ID "Natural" y "Jurídico"
-        const forms = document.querySelectorAll('#Natural, #Jurídico'); 
+            // Selecciona todos los formularios con los ID "Natural" y "Jurídico"
+            const forms = document.querySelectorAll('#Natural, #Jurídico');
+    
+            // Recorre todos los formularios
+            forms.forEach(form => {
 
-        // Inicialmente oculta ambos formularios
-        /* forms[0].style.display = 'none';
-        forms[1].style.display = 'none'; */
+                // Si el ID del formulario es "Natural"
+                if (form.id === 'Natural') {
 
-        // Muestra el formulario "Natural" por defecto
-        const defaultForm = document.querySelector('#Natural');
-        defaultForm.style.display = 'block';
+                    // Muestra el formulario "Natural"
+                    form.classList.remove('inactive');
+                    form.classList.add('active');
 
-        // Añade un evento de cambio a los botones de radio
-        radios.forEach(radio => {
-            radio.addEventListener('change', (event) => {
+                    // Establece el valor del campo oculto "tipo" en el formulario "Natural" a "Natural"
+                    document.querySelector(`#tipo-natural`).value = 'Natural';
+                } else {
 
-                // Obtiene el ID del formulario a mostrar
-                const selectedFormId = event.target.value; 
-
-                // Recorre todos los formularios
-                for (const form of forms) {
-
-                    // Si el ID del formulario coincide con el ID seleccionado, muestra el formulario
-                    if (form.id === selectedFormId) {
-                        form.style.display = 'block';
-
-                        // Establece el valor del campo de tipo en el formulario seleccionado
-                        document.querySelector(`#tipo-${selectedFormId.toLowerCase()}`).value = selectedFormId;
-                    } else {
-                        
-                        // Si no coincide, oculta el formulario
-                        form.style.display = 'none';
-                    }
+                    // Oculta el formulario "Jurídico"
+                    form.classList.remove('active');
+                    form.classList.add('inactive');
                 }
             });
-        });
-    }
+    
+            // Recorre todos los radio buttons
+            radios.forEach(radio => {
 
-    // Añade el evento de carga a la ventana para ejecutar la función showHideForms cuando se carga la página
-    window.addEventListener('DOMContentLoaded', showHideForms);
+                // Agrega un evento de cambio a cada radio button
+                radio.addEventListener('change', (event) => {
+
+                    // Obtiene el valor del radio button seleccionado
+                    const selectedFormId = event.target.value;
+    
+                    // Recorre todos los formularios
+                    forms.forEach(form => {
+
+                        // Si el ID del formulario coincide con el valor del radio button seleccionado
+                        if (form.id === selectedFormId) {
+
+                            // Muestra el formulario correspondiente
+                            form.classList.remove('inactive');
+                            form.classList.add('active');
+
+                            // Establece el valor del campo oculto "tipo" en el formulario correspondiente al valor del radio button seleccionado
+                            document.querySelector(`#tipo-${selectedFormId.toLowerCase()}`).value = selectedFormId;
+                        } else {
+                            
+                            // Oculta el otro formulario
+                            form.classList.remove('active');
+                            form.classList.add('inactive');
+                        }
+                    });
+                });
+            });
+        }
+    
+        // Ejecuta la función showHideForms cuando se cargue la página
+        window.addEventListener('DOMContentLoaded', showHideForms);
     </script>
 
                                                                                 {{-- POR SI ACASO JODEN MAS --}}
