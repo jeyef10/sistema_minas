@@ -58,6 +58,7 @@
                         <table class="table align-items-center table-flush" id="dataTable">
                             <thead class="thead-light">
                                 <tr>
+                                    <th class="font-weight-bold text-Secondary">Nº</th>
                                     <th class="font-weight-bold text-Secondary">Solicitante</th>
                                     <th class="font-weight-bold text-Secondary">Cédula</th>
                                     <th class="font-weight-bold text-Secondary">Rif</th>
@@ -72,7 +73,7 @@
                                 @foreach ($solicitudes as $solicitud)
                                 <tr>
                                    
-                                    <!-- <td class="font-weight-bold text-Secondary">{{ $solicitud->id}}</td> -->
+                                    <td class="font-weight-bold text-Secondary">{{ $solicitud->id}}</td>
 
                                         <!-- Muestra el tipo de solicitante (Natural o Jurídico) -->
                                         <td class="font-weight-bold text-Secondary">{{ $solicitud->solicitante->tipo }}</td>

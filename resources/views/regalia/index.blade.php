@@ -40,7 +40,7 @@
                         <table class="table align-items-center table-flush" id="dataTable">
                             <thead class="thead-light">
                                 <tr>
-                                    <th class="font-weight-bold text-Secondary">Monto</th>
+                                    <th class="font-weight-bold text-Secondary">Tasa</th>
                                     <th class="font-weight-bold text-Secondary"> Moneda/Longitud</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center> </th>
                                 </tr>

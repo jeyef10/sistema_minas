@@ -19,14 +19,9 @@ class InspeccionesController extends Controller
      */
     public function index()
     {
-        $solicitudes = Solicitudes::with('solicitante','recaudo')->get();
-
-        // $solicitudesAgrupadas =$solicitudes->groupBy(function($solicitudes) {
-        //     // Agrupa por la identificación de la persona y del equipo.
-        //     return $solicitudes->id_solicitante . 'id' . $solicitudes->id_recaudo;
-        // });
-
+        $solicitudes = Solicitudes::with('solicitante', 'solicitudesrecaudos')->get();
         return view('inspeccion.index', compact('solicitudes'));
+
     }
 
     /**

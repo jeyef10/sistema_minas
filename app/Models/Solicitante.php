@@ -18,4 +18,10 @@ class Solicitante extends Model
     {
         return $this->morphTo();
     }
+
+    public function solicitudes()
+    {
+        return $this->hasMany(Solicitudes::class, 'id_solicitante');
+    }
+    
 }

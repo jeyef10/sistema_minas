@@ -27,7 +27,7 @@
                             
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Nombre</label>
-                                    <input type="text" class="form-control" id="recaudo" name="nombre" style="background: white;" value="{{ isset($recaudo->nombre)?$recaudo->nombre:'' }}" placeholder="Ingrese El Nombre" autocomplete="off" onkeypress="return soloLetras(event);">
+                                    <input type="text" class="form-control" id="recaudo" name="nombre" style="background: white;" value="{{ isset($recaudo->nombre)?$recaudo->nombre:'' }}" placeholder="Ingrese El Nombre" autocomplete="off" onkeypress="return soloLetras(event);" oninput="capitalizarInput('recaudo')">
                                 </div>
         
                             </div>
@@ -49,24 +49,37 @@
                 </div>
             </div>    
     </div> 
+
+    {{-- ? FUNCIÓN PARA CONVERTIR UNA LETRA EN MAYÚSCULAS Y LOS DEMAS EN MINÚSCULAS --}}
+    
+    <script>
+        function capitalizarPrimeraLetra(texto) {
+            return texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
+        }
+    
+        function capitalizarInput(idInput) {
+            const inputElement = document.getElementById(idInput);
+            inputElement.value = capitalizarPrimeraLetra(inputElement.value);
+        }
+    </script>
     
     @if ($errors->any())
     <script>
         var errorMessage = @json($errors->first());
         Swal.fire({
-                            title: 'Recaudo',
-                            text: " Esta Recaudo Ya Existe.",
-                            icon: 'warning',
-                            showconfirmButton: true,
-                            confirmButtonColor: '#3085d6',
-                            confirmButtonText: '¡OK!',
-                            
-                            }).then((result) => {
-                        if (result.isConfirmed) {
+                    title: 'Recaudo',
+                    text: " Esta Recaudo Ya Existe.",
+                    icon: 'warning',
+                    showconfirmButton: true,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: '¡OK!',
+                    
+                    }).then((result) => {
+                if (result.isConfirmed) {
 
-                            this.submit();
-                        }
-                        })
+                    this.submit();
+                }
+                })
     </script>
 @endif
 

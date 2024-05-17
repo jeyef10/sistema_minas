@@ -185,4 +185,25 @@
 
             
             </script>
+
+        @if ($errors->any())
+            <script>
+                var errorMessage = @json($errors->first());
+                Swal.fire({
+                        title: 'Solicitante',
+                        text: " No se puede eliminar el Solicitante debido a que tiene una Recepción de Recaudos asignados.",
+                        icon: 'warning',
+                        showconfirmButton: true,
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: '¡OK!',
+                        
+                        }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        this.submit();
+                    }
+                    })
+            </script>
+        @endif
+
 @endsection

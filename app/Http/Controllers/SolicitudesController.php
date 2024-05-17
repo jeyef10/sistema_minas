@@ -34,7 +34,7 @@ class SolicitudesController extends Controller
      */
     public function create()
     {   
-        $solicitantes = Solicitante::all();
+        $solicitantes = Solicitante::with('solicitanteEspecifico')->get();
         $recaudos = Recaudos::orderBy('nombre', 'asc')->get();
         $solicitudesrecaudos = SolicitudesRecaudos::all();
 
@@ -125,7 +125,24 @@ class SolicitudesController extends Controller
     public function edit($id)
     {
         $solicitudes = Solicitudes::findOrFail($id);
-        return view('solicitudes.edit' , compact('solicitudes'));
+        $tipoSolicitante = $solicitudes->solicitante;
+        $datosSolicitante =  $solicitudes->solicitante->solicitanteEspecifico;
+        $fecha = $solicitudes->fecha;
+        
+        // Obtener los IDs de los recaudos seleccionados para la solicitud actual
+        $recaudosSeleccionadosIds = $solicitudes->recaudos()->pluck('id')->toArray();
+
+        // Obtener todos los recaudos
+        $recaudos = Recaudos::all();
+
+        // Marcar los recaudos seleccionados como seleccionados
+        $recaudos->each(function ($recaudo) use ($recaudosSeleccionadosIds) {
+            $recaudo->selected = in_array($recaudo->id, $recaudosSeleccionadosIds);
+
+    });
+
+        return view('solicitudes.edit' , compact('solicitudes', 'tipoSolicitante', 'datosSolicitante', 'recaudos', 'fecha'));
+
     }
 
     /**
@@ -158,7 +175,7 @@ class SolicitudesController extends Controller
         $bitacora = new BitacoraController;
         $bitacora->update();
 
-        return redirect('inspeccion', ['id' => $solicitud->id]);
+        return redirect('inspeccion');
     }
 
     /**

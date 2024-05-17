@@ -26,7 +26,7 @@
                             <div class="row">
 
                             <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">Monto</label>
+                                    <label  class="font-weight-bold text-primary">Tasa</label>
                                     <input type="text" class="form-control" id="monto" name="monto" style="background: white;" value="" placeholder="Ingrese el monto" autocomplete="off" onkeypress="return solonum(event);">
                                 </div>
 

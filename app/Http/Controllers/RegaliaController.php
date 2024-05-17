@@ -63,7 +63,7 @@ class RegaliaController extends Controller
             'monto' => 'unique:regalias,monto'
             ],
             [
-            'monto.unique' => 'Este monto ya existe.'
+            'monto.unique' => 'Está Tasa ya existe.'
             ]
         );
 
@@ -120,7 +120,7 @@ class RegaliaController extends Controller
             'monto' => 'unique:regalias,monto'
             ],
             [
-            'monto.unique' => 'Este monto ya existe.'
+            'monto.unique' => 'Está Tasa ya existe.'
             ]
         );
 

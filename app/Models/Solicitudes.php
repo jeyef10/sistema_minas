@@ -24,11 +24,10 @@ class Solicitudes extends Model
         return $this->belongsTo(SolicitudesRecaudos::class, 'id_solicitud', 'id', 'id_recaudo');
     }
 
-    public function recaudo()
+    public function recaudos()
     {
         return $this->belongsTo(Recaudos::class, 'id_recaudo', 'id', 'nombre');
     }
-
     
 }
 

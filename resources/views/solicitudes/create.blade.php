@@ -12,7 +12,7 @@
                 <div class="card mb-4">
 
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Recepción de Recaudos</h2>
+                        <h2 class="font-weight-bold text-primary" style="margin-left: 34%;">Recepción de Recaudos</h2>
                     </div>
 
                     <!-- <div class="card-body">
@@ -92,7 +92,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control" value="01/06/2020" id="simpleDataInput" name= "simpleDataInput">
+                                                <input type="text" class="form-control" value="16/05/2024" id="simpleDataInput" name= "simpleDataInput">
                                             </div>
                                         </div>
                                     </div>

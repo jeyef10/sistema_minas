@@ -37,7 +37,7 @@
                             
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Nombre</label>
-                                    <input type="text" class="form-control" id="username" name="nombre" style="background: white;" value="{{ isset($mineral->nombre)?$mineral->nombre:'' }}" placeholder="Ingrese El Nombre" autocomplete="off">
+                                    <input type="text" class="form-control" id="username" name="nombre" style="background: white;" value="{{ isset($mineral->nombre)?$mineral->nombre:'' }}" placeholder="Ingrese El Nombre" autocomplete="off"  oninput="capitalizarInput('username')">
                                 </div>
         
                                 <div class="col-4">
@@ -68,6 +68,19 @@
                 </div>
             </div>    
     </div> 
+
+    {{-- ? FUNCIÓN PARA CONVERTIR UNA LETRA EN MAYÚSCULAS Y LOS DEMAS EN MINÚSCULAS --}}
+    
+    <script>
+        function capitalizarPrimeraLetra(texto) {
+            return texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
+        }
+    
+        function capitalizarInput(idInput) {
+            const inputElement = document.getElementById(idInput);
+            inputElement.value = capitalizarPrimeraLetra(inputElement.value);
+        }
+    </script>
     
     @if ($errors->any())
     <script>
