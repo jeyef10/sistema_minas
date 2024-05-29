@@ -39,9 +39,14 @@
                         @csrf
                     
                             <div class="card-body">
-{{--                                     <h3 class="font-weight-bold text-primary mb1" style="margin-left: 44%;">Inspección</h3> --}}
+
+                            {{-- <h3 class="font-weight-bold text-primary mb1" style="margin-left: 44%;">Inspección</h3> --}}
                                 <div class="row">
 
+                                    @foreach ($solicitudes as $solicitud)
+                                        <input type="hidden" class="form-control" id="id_solicitud" name="id_solicitud" style="background: white;" value="{{ isset($solicitud->id)?$solicitud->id:'' }}" placeholder="" autocomplete="off">                                  
+                                    @endforeach
+                                    
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Municipio</label>
                                         <select class="select2-single form-control" id="municipio" name="municipio">
@@ -68,22 +73,22 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Funcionario Acompañante</label>
-                                        <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
+                                        <textarea name="acompañante" class="form-control" id="acompañante" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
                                     </div>
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Lugar</label>
-                                        <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
+                                        <textarea name="lugar" class="form-control" id="lugar" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
                                     </div>
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Observaciones</label>
-                                        <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
+                                        <textarea name="observaciones" class="form-control" id="observaciones" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
                                     </div>
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Conclusiones</label>
-                                        <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
+                                        <textarea name="conclusiones" class="form-control" id="conclusiones" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
                                     </div>
 
                                     <div class="col-4">
@@ -99,7 +104,8 @@
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Reseña Fotográfica</label>
                                         <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>
-                                        <input type="file" name="resenia" id="resenia" class="btn btn-outline-info">
+
+                                        <input type="file" name="reseña" id="reseña" class="btn btn-outline-info">
                                     </div>
 
                                     <div class="col-4">                                     
@@ -109,7 +115,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control" value="01/06/2020" id="simpleDataInput">
+                                                <input type="text" name="fecha" class="form-control" value="01/06/2020" id="simpleDataInput">
                                             </div>
                                         </div>
                                     </div>

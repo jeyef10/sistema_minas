@@ -567,7 +567,8 @@ function Solicitante(obj) {
        obj.nombre.focus();
        return false;
    }
-   if (/^([a-zA-Z0-9])\1+$/.test(nombre  )) {
+
+   if (/^[A-Z][a-zA-Z0-9]*$/.test(nombre)) {
        Swal.fire({
            title: 'Solicitante',
            text: "El campo del nombre no debe contener caracteres repetidos.",
@@ -584,6 +585,7 @@ function Solicitante(obj) {
        obj.nombre.focus();
        return false;
    }
+
 //    if (!/^[A-Z][a-z]+$/.test(nombre  )) {
 //        Swal.fire({
 //            title: 'Solicitante',
@@ -655,7 +657,7 @@ function Solicitante(obj) {
        obj.apellido.focus();
        return false;
    }
-   if (/^([a-zA-Z0-9])\1+$/.test(apellido)) {
+   if (/^[A-Z][a-zA-Z0-9]*$/.test(apellido)) {
        Swal.fire({
            title: 'Solicitante',
            text: "El campo de apellido no debe contener caracteres repetidos.",

@@ -40,11 +40,11 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th class="font-weight-bold text-Secondary">Tipo de Solicitante</th>
-                                    <th class="font-weight-bold text-Secondary">Cédula</th>
-                                    <th class="font-weight-bold text-Secondary">Rif</th>
-                                    <th class="font-weight-bold text-Secondary">Nombre</th>
-                                    <th class="font-weight-bold text-Secondary">Apellido</th>
-                                    <th class="font-weight-bold text-Secondary">Correo</th>
+                                    <th class="font-weight-bold text-Secondary">Cédula/Rif</th>
+                                    {{-- <th class="font-weight-bold text-Secondary">Rif</th> --}}
+                                    <th class="font-weight-bold text-Secondary">Solicitante</th>
+                                    {{-- <th class="font-weight-bold text-Secondary">Apellido</th> --}}
+                                    {{-- <th class="font-weight-bold text-Secondary">Correo</th> --}}
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center> </th>
                                 </tr>
                             </thead>
@@ -59,20 +59,24 @@
                                         <!-- Verifica si el solicitante es una Persona Natural -->
                                         @if ($solicitante->solicitanteEspecifico instanceof \App\Models\PersonaNatural)
                                             <!-- Si es una Persona Natural, muestra la cédula, el nombre y el apellido -->
-                                            <td class="font-weight-bold text-Secondary">{{ $solicitante->solicitanteEspecifico->cedula }}</td>
-                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
-                                            <td class="font-weight-bold text-Secondary">{{ $solicitante->solicitanteEspecifico->nombre }}</td>
-                                            <td class="font-weight-bold text-Secondary">{{ $solicitante->solicitanteEspecifico->apellido }}</td>
-                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
+                                            <td class="font-weight-bold text-Secondary">
+                                                {{ $solicitante->solicitanteEspecifico->cedula }}
+                                            </td>                                        
+                                            {{-- <td class="font-weight-bold text-Secondary">{{ $solicitante->solicitanteEspecifico->cedula }}</td>
+                                            <td class="font-weight-bold text-Secondary">No Aplica</td> --}}
+                                            <td class="font-weight-bold text-Secondary">{{ $solicitante->solicitanteEspecifico->nombre }} {{ $solicitante->solicitanteEspecifico->apellido }}</td>
+                                            {{-- <td class="font-weight-bold text-Secondary">{{ $solicitante->solicitanteEspecifico->apellido }}</td> --}}
+                                            {{-- <td class="font-weight-bold text-Secondary">No Aplica</td> --}}
 
                                         <!-- Verifica si el solicitante es una Persona Jurídica -->
                                         @elseif ($solicitante->solicitanteEspecifico instanceof \App\Models\PersonaJuridica)
                                             <!-- Si es una Persona Jurídica, muestra el rif, el nombre y el correo -->
-                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
-                                            <td class="font-weight-bold text-Secondary">{{ $solicitante->solicitanteEspecifico->rif }}</td>
+                                            <td class="font-weight-bold text-Secondary">
+                                                {{ $solicitante->solicitanteEspecifico->rif }}
+                                            </td>                                        
                                             <td class="font-weight-bold text-Secondary">{{ $solicitante->solicitanteEspecifico->nombre }}</td>
-                                            <td class="font-weight-bold text-Secondary">No Aplica</td>
-                                            <td class="font-weight-bold text-Secondary">{{ $solicitante->solicitanteEspecifico->correo }}</td>
+                                            {{-- <td class="font-weight-bold text-Secondary"></td> --}}
+                                            {{-- <td class="font-weight-bold text-Secondary">{{ $solicitante->solicitanteEspecifico->correo }}</td> --}}
                                         @endif
                                         
                                         <td>

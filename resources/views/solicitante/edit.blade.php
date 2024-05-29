@@ -65,12 +65,12 @@
             
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Nombre</label>
-                                        <input type="text" class="form-control" id="nombre" name="nombre" style="background: white;" value="{{ $solicitante->solicitanteEspecifico->nombre }}" placeholder="Ingrese El Nombre" autocomplete="off" oninput="capitalizarInput('nombre')">
+                                        <input type="text" class="form-control" id="nombre" name="nombre" style="background: white;" value="{{ $solicitante->solicitanteEspecifico->nombre }}" placeholder="Ingrese El Nombre" autocomplete="off" oninput="capitalizarInput('nombre')" onkeypress="return soloLetras(event);">
                                     </div>
             
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Apellido</label>
-                                        <input type="text" class="form-control" id="apellido" name="apellido" style="background: white;" value="{{ $solicitante->solicitanteEspecifico->apellido }}" placeholder="Ingrese El Apellido" autocomplete="off" oninput="capitalizarInput('apellido')">
+                                        <input type="text" class="form-control" id="apellido" name="apellido" style="background: white;" value="{{ $solicitante->solicitanteEspecifico->apellido }}" placeholder="Ingrese El Apellido" autocomplete="off" oninput="capitalizarInput('apellido')" onkeypress="return soloLetras(event);">
                                     </div>
 
                                 </div>
@@ -191,7 +191,7 @@
 
 <script>
     function capitalizarPrimeraLetra(texto) {
-        return texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
+        return texto.charAt(0).toUpperCase() + texto.slice(1);
     }
 
     function capitalizarInput(idInput) {
