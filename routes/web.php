@@ -21,8 +21,8 @@ use App\Http\Controllers\MineralController;
 use App\Http\Controllers\RegaliaController;
 use App\Http\Controllers\PlazosController;
 use App\Http\Controllers\CategoriaController;
-use App\Http\Controllers\SolicitudesController;
-use App\Http\Controllers\InspeccionesController;
+use App\Http\Controllers\RecepcionController;
+use App\Http\Controllers\PlanificacionController;
 
 
 
@@ -129,16 +129,18 @@ Route::get('/categoria/create', [CategoriaController::class, 'create'])->name('c
 Route::get('/categoria/pdf',  [CategoriaController::class,'pdf'])->name('categoria')->middleware('auth');
 Route::resource('categoria', CategoriaController::class)->middleware('auth');
 
-/* Ruta Solicitudes */
-Route::get('/solicitudes/create', [SolicitudesController::class, 'create'])->name('create')->middleware('auth');
-Route::resource('solicitudes', SolicitudesController::class)->middleware('auth');
-Route::get('/solicitudes/create/fetch-solicitantes/{tipoSolicitante}', [SolicitudesController::class, 'fetchSolicitantesByTipo']);
+/* Ruta Recepcion de Recaudos */
+Route::get('/recepcion/create', [RecepcionController::class, 'create'])->name('create')->middleware('auth');
+Route::resource('recepcion', RecepcionController::class)->middleware('auth');
+Route::get('/recepcion/create/fetch-solicitantes/{tipoSolicitante}', [RecepcionController::class, 'fetchSolicitantesByTipo']);
+Route::get('/recepcion/create/fetch-minerales', [RecepcionController::class, 'fetchMinerales']);
+Route::get('/recepcion/create/fetch-recaudos', [RecepcionController::class, 'fetchRecaudos']);
 
-/* Ruta Inspección */
-Route::get('/inspeccion', [InspeccionesController::class,'index'])->name('inspeccion')->middleware('auth');
-Route::get('/inspeccion/create', [InspeccionesController::class, 'create'])->name('create')->middleware('auth');
-Route::resource('inspeccion', InspeccionesController::class)->middleware('auth');
-Route::get('/inspeccion/create/fetchComisionados/{municipioId}', [InspeccionesController::class, 'fetchComisionados']);
+/* Ruta Planificación */
+Route::get('/planificacion', [PlanificacionController::class,'index'])->name('planificacion')->middleware('auth');
+Route::get('/planificacion/create', [PlanificacionController::class, 'create'])->name('create')->middleware('auth');
+Route::resource('planificacion', PlanificacionController::class)->middleware('auth');
+Route::get('/planificacion/create/fetchComisionados/{municipioId}', [PlanificacionController::class, 'fetchComisionados']);
 
 /* Ruta Bitacora*/
 Route::get('bitacora', [ReporteController::class, 'bitacora'])->name('bitacora')->middleware('auth');

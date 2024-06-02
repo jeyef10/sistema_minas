@@ -21,8 +21,8 @@ class Comisionados extends Model
         return $this->belongsTo(Municipio::class, 'id_municipio');
     }
     
-    public function solicitudesinspecciones()
+    public function planiciacioninspecciones()
     {
-        return $this->hasMany(SolicitudesInspecciones::class, 'id_solicitud', 'id', 'id_comisionado');
+        return $this->hasMany(PlaniciacionInspecciones::class, 'id_planificacion', 'id', 'id_comisionado');
     }
 }

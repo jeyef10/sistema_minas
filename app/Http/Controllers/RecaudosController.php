@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Recaudos;
-use App\Models\SolicitudesRecaudos;
+use App\Models\RecepcionRecaudos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +47,7 @@ class RecaudosController extends Controller
      */
     public function create()
     {
-        $solicitudesrecaudos = SolicitudesRecaudos::get();
+        $recepcionrecaudos = RecepcionRecaudos::get();
         return view('recaudo.create');
     }
 
@@ -62,14 +62,19 @@ class RecaudosController extends Controller
 
         $request->validate(
             [
-            'nombre' => 'unique:recaudos,nombre'
+            'nombre' => 'unique:recaudos,nombre',
+            'categoria_recaudos' => 'required|array',
             ],
             [
             'nombre.unique' => 'Este recaudo ya existe.'
             ]
         );
+    
+        $recaudos = Recaudos::create([
+            'nombre' => $request->input('nombre'),
+            'categoria_recaudos' => json_encode($request->input('categoria_recaudos')) // Guardar opciones como JSON
+        ]);
 
-        $recaudos = Recaudos::create(['nombre' => $request->input('nombre')]);
         $bitacora = new BitacoraController;
         $bitacora->update();
         
@@ -114,19 +119,24 @@ class RecaudosController extends Controller
      * @param  \App\Models\Recaudos  $recaudos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, recaudos $recaudos, $id)
+    public function update(Request $request, $id)
     {
         $request->validate(
             [
-            'nombre' => 'unique:recaudos,nombre'
+            'nombre' => 'unique:recaudos,nombre',
+            'categoria_recaudos' => 'required|array',
             ],
             [
             'nombre.unique' => 'Este recaudo ya existe.'
             ]
         );
-        
-        $datosRecaudos = request()->except('_token','_method');
-        Recaudos::where('id','=',$id)->update($datosRecaudos);
+
+        $recaudo = Recaudos::find($id);
+
+        $recaudo->nombre = $request->input('nombre');
+        $recaudo->categoria_recaudos = json_encode($request->input('categoria_recaudos'));
+
+        $recaudo->save();
         
         $bitacora = new BitacoraController;
         $bitacora->update();
@@ -139,7 +149,6 @@ class RecaudosController extends Controller
                 $errorMessage = 'Error: .';
                 return redirect()->back()->withErrors($errorMessage);
             }
-
         
     }
 

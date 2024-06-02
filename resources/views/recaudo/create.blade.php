@@ -4,6 +4,7 @@
 <script src="{{ asset('js/validaciones.js') }}"></script>
 <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
 
+
 @section('contenido')
 
     <div class="container-fluid" id="container-wrapper">
@@ -24,9 +25,18 @@
                             
                             <div class="row">
 
-                            <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">Nombre</label>
+                                <div class="col-4">
+                                    <label for="recaudo" class="font-weight-bold text-primary">Nombre</label>
                                     <input type="text" class="form-control" id="recaudo" name="nombre" style="background: white;" value="" placeholder="Ingrese un Recaudo" autocomplete="off" onkeypress="return soloLetras(event);" oninput="capitalizarInput('recaudo')">
+                                </div>
+
+                                <div class="col-5">
+                                    <label for="select2Multiple" class="font-weight-bold text-primary">Categoria</label>
+                                    <select class="select2-multiple form-control" name="categoria_recaudos[]" multiple="multiple" id="select2Multiple">
+                                        <option value="" disabled>Seleccione una Categoria</option>
+                                        <option value="Aprovechamiento">Aprovechamiento</option>
+                                        <option value="Procesamiento">Procesamiento</option>
+                                    </select>
                                 </div>
 
                             </div>
@@ -48,9 +58,30 @@
                 </div>
             </div>    
     </div> 
-
-    {{-- ? FUNCIÓN PARA CONVERTIR UNA LETRA EN MAYÚSCULAS Y LOS DEMAS EN MINÚSCULAS --}}
     
+    <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('vendor/select2/dist/js/select2.min.js')}}"></script>
+  
+
+    <script>
+
+    $(document).ready(function () {
+
+    $('.select2-single').select2();
+
+      // Select2 Single  with Placeholder
+      $('.select2-single-placeholder').select2({
+        placeholder: "Select a Province",
+        allowClear: true
+      });      
+
+      // Select2 Multiple
+      $('.select2-multiple').select2();
+    });
+    </script>
+    
+    {{-- ? FUNCIÓN PARA CONVERTIR UNA LETRA EN MAYÚSCULAS Y LOS DEMAS EN MINÚSCULAS --}}
+
     <script>
         function capitalizarPrimeraLetra(texto) {
             return texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
@@ -81,6 +112,7 @@
                         }
                         })
     </script>
+
 @endif
 
 @endsection

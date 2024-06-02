@@ -10,13 +10,12 @@
     <title>Inicio</title>
     <link href= "{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
     <link href= "{{asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('vendor/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css">
-
+    <link href= "{{asset('vendor/select2/dist/css/select2.min.css')}}" rel="stylesheet" type="text/css">
     <link href= "{{asset('css/ruang-admin.min.css')}}" rel="stylesheet">
     <link href= "{{asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-    <link href= "{{asset('vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/bootstrap-touchspin/css/jquery.bootstrap-touchspin.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/clock-picker/clockpicker.css') }}" rel="stylesheet">
+    <link href= "{{asset('vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}" rel="stylesheet">
+    <link href= "{{asset('vendor/bootstrap-touchspin/css/jquery.bootstrap-touchspin.css')}}" rel="stylesheet">
+    <link href= "{{asset('vendor/clock-picker/clockpicker.css')}}" rel="stylesheet">
 
 
     <script src="{{ asset ('js/validaciones.js') }}"></script>
@@ -70,9 +69,9 @@
                   <div class="bg-white py-2 collapse-inner rounded">
                     {{-- <h6 class="collapse-header">Forms</h6>
                     <a class="collapse-item" href="form_basics.html">Form Basics</a>--}}
-                    <a class="collapse-item" href="{{ route('solicitudes.create') }}">Recepción de Recaudos</a>
+                    <a class="collapse-item" href="{{ route('recepcion.create') }}">Recepción de Recaudos</a>
+                    <a class="collapse-item" href="{{ url('planificacion') }}">Planificación</a>
                     <a class="collapse-item" href="{{ url('inspeccion') }}">Inspección</a>
-                    <a class="collapse-item" href="{{ url('datosolicitud') }}">Solicitudes</a>
                     <a class="collapse-item" href="{{ url('licencia') }}">Licencia</a>
                     {{-- <a class="collapse-item" href="{{ url('Pago') }}">Pago / Talonario</a> --}}
                   </div>

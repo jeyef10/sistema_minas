@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('solicitudes_recaudos', function (Blueprint $table) {
+        Schema::create('recepcion_recaudos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_solicitud'); // Agregar columna de clave foránea
+            $table->unsignedBigInteger('id_recepcion'); // Agregar columna de clave foránea
             $table->unsignedBigInteger('id_recaudo'); // Agregar columna de clave foránea
 
             // Establecer relación con la tabla de solicitudes
-            $table->foreign('id_solicitud')->references('id')->on('solicitudes');
+            $table->foreign('id_recepcion')->references('id')->on('recepcion');
 
             // Establecer relación con la tabla de recaudos
             $table->foreign('id_recaudo')->references('id')->on('recaudos');
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('solicitudes_recaudos');
+        Schema::dropIfExists('recepcion_recaudos');
     }
 };

@@ -13,18 +13,25 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('solicitudes_inspecciones', function (Blueprint $table) {
+        Schema::create('planificacion', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_inspeccion');
+            $table->unsignedBigInteger('id_recepcion');
             $table->unsignedBigInteger('id_comisionado');
+            $table->unsignedBigInteger('id_municipio');
+            $table->date('fecha_inicial');
+            $table->date('fecha_final');
+            $table->string('estatus');
+            $table->timestamps();
 
-            // Establecer relación con la tabla de inspecciones
-            $table->foreign('id_inspeccion')->references('id')->on('inspecciones');
+             // Establecer relación con la tabla de municipios
+             $table->foreign('id_recepcion')->references('id')->on('recepcion');
 
             // Establecer relación con la tabla de comisionados
             $table->foreign('id_comisionado')->references('id')->on('comisionados');
 
-            $table->timestamps();
+            $table->foreign('id_municipio')->references('id')->on('municipios');
+
+
         });
     }
 
@@ -35,6 +42,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('solicitudes_inspecciones');
+        Schema::dropIfExists('planificacion');
     }
 };

@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('recaudos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->string('categoria_recaudos');
             $table->timestamps();
         });
     }

@@ -11,11 +11,11 @@ class Recaudos extends Model
     protected $table = 'recaudos';
     protected $primaryKey = 'id';
     public $timestamps = true;
-    protected $fillable = ['nombre'];
+    protected $fillable = ['nombre', 'categoria_recaudos'];
 
-    public function solicitudesrecaudos()
+    public function recepcionrecaudos()
     {
-        return $this->belongsTo(SolicitudesRecaudos::class, 'id_solicitud', 'id', 'id_recaudo');
+        return $this->belongsTo(RecepcionRecaudos::class, 'id_recepcion', 'id', 'id_recaudo');
     }
 
 }
