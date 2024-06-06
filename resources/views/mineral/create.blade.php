@@ -28,7 +28,7 @@
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Tipo</label>
                                     <select class="select2-single form-control" name="tipo" id="tipo">
-                                        <option value="0" disabled>Seleccione una Mineral</option>
+                                        <option value="" disabled>Seleccione una Mineral</option>
                                         <option value="No metálicos" selected="true">No metálicos</option>
                                         <{{-- option value="Metálicos">Metálicos</option> --}}
                                     </select>

@@ -496,23 +496,24 @@ function Solicitante(obj) {
        obj.cedula.focus();
        return false;
    }
-   if (cedula.length < 7){
-       Swal.fire({
-           title: 'Solicitante',
-           text: "Faltan dígitos de la cédula.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
 
-           this.submit();
-       }
-       })
-       
-       obj.cedula.focus();
-       return (false);
-   }
+   if (cedula.length < 7 || cedula.length > 8){
+    Swal.fire({
+        title: 'Solicitante',
+        text: "La cédula no puede tener más de 8 dígitos.",
+        icon: 'warning',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        }).then((result) => {
+    if (result.isConfirmed) {
+
+        this.submit();
+    }
+    })
+    
+    obj.cedula.focus();
+    return (false);
+    }
 
 
    var nombre = obj.nombre.value;
@@ -568,28 +569,28 @@ function Solicitante(obj) {
        return false;
    }
 
-   if (/^[A-Z][a-zA-Z0-9]*$/.test(nombre)) {
-       Swal.fire({
-           title: 'Solicitante',
-           text: "El campo del nombre no debe contener caracteres repetidos.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+   if (/(\w)\1+/i.test(nombre.toLowerCase())) {
+    Swal.fire({
+            title: 'Solicitante',
+            text: "El campo del nombre no debe contener caracteres repetidos.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
-           this.submit();
-       }
-       })
-       
-       obj.nombre.focus();
-       return false;
-   }
+            this.submit();
+        }
+        })
+        
+        obj.nombre.focus();
+        return false;
+    }
 
-//    if (!/^[A-Z][a-z]+$/.test(nombre  )) {
+//    if (/^[A-Z][a-zA-Z0-9]*$/.test(nombre)) {
 //        Swal.fire({
 //            title: 'Solicitante',
-//            text: "El nombre   debe comenzar con una letra mayúscula y las demás en minúscula.",
+//            text: "El campo del nombre no debe contener caracteres repetidos.",
 //            icon: 'warning',
 //            confirmButtonColor: '#3085d6',
 //            cancelButtonColor: '#d33',
@@ -599,7 +600,7 @@ function Solicitante(obj) {
 //            this.submit();
 //        }
 //        })
-      
+       
 //        obj.nombre.focus();
 //        return false;
 //    }
@@ -657,27 +658,28 @@ function Solicitante(obj) {
        obj.apellido.focus();
        return false;
    }
-   if (/^[A-Z][a-zA-Z0-9]*$/.test(apellido)) {
-       Swal.fire({
-           title: 'Solicitante',
-           text: "El campo de apellido no debe contener caracteres repetidos.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+   if (/(\w)\1+/i.test(apellido.toLowerCase())) {
+    Swal.fire({
+            title: 'Solicitante',
+            text: "El campo del apellido no debe contener caracteres repetidos.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
-           this.submit();
-       }
-       })
-       
-       obj.apellido.focus();
-       return false;
-   }
-//    if (!/^[A-Z][a-z]+$/.test(apellido)) {
+            this.submit();
+        }
+        })
+        
+        obj.apellido.focus();
+        return false;
+    }
+
+//    if (/^[A-Z][a-zA-Z0-9]*$/.test(apellido)) {
 //        Swal.fire({
 //            title: 'Solicitante',
-//            text: "El apellido debe comenzar con una letra mayúscula y las demás en minúscula.",
+//            text: "El campo de apellido no debe contener caracteres repetidos.",
 //            icon: 'warning',
 //            confirmButtonColor: '#3085d6',
 //            cancelButtonColor: '#d33',
@@ -687,173 +689,101 @@ function Solicitante(obj) {
 //            this.submit();
 //        }
 //        })
-      
+       
 //        obj.apellido.focus();
 //        return false;
 //    }
-  
-//    var num_minero= obj.num_minero.value;
-//    if (!num_minero) {
-//        Swal.fire({
-//            title: 'Solicitante',
-//            text: "Debe de ingresar el N° Minero.",
-//            icon: 'warning',
-//            confirmButtonColor: '#3085d6',
-//            cancelButtonColor: '#d33',
-//            }).then((result) => {
-//        if (result.isConfirmed) {
-
-//            this.submit();
-//        }
-//        })
-       
-//        obj.num_minero.focus();
-//        return false;
-//    }
-//    if (num_minero.length < 5){
-//        Swal.fire({
-//            title: 'Solicitante',
-//            text: "Faltan dígitos en este campo de N° Minero.",
-//            icon: 'warning',
-//            confirmButtonColor: '#3085d6',
-//            cancelButtonColor: '#d33',
-//            }).then((result) => {
-//        if (result.isConfirmed) {
-
-//            this.submit();
-//        }
-//        })
-       
-//        obj.num_minero.focus();
-//        return (false);
-//    }
-//    if (num_minero.trim() == "") {
-//        Swal.fire({
-//            title: 'Solicitante',
-//            text: "El campo de N° Minero no debe contener espacios en blancos.",
-//            icon: 'warning',
-//            confirmButtonColor: '#3085d6',
-//            cancelButtonColor: '#d33',
-//            }).then((result) => {
-//        if (result.isConfirmed) {
-
-//            this.submit();
-//        }
-//        })
-       
-//        obj.num_minero.focus();
-//        return false;
-//    }
-//    if (/^([a-zA-Z0-9])\1+$/.test(num_minero)) {
-//        Swal.fire({
-//            title: 'Solictante',
-//            text: "El campo de N° Minero no debe contener caracteres repetidos.",
-//            icon: 'warning',
-//            confirmButtonColor: '#3085d6',
-//            cancelButtonColor: '#d33',
-//            }).then((result) => {
-//        if (result.isConfirmed) {
-
-//            this.submit();
-//        }
-//        })
-       
-//        obj.num_minero.focus();
-//        return false;
-//    }
-//    if (/^[A-ZÀÁÉÈÍÓÚÜÑñ]{6,}-[0-9]+$/.test(num_minero)) { //falta acomodar
-//        Swal.fire({
-//             title: 'Solicitante',
-//             text:  "El N° Minero debe comenzar en letras mayúscula seguido de guión y lo demás en número.",
-//            icon: 'warning',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             }).then((result) => {
-//         if (result.isConfirmed) {
-     
-//             this.submit();
-//        }
-//         })
-         
-//         obj.num_minero.focus();
-//         return false;
- 
-//    }
-
+//  
 }
 
 // Validar SOLICITANTE JURIDICO
 function Solicitante_juridico(obj) {    
-   var rif = obj.rif.value;
-   if (!rif) {
-       Swal.fire({
-           title: 'Solicitante',
-           text: "Debe de ingresar el rif.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+    var rif = obj.rif.value;
+    // Expresión regular que verifica que comience con una letra mayúscula seguida por 9 números y puede contener guiones
+    var regex = /^[A-Z]-?\d{9,10}$/;
 
-           this.submit();
-       }
-       })
-       
-       obj.rif.focus();
-       return false;
-   }
-   if (rif.length < 7){
-       Swal.fire({
-           title: 'Solicitante',
-           text: "Faltan dígitos del rif.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
-
-           this.submit();
-       }
-       })
-       
-       obj.rif.focus();
-       return (false);
-   }
-
-   if (rif.trim() == "") {
-    Swal.fire({
-        title: 'Solicitante',
-        text: "El Campo del rif de la empresa no debe contener espacios en blancos.",
-        icon: 'warning',
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+    if (!rif) {
+        Swal.fire({
+            title: 'Solicitante',
+            text: "Debe de ingresar el RIF.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
         }).then((result) => {
-    if (result.isConfirmed) {
+            if (result.isConfirmed) {
+                this.submit();
+            }
+        });
+        
+        obj.rif.focus();
+        return false;
+    } else if (!regex.test(rif)) {
+        Swal.fire({
+            title: 'Solicitante',
+            text: "El RIF debe comenzar con una letra mayúscula, seguido por números y puede contener guiones.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+        });
 
-        this.submit();
+        obj.rif.focus();
+        return false;
     }
-    })
-    
-    obj.rif.focus();
-    return false;
-}
-if (/^([a-zA-Z0-9])\1+$/.test(rif)) {
-    Swal.fire({
-        title: 'Solicitante',
-        text: "El campo del rif de empresa no debe contener caracteres repetidos.",
-        icon: 'warning',
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        }).then((result) => {
-    if (result.isConfirmed) {
 
-        this.submit();
+
+    if (rif.trim() == "") {
+        Swal.fire({
+            title: 'Solicitante',
+            text: "El Campo del RIF de la empresa no debe contener espacios en blancos.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        obj.rif.focus();
+        return false;
     }
-    })
+
+    if (/(\w)\1+/i.test(rif.toLowerCase())) {
+        Swal.fire({
+                title: 'Solicitante',
+                text: "El campo del RIF no debe contener caracteres repetidos.",
+                icon: 'warning',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                }).then((result) => {
+            if (result.isConfirmed) {
     
-    obj.nombre.focus();
-    return false;
-}
+                this.submit();
+            }
+            })
+            
+            obj.rif.focus();
+            return false;
+        }
+
+    // if (/^([a-zA-Z0-9])\1+$/.test(rif)) {
+    //     Swal.fire({
+    //         title: 'Solicitante',
+    //         text: "El campo del RIF de empresa no debe contener caracteres repetidos.",
+    //         icon: 'warning',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         }).then((result) => {
+    //     if (result.isConfirmed) {
+
+    //         this.submit();
+    //     }
+    //     })
+        
+    //     obj.nombre.focus();
+    //     return false;
+    // }
 
    var nombre_empresa = obj.nombre_empresa.value;
    if (!nombre_empresa) {
@@ -873,10 +803,10 @@ if (/^([a-zA-Z0-9])\1+$/.test(rif)) {
        obj.nombre_empresa.focus();
        return false;
    }
-   if (nombre_empresa.length < 2){       //FALTA ACOMODAR
+   if (nombre_empresa.length <=2){       //FALTA ACOMODAR
        Swal.fire({
            title: 'Solicitante',
-           text: "Faltan mas infromación del nombre de la empresa.",
+           text: "Faltan más infromación del nombre de la empresa.",
            icon: 'warning',
            confirmButtonColor: '#3085d6',
            cancelButtonColor: '#d33',
@@ -893,7 +823,7 @@ if (/^([a-zA-Z0-9])\1+$/.test(rif)) {
    if (nombre_empresa.trim() == "") {
        Swal.fire({
            title: 'Solicitante',
-           text: "El Campo del nombre de la empresa no debe contener espacios en blancos.",
+           text: "El Campo de nombre de la empresa no debe contener espacios en blancos.",
            icon: 'warning',
            confirmButtonColor: '#3085d6',
            cancelButtonColor: '#d33',
@@ -907,23 +837,43 @@ if (/^([a-zA-Z0-9])\1+$/.test(rif)) {
        obj.nombre_empresa.focus();
        return false;
    }
-   if (/^([a-zA-Z0-9])\1+$/.test(nombre_empresa)) {
-       Swal.fire({
-           title: 'Solicitante',
-           text: "El campo del nombre de empresa no debe contener caracteres repetidos.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
 
-           this.submit();
-       }
-       })
+   if (/(\w)\1+/i.test(nombre_empresa.toLowerCase())) {
+    Swal.fire({
+            title: 'Solicitante',
+            text: "El campo de nombre de la empresa no debe contener caracteres repetidos.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        obj.nombre_empresa.focus();
+        return false;
+    }
+
+
+//    if (/^([a-zA-Z0-9])\1+$/.test(nombre_empresa)) {
+//        Swal.fire({
+//            title: 'Solicitante',
+//            text: "El campo del nombre de empresa no debe contener caracteres repetidos.",
+//            icon: 'warning',
+//            confirmButtonColor: '#3085d6',
+//            cancelButtonColor: '#d33',
+//            }).then((result) => {
+//        if (result.isConfirmed) {
+
+//            this.submit();
+//        }
+//        })
        
-       obj.nombre.focus();
-       return false;
-   }
+//        obj.nombre.focus();
+//        return false;
+//    }
    /* if (!/^[A-Z][a-z]+$/.test(nombre_empresa  )) {
        Swal.fire({
            title: 'Solicitante',
@@ -997,93 +947,93 @@ if (/^([a-zA-Z0-9])\1+$/.test(rif)) {
        return false;
    }
 
-   var num_mineroj= obj.num_mineroj.value;
-   if (!num_mineroj) {
-       Swal.fire({
-           title: 'Solicitante',
-           text: "Debe de ingresar el N° Minero.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+//    var num_mineroj= obj.num_mineroj.value;
+//    if (!num_mineroj) {
+//        Swal.fire({
+//            title: 'Solicitante',
+//            text: "Debe de ingresar el N° Minero.",
+//            icon: 'warning',
+//            confirmButtonColor: '#3085d6',
+//            cancelButtonColor: '#d33',
+//            }).then((result) => {
+//        if (result.isConfirmed) {
 
-           this.submit();
-       }
-       })
+//            this.submit();
+//        }
+//        })
        
-       obj.num_mineroj.focus();
-       return false;
-   }
-   if (num_mineroj.length < 5){
-       Swal.fire({
-           title: 'Solicitante',
-           text: "Faltan dígitos en este campo de N° Minero.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+//        obj.num_mineroj.focus();
+//        return false;
+//    }
+//    if (num_mineroj.length < 5){
+//        Swal.fire({
+//            title: 'Solicitante',
+//            text: "Faltan dígitos en este campo de N° Minero.",
+//            icon: 'warning',
+//            confirmButtonColor: '#3085d6',
+//            cancelButtonColor: '#d33',
+//            }).then((result) => {
+//        if (result.isConfirmed) {
 
-           this.submit();
-       }
-       })
+//            this.submit();
+//        }
+//        })
        
-       obj.num_mineroj.focus();
-       return (false);
-   }
-   if (num_mineroj.trim() == "") {
-       Swal.fire({
-           title: 'Solicitante',
-           text: "El campo de N° Minero no debe contener espacios en blancos.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+//        obj.num_mineroj.focus();
+//        return (false);
+//    }
+//    if (num_mineroj.trim() == "") {
+//        Swal.fire({
+//            title: 'Solicitante',
+//            text: "El campo de N° Minero no debe contener espacios en blancos.",
+//            icon: 'warning',
+//            confirmButtonColor: '#3085d6',
+//            cancelButtonColor: '#d33',
+//            }).then((result) => {
+//        if (result.isConfirmed) {
 
-           this.submit();
-       }
-       })
+//            this.submit();
+//        }
+//        })
        
-       obj.num_mineroj.focus();
-       return false;
-   }
-   if (/^([a-zA-Z0-9])\1+$/.test(num_mineroj)) {
-       Swal.fire({
-           title: 'Solictante',
-           text: "El campo de N° Minero no debe contener caracteres repetidos.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+//        obj.num_mineroj.focus();
+//        return false;
+//    }
+//    if (/^([a-zA-Z0-9])\1+$/.test(num_mineroj)) {
+//        Swal.fire({
+//            title: 'Solictante',
+//            text: "El campo de N° Minero no debe contener caracteres repetidos.",
+//            icon: 'warning',
+//            confirmButtonColor: '#3085d6',
+//            cancelButtonColor: '#d33',
+//            }).then((result) => {
+//        if (result.isConfirmed) {
 
-           this.submit();
-       }
-       })
+//            this.submit();
+//        }
+//        })
        
-       obj.num_mineroj.focus();
-       return false;
-   }
-   if (!/^[A-Z]-[0-9]+$/.test(num_mineroj)) {
-       Swal.fire({
-           title: 'Solicitante',
-           text:  "El N° Minero debe comenzar en letras mayúscula seguido de guión y lo demás en número.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+//        obj.num_mineroj.focus();
+//        return false;
+//    }
+//    if (!/^[A-Z]-[0-9]+$/.test(num_mineroj)) {
+//        Swal.fire({
+//            title: 'Solicitante',
+//            text:  "El N° Minero debe comenzar en letras mayúscula seguido de guión y lo demás en número.",
+//            icon: 'warning',
+//            confirmButtonColor: '#3085d6',
+//            cancelButtonColor: '#d33',
+//            }).then((result) => {
+//        if (result.isConfirmed) {
    
-           this.submit();
-       }
-       })
+//            this.submit();
+//        }
+//        })
        
-       obj.num_mineroj.focus();
-       return false;
+//        obj.num_mineroj.focus();
+//        return false;
 
-   }
+//    }
   
 }
 // Validar COMISIONADO
@@ -1107,24 +1057,23 @@ function Comisionado(obj) {
        obj.cedula.focus();
        return false;
    }
-   if (cedula.length < 7){
-       Swal.fire({
-           title: 'Comisionado',
-           text: "Faltan dígitos de la cédula.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+   if (cedula.length < 7 || cedula.length > 8){
+    Swal.fire({
+        title: 'Comisionado',
+        text: "La cédula no puede tener más de 8 dígitos.",
+        icon: 'warning',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        }).then((result) => {
+    if (result.isConfirmed) {
 
-           this.submit();
-       }
-       })
-       
-       obj.cedula.focus();
-       return (false);
-   }
-
+        this.submit();
+    }
+    })
+    
+    obj.cedula.focus();
+    return (false);
+}
 
    var nombre = obj.nombre.value;
    if (!nombre) {
@@ -1161,6 +1110,7 @@ function Comisionado(obj) {
        obj.nombre.focus();
        return (false);
    }
+
    if (nombre.trim() == "") {
        Swal.fire({
            title: 'Comisionado',
@@ -1178,147 +1128,115 @@ function Comisionado(obj) {
        obj.nombre.focus();
        return false;
    }
-   if (/^([a-zA-Z0-9])\1+$/.test(nombre  )) {
-       Swal.fire({
-           title: 'Comisionado',
-           text: "El campo del nombre no debe contener caracteres repetidos.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+   if (/(\w)\1+/i.test(nombre.toLowerCase())) {
+    Swal.fire({
+        title: 'Comisionado',
+        text: "El campo del nombre no debe contener caracteres repetidos.",
+        icon: 'warning',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        }).then((result) => {
+    if (result.isConfirmed) {
 
-           this.submit();
-       }
-       })
-       
-       obj.nombre.focus();
-       return false;
+        this.submit();
+    }
+    })
+    
+    obj.nombre.focus();
+    return false;
+}
+
+var apellido = obj.apellido.value;
+if (!apellido) {
+   Swal.fire({
+       title: 'Comisionado',
+       text: "Debe de ingresar el apellido.",
+       icon: 'warning',
+       confirmButtonColor: '#3085d6',
+       cancelButtonColor: '#d33',
+       }).then((result) => {
+   if (result.isConfirmed) {
+
+       this.submit();
    }
-   if (!/^[A-Z][a-z]+$/.test(nombre  )) {
-       Swal.fire({
-           title: 'Comisionado',
-           text: "El nombre   debe comenzar con una letra mayúscula y las demás en minúscula.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+   })
 
-           this.submit();
-       }
-       })
-      
-       obj.nombre.focus();
-       return false;
+   obj.apellido.focus();
+   return false;
+}
+if (apellido.length < 4){
+   Swal.fire({
+       title: 'Comisionado',
+       text: "Faltan dígitos en este campo de apellido.",
+       icon: 'warning',
+       confirmButtonColor: '#3085d6',
+       cancelButtonColor: '#d33',
+       }).then((result) => {
+   if (result.isConfirmed) {
+
+       this.submit();
    }
+   })
 
-   var apellido = obj.apellido.value;
-   if (!apellido) {
-       Swal.fire({
-           title: 'Comisionado',
-           text: "Debe de ingresar el apellido.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
-
-           this.submit();
-       }
-       })
    
-       obj.apellido.focus();
-       return false;
-   }
-   if (apellido.length < 4){
-       Swal.fire({
-           title: 'Comisionado',
-           text: "Faltan dígitos en este campo de apellido.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+   obj.apellido.focus();
+   return (false);
+}
+if (apellido.trim() == "") {
+   Swal.fire({
+       title: 'Comisionado',
+       text: "El campo de apellido no debe contener espacios en blancos.",
+       icon: 'warning',
+       confirmButtonColor: '#3085d6',
+       cancelButtonColor: '#d33',
+       }).then((result) => {
+   if (result.isConfirmed) {
 
-           this.submit();
-       }
-       })
-
-       
-       obj.apellido.focus();
-       return (false);
+       this.submit();
    }
-   if (apellido.trim() == "") {
-       Swal.fire({
-           title: 'Comisionado',
-           text: "El campo de apellido no debe contener espacios en blancos.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+   })
+   
+   obj.apellido.focus();
+   return false;
+}
 
-           this.submit();
-       }
-       })
-       
-       obj.apellido.focus();
-       return false;
-   }
-   if (/^([a-zA-Z0-9])\1+$/.test(apellido)) {
-       Swal.fire({
-           title: 'Comisionado',
-           text: "El campo de apellido no debe contener caracteres repetidos.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+if (/(\w)\1+/i.test(apellido.toLowerCase())) {
+Swal.fire({
+        title: 'Comisionado',
+        text: "El campo del apellido no debe contener caracteres repetidos.",
+        icon: 'warning',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        }).then((result) => {
+    if (result.isConfirmed) {
 
-           this.submit();
-       }
-       })
-       
-       obj.apellido.focus();
-       return false;
-   }
-   if (!/^[A-Z][a-z]+$/.test(apellido)) {
-       Swal.fire({
-           title: 'Comisionado',
-           text: "El apellido debe comenzar con una letra mayúscula y las demás en minúscula.",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
-
-           this.submit();
-       }
-       })
-      
-       obj.apellido.focus();
-       return false;
-   }
+        this.submit();
+    }
+    })
+    
+    obj.apellido.focus();
+    return false;
+}
   
-   var c_municipio = obj.c_municipio.value;
-   if (!c_municipio){
-       Swal.fire({
-           title: 'Comisionado',
-           text: "Debe de seleccionar un Municipio",
-           icon: 'warning',
-           confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           }).then((result) => {
-       if (result.isConfirmed) {
+    var c_municipio = obj.c_municipio.value;
+    if (!c_municipio){
+        Swal.fire({
+            title: 'Comisionado',
+            text: "Debe de seleccionar un Municipio",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
-           this.submit();
-       }
-       })
-       
-       obj.c_municipio.focus();
-       return (false);
-   }
+            this.submit();
+        }
+        })
+        
+        obj.c_municipio.focus();
+        return (false);
+    }
+
 
 }
 

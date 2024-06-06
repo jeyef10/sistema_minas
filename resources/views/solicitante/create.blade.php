@@ -22,7 +22,7 @@
 
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
     
-                        <h2 class="font-weight-bold text-primary" style="margin-left: 44%;">Registrar Solicitante</h2>
+                        <h2 class="font-weight-bold text-primary" style="margin-left: 35%;">Registrar Solicitante</h2>
 
                     </div>
 
@@ -57,7 +57,7 @@
 
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Cédula</label>
-                                    <input type="text" class="form-control" id="cedula" name="cedula" style="background: white;" value="" placeholder="Ingrese La Cédula" autocomplete="off" onkeypress="return solonum(event);">
+                                    <input type="text" class="form-control" id="cedula" name="cedula" maxlength="8" style="background: white;" value="" placeholder="Ingrese La Cédula" autocomplete="off" onkeypress="return solonum(event);">
                                 </div>
         
                                 <div class="col-4">
@@ -101,7 +101,7 @@
 
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">RIF</label>
-                                    <input type="text" class="form-control" id="rif" name="rif" style="background: white;" value="" placeholder="Ingrese el Rif" autocomplete="off">
+                                    <input type="text" class="form-control" id="rif" name="rif" style="background: white;" value="" maxlength="12" placeholder="Ingrese el Rif" autocomplete="off" oninput="capitalizarInput('rif')">
                                 </div>
         
                                 <div class="col-4">

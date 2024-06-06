@@ -80,7 +80,7 @@
 
     {{-- <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script> --}}
     
-    {{-- * FUNCION PARA MOSTRAR PARROQUIAS EN Comisionado  --}}
+    <!-- {{-- * FUNCION PARA MOSTRAR PARROQUIAS EN Comisionado  --}}
 
     {{-- <script>
         $(document).ready(function() {
@@ -106,7 +106,7 @@
             }
         });
     });
-    </script> --}}
+    </script> --}} -->
 
 @if ($errors->any())
     <script>
