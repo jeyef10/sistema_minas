@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('recepcion', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_solicitante'); // Agregar columna de clave foránea
-            $table->bigInteger('id_municipio')->nullable(); ;// Agregar columna de clave foránea
+            $table->bigInteger('id_municipio')->nullable(); // Agregar columna de clave foránea
             $table->unsignedBigInteger('id_mineral');// Agregar columna de clave foránea
             $table->string('direccion');
             // $table->string('condernada');

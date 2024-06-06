@@ -30,12 +30,9 @@
                         <table class="table align-items-center table-flush" id="dataTable">
                             <thead class="thead-light">
                                 <tr>
-                                    <th class="font-weight-bold text-Secondary">Nº</th>
                                     <th class="font-weight-bold text-Secondary">Tipo de Solicitante</th>
                                     <th class="font-weight-bold text-Secondary">Cédula/Rif</th>
                                     <th class="font-weight-bold text-Secondary">Solicitante</th>
-                                    {{-- <th class="font-weight-bold text-Secondary">Nombre</th>
-                                    <th class="font-weight-bold text-Secondary">Apellido</th> --}}
                                     <th class="font-weight-bold text-Secondary">Municipio</th>
                                     <th class="font-weight-bold text-Secondary">Fecha</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center></th>
@@ -45,7 +42,7 @@
                                 @foreach ($recepciones as $recepcion)
                                 <tr>
                                    
-                                    <td class="font-weight-bold text-Secondary">{{ $recepcion->id}}</td>
+                                    {{-- <td class="font-weight-bold text-Secondary">{{ $recepcion->id}}</td> --}}
 
                                         <!-- Muestra el tipo de solicitante (Natural o Jurídico) -->
                                         <td class="font-weight-bold text-Secondary">{{ $recepcion->solicitante->tipo }}</td>
@@ -55,16 +52,12 @@
                                             <!-- Si es una Persona Natural, muestra la cédula, el nombre y el apellido -->
                                             <td class="font-weight-bold text-Secondary">{{ $recepcion->solicitante->solicitanteEspecifico->cedula }}</td>
                                             <td class="font-weight-bold text-Secondary">{{ $recepcion->solicitante->solicitanteEspecifico->nombre }} {{ $recepcion->solicitante->solicitanteEspecifico->apellido }}</td>
-                                            {{-- <td class="font-weight-bold text-Secondary"></td> --}}
 
                                         <!-- Verifica si el solicitante es una Persona Jurídica -->
                                         @elseif ($recepcion->solicitante->solicitanteEspecifico instanceof \App\Models\PersonaJuridica)
                                             <!-- Si es una Persona Jurídica, muestra el rif, el nombre y el correo -->
-                                            {{-- <td class="font-weight-bold text-Secondary">No Aplica</td> --}}
                                             <td class="font-weight-bold text-Secondary">{{ $recepcion->solicitante->solicitanteEspecifico->rif }}</td>
                                             <td class="font-weight-bold text-Secondary">{{ $recepcion->solicitante->solicitanteEspecifico->nombre }}</td>
-                                            {{-- <td class="font-weight-bold text-Secondary">No Aplica</td> --}}
-                                            {{-- <td class="font-weight-bold text-Secondary">{{ $recepcion->solicitante->solicitanteEspecifico->correo }}</td> --}}
                                         @endif
 
                                             <td class="font-weight-bold text-Secondary">
@@ -84,7 +77,7 @@
                                                 <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
                                             </svg></a>
 
-                                            <a class="btn btn-info btn-sm" title="Ver Detalles" value='{{ $recepcion->id }}' class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable" id="#modalScroll"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layout-text-window-reverse" viewBox="0 0 16 16">
+                                            <a class="btn btn-info btn-sm" title="Ver Detalles" data-recepcion-id='{{ $recepcion->id }}' class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable" id="#modalScroll"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layout-text-window-reverse" viewBox="0 0 16 16">
                                                 <path d="M13 6.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5m0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5m-.5 2.5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/>
                                                 <path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zM2 1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1zM1 4v10a1 1 0 0 0 1 1h2V4zm4 0v11h9a1 1 0 0 0 1-1V4z"/>
                                             </svg></a>
@@ -107,32 +100,14 @@
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    {{-- <h5 class="modal-title" id="exampleModalScrollableTitle">Ver recaudos</h5> --}}
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
 
-                <div class="modal-body">
-                    <h5 class="font-weight-bold text-primary" style="text-align: center">Recaudos entregados</h5>
+                <div class="modal-body" id="modal-body-content">
 
-                        {{-- <input type="hidden" value="{{ $recepcion->id }}">
-
-                        <ul>
-                            @foreach ($recaudos as $recaudo)
-                                <li>{{ $recaudo->nombre }}</li>
-                            @endforeach
-                        </ul>
-
-                        <p><b>Dirección:</b> {{ $recepcion->direccion }}</p>
-                        
-                        <p><b>Mineral:</b> 
-                            @if ($recepcion->mineral)
-                            {{$recepcion->mineral->nombre }} @else
-                        @endif
-                        </p> --}}
-                        
-                </div>
+                    {{-- ! DATOS CARGADOS POR JS/AJAX --}}
             
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-primary" data-dismiss="modal"> Cerrar</button>
@@ -277,6 +252,56 @@
                         })
                 });
 
-            
             </script>
+
+
+        {{-- * FUNCIÓN PARA MOSTRAR DATOS DE LOS RECAUDOS, MINERAL Y DIRECCIÓN EN EL MODAL --}}
+
+    <script>
+
+        $(document).ready(function() {
+            $('#t_Aprovechamiento').on('click', '.btn-info', function(event) {
+                event.preventDefault();
+                var recepcionId = $(this).data('recepcion-id'); // Obtén el ID de la recepción
+
+                $.ajax({
+                    url: '/planificacion/detalles/' + recepcionId,
+                    type: 'GET',
+                    success: function(data) {
+                        let recaudosHtml = '<ul>';
+
+                        if (data.recaudos && data.recaudos.length > 0) {
+                            data.recaudos.forEach(function(recepcionRecaudo) {
+                                if (recepcionRecaudo.recaudo) {
+                                    recaudosHtml += `<li>${recepcionRecaudo.recaudo.nombre}</li>`;
+                                } else {
+                                    recaudosHtml += `<li>No hay información de recaudo para esta recepción.</li>`;
+                                }
+                            });
+                        } else {
+                            recaudosHtml += '<li>No se encontraron recaudos para esta recepción.</li>';
+                        }
+                        recaudosHtml += '</ul>';
+
+                        $('#exampleModalScrollable .modal-body').html(`
+                            <h5 class="font-weight-bold text-primary" style="text-align: center">Recaudos entregados para Recepción #${data.recepcion.id}</h5>
+                            ${recaudosHtml}
+                            <p><b>Dirección:</b> ${data.recepcion.direccion}</p>
+                            <p><b>Mineral:</b> ${data.recepcion.mineral ? data.recepcion.mineral.nombre : 'No especificado'}</p>
+                        `);
+
+                        if (!$('#exampleModalScrollable').is(':visible')) {
+                            $('#exampleModalScrollable').modal('show');
+                        }
+                    },
+                    error: function(error) {
+                        console.error("Error al obtener los datos:", error);
+                        alert("Error al cargar los recaudos. Por favor, inténtalo de nuevo.");
+                    }
+                });
+            });
+        });
+
+    </script>
+
 @endsection

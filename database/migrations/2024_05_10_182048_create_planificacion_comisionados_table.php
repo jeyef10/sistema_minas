@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('planificacion_inspeccion');
+        Schema::dropIfExists('planificacion_comisionados');
     }
 };

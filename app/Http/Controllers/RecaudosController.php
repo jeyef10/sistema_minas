@@ -123,7 +123,7 @@ class RecaudosController extends Controller
     {
         $request->validate(
             [
-            'nombre' => 'unique:recaudos,nombre',
+            'nombre' => 'unique:recaudos,nombre,' . $id,
             'categoria_recaudos' => 'required|array',
             ],
             [

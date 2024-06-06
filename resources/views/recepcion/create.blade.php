@@ -110,7 +110,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control" value="16/05/2024" id="simpleDataInput" name= "simpleDataInput">
+                                                <input type="text" class="form-control" value="<?php echo date('d/m/Y'); ?>" id="simpleDataInput" name= "simpleDataInput">
                                             </div>
                                         </div>
                                     </div>
@@ -148,9 +148,6 @@
              success: function(data) {
                  // Assuming data is an array of solicitante objects
                  var options = '<option value="">Seleccione una Persona</option>';
-                 // var numMineroInput = $('#num_minero'); // Get the num_minero input element
-                 
-                 // numMineroInput = ' ';
  
                  data.forEach(function(solicitante) {
                  if (solicitante.solicitante_especifico || solicitante) {

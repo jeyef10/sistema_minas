@@ -20,7 +20,7 @@ use App\Http\Controllers\ComisionadosController;
 use App\Http\Controllers\MineralController;
 use App\Http\Controllers\RegaliaController;
 use App\Http\Controllers\PlazosController;
-use App\Http\Controllers\CategoriaController;
+// use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\RecepcionController;
 use App\Http\Controllers\PlanificacionController;
 
@@ -103,7 +103,7 @@ Route::get('/comisionado/create', [ComisionadosController::class, 'create'])->na
 Route::get('/comisionado/pdf',  [ComisionadosController::class,'pdf'])->name('comisionado')->middleware('auth');
 Route::resource('comisionado', ComisionadosController::class)->middleware('auth');
 Route::get('/municipios', [ComisionadosController::class, 'getMunicipios']);
-Route::get('/comisionados/create/{municipioId}', [ComisionadosController::class, 'getParroquias']);
+// Route::get('/comisionados/create/{municipioId}', [ComisionadosController::class, 'getParroquias']);
 
 /* Ruta Mineral */
 Route::get('/mineral',  [MineralController::class,'index'])->name('mineral')->middleware('auth');
@@ -124,10 +124,10 @@ Route::get('/plazo/pdf',  [PlazosController::class,'pdf'])->name('plazo')->middl
 Route::resource('plazo', PlazosController::class)->middleware('auth');
 
 /* Ruta Categoria*/
-Route::get('/categoria',  [CategoriaController::class,'index'])->name('categoria')->middleware('auth');
-Route::get('/categoria/create', [CategoriaController::class, 'create'])->name('create')->middleware('auth');
-Route::get('/categoria/pdf',  [CategoriaController::class,'pdf'])->name('categoria')->middleware('auth');
-Route::resource('categoria', CategoriaController::class)->middleware('auth');
+// Route::get('/categoria',  [CategoriaController::class,'index'])->name('categoria')->middleware('auth');
+// Route::get('/categoria/create', [CategoriaController::class, 'create'])->name('create')->middleware('auth');
+// Route::get('/categoria/pdf',  [CategoriaController::class,'pdf'])->name('categoria')->middleware('auth');
+// Route::resource('categoria', CategoriaController::class)->middleware('auth');
 
 /* Ruta Recepcion de Recaudos */
 Route::get('/recepcion/create', [RecepcionController::class, 'create'])->name('create')->middleware('auth');
@@ -135,12 +135,14 @@ Route::resource('recepcion', RecepcionController::class)->middleware('auth');
 Route::get('/recepcion/create/fetch-solicitantes/{tipoSolicitante}', [RecepcionController::class, 'fetchSolicitantesByTipo']);
 Route::get('/recepcion/create/fetch-minerales', [RecepcionController::class, 'fetchMinerales']);
 Route::get('/recepcion/create/fetch-recaudos', [RecepcionController::class, 'fetchRecaudos']);
+// Route::get('/recepcion/detalles/{id}', [RecepcionController::class, 'getRecepcionDetalles']);
 
 /* Ruta Planificación */
 Route::get('/planificacion', [PlanificacionController::class,'index'])->name('planificacion')->middleware('auth');
 Route::get('/planificacion/create', [PlanificacionController::class, 'create'])->name('create')->middleware('auth');
 Route::resource('planificacion', PlanificacionController::class)->middleware('auth');
 Route::get('/planificacion/create/fetchComisionados/{municipioId}', [PlanificacionController::class, 'fetchComisionados']);
+Route::get('/planificacion/detalles/{id}', [PlanificacionController::class, 'getRecepcionDetalles']);
 
 /* Ruta Bitacora*/
 Route::get('bitacora', [ReporteController::class, 'bitacora'])->name('bitacora')->middleware('auth');

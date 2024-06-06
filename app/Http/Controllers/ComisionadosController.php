@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comisionados;
 use App\Models\Municipio;
-use App\Models\PlanificacionInspecciones;
+use App\Models\PlanificacionComisionados;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,8 +49,8 @@ class ComisionadosController extends Controller
     public function create()
     {
         $municipios = Municipio::all();
-        $planificacioninspecciones = PlanificacionInspecciones::get();
-        return view('comisionado.create', compact('planificacioninspecciones','municipios'));
+        $planificacioncomisionados = PlanificacionComisionados::get();
+        return view('comisionado.create', compact('planificacioncomisionados','municipios'));
     }
 
     /**

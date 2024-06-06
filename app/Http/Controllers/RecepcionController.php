@@ -75,8 +75,6 @@ class RecepcionController extends Controller
         return response()->json($recaudos);
     }
 
-
-
     /**
      * Store a newly created resource in storage.
      *
@@ -92,20 +90,19 @@ class RecepcionController extends Controller
         // Crear una nueva recepcion de recaudos
         $recepcion = new Recepcion ();
         $recepcion->id_solicitante = $request->input('solicitante_especifico_id');
-        $recepcion->id_municipio = $request->input('municipio');
+        $recepcion->id_municipio = $request->input('id_municipio');
         $recepcion->direccion = $request->input('direccion');
         $recepcion->id_mineral = $request->input('nom_mineral');
         $recepcion->fecha = $request->input('simpleDataInput');
         
         $recepcion->save();// Guardar la instancia de la tabla Recepcion
 
-        if ($recaudosCount != 13) {
-            // Mostrar alerta
-            $errorMessage = 'Se requieren 13 Recaudos para registrar la recepción. Por favor, seleccione 13 Recaudos.';
-            // Session::flash('alert-danger', $message);
-        
-            // Redireccionar a la página de selección de recaudos
-            // return redirect()->back();
+        $recaudosSeleccionados = [];
+
+        if (count($recaudosSeleccionados) !== 13) {
+            
+            $errorMessage = 'Se requieren 13 Recaudos para registrar la recepción. Por favor, seleccione 13 Recaudos.';// Mostrar el mensaje cuando no cumples con los 13 recaudos.
+
         }
         
         // Obtener los IDs de recaudos seleccionados (debe ser un array)
@@ -130,6 +127,7 @@ class RecepcionController extends Controller
                 $errorMessage = 'Error: .';
                 return redirect()->back()->withErrors($errorMessage);
             }
+
     }
 
 
@@ -142,26 +140,8 @@ class RecepcionController extends Controller
      */
     public function show($id)
     {
-        // Obtener la solicitud con el ID especificado
-        // $recepcion = Recepcion::find($id);
-
-        // // Verificar si la recepcion existe
-        // if (!$recepcion) {
-        //     return redirect('planificacion')->with('error', 'recepcion no encontrada');
-        // }
-
-        // // Obtener los IDs de recaudos asociados a la recepcion
-        // $recaudos = RecepcionRecaudos::where('id_recepcion', $recepcion->id)->pluck('id_recaudo');
-
-        // // Obtener los recaudos completos con los id obtenidos
-        // $recaudos = Recaudos::whereIn('id', $recaudos)->get();
-
-        // // Devolver la vista con la recepcion y sus recaudos asociados
-        // return view('planificacion.index', [
-        //     'recepcion' => $recepcion,
-        //     'recaudos' => $recaudos
-        // ]);
-     }
+        // 
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -173,26 +153,21 @@ class RecepcionController extends Controller
     {
         $recepcion = Recepcion::findOrFail($id);
         $municipios = Municipio::all();
+        $minerales = Minerales::all();
+        $cat_mineral = $recepcion->mineral;
         $tipoSolicitante = $recepcion->solicitante;
-        $datosSolicitante =  $recepcion->solicitante->solicitanteEspecifico;
-        $minerales = $recepcion->mineral->nombre;
+        $datosSolicitante = $recepcion->solicitante->solicitanteEspecifico;
         $direccion = $recepcion->direccion;
         $fecha = $recepcion->fecha;
-        
-        // Obtener los IDs de los recaudos seleccionados para la solicitud actual
-        $recaudosSeleccionadosIds = $recepcion->recaudos()->pluck('id')->toArray();
 
         // Obtener todos los recaudos
         $recaudos = Recaudos::all();
 
-        // Marcar los recaudos seleccionados como seleccionados
-        $recaudos->each(function ($recaudo) use ($recaudosSeleccionadosIds) {
-        $recaudo->selected = in_array($recaudo->id, $recaudosSeleccionadosIds);
-
-    });
+        // Obtener los IDs de los recaudos seleccionados de la tabla puente recepcion_recaudos
+        $recaudosSeleccionados = RecepcionRecaudos::where('id_recepcion', $id)->pluck('id_recaudo');
 
         return view('recepcion.edit' , compact('recepcion', 'tipoSolicitante', 'datosSolicitante', 'municipios',
-        'minerales', 'direccion', 'recaudos', 'fecha'));
+        'minerales', 'direccion', 'recaudos', 'fecha', 'cat_mineral', 'recaudosSeleccionados'));
 
     }
 
@@ -205,28 +180,33 @@ class RecepcionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Obtener la solicitud por ID
-        // $recepcion = recepcion::findOrFail($id);
+        // Obtener la recepcion por ID
+        $recepcion = Recepcion::findOrFail($id);
+        $municipios = Municipio::all();
+        $minerales = Minerales::all();
 
-        // // Actualizar los campos según los datos del formulario
-        // $recepcion->id_solicitante = $request->input('solicitante_especifico_id');
-        // $recepcion->fecha = $request->input('simpleDataInput');
-        // $recepcion->save();
+        // Actualizar los campos según los datos del formulario
+        $recepcion->id_solicitante = $request->input('solicitante_especifico_id');
+        $recepcion->id_municipio = $request->input('id_municipio');
+        $recepcion->direccion = $request->input('direccion');
+        $recepcion->id_mineral = $request->input('nom_mineral');
+        $recepcion->fecha = $request->input('simpleDataInput');
+        $recepcion->save();
 
-        // // Actualizar los registros en la tabla puente (recepciones_recaudos)
-        // $recaudosSeleccionados = $request->input('recaudos');
-        // RecepcionRecaudos::where('id_recepcion', $id)->delete(); // Eliminar registros anteriores
-        // foreach ($recaudosSeleccionados as $recaudo) {
-        //     $puente = new RecepcionRecaudos();
-        //     $puente->id_recaudo = $recaudo;
-        //     $puente->id_recepcion = $recepcion->id;
-        //     $puente->save();
-        // }
+        // Actualizar los registros en la tabla puente (recepciones_recaudos)
+        $recaudosSeleccionados = $request->input('recaudos');
+        RecepcionRecaudos::where('id_recepcion', $id)->delete(); // Eliminar registros anteriores
+        foreach ($recaudosSeleccionados as $recaudo) {
+            $puente = new RecepcionRecaudos();
+            $puente->id_recaudo = $recaudo;
+            $puente->id_recepcion = $recepcion->id;
+            $puente->save();
+        }
 
-        // $bitacora = new BitacoraController;
-        // $bitacora->update();
+        $bitacora = new BitacoraController;
+        $bitacora->update();
 
-        // return redirect('planificacion');
+        return redirect('planificacion');
     }
 
     /**

@@ -55,7 +55,7 @@
 
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Municipio</label>
-                                    <select class="select2-single form-control" id="municipio" name="municipio">
+                                    <select class="select2-single form-control" id="municipio" name="id_municipio">
                                         @foreach($municipios as $municipio)
                                             <option value="{{ $municipio->id }}" @selected($recepcion->id_municipio == $municipio->id)>{{ $municipio->nom_municipio }}</option>
                                         @endforeach
@@ -74,9 +74,9 @@
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Categoria</label>
                                     <select class="select2-single form-control" name="categoria" id="categoria">
-                                        <option value="" selected="true" disabled>Seleccione una Categoria</option>
-                                        <option value="Aprovechamiento" {{ (old('categoria', $recepcion->categoria ?? '') === 'Aprovechamiento') ? 'selected' : '' }}>Aprovechamiento</option>
-                                        <option value="Procesamiento" {{ (old('categoria', $recepcion->categoria ?? '') === 'Procesamiento') ? 'selected' : '' }}>Procesamiento</option>
+                                        <option value="0" selected="true" disabled>Seleccione una Categoria</option>
+                                        <option value="Aprovechamiento" {{ (old('categoria', $cat_mineral->categoria ?? '') === 'Aprovechamiento') ? 'selected' : '' }}>Aprovechamiento</option>
+                                        <option value="Procesamiento" {{ (old('categoria', $cat_mineral->categoria ?? '') === 'Procesamiento') ? 'selected' : '' }}>Procesamiento</option>
                                     </select>
                                 </div>
                                 
@@ -84,15 +84,20 @@
                                     <label  class="font-weight-bold text-primary">Nombre Mineral</label>
                                     <select class="select2-single form-control" id="nom_mineral" name="nom_mineral">
                                         @foreach($minerales as $mineral)
-                                            <option value="{{ $mineral->id }}" @selected($recepcion->id_mineral == $mineral->id)>{{ $mineral->nom_mineral }}</option>
+                                            <option value="{{ $mineral->id }}" @if (old('id_mineral', $recepcion->id_mineral) == $mineral->id) selected @endif>
+                                            {{ $mineral->nombre }}
+                                        </option>
                                         @endforeach
                                     </select>                                  
                                 </div>
 
+                                <div class="col-4 mt-2">
+                                    <label  class="font-weight-bold text-primary">Dirección / Lugar</label>
+                                    <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;">{{ $direccion }}</textarea>                                   
+                                </div>
 
-                                
-                                    
                             </div>
+                        </div>
                         
                         <hr class="sidebar-divider">
                                 
@@ -101,17 +106,22 @@
                             <div class="row">
                                 
                                 <div class="col-4">
+                                    <label for="recaudo" class="font-weight-bold text-primary">Recaudos</label>
                                     <div class="form-check">
-                                        <input type="checkbox" id="select-all-recaudos" onclick="selectAll()" class="form-check-input">
-                                        <label class="form-check-label" for="select-all">Seleccionar todos los recaudos</label>
+                                        <input type="checkbox" id="select-all-recaudos" onclick="selectAll()" class="form-check-input" style="margin-rigth:">
+                                        <label class="form-check-label ml-1" for="select-all">Seleccionar todos los recaudos</label>
                                     </div>
-                                    <br>
-                                    @foreach ($recaudos as $recaudo)
-                                        <div class="form-group">
-                                            <input type="checkbox" name="recaudos[]" value="{{ $recaudo->id }}" {{ $recaudo->selected ? 'checked' : '' }} @checked(true)>
-                                            <label for="{{ $recaudo->id }}">{{ $recaudo->nombre }}</label>
+                                   
+                                    <div id='recaudo_categoria'>
+                                        @foreach ($recaudos as $recaudo)
+                                        <div class="form-check"> 
+                                            <input type="checkbox" name="recaudos[]" value="{{ $recaudo->id }}"
+                                                   @if ($recaudosSeleccionados->contains($recaudo->id)) checked @endif
+                                                   class="form-check-input"> 
+                                            <label class="form-check-label ml-1" for="{{ $recaudo->id }}">{{ $recaudo->nombre }}</label>
                                         </div>
-                                    @endforeach
+                                        @endforeach
+                                    </div>
                                 </div>
 
                                 <div class="col-4">                                     
@@ -129,17 +139,17 @@
                             </div>
                         </div>
 
-                        <br>
+                    <br>
 
-                        <center>
-                            <button type="submit" class="btn btn-success btn-lg"><span class="icon text-white-60"><i class="fas fa-check"></i></span>
-                            <span class="text">Guardar</span>
-                            </button>
-                            <a  class="btn btn-info btn-lg" href="{{ url('planificacion/') }}"><span class="icon text-white-50">
-                                <i class="fas fa-info-circle"></i>
-                            </span>
-                            <span class="text">Regresar</span></a>
-                        </center>
+                    <center>
+                        <button type="submit" class="btn btn-success btn-lg"><span class="icon text-white-60"><i class="fas fa-check"></i></span>
+                        <span class="text">Guardar</span>
+                        </button>
+                        <a  class="btn btn-info btn-lg" href="{{ url('planificacion/') }}"><span class="icon text-white-50">
+                            <i class="fas fa-info-circle"></i>
+                        </span>
+                        <span class="text">Regresar</span></a>
+                    </center>
                 </form>
             </div>
         </div>    
@@ -185,6 +195,251 @@
           });    
     
         });
+    </script>
+
+    {{-- ? FUNCION PARA FILTRAR MINERALES POR SU CATEGORIA --}}
+
+    <script> 
+
+        $(document).ready(function() {
+        actualizarMinerales(); // Filtrar al cargar la página
+
+        $('#categoria').change(actualizarMinerales); // Filtrar al cambiar la categoría
+        });
+
+        function actualizarMinerales() {
+            const categoriaSeleccionada = $('#categoria').val();
+            const mineralActual = $('#nom_mineral').val();
+
+            if (categoriaSeleccionada) {
+                $.ajax({
+                    url: '/recepcion/create/fetch-minerales', 
+                    method: 'GET',
+                    data: { categoria: categoriaSeleccionada },
+                    success: function(data) {
+                        const selectMinerales = $('#nom_mineral');
+                        selectMinerales.empty();
+
+                        selectMinerales.append('<option value="0">Seleccione un mineral</option>');
+
+                        data.forEach(function(mineral) {
+                            const option = $('<option>', {
+                                value: mineral.id,
+                                text: mineral.nombre,
+                                selected: (mineral.id == mineralActual) 
+                            });
+                            selectMinerales.append(option);
+                        });
+                    },
+                    error: function(error) {
+                        console.error('Error fetching minerales:', error);
+                    }
+                });
+            }
+        }
+    </script> 
+
+     {{-- ? FUNCION PARA FILTRAR RECAUDOS POR SU CATEGORIA --}}
+
+    <script>
+        // $(document).ready(function() {
+        // actualizarRecaudos(); // Filtrar al cargar la página
+
+        // $('#categoria').change(actualizarRecaudos); // Filtrar al cambiar la categoría
+        // });
+
+        // function actualizarRecaudos() {
+        //     const categoriaSeleccionada = $('#categoria').val();
+        //     const recaudosSeleccionados = @json($recaudosSeleccionados); // Pasar los recaudos seleccionados desde PHP
+
+        //     if (categoriaSeleccionada) {
+        //         $.ajax({
+        //             url: '/recepcion/create/fetch-recaudos',
+        //             method: 'GET',
+        //             data: { categoria: categoriaSeleccionada },
+        //             success: function(data) {
+        //                 const recaudosContainer = $('#recaudo_categoria');
+        //                 recaudosContainer.empty();
+
+        //                 data.forEach(function(recaudo) {
+        //                     const categoriasRecaudo = JSON.parse(recaudo.categoria_recaudos);
+        //                     if (categoriasRecaudo.includes(categoriaSeleccionada)) {
+        //                         const recaudoDiv = $('<div>', { class: 'form-check' });
+        //                         const label = $('<label>', { class: 'form-check-label ml-1' });
+        //                         const checkbox = $('<input>', {
+        //                             type: 'checkbox',
+        //                             name: 'recaudos[]',
+        //                             value: recaudo.id,
+        //                             class: 'form-check-input',
+        //                             checked: recaudosSeleccionados.includes(recaudo.id) // Marcar si está seleccionado
+        //                         });
+
+        //                         label.append(checkbox).append(recaudo.nombre);
+        //                         recaudoDiv.append(label);
+        //                         recaudosContainer.append(recaudoDiv);
+        //                     }
+        //                 });
+        //             },
+        //             error: function(error) {
+        //                 console.error('Error fetching recaudos:', error);
+        //             }
+        //         });
+        //     }
+        // }
+
+//     $(document).ready(function() {
+//     actualizarRecaudos(); 
+
+//     $('#categoria').change(actualizarRecaudos); 
+// });
+
+// function actualizarRecaudos() {
+//     const categoriaSeleccionada = $('#categoria').val();
+//     const recaudosSeleccionados = $('input[name="recaudos[]"]:checked').map(function() {
+//         return this.value;
+//     }).get(); // Obtener los valores de los checkboxes seleccionados
+
+//     if (categoriaSeleccionada) {
+//         $.ajax({
+//             url: '/recepcion/create/fetch-recaudos',
+//             method: 'GET',
+//             data: { categoria: categoriaSeleccionada },
+//             success: function(data) {
+//                 const recaudosContainer = $('#recaudo_categoria');
+//                 recaudosContainer.empty();
+
+//                 data.forEach(function(recaudo) {
+//                     const categoriasRecaudo = JSON.parse(recaudo.categoria_recaudos);
+
+//                     // Mostrar si pertenece a la categoría seleccionada o a ambas
+//                     if (categoriasRecaudo.includes(categoriaSeleccionada)) {
+//                         const recaudoDiv = $('<div>', { class: 'form-check' });
+//                         const label = $('<label>', { class: 'form-check-label ml-1' });
+//                         const checkbox = $('<input>', {
+//                             type: 'checkbox',
+//                             name: 'recaudos[]',
+//                             value: recaudo.id,
+//                             class: 'form-check-input',
+//                             checked: recaudosSeleccionados.includes(recaudo.id.toString()) // Mantener checked
+//                         });
+//                         label.append(checkbox).append(recaudo.nombre);
+//                         recaudoDiv.append(label);
+//                         recaudosContainer.append(recaudoDiv);
+//                     }
+//                 });
+//             },
+//             error: function(error) {
+//                 console.error('Error fetching recaudos:', error);
+//             }
+//         });
+//     }
+// }
+
+// $(document).ready(function() {
+//     actualizarRecaudos(); 
+
+//     $('#categoria').change(actualizarRecaudos); 
+// });
+
+// function actualizarRecaudos() {
+//     const categoriaSeleccionada = $('#categoria').val();
+//     const recaudosSeleccionados = $('input[name="recaudos[]"]:checked').map(function() {
+//         return this.value;
+//     }).get(); 
+
+//     if (categoriaSeleccionada) {
+//         $.ajax({
+//             url: '/recepcion/create/fetch-recaudos',
+//             method: 'GET',
+//             data: { categoria: categoriaSeleccionada },
+//             success: function(data) {
+//                 const recaudosContainer = $('#recaudo_categoria');
+
+//                 data.forEach(function(recaudo) {
+//                     const categoriasRecaudo = JSON.parse(recaudo.categoria_recaudos);
+//                     const esCategoriaUnica = categoriasRecaudo.length === 1 && categoriasRecaudo.includes(categoriaSeleccionada);
+//                     const noEstaSeleccionado = !recaudosSeleccionados.includes(recaudo.id.toString());
+
+//                     // Agregar solo si es de categoría única y no está seleccionado
+//                     if (esCategoriaUnica && noEstaSeleccionado) {
+//                         const recaudoDiv = $('<div>', { class: 'form-check' });
+//                         const label = $('<label>', { class: 'form-check-label ml-1' });
+//                         const checkbox = $('<input>', {
+//                             type: 'checkbox',
+//                             name: 'recaudos[]',
+//                             value: recaudo.id,
+//                             class: 'form-check-input'
+//                         });
+//                         label.append(checkbox).append(recaudo.nombre);
+//                         recaudoDiv.append(label);
+//                         recaudosContainer.append(recaudoDiv);
+//                     }
+//                 });
+//             },
+//             error: function(error) {
+//                 console.error('Error fetching recaudos:', error);
+//             }
+//         });
+//     }
+// }
+
+$(document).ready(function() {
+    actualizarRecaudos(); 
+
+    $('#categoria').change(actualizarRecaudos); 
+});
+
+function actualizarRecaudos() {
+    const categoriaSeleccionada = $('#categoria').val();
+    const recaudosSeleccionados = $('input[name="recaudos[]"]:checked').map(function() {
+        return this.value;
+    }).get(); 
+
+    if (categoriaSeleccionada) {
+        $.ajax({
+            url: '/recepcion/create/fetch-recaudos',
+            method: 'GET',
+            data: { categoria: categoriaSeleccionada },
+            success: function(data) {
+                const recaudosContainer = $('#recaudo_categoria');
+                recaudosContainer.children().each(function() { // Iterar sobre los recaudos existentes
+                    const recaudoId = $(this).find('input[type="checkbox"]').val();
+                    const recaudoData = data.find(r => r.id == recaudoId); // Buscar datos del recaudo
+
+                    if (!recaudoData || !JSON.parse(recaudoData.categoria_recaudos).includes(categoriaSeleccionada)) {
+                        $(this).remove(); // Eliminar si no pertenece a la categoría
+                    }
+                });
+
+                data.forEach(function(recaudo) {
+                    const categoriasRecaudo = JSON.parse(recaudo.categoria_recaudos);
+                    const esCategoriaUnica = categoriasRecaudo.length === 1 && categoriasRecaudo.includes(categoriaSeleccionada);
+                    const noEstaSeleccionado = !recaudosSeleccionados.includes(recaudo.id.toString());
+                    const noExiste = !recaudosContainer.children().find('input[value="' + recaudo.id + '"]').length;
+
+                    // Agregar solo si es de categoría única, no está seleccionado y no existe
+                    if (esCategoriaUnica && noExiste) {
+                        const recaudoDiv = $('<div>', { class: 'form-check' });
+                        const label = $('<label>', { class: 'form-check-label ml-1' });
+                        const checkbox = $('<input>', {
+                            type: 'checkbox',
+                            name: 'recaudos[]',
+                            value: recaudo.id,
+                            class: 'form-check-input'
+                        });
+                        label.append(checkbox).append(recaudo.nombre);
+                        recaudoDiv.append(label);
+                        recaudosContainer.append(recaudoDiv);
+                    }
+                });
+            },
+            error: function(error) {
+                console.error('Error fetching recaudos:', error);
+            }
+        });
+    }
+}
+
     </script>
 
      {{-- ! FUNCION PARA SELLECIONAR TODOS LOS RECAUDOS --}}

@@ -30,10 +30,10 @@
                                     <input type="text" class="form-control" id="recaudo" name="nombre" style="background: white;" value="" placeholder="Ingrese un Recaudo" autocomplete="off" onkeypress="return soloLetras(event);" oninput="capitalizarInput('recaudo')">
                                 </div>
 
-                                <div class="col-5">
+                                <div class="col-4">
                                     <label for="select2Multiple" class="font-weight-bold text-primary">Categoria</label>
                                     <select class="select2-multiple form-control" name="categoria_recaudos[]" multiple="multiple" id="select2Multiple">
-                                        <option value="" disabled>Seleccione una Categoria</option>
+                                        <option value="" disabled>Seleccione una o ambas Categoria</option>
                                         <option value="Aprovechamiento">Aprovechamiento</option>
                                         <option value="Procesamiento">Procesamiento</option>
                                     </select>

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_recepcion');
             $table->unsignedBigInteger('id_comisionado');
-            $table->unsignedBigInteger('id_municipio');
+            $table->bigInteger('id_municipio')->nullable();
             $table->date('fecha_inicial');
             $table->date('fecha_final');
             $table->string('estatus');
