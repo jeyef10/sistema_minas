@@ -749,41 +749,41 @@ function Solicitante_juridico(obj) {
         return false;
     }
 
-    if (/(\w)\1+/i.test(rif.toLowerCase())) {
-        Swal.fire({
-                title: 'Solicitante',
-                text: "El campo del RIF no debe contener caracteres repetidos.",
-                icon: 'warning',
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                }).then((result) => {
-            if (result.isConfirmed) {
-    
-                this.submit();
-            }
-            })
-            
-            obj.rif.focus();
-            return false;
-        }
-
-    // if (/^([a-zA-Z0-9])\1+$/.test(rif)) {
+    // if (/(\w)\1+/i.test(rif.toLowerCase())) {
     //     Swal.fire({
-    //         title: 'Solicitante',
-    //         text: "El campo del RIF de empresa no debe contener caracteres repetidos.",
-    //         icon: 'warning',
-    //         confirmButtonColor: '#3085d6',
-    //         cancelButtonColor: '#d33',
-    //         }).then((result) => {
-    //     if (result.isConfirmed) {
-
-    //         this.submit();
+    //             title: 'Solicitante',
+    //             text: "El campo del RIF no debe contener caracteres repetidos.",
+    //             icon: 'warning',
+    //             confirmButtonColor: '#3085d6',
+    //             cancelButtonColor: '#d33',
+    //             }).then((result) => {
+    //         if (result.isConfirmed) {
+    
+    //             this.submit();
+    //         }
+    //         })
+            
+    //         obj.rif.focus();
+    //         return false;
     //     }
-    //     })
+
+    if (/^([a-zA-Z0-9])\1+$/.test(rif)) {
+        Swal.fire({
+            title: 'Solicitante',
+            text: "El campo del RIF de empresa no debe contener caracteres repetidos.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
         
-    //     obj.nombre.focus();
-    //     return false;
-    // }
+        obj.nombre.focus();
+        return false;
+    }
 
    var nombre_empresa = obj.nombre_empresa.value;
    if (!nombre_empresa) {
@@ -838,24 +838,23 @@ function Solicitante_juridico(obj) {
        return false;
    }
 
-   if (/(\w)\1+/i.test(nombre_empresa.toLowerCase())) {
-    Swal.fire({
-            title: 'Solicitante',
-            text: "El campo de nombre de la empresa no debe contener caracteres repetidos.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+//    if (/(\w)\1+/i.test(nombre_empresa.toLowerCase())) {
+//     Swal.fire({
+//             title: 'Solicitante',
+//             text: "El campo de nombre de la empresa no debe contener caracteres repetidos.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+//             this.submit();
+//         }
+//         })
         
-        obj.nombre_empresa.focus();
-        return false;
-    }
-
+//         obj.nombre_empresa.focus();
+//         return false;
+//     }
 
 //    if (/^([a-zA-Z0-9])\1+$/.test(nombre_empresa)) {
 //        Swal.fire({
@@ -874,6 +873,7 @@ function Solicitante_juridico(obj) {
 //        obj.nombre.focus();
 //        return false;
 //    }
+
    /* if (!/^[A-Z][a-z]+$/.test(nombre_empresa  )) {
        Swal.fire({
            title: 'Solicitante',

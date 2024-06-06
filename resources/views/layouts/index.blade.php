@@ -157,7 +157,7 @@
                         <h6 class="dropdown-header">
                           Planificaciones
                         </h6>
-                        {{-- <a class="dropdown-item d-flex align-items-center" href="#">
+                         <a class="dropdown-item d-flex align-items-center" href="#">
                           <div class="mr-3">
                             <div class="icon-circle bg-primary">
                               <i class="fas fa-file-alt text-white"></i>
@@ -189,7 +189,7 @@
                             <div class="small text-gray-500">December 2, 2019</div>
                             Spending Alert: We've noticed unusually high spending for your account.
                           </div>
-                        </a> --}}
+                        </a> 
                         <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                       </div>
                     <li class="nav-item dropdown no-arrow">

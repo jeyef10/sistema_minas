@@ -73,7 +73,7 @@
     
      <script>
     function capitalizarPrimeraLetra(texto) {
-        return texto.charAt(0).toUpperCase() + texto.slice(1);
+        return texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
     }
 
     function capitalizarInput(idInput) {

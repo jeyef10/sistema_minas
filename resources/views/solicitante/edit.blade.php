@@ -104,7 +104,7 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">RIF</label>
-                                        <input type="text" class="form-control" id="rif" name="rif" style="background: white;" value="{{ $solicitante->solicitanteEspecifico->rif }}" placeholder="Ingrese el Rif" autocomplete="off">
+                                        <input type="text" class="form-control" id="rif" name="rif" style="background: white;" maxlength="12" value="{{ $solicitante->solicitanteEspecifico->rif }}" placeholder="Ingrese el Rif" autocomplete="off">
                                     </div>
             
                                     <div class="col-4">
