@@ -23,7 +23,7 @@
                             <div class="row">
                                 <div class="col-4">
                                     <label class="font-weight-bold text-primary">Nombre del Rol</label>
-                                    {!! Form::text('name', null, array('class' => 'form-control', 'onkeypress' => 'return soloLetras(event);')) !!}
+                                    {!! Form::text('name', null, array('class' => 'form-control', 'oninput' => 'capitalizarInput(name)', 'onkeypress' => 'return soloLetras(event);')) !!}
                                 </div>
                             </div>
                         </div> 
@@ -79,6 +79,19 @@
         }
         }
         
+    </script>
+
+    {{-- ? FUNCIÓN PARA CONVERTIR UNA LETRA EN MAYÚSCULAS Y LOS DEMAS EN MINÚSCULAS --}}
+    
+    <script>
+        function capitalizarPrimeraLetra(texto) {
+            return texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
+        }
+    
+        function capitalizarInput(idInput) {
+            const inputElement = document.getElementById(idInput);
+            inputElement.value = capitalizarPrimeraLetra(inputElement.value);
+        }
     </script>
 
     if ($errors->any())

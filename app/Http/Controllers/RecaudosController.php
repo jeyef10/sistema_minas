@@ -66,7 +66,7 @@ class RecaudosController extends Controller
             'categoria_recaudos' => 'required|array',
             ],
             [
-            'nombre.unique' => 'Este recaudo ya existe.'
+            'nombre.unique' => ''
             ]
         );
     

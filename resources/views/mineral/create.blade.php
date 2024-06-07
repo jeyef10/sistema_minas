@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Nombre</label>
-                                    <input type="text" class="form-control" id="nombre" name="nombre" style="background: white;" value="" placeholder="Ingrese el nombre" autocomplete="off" onkeypress="return soloLetras(event);" oninput="capitalizarInput('nombre')">
+                                    <input type="text" class="form-control" id="nombre" name="nombre" style="background: white;" value="" placeholder="Ingrese el nombre" autocomplete="off" oninput="capitalizarInput('nombre')" onkeypress="return soloLetras(event);">
                                 </div>
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Categoria</label>

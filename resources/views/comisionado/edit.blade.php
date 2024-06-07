@@ -27,17 +27,17 @@
         
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Cédula</label>
-                                    <input type="text" class="form-control" id="cedula" name="cedula" style="background: white;" value="{{ isset($comisionado->cedula)?$comisionado->cedula:'' }}" placeholder="Ingrese La Cédula" autocomplete="off" onkeypress="return solonum(event);">
+                                    <input type="text" class="form-control" id="cedula" name="cedula"  maxlength="8" style="background: white;" value="{{ isset($comisionado->cedula)?$comisionado->cedula:'' }}" placeholder="Ingrese La Cédula" autocomplete="off" onkeypress="return solonum(event);">
                                 </div>
         
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Nombres</label>
-                                    <input type="text" class="form-control" id="nombre" name="nombres" style="background: white;" value="{{ isset($comisionado->nombres)?$comisionado->nombres:'' }}" placeholder="Ingrese El Nombre" autocomplete="off" onkeypress="return soloLetras(event);">
+                                    <input type="text" class="form-control" id="nombre" name="nombres" style="background: white;" value="{{ isset($comisionado->nombres)?$comisionado->nombres:'' }}" placeholder="Ingrese El Nombre" autocomplete="off" oninput="capitalizarInput('nombre')" onkeypress="return soloLetras(event);">
                                 </div>
         
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Apellidos</label>
-                                    <input type="text" class="form-control" id="apellido" name="apellidos" style="background: white;" value="{{ isset($comisionado->apellidos)?$comisionado->apellidos:'' }}" placeholder="Ingrese El Apellido" autocomplete="off" onkeypress="return soloLetras(event);">
+                                    <input type="text" class="form-control" id="apellido" name="apellidos" style="background: white;" value="{{ isset($comisionado->apellidos)?$comisionado->apellidos:'' }}" placeholder="Ingrese El Apellido" autocomplete="off" oninput="capitalizarInput('apellido')" onkeypress="return soloLetras(event);">
                                 </div>
 
                                 <div class="col-4">
@@ -48,15 +48,6 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                
-                                {{-- <div class="col-4">
-                                    <label class="font-weight-bold text-primary">Parroquia</label>
-                                    <select class="select2-single form-control" id="parroquia" name="id_parroquia">
-                                        @foreach ($parroquias as $parroquia)
-                                        <option value="{{ $parroquia->id }}" @selected($comisionado->id_parroquia == $parroquia->id)>{{ $parroquia->nom_parroquia }}</option>
-                                        @endforeach
-                                    </select>
-                                </div> --}}
                                        
                             </div>
 
@@ -78,35 +69,18 @@
             </div>    
     </div>
 
-    {{-- <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script> --}}
-    
-    <!-- {{-- * FUNCION PARA MOSTRAR PARROQUIAS EN Comisionado  --}}
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 
-    {{-- <script>
-        $(document).ready(function() {
-        $('#municipio').change(function() {
-            var municipioId = $(this).val(); // Get the selected municipio ID
+    <script>
+        function capitalizarPrimeraLetra(texto) {
+            return texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
+        }
 
-            if (municipioId) { // If a municipio is selected
-                $.ajax({
-                    url: '/comisionados/create/' + municipioId, // Replace with your actual route URL
-                    method: 'GET',
-                    success: function(data) {
-                        console.log(data)
-                        var options = '<option value="">Seleccione una parroquia</option>';
-                        $.each(data, function(key, value) {
-                            options += '<option value="' + key + '">' + value + '</option>';
-                        });
-
-                        $('#parroquia').html(options); // Update the 'Parroquia' select with new options
-                    }
-                });
-            } else {
-                $('#parroquia').html('<option value="">Seleccione una parroquia</option>'); // Clear 'Parroquia' select
-            }
-        });
-    });
-    </script> --}} -->
+        function capitalizarInput(idInput) {
+            const inputElement = document.getElementById(idInput);
+            inputElement.value = capitalizarPrimeraLetra(inputElement.value);
+        }
+    </script>   
 
 @if ($errors->any())
     <script>
@@ -127,7 +101,5 @@
                 })
     </script>
 @endif
-
-    
 
 @endsection

@@ -117,7 +117,7 @@ class MineralController extends Controller
     {
         $request->validate(
             [
-            'nombre' => 'unique:minerales,nombre'
+            'nombre' => 'unique:minerales,nombre,' .$id,
             ],
             [
             'nombre.unique' => 'Este mineral ya existe.'

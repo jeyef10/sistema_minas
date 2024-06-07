@@ -27,7 +27,7 @@
                                 <div class="col-4">
                                     <label for="persona" class="font-weight-bold text-primary">Tipo de Solicitante</label>
                                     <select class="select2-single form-control" id="tipo_solicitante" name="solicitante">
-                                        <option value="0">Seleccione tipo de Solicitante</option>
+                                        <option value="">Seleccione tipo de Solicitante</option>
                                         <option value="Natural">Natural</option>
                                         <option value="Jurídico">Jurídico</option>
                                     </select>
@@ -37,7 +37,7 @@
                                     <label for="persona" class="font-weight-bold text-primary">Solicitante</label>
                                     <div style="display: flex;">
                                         <select class="select2-single form-control" id="solicitante" name="solicitante_especifico_id" >
-                                            <option value="0">Seleccione una Persona</option>
+                                            <option value="">Seleccione una Persona</option>
                                         </select>
                                     </div>
                                 </div>
@@ -45,7 +45,7 @@
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Municipio</label>
                                     <select class="select2-single form-control" id="municipio" name="id_municipio">
-                                        <option value="0">Seleccione un municipio</option>
+                                        <option value="">Seleccione un municipio</option>
                                         @foreach($municipios as $municipio)
                                             <option value="{{ $municipio->id }}">{{ $municipio->nom_municipio }}</option>
                                         @endforeach

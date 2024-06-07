@@ -37,7 +37,7 @@
                             
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Nombre</label>
-                                    <input type="text" class="form-control" id="username" name="nombre" style="background: white;" value="{{ isset($mineral->nombre)?$mineral->nombre:'' }}" placeholder="Ingrese El Nombre" autocomplete="off"  oninput="capitalizarInput('username')">
+                                    <input type="text" class="form-control" id="nombre" name="nombre" style="background: white;" value="{{ isset($mineral->nombre)?$mineral->nombre:'' }}" placeholder="Ingrese El Nombre" autocomplete="off" oninput="capitalizarInput('nombre')" onkeypress="return soloLetras(event);">
                                 </div>
         
                                 <div class="col-4">
