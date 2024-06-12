@@ -28,9 +28,9 @@ class Planificacion extends Model
         return $this->belongsTo(Municipio::class, 'id_municipio');
     }
 
-    public function planiciacioninspecciones()
+    public function planificacioncomisionados()
     {
-        return $this->belongsTo(PlaniciacionInspecciones::class, 'id_planificacion', 'id', 'id_comisionado');
+        return $this->belongsTo(PlanificacionComisionados::class, 'id_planificacion', 'id', 'id_comisionado');
     }
 
 }

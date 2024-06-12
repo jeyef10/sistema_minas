@@ -156,19 +156,21 @@
     </div>
 
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{asset('path/to/bootstrap-datepicker.es.min.js')}}"></script>
+    <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js')}}"></script>
     <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
 
     {{--! ESTILOS DE LA FECHA PARA QUE SE DESPLIEGUE  --}}
 
     <script>
         $(document).ready(function () {
-       
           // Bootstrap Date Picker
           $('#simple-date1 .input-group.date').datepicker({
             format: 'dd/mm/yyyy',
             todayBtn: 'linked',
             todayHighlight: true,
-            autoclose: true,        
+            autoclose: true,
+            language: 'es'        
           });
     
           $('#simple-date2 .input-group.date').datepicker({
@@ -177,6 +179,7 @@
             autoclose: true,     
             todayHighlight: true,   
             todayBtn: 'linked',
+            language: 'es'
           });
     
           $('#simple-date3 .input-group.date').datepicker({
@@ -185,6 +188,7 @@
             autoclose: true,     
             todayHighlight: true,   
             todayBtn: 'linked',
+            language: 'es'
           });
     
           $('#simple-date4 .input-daterange').datepicker({        
@@ -192,6 +196,7 @@
             autoclose: true,     
             todayHighlight: true,   
             todayBtn: 'linked',
+            language: 'es'
           });    
     
         });
@@ -242,203 +247,63 @@
      {{-- ? FUNCION PARA FILTRAR RECAUDOS POR SU CATEGORIA --}}
 
     <script>
-        // $(document).ready(function() {
-        // actualizarRecaudos(); // Filtrar al cargar la página
+        
+    $(document).ready(function() {
+        actualizarRecaudos(); 
 
-        // $('#categoria').change(actualizarRecaudos); // Filtrar al cambiar la categoría
-        // });
+        $('#categoria').change(actualizarRecaudos); 
+    });
 
-        // function actualizarRecaudos() {
-        //     const categoriaSeleccionada = $('#categoria').val();
-        //     const recaudosSeleccionados = @json($recaudosSeleccionados); // Pasar los recaudos seleccionados desde PHP
+    function actualizarRecaudos() {
+        const categoriaSeleccionada = $('#categoria').val();
+        const recaudosSeleccionados = $('input[name="recaudos[]"]:checked').map(function() {
+            return this.value;
+        }).get(); 
 
-        //     if (categoriaSeleccionada) {
-        //         $.ajax({
-        //             url: '/recepcion/create/fetch-recaudos',
-        //             method: 'GET',
-        //             data: { categoria: categoriaSeleccionada },
-        //             success: function(data) {
-        //                 const recaudosContainer = $('#recaudo_categoria');
-        //                 recaudosContainer.empty();
+        if (categoriaSeleccionada) {
+            $.ajax({
+                url: '/recepcion/create/fetch-recaudos',
+                method: 'GET',
+                data: { categoria: categoriaSeleccionada },
+                success: function(data) {
+                    const recaudosContainer = $('#recaudo_categoria');
+                    recaudosContainer.children().each(function() { // Iterar sobre los recaudos existentes
+                        const recaudoId = $(this).find('input[type="checkbox"]').val();
+                        const recaudoData = data.find(r => r.id == recaudoId); // Buscar datos del recaudo
 
-        //                 data.forEach(function(recaudo) {
-        //                     const categoriasRecaudo = JSON.parse(recaudo.categoria_recaudos);
-        //                     if (categoriasRecaudo.includes(categoriaSeleccionada)) {
-        //                         const recaudoDiv = $('<div>', { class: 'form-check' });
-        //                         const label = $('<label>', { class: 'form-check-label ml-1' });
-        //                         const checkbox = $('<input>', {
-        //                             type: 'checkbox',
-        //                             name: 'recaudos[]',
-        //                             value: recaudo.id,
-        //                             class: 'form-check-input',
-        //                             checked: recaudosSeleccionados.includes(recaudo.id) // Marcar si está seleccionado
-        //                         });
+                        if (!recaudoData || !JSON.parse(recaudoData.categoria_recaudos).includes(categoriaSeleccionada)) {
+                            $(this).remove(); // Eliminar si no pertenece a la categoría
+                        }
+                    });
 
-        //                         label.append(checkbox).append(recaudo.nombre);
-        //                         recaudoDiv.append(label);
-        //                         recaudosContainer.append(recaudoDiv);
-        //                     }
-        //                 });
-        //             },
-        //             error: function(error) {
-        //                 console.error('Error fetching recaudos:', error);
-        //             }
-        //         });
-        //     }
-        // }
+                    data.forEach(function(recaudo) {
+                        const categoriasRecaudo = JSON.parse(recaudo.categoria_recaudos);
+                        const esCategoriaUnica = categoriasRecaudo.length === 1 && categoriasRecaudo.includes(categoriaSeleccionada);
+                        const noEstaSeleccionado = !recaudosSeleccionados.includes(recaudo.id.toString());
+                        const noExiste = !recaudosContainer.children().find('input[value="' + recaudo.id + '"]').length;
 
-//     $(document).ready(function() {
-//     actualizarRecaudos(); 
-
-//     $('#categoria').change(actualizarRecaudos); 
-// });
-
-// function actualizarRecaudos() {
-//     const categoriaSeleccionada = $('#categoria').val();
-//     const recaudosSeleccionados = $('input[name="recaudos[]"]:checked').map(function() {
-//         return this.value;
-//     }).get(); // Obtener los valores de los checkboxes seleccionados
-
-//     if (categoriaSeleccionada) {
-//         $.ajax({
-//             url: '/recepcion/create/fetch-recaudos',
-//             method: 'GET',
-//             data: { categoria: categoriaSeleccionada },
-//             success: function(data) {
-//                 const recaudosContainer = $('#recaudo_categoria');
-//                 recaudosContainer.empty();
-
-//                 data.forEach(function(recaudo) {
-//                     const categoriasRecaudo = JSON.parse(recaudo.categoria_recaudos);
-
-//                     // Mostrar si pertenece a la categoría seleccionada o a ambas
-//                     if (categoriasRecaudo.includes(categoriaSeleccionada)) {
-//                         const recaudoDiv = $('<div>', { class: 'form-check' });
-//                         const label = $('<label>', { class: 'form-check-label ml-1' });
-//                         const checkbox = $('<input>', {
-//                             type: 'checkbox',
-//                             name: 'recaudos[]',
-//                             value: recaudo.id,
-//                             class: 'form-check-input',
-//                             checked: recaudosSeleccionados.includes(recaudo.id.toString()) // Mantener checked
-//                         });
-//                         label.append(checkbox).append(recaudo.nombre);
-//                         recaudoDiv.append(label);
-//                         recaudosContainer.append(recaudoDiv);
-//                     }
-//                 });
-//             },
-//             error: function(error) {
-//                 console.error('Error fetching recaudos:', error);
-//             }
-//         });
-//     }
-// }
-
-// $(document).ready(function() {
-//     actualizarRecaudos(); 
-
-//     $('#categoria').change(actualizarRecaudos); 
-// });
-
-// function actualizarRecaudos() {
-//     const categoriaSeleccionada = $('#categoria').val();
-//     const recaudosSeleccionados = $('input[name="recaudos[]"]:checked').map(function() {
-//         return this.value;
-//     }).get(); 
-
-//     if (categoriaSeleccionada) {
-//         $.ajax({
-//             url: '/recepcion/create/fetch-recaudos',
-//             method: 'GET',
-//             data: { categoria: categoriaSeleccionada },
-//             success: function(data) {
-//                 const recaudosContainer = $('#recaudo_categoria');
-
-//                 data.forEach(function(recaudo) {
-//                     const categoriasRecaudo = JSON.parse(recaudo.categoria_recaudos);
-//                     const esCategoriaUnica = categoriasRecaudo.length === 1 && categoriasRecaudo.includes(categoriaSeleccionada);
-//                     const noEstaSeleccionado = !recaudosSeleccionados.includes(recaudo.id.toString());
-
-//                     // Agregar solo si es de categoría única y no está seleccionado
-//                     if (esCategoriaUnica && noEstaSeleccionado) {
-//                         const recaudoDiv = $('<div>', { class: 'form-check' });
-//                         const label = $('<label>', { class: 'form-check-label ml-1' });
-//                         const checkbox = $('<input>', {
-//                             type: 'checkbox',
-//                             name: 'recaudos[]',
-//                             value: recaudo.id,
-//                             class: 'form-check-input'
-//                         });
-//                         label.append(checkbox).append(recaudo.nombre);
-//                         recaudoDiv.append(label);
-//                         recaudosContainer.append(recaudoDiv);
-//                     }
-//                 });
-//             },
-//             error: function(error) {
-//                 console.error('Error fetching recaudos:', error);
-//             }
-//         });
-//     }
-// }
-
-$(document).ready(function() {
-    actualizarRecaudos(); 
-
-    $('#categoria').change(actualizarRecaudos); 
-});
-
-function actualizarRecaudos() {
-    const categoriaSeleccionada = $('#categoria').val();
-    const recaudosSeleccionados = $('input[name="recaudos[]"]:checked').map(function() {
-        return this.value;
-    }).get(); 
-
-    if (categoriaSeleccionada) {
-        $.ajax({
-            url: '/recepcion/create/fetch-recaudos',
-            method: 'GET',
-            data: { categoria: categoriaSeleccionada },
-            success: function(data) {
-                const recaudosContainer = $('#recaudo_categoria');
-                recaudosContainer.children().each(function() { // Iterar sobre los recaudos existentes
-                    const recaudoId = $(this).find('input[type="checkbox"]').val();
-                    const recaudoData = data.find(r => r.id == recaudoId); // Buscar datos del recaudo
-
-                    if (!recaudoData || !JSON.parse(recaudoData.categoria_recaudos).includes(categoriaSeleccionada)) {
-                        $(this).remove(); // Eliminar si no pertenece a la categoría
-                    }
-                });
-
-                data.forEach(function(recaudo) {
-                    const categoriasRecaudo = JSON.parse(recaudo.categoria_recaudos);
-                    const esCategoriaUnica = categoriasRecaudo.length === 1 && categoriasRecaudo.includes(categoriaSeleccionada);
-                    const noEstaSeleccionado = !recaudosSeleccionados.includes(recaudo.id.toString());
-                    const noExiste = !recaudosContainer.children().find('input[value="' + recaudo.id + '"]').length;
-
-                    // Agregar solo si es de categoría única, no está seleccionado y no existe
-                    if (esCategoriaUnica && noExiste) {
-                        const recaudoDiv = $('<div>', { class: 'form-check' });
-                        const label = $('<label>', { class: 'form-check-label ml-1' });
-                        const checkbox = $('<input>', {
-                            type: 'checkbox',
-                            name: 'recaudos[]',
-                            value: recaudo.id,
-                            class: 'form-check-input'
-                        });
-                        label.append(checkbox).append(recaudo.nombre);
-                        recaudoDiv.append(label);
-                        recaudosContainer.append(recaudoDiv);
-                    }
-                });
-            },
-            error: function(error) {
-                console.error('Error fetching recaudos:', error);
-            }
-        });
+                        // Agregar solo si es de categoría única, no está seleccionado y no existe
+                        if (esCategoriaUnica && noExiste) {
+                            const recaudoDiv = $('<div>', { class: 'form-check' });
+                            const label = $('<label>', { class: 'form-check-label ml-1' });
+                            const checkbox = $('<input>', {
+                                type: 'checkbox',
+                                name: 'recaudos[]',
+                                value: recaudo.id,
+                                class: 'form-check-input'
+                            });
+                            label.append(checkbox).append(recaudo.nombre);
+                            recaudoDiv.append(label);
+                            recaudosContainer.append(recaudoDiv);
+                        }
+                    });
+                },
+                error: function(error) {
+                    console.error('Error fetching recaudos:', error);
+                }
+            });
+        }
     }
-}
 
     </script>
 

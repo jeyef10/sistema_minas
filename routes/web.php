@@ -23,6 +23,7 @@ use App\Http\Controllers\PlazosController;
 // use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\RecepcionController;
 use App\Http\Controllers\PlanificacionController;
+use App\Http\Controllers\InspeccionesController;
 
 
 
@@ -143,6 +144,17 @@ Route::get('/planificacion/create', [PlanificacionController::class, 'create'])-
 Route::resource('planificacion', PlanificacionController::class)->middleware('auth');
 Route::get('/planificacion/create/fetchComisionados/{municipioId}', [PlanificacionController::class, 'fetchComisionados']);
 Route::get('/planificacion/detalles/{id}', [PlanificacionController::class, 'getRecepcionDetalles']);
+// Route::get('/planificacion/{recepcionId}', [PlanificacionController::class, 'getRecepcionDatos']);
+
+Route::get('/planificacion/create/getRecepcionDatos/{recepcionId}', [PlanificacionController::class, 'getRecepcionDatos'])->name('recepcionId');
+
+
+/* Ruta Inspección */
+Route::get('/inspeccion', [InspeccionesController::class,'index'])->name('inspeccion')->middleware('auth');
+Route::get('/inspeccion/create', [InspeccionesController::class, 'create'])->name('create')->middleware('auth');
+// Route::resource('planificacion', PlanificacionController::class)->middleware('auth');
+// Route::get('/planificacion/create/fetchComisionados/{municipioId}', [PlanificacionController::class, 'fetchComisionados']);
+// Route::get('/planificacion/detalles/{id}', [PlanificacionController::class, 'getRecepcionDetalles']);
 
 /* Ruta Bitacora*/
 Route::get('bitacora', [ReporteController::class, 'bitacora'])->name('bitacora')->middleware('auth');

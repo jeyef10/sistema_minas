@@ -16,24 +16,6 @@
                         <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Registrar Inspección</h2>
 
                     </div>
-
-                    {{-- <div class="card-body">
-
-                        <div class="row">
-
-                            <div class="custom-control custom-radio col-2">
-                                <input type="radio" id="natural" name="tipo" value="Natural" class="custom-control-input">
-                                <label class="custom-control-label" for="natural">Aprovechamiento</label>
-                            </div>
-
-                            <div class="custom-control custom-radio col-1">
-                                <input type="radio" id="juridico" name="tipo" value="Jurídico" class="custom-control-input">
-                                <label class="custom-control-label" for="juridico">Procesamiento</label>
-                            </div>
-
-                        </div>
-
-                    </div>  --}}
  
         <form method="post" action="{{ route('inspeccion.store') }}" enctype="multipart/form-data" onsubmit="return Inspeccion(this)" id="Natural" style="">
                         @csrf
@@ -56,13 +38,6 @@
                                             @endforeach
                                         </select>                                   
                                     </div>
-
-                                    {{-- <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Parroquia</label>
-                                        <select class="select2-single form-control" id="parroquia" name="parroquia">
-                                            <option value="0">Seleccione un parroquia</option>
-                                        </select>                                   
-                                    </div>  --}}
 
                                     <div class="col-4">
                                         <label for="comisionado" class="font-weight-bold text-primary">Comisionado asignado</label>
@@ -154,18 +129,20 @@
 
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
+    <script src="{{asset('path/to/bootstrap-datepicker.es.min.js')}}"></script>
+    <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js')}}"></script>
 
     {{--! ESTILOS DE LA FECHA PARA QUE SE DESPLIEGUE  --}}
 
     <script>
         $(document).ready(function () {
-       
           // Bootstrap Date Picker
           $('#simple-date1 .input-group.date').datepicker({
             format: 'dd/mm/yyyy',
             todayBtn: 'linked',
             todayHighlight: true,
-            autoclose: true,        
+            autoclose: true,
+            language: 'es'        
           });
     
           $('#simple-date2 .input-group.date').datepicker({
@@ -174,6 +151,7 @@
             autoclose: true,     
             todayHighlight: true,   
             todayBtn: 'linked',
+            language: 'es'
           });
     
           $('#simple-date3 .input-group.date').datepicker({
@@ -182,6 +160,7 @@
             autoclose: true,     
             todayHighlight: true,   
             todayBtn: 'linked',
+            language: 'es'
           });
     
           $('#simple-date4 .input-daterange').datepicker({        
@@ -189,54 +168,11 @@
             autoclose: true,     
             todayHighlight: true,   
             todayBtn: 'linked',
+            language: 'es'
           });    
     
         });
     </script>
-
-    {{-- ! FUNCION PARA MOSTRAR Y OCULTAR FORMULARIOS --}}
-
-   {{--  <script>
-        function showHideForms() {
-            // Selecciona los botones de radio con el nombre "tipo"
-            const radios = document.querySelectorAll('input[type="radio"][name="tipo"]'); 
-    
-            // Selecciona los formularios con los ID "Natural" y "Jurídico"
-            const forms = document.querySelectorAll('#Natural, #Jurídico'); 
-    
-            // Inicialmente oculta ambos formularios
-            forms[0].style.display = 'none';
-            forms[1].style.display = 'none';
-    
-            // Añade un evento de cambio a los botones de radio
-            radios.forEach(radio => {
-                radio.addEventListener('change', (event) => {
-
-                    // Obtiene el ID del formulario a mostrar
-                    const selectedFormId = event.target.value; 
-    
-                    // Recorre todos los formularios
-                    for (const form of forms) {
-
-                        // Si el ID del formulario coincide con el ID seleccionado, muestra el formulario
-                        if (form.id === selectedFormId) {
-                            form.style.display = 'block';
-
-                            // Establece el valor del campo de tipo en el formulario seleccionado
-                            document.querySelector(`#tipo-${selectedFormId.toLowerCase()}`).value = selectedFormId;
-                        } else {
-                            
-                            // Si no coincide, oculta el formulario
-                            form.style.display = 'none';
-                        }
-                    }
-                });
-            });
-        }
-    
-        // Añade el evento de carga a la ventana para ejecutar la función showHideForms cuando se carga la página
-        window.addEventListener('DOMContentLoaded', showHideForms);
-    </script> --}}
 
     {{-- * FUNCION PARA MOSTRAR COMISIONADOS SEGUN SU MUNICIPIO --}}
 
@@ -275,62 +211,6 @@
         });
 
 
-    </script>
-
-    {{-- * FUNCION PARA MOSTRAR PARROQUIAS EN APROVECHAMIENTO  --}}
-
-    {{-- <script>
-        $(document).ready(function() {
-        $('#municipio').change(function() {
-            var municipioId = $(this).val(); // Get the selected municipio ID
-
-            if (municipioId) { // If a municipio is selected
-                $.ajax({
-                    url: '/solicitudes/create/' + municipioId, // Replace with your actual route URL
-                    method: 'GET',
-                    success: function(data) {
-                        console.log(data)
-                        var options = '<option value="">Seleccione una parroquia</option>';
-                        $.each(data, function(key, value) {
-                            options += '<option value="' + key + '">' + value + '</option>';
-                        });
-
-                        $('#parroquia').html(options); // Update the 'Parroquia' select with new options
-                    }
-                });
-            } else {
-                $('#parroquia').html('<option value="">Seleccione una parroquia</option>'); // Clear 'Parroquia' select
-            }
-        });
-    });
-    </script> --}}
-
-    {{-- * FUNCION PARA MOSTRAR PARROQUIAS EN PROCESAMIENTO  --}}
-
-    <script>
-        $(document).ready(function() {
-        $('#municipio_p').change(function() {
-            var municipioId = $(this).val(); // Get the selected municipio ID
-
-            if (municipioId) { // If a municipio is selected
-                $.ajax({
-                    url: '/solicitudes/create/' + municipioId, // Replace with your actual route URL
-                    method: 'GET',
-                    success: function(data) {
-                        console.log(data)
-                        var options = '<option value="">Seleccione una parroquia</option>';
-                        $.each(data, function(key, value) {
-                            options += '<option value="' + key + '">' + value + '</option>';
-                        });
-
-                        $('#parroquia_p').html(options); // Update the 'Parroquia' select with new options
-                    }
-                });
-            } else {
-                $('#parroquia_p').html('<option value="">Seleccione una parroquia</option>'); // Clear 'Parroquia' select
-            }
-        });
-    });
     </script>
 
 @endsection

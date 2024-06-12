@@ -9,6 +9,9 @@ use App\Models\Recaudos;
 use App\Models\Comisionados;
 use App\Models\Municipio;
 use App\Models\RecepcionRecaudos;
+use App\Models\Solicitante;
+use App\Models\PersonaJuridica;
+use App\Models\PersonaNatural;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -48,10 +51,14 @@ class PlanificacionController extends Controller
     {
         $planificacioncomisionados = PlanificacionComisionados::all();
         $comisionados = Comisionados::all();
-        $recepciones = Recepcion::all();
         $municipios = Municipio::all();
+        $solicitantes = Solicitante::with('solicitanteEspecifico')->get();
+
+        // $id->repcecion->id_recepcion;
+
+        $recepcion = Recepcion::all();
         
-        return view('planificacion.create', compact('planificacioncomisionados', 'comisionados', 'recepciones', 'municipios' ));
+        return view('planificacion.create', compact('planificacioncomisionados', 'comisionados', 'municipios', 'solicitantes'));
     }
 
     public function fetchComisionados(Request $request, $municipioId)
@@ -60,6 +67,15 @@ class PlanificacionController extends Controller
     
         return response()->json($municipiocomisionados);
     }
+
+    // public function getRecepcionDatos($recepcionId)
+    // {
+        
+    //     $datos_recepcion = Recepcion::where('id_recepcion', $recepcionId)->get();
+    //     dd($$datos_recepcion);
+    //     return response()->json($datos_recepcion);
+    
+    // }
     /**
      * Store a newly created resource in storage.
      *
@@ -68,7 +84,46 @@ class PlanificacionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $this->validate($request, [
+            'fecha_inicial' => 'required|date_format:d/m/Y|after_or_equal:today', // Garantiza que la fecha inicial sea hoy o en el futuro.
+            'fecha_final' => 'required|date_format:d/m/Y|after:fecha_inicial|before_or_equal:'// Limita la fecha final a la próxima semana, incluido hoy y los próximos siete días.
+        ]);
+
+        // Crear una nueva Planificación
+        $planificacion = new Planificacion ();
+        $planificacion->id_recepcion = $request->input('id_recepcion');
+        $planificacion->id_municipio = $request->input('id_municipio');
+        $planificacion->id_comisionado = $request->input('comisionado');
+        $planificacion->fecha_inicial = $request->input('fecha_inicial');
+        $planificacion->fecha_final = $request->input('fecha_final');
+        $planificacion->estatus = $request->input('estatus');
+        
+        $planificacion->save();
+
+        // Obtener los IDs de recaudos seleccionados (debe ser un array)
+        // $recaudosSeleccionados = $request->input('recaudos');
+
+        // Crear registros en la tabla puente para cada comisionado
+        // foreach ($recaudosSeleccionados as $recaudo) {
+        //     $puente = new RecepcionRecaudos();
+        //     $puente->id_recaudo = $recaudo;
+        //     $puente->id_recepcion = $recepcion->id;
+        //     $puente->save();// Guardar la instancia de la tabla puente (planificacion_comisionados)
+        // }
+
+        $bitacora = new BitacoraController;
+        $bitacora->update();
+
+        try {
+        
+            return redirect('planificacion');
+    
+            } catch (QueryException $exception) {
+                $errorMessage = 'Error: .';
+                return redirect()->back()->withErrors($errorMessage);
+            }
+
     }
 
     /**

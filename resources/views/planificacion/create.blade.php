@@ -13,7 +13,7 @@
 
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
     
-                        <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Planificación</h2>
+                        <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Registrar Planificación</h2>
 
                     </div>
  
@@ -22,29 +22,72 @@
                     
                         <div class="card-body">
 
-                            <div class="row">
-
-                                {{-- <div class="accordion" id="miAcordeon">
-
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="encabezadoUno">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#colapsoUno" aria-expanded="true" aria-controls="colapsoUno">
-                                            Recepcion
+                            <div class="accordion" id="accordionExample" style="display: flex; justify-content: center;">
+                                <div class="card" style="width: 90%; border-radius: 2.5%;">
+                                    {{-- <div class="card-header" id="headingOne">
+                                        <h2 class="font-weight-bold text-primary"> --}}
+                                        <button class="btn btn-block text-center" type="button" data-toggle="collapse" data-target="#collapseOne" style="margin-top: 0.3%;">
+                                            <label  class="font-weight-bold text-primary">Detalles Recepción</label>
                                         </button>
-                                        </h2>
-                                        <div id="colapsoUno" class="accordion-collapse collapse show" aria-labelledby="encabezadoUno" data-bs-parent="#miAcordeon">
-                                        <div class="accordion-body">
-                                        @foreach ($recepciones as $recepcion)
-                                            <input type="hidden" class="form-control" id="id_recepcion" name="id_recepcion" style="background: white;" value="{{ isset($recepcion->id)?$recepcion->id:'' }}" placeholder="" autocomplete="off">                                  
-                                        @endforeach 
+                                        {{-- </h2>
+                                    </div> --}}
+                        
+                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            {{-- <input type="hidden" id="recepcionId" value="{{ request()->route('id') }}"> --}}
+                                            <div class="row">
+                                                <p style="margin-left: 0.5%"><strong>Nº: </strong>{{$recepcion->id}}</p>
+                                                <p style="margin-left: 0.5%"><strong>Tipo Solicitante: </strong>{{$recepcion->solicitante->tipo}}</p>
+                                                <p style="margin-left: 0.5%"><strong>Solicitante: </strong>
+                                                @if ($recepcion->solicitante->tipo == "Natural")
+                                                    {{$recepcion->solicitante->solicitanteEspecifico->nombre}} {{$recepcion->solicitante->solicitanteEspecifico->apellido}}
+                                                @else
+                                                    {{$recepcion->solicitante->solicitanteEspecifico->nombre}}
+                                                @endif 
+                                                </p>
+                                                <p style="margin-left: 0.5%"><strong>Cédula/Rif: </strong> 
+                                                @if ($recepcion->solicitante->tipo == "Natural")
+                                                    {{$recepcion->solicitante->solicitanteEspecifico->cedula}}
+                                                @else
+                                                    {{$recepcion->solicitante->solicitanteEspecifico->rif}}
+                                                @endif 
+                                                </p>
+                                                <p style="margin-left: 0.5%"><strong>Municipio: </strong>{{$recepcion->municipio->nom_municipio}}</p>
+                                                <p style="margin-left: 0.5%"><strong>Direccion: </strong>{{$recepcion->direccion}}</p>
+                                                <p style="margin-left: 0.5%"><strong>Mineral: </strong>{{$recepcion->mineral->nombre}}</p>
+
+                                                {{-- @foreach ($recepciones as $recepcion)
+                                                    <p style="margin-left: 0.5%"><strong>Nº: </strong>{{$recepcion->id}}</p>
+                                                    <p style="margin-left: 0.5%"><strong>Tipo Solicitante: </strong>{{$recepcion->solicitante->tipo}}</p>
+                                                    <p style="margin-left: 0.5%"> <strong>Solicitante: </strong>
+                                                        @if ($recepcion->solicitante->tipo == "Natural")
+                                                        {{$recepcion->solicitante->solicitanteEspecifico->nombre}} {{$recepcion->solicitante->solicitanteEspecifico->apellido}}
+                                                    @else
+                                                        {{$recepcion->solicitante->solicitanteEspecifico->nombre}}
+                                                    @endif 
+                                                    
+                                                    </p>
+                                                    <p style="margin-left: 0.5%"><strong>Cédula/Rif: </strong> 
+                                                        @if ($recepcion->solicitante->tipo == "Natural")
+                                                            {{$recepcion->solicitante->solicitanteEspecifico->cedula}}
+                                                        @else
+                                                            {{$recepcion->solicitante->solicitanteEspecifico->rif}}
+                                                        @endif 
+                                                    </p>
+                                                    <p style="margin-left: 0.5%"><strong>Municipio: </strong>{{$recepcion->municipio->nom_municipio}}</p>
+                                                    <p style="margin-left: 0.5%"><strong>Direccion: </strong>{{$recepcion->direccion}}</p>
+                                                    <p style="margin-left: 0.5%"><strong>Mineral: </strong>{{$recepcion->mineral->nombre}}</p>
+                                                @endforeach --}}
+                                            </div>
+                                            
+                                            {{-- Some placeholder content for the first accordion panel. This panel is shown by default, thanks to the <code>.show</code> class. --}}
                                         </div>
-                                        </div>
+                            
+
                                     </div>
-                                </div> --}}
-
-                            </div>
+                                </div>
                         </div>
-
+    
                         <hr class="sidebar-divider">
 
                         <div class="card-body">
@@ -75,7 +118,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                             </div>
-                                            <input type="text" class="form-control" value="<?php echo date('d/m/Y'); ?>" id="simpleDataInput">
+                                            <input type="text" class="form-control" value="<?php echo date('d/m/Y'); ?>" id="simpleDataInput" name="fecha_inicial">
                                         </div>
                                     </div>
                                 </div>
@@ -96,7 +139,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                             </div>
-                                            <input type="text" class="form-control" value="<?php echo date('d/m/Y'); ?>" id="simpleDataInput">
+                                            <input type="text" class="form-control" value="<?php echo date('d/m/Y'); ?>" id="simpleDataInput" name="fecha_final">
                                         </div>
                                     </div>
                                 </div>
@@ -105,8 +148,8 @@
                                     <label  class="font-weight-bold text-primary">Estatus</label>
                                     <select class="select2-single form-control" id="estatus" name="estatus">
                                         <option value="0">Seleccione un estatus</option>
-                                        <option value="1">Asignado</option>
-                                        <option value="2">Ejecutado</option>
+                                        <option value="Asignado">Asignado</option>
+                                        <option value="Ejecutado">Ejecutado</option>
                                         
                                     </select>                                   
                                 </div> 
@@ -132,6 +175,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{asset('path/to/bootstrap-datepicker.es.min.js')}}"></script>
+    <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js')}}"></script>
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
 
@@ -139,13 +184,13 @@
 
     <script>
         $(document).ready(function () {
-       
           // Bootstrap Date Picker
           $('#simple-date1 .input-group.date').datepicker({
             format: 'dd/mm/yyyy',
             todayBtn: 'linked',
             todayHighlight: true,
-            autoclose: true,        
+            autoclose: true,
+            language: 'es'        
           });
     
           $('#simple-date2 .input-group.date').datepicker({
@@ -154,6 +199,7 @@
             autoclose: true,     
             todayHighlight: true,   
             todayBtn: 'linked',
+            language: 'es'
           });
     
           $('#simple-date3 .input-group.date').datepicker({
@@ -162,6 +208,7 @@
             autoclose: true,     
             todayHighlight: true,   
             todayBtn: 'linked',
+            language: 'es'
           });
     
           $('#simple-date4 .input-daterange').datepicker({        
@@ -169,6 +216,7 @@
             autoclose: true,     
             todayHighlight: true,   
             todayBtn: 'linked',
+            language: 'es'
           });    
     
         });
@@ -212,6 +260,40 @@
         });
 
     </script>
+
+    {{-- * FUNCION PARA TRAER DATOS AL ACODION --}}
+
+    {{-- <script>
+        $(document).ready(function() {
+          const recepcionId = $('#recepcionId').val();
+            console.log(recepcionId);
+          // Fetch reception data using AJAX
+          $.ajax({
+            url: "/planificacion/create/getRecepcionDatos/" + recepcionId, // Replace with your actual route
+            type: "GET",
+            
+            success: function(data) {
+              // Process and display the received data
+              displayReceptionDetails(data);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+              console.error("Error fetching reception data:", textStatus, errorThrown);
+              // Handle errors appropriately (e.g., display an error message)
+            }
+          });
+        });
+        
+        function displayReceptionDetails(data) {
+            const detailsHtml = `
+                <div class="card-body">
+                <p>Tipo de Solicitante: ${data.solicitante.tipo}</p>
+                </div>
+            `;
+            $('#receptionDetails').html(detailsHtml);
+        }
+
+        </script>
+         --}}
 
 @endsection
 

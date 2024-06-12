@@ -133,6 +133,8 @@
         </div> 
 
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{asset('path/to/bootstrap-datepicker.es.min.js')}}"></script>
+    <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js')}}"></script>
     <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
 
     {{-- ! FUNCION PARA MOSTRAR SOLICITANTES SEGUN SU TIPO --}}
@@ -297,13 +299,13 @@
 
      <script>
         $(document).ready(function () {
-       
           // Bootstrap Date Picker
           $('#simple-date1 .input-group.date').datepicker({
             format: 'dd/mm/yyyy',
             todayBtn: 'linked',
             todayHighlight: true,
-            autoclose: true,        
+            autoclose: true,
+            language: 'es'        
           });
     
           $('#simple-date2 .input-group.date').datepicker({
@@ -312,6 +314,7 @@
             autoclose: true,     
             todayHighlight: true,   
             todayBtn: 'linked',
+            language: 'es'
           });
     
           $('#simple-date3 .input-group.date').datepicker({
@@ -320,6 +323,7 @@
             autoclose: true,     
             todayHighlight: true,   
             todayBtn: 'linked',
+            language: 'es'
           });
     
           $('#simple-date4 .input-daterange').datepicker({        
@@ -327,6 +331,7 @@
             autoclose: true,     
             todayHighlight: true,   
             todayBtn: 'linked',
+            language: 'es'
           });    
     
         });

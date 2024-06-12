@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inspecciones;
-use App\Models\Solicitudes;
-use App\Models\Municipio;
+use App\Models\Planificacion;
+use App\Models\PlanificacionComisionados;
+use App\Models\Recepcion;
 use App\Models\Comisionados;
-use App\Models\SolicitudesRecaudos;
+use App\Models\Municipio;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -19,8 +20,9 @@ class InspeccionesController extends Controller
      */
     public function index()
     {
-        $solicitudes = Solicitudes::with('solicitante', 'solicitudesrecaudos')->get();
-        return view('inspeccion.index', compact('solicitudes'));
+        $planificaciones = Planificacion::with('comisionados', 'planificacioncomisionados')->get();
+
+        return view('inspeccion.index', compact('planificaciones'));
 
     }
 
@@ -45,12 +47,12 @@ class InspeccionesController extends Controller
         return response()->json($parroquias);
     } */
 
-    public function fetchComisionados(Request $request, $municipioId)
-    {
-        $municipiocomisionados = Comisionados::where('id_municipio', $municipioId)->get();
+    // public function fetchComisionados(Request $request, $municipioId)
+    // {
+    //     $municipiocomisionados = Comisionados::where('id_municipio', $municipioId)->get();
     
-        return response()->json($municipiocomisionados);
-    }
+    //     return response()->json($municipiocomisionados);
+    // }
 
     /**
      * Store a newly created resource in storage.

@@ -257,6 +257,8 @@
     <script src="{{ asset ('vendor/select2/dist/js/select2.min.js') }}"></script>
     <script src="{{ asset ('vendor/bootstrap-touchspin/js/jquery.bootstrap-touchspin.js') }}"></script>
     <script src="{{ asset ('vendor/clock-picker/clockpicker.js') }}"></script>
+    <script src="{{asset('path/to/bootstrap-datepicker.es.min.js')}}"></script>
+    <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js')}}"></script>
 
     @yield('datatable')
 
