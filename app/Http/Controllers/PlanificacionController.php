@@ -54,11 +54,11 @@ class PlanificacionController extends Controller
         $municipios = Municipio::all();
         $solicitantes = Solicitante::with('solicitanteEspecifico')->get();
 
-        // $id->repcecion->id_recepcion;
+        $id = Recepcion::all()->random()->id;
 
-        $recepcion = Recepcion::all();
+        $recepcion = Recepcion::find($id);
         
-        return view('planificacion.create', compact('planificacioncomisionados', 'comisionados', 'municipios', 'solicitantes'));
+        return view('planificacion.create', compact('planificacioncomisionados', 'comisionados', 'municipios', 'solicitantes','recepcion'));
     }
 
     public function fetchComisionados(Request $request, $municipioId)
@@ -86,8 +86,8 @@ class PlanificacionController extends Controller
     {
 
         $this->validate($request, [
-            'fecha_inicial' => 'required|date_format:d/m/Y|after_or_equal:today', // Garantiza que la fecha inicial sea hoy o en el futuro.
-            'fecha_final' => 'required|date_format:d/m/Y|after:fecha_inicial|before_or_equal:'// Limita la fecha final a la próxima semana, incluido hoy y los próximos siete días.
+            'fecha_inicial' => 'required|date_format:d/m/Y|after_or_equal:today',
+            'fecha_final' => 'required|date_format:d/m/Y|after:fecha_inicial|before_or_equal:' . date('d/m/Y', strtotime('+7 days')),
         ]);
 
         // Crear una nueva Planificación
@@ -101,23 +101,18 @@ class PlanificacionController extends Controller
         
         $planificacion->save();
 
-        // Obtener los IDs de recaudos seleccionados (debe ser un array)
-        // $recaudosSeleccionados = $request->input('recaudos');
-
-        // Crear registros en la tabla puente para cada comisionado
-        // foreach ($recaudosSeleccionados as $recaudo) {
-        //     $puente = new RecepcionRecaudos();
-        //     $puente->id_recaudo = $recaudo;
-        //     $puente->id_recepcion = $recepcion->id;
-        //     $puente->save();// Guardar la instancia de la tabla puente (planificacion_comisionados)
-        // }
+        // Registrar la relación en planificacion_comisionados
+        $planificacionComisionado = new PlanificacionComisionados();
+        $planificacionComisionado->id_planificacion = $planificacion->id; // Usamos el ID de la planificación creada
+        $planificacionComisionado->id_comisionado = $request->input('comisionado');
+        $planificacionComisionado->save();
 
         $bitacora = new BitacoraController;
         $bitacora->update();
 
         try {
         
-            return redirect('planificacion');
+            return redirect('inspeccion');
     
             } catch (QueryException $exception) {
                 $errorMessage = 'Error: .';
@@ -143,9 +138,21 @@ class PlanificacionController extends Controller
      * @param  \App\Models\Planificacion  $Planificacion
      * @return \Illuminate\Http\Response
      */
-    public function edit(Planificacion $planificacion)
+    public function edit($id)
     {
-        //
+        $planificacion = Planificacion::findOrFail($id);
+        $municipios = Municipio::all();
+        $comisionados = Comisionados::all();
+        $fecha_inicial = $planificacion->fecha_inicial;
+        $fecha_final = $planificacion->fecha_final;
+        $estatus = $planificacion->estatus;
+
+        $id = Recepcion::all()->random()->id;
+
+        $recepcion = Recepcion::find($id);
+
+        return view('planificacion.edit' , compact('planificacion', 'municipios', 'comisionados', 'fecha_inicial',
+        'fecha_final', 'estatus', 'recepcion'));
     }
 
     /**
@@ -155,9 +162,42 @@ class PlanificacionController extends Controller
      * @param  \App\Models\Planificacion  $Planificacion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Planificacion $planificacion)
+    public function update(Request $request, $id)
     {
-        //
+        // Obtener la recepcion por ID
+        $planificacion = Planificacion::findOrFail($id);
+        $municipios = Municipio::all();
+        $comisionados = Comisionados::all();
+
+        // Actualizar los campos según los datos del formulario
+        $planificacion->id_recepcion = $request->input('id_recepcion');
+        $planificacion->id_municipio = $request->input('id_municipio');
+        $planificacion->id_comisionado = $request->input('comisionado');
+        $planificacion->fecha_inicial = $request->input('fecha_inicial');
+        $planificacion->fecha_final = $request->input('fecha_final');
+        $planificacion->estatus = $request->input('estatus');
+
+        $planificacion->save();
+
+        // Actualizar la relación en planificacion_comisionados (si es necesario)
+        // Por ejemplo, si deseas cambiar el comisionado asociado
+        $planificacionComisionado = PlanificacionComisionados::where('id_planificacion', $id)->first();
+        if ($planificacionComisionado) {
+            $planificacionComisionado->id_comisionado = $request->input('comisionado');
+            $planificacionComisionado->save();
+        } else {
+            // Crear una nueva entrada en la tabla puente
+            $nuevoPlanificacionComisionado = new PlanificacionComisionados();
+            $nuevoPlanificacionComisionado->id_planificacion = $id;
+            $nuevoPlanificacionComisionado->id_comisionado = $request->input('comisionado');
+            $nuevoPlanificacionComisionado->save();
+        }
+
+        $bitacora = new BitacoraController;
+        $bitacora->update();
+
+        return redirect('inspeccion');
+
     }
 
     /**

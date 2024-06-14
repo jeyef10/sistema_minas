@@ -1,6 +1,6 @@
 @extends('layouts.index')
 
-<title>@yield('title') Registrar Planificacion</title>
+<title>@yield('title') Actualizar Planificacion</title>
 <script src="{{ asset('js/validaciones.js') }}"></script>
 <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
 
@@ -13,13 +13,17 @@
 
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
     
-                        <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Registrar Planificación</h2>
+                        <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Actualizar Planificación</h2>
 
                     </div>
  
-                <form method="post" action="{{ route('planificacion.store') }}" enctype="multipart/form-data" onsubmit="return Planificacion(this)">
-                        @csrf
-                    
+               
+                                                {{-- * FORMULARIO EDITAR DE RECEPCION DE RECAUDOS --}}
+
+                <form method="post" action="{{ route('planificacion.update', $planificacion->id) }}" enctype="multipart/form-data" onsubmit="return Plafinicacion(this)" >
+                    @csrf
+                    @method('PUT')
+                                
                         <div class="card-body">
 
                             <input type="hidden" class="form-control" id="id_recepcion" name="id_recepcion" style="background: white;" value="{{ isset($recepcion->id)?$recepcion->id:'' }}" placeholder="" autocomplete="off">
@@ -82,7 +86,7 @@
                                     <select class="select2-single form-control" id="municipio" name="id_municipio">
                                         <option value="0">Seleccione un municipio</option>
                                         @foreach($municipios as $municipio)
-                                            <option value="{{ $municipio->id }}">{{ $municipio->nom_municipio }}</option>
+                                            <option value="{{ $municipio->id }}" @selected($planificacion->id_municipio == $municipio->id)>{{ $municipio->nom_municipio }}</option>
                                         @endforeach
                                     </select>                                   
                                 </div>
@@ -91,6 +95,9 @@
                                     <label for="comisionado" class="font-weight-bold text-primary">Comisionado asignado</label>
                                     <select class="select2-single form-control" id="comisionado" name="comisionado">
                                         <option value="0">Seleccione un comisionado</option>
+                                        @foreach($comisionados as $comisionado)
+                                            <option value="{{ $comisionado->id }}" @selected($planificacion->id_comisionado == $comisionado->id)> {{ $comisionado->cedula }} {{ $comisionado->nombres }} {{ $comisionado->apellidos }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
@@ -101,7 +108,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                             </div>
-                                            <input type="text" class="form-control" value="<?php echo date('d/m/Y'); ?>" id="simpleDataInput" name="fecha_inicial">
+                                            <input type="text" class="form-control" value="{{ $fecha_inicial }}" id="simpleDataInput" name="fecha_inicial">
                                         </div>
                                     </div>
                                 </div>
@@ -122,7 +129,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                             </div>
-                                            <input type="text" class="form-control" value="<?php echo date('d/m/Y'); ?>" id="simpleDataInput" name="fecha_final">
+                                            <input type="text" class="form-control" value="{{ $fecha_final }}" id="simpleDataInput" name="fecha_final">
                                         </div>
                                     </div>
                                 </div>
@@ -131,9 +138,8 @@
                                     <label  class="font-weight-bold text-primary">Estatus</label>
                                     <select class="select2-single form-control" id="estatus" name="estatus">
                                         <option value="0">Seleccione un estatus</option>
-                                        <option value="Asignado">Asignado</option>
-                                        <option value="Ejecutado">Ejecutado</option>
-                                        
+                                        <option value="Asignado" {{ (old('estatus', $planificacion->estatus ?? '') === 'Asignado') ? 'selected' : '' }}>Asignado</option>
+                                        <option value="Ejecutado" {{ (old('estatus', $planificacion->estatus ?? '') === 'Ejecutado') ? 'selected' : '' }}>Ejecutado</option>
                                     </select>                                   
                                 </div> 
 
@@ -243,62 +249,6 @@
         });
 
     </script>
-
-    {{--! FUNCIÓN PARA MOSTRAR LA ALERTA DE LA FECHA --}}
-
-    @if ($errors->any())
-    <script>
-        var errorMessage = @json($errors->first());
-        Swal.fire({
-                title: 'Recaudo',
-                text: "La fecha registrada no es válida. Por favor, asegúrese de ingresar la fecha actual y que esté dentro del lapso permitido.",
-                icon: 'warning',
-                showconfirmButton: true,
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: '¡OK!',
-                
-                }).then((result) => {
-            if (result.isConfirmed) {
-
-                this.submit();
-            }
-            })
-    </script>
-    @endif
-
-    {{-- * FUNCION PARA TRAER DATOS AL ACODION --}}
-
-    {{-- <script>
-        $(document).ready(function() {
-          const recepcionId = $('#recepcionId').val();
-            console.log(recepcionId);
-          // Fetch reception data using AJAX
-          $.ajax({
-            url: "/planificacion/create/getRecepcionDatos/" + recepcionId, // Replace with your actual route
-            type: "GET",
-            
-            success: function(data) {
-              // Process and display the received data
-              displayReceptionDetails(data);
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-              console.error("Error fetching reception data:", textStatus, errorThrown);
-              // Handle errors appropriately (e.g., display an error message)
-            }
-          });
-        });
-        
-        function displayReceptionDetails(data) {
-            const detailsHtml = `
-                <div class="card-body">
-                <p>Tipo de Solicitante: ${data.solicitante.tipo}</p>
-                </div>
-            `;
-            $('#receptionDetails').html(detailsHtml);
-        }
-
-        </script>
-         --}}
 
 @endsection
 

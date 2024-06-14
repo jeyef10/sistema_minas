@@ -144,6 +144,7 @@ Route::get('/planificacion/create', [PlanificacionController::class, 'create'])-
 Route::resource('planificacion', PlanificacionController::class)->middleware('auth');
 Route::get('/planificacion/create/fetchComisionados/{municipioId}', [PlanificacionController::class, 'fetchComisionados']);
 Route::get('/planificacion/detalles/{id}', [PlanificacionController::class, 'getRecepcionDetalles']);
+// Route::get('/planificacion/create/{recepcion}', 'PlanificacionController@create')->name('planificacion.create');
 // Route::get('/planificacion/{recepcionId}', [PlanificacionController::class, 'getRecepcionDatos']);
 
 Route::get('/planificacion/create/getRecepcionDatos/{recepcionId}', [PlanificacionController::class, 'getRecepcionDatos'])->name('recepcionId');

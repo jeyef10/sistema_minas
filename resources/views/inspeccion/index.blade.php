@@ -79,7 +79,7 @@
                                                 {{$planificacion->municipio->nom_municipio }} @else
                                             @endif
                                         </td>
-                                        <td class="font-weight-bold text-Secondary">{{ $planificacion->first()->comisionados->cedula }} - {{ $planificacion->first()->comisionados->nombres }} {{ $planificacion->first()->comisionados->apellidos }}</td>
+                                        <td class="font-weight-bold text-Secondary">{{ $planificacion->comisionados->cedula }} - {{ $planificacion->comisionados->nombres}} {{ $planificacion->comisionados->apellidos}}</td>
                                         <td class="font-weight-bold text-Secondary">{{ $planificacion->fecha_inicial}}</td>
                                         <td class="font-weight-bold text-Secondary">{{ $planificacion->fecha_final}}</td>
                                         <td class="font-weight-bold text-Secondary">{{ $planificacion->estatus}}</td>
