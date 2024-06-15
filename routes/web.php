@@ -24,6 +24,7 @@ use App\Http\Controllers\PlazosController;
 use App\Http\Controllers\RecepcionController;
 use App\Http\Controllers\PlanificacionController;
 use App\Http\Controllers\InspeccionesController;
+use App\Http\Controllers\NotificationController;
 
 
 
@@ -148,7 +149,7 @@ Route::get('/planificacion/detalles/{id}', [PlanificacionController::class, 'get
 // Route::get('/planificacion/{recepcionId}', [PlanificacionController::class, 'getRecepcionDatos']);
 
 Route::get('/planificacion/create/getRecepcionDatos/{recepcionId}', [PlanificacionController::class, 'getRecepcionDatos'])->name('recepcionId');
-
+Route::get('/notifications/fetch', [NotificationController::class, 'fetch']) ->name('notifications.fetch');
 
 /* Ruta Inspección */
 Route::get('/inspeccion', [InspeccionesController::class,'index'])->name('inspeccion')->middleware('auth');

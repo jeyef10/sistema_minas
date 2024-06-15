@@ -1331,9 +1331,9 @@ function Recaudo(obj){
         return false;
     }
 
-    if (/(\w)\1+/i.test(recaudo.toLowerCase())) {
+    if (/(\w)\2+/i.test(recaudo.toLowerCase())) {
         Swal.fire({
-                title: 'Solicitante',
+                title: 'Nombre',
                 text: "El campo del nombre no debe contener caracteres repetidos.",
                 icon: 'warning',
                 confirmButtonColor: '#3085d6',
@@ -1369,23 +1369,23 @@ function Recaudo(obj){
         
     // }
 
-    if (/^([a-zA-Z0-9])\1+$/.test(recaudo)) {
-        Swal.fire({
-            title: 'Nombre',
-            text: "El campo nombre no debe contener caracteres repetidos.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+    // if (/^([a-zA-Z0-9])\1+$/.test(recaudo)) {
+    //     Swal.fire({
+    //         title: 'Nombre',
+    //         text: "El campo nombre no debe contener caracteres repetidos.",
+    //         icon: 'warning',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         }).then((result) => {
+    //     if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+    //         this.submit();
+    //     }
+    //     })
        
-        obj.recaudo.focus();
-        return false;
-    }
+    //     obj.recaudo.focus();
+    //     return false;
+    // }
 
     if (recaudo.length < 4){
         Swal.fire({

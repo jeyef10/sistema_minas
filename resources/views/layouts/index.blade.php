@@ -146,13 +146,48 @@
                   <ul class="navbar-nav ml-auto">
                     <div class="topbar-divider d-none d-sm-block"> 
                     </div>
+
                     <li class="nav-item dropdown no-arrow mx-1">
+                      <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-bell fa-fw"></i>
+                          <!-- El contador de notificaciones se actualizará dinámicamente -->
+                          <span id="notificationCounter" class="badge badge-danger badge-counter"></span>
+                      </a>
+                      <!-- La lista de notificaciones se actualizará dinámicamente -->
+                      <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                          aria-labelledby="alertsDropdown">
+                          <h6 class="dropdown-header">
+                              Centro de notificaciones
+                          </h6>
+                          <div id="notificationList"> <!-- Contenedor para las notificaciones -->
+                              <!-- Las notificaciones individuales se agregarán aquí con AJAX -->
+                          </div>
+                      </div>
+                    </li>
+
+                    {{--<li class="nav-item dropdown no-arrow mx-1">
                       <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-bell fa-fw"></i>
-                        {{-- <span class="badge badge-danger badge-counter">3+</span> --}}
-                      </a>
-                      <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                        <span id="notificationCounter" class="badge badge-danger badge-counter"></span>
+
+                         @foreach ($notifications as $notification)
+                          <a class="dropdown-item d-flex align-items-center" href="">
+                            <div class="mr-3">
+                              <div class="icon-circle bg-primary">
+                                <i class="fas fa-file-alt text-white"></i>
+                              </div>
+                            </div>
+                            <div>
+                              <div class="small text-gray-500">{{ $notification->created_at->format('M d, Y') }}</div>
+                              <span class="font-weight-bold">{{ $notification->data['message'] }}</span>
+                            </div>
+                          </a>
+                        @endforeach 
+                      </a>                    
+                    
+                      {{-- <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                         aria-labelledby="alertsDropdown">
                         <h6 class="dropdown-header">
                           Planificaciones
@@ -191,7 +226,9 @@
                           </div>
                         </a> 
                         <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                      </div>
+                      </div> 
+                    </li> --}}
+
                     <li class="nav-item dropdown no-arrow">
                       <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
@@ -263,6 +300,44 @@
     @yield('datatable')
 
     @yield('sweetalert')
+
+    <script>
+        function fetchNotifications() {
+            $.ajax({
+                url: '/notifications/fetch', // Asegúrate de que esta URL coincida con tu ruta definida
+                method: 'GET',
+                success: function(data) {
+
+                  console.log(data);
+
+                    $('#notificationCounter').text(data.unreadCount); // Actualiza el contador
+                    var notificationsHtml = ''; // Inicializa el HTML para las notificaciones
+
+                    // Construye el HTML para cada notificación
+                    $.each(data.notifications, function(i, notification) {
+                        notificationsHtml += `
+                            <a class="dropdown-item d-flex align-items-center" href="">
+                                <div class="mr-3">
+                                    <div class="icon-circle bg-primary">
+                                        <i class="fas fa-file-alt text-white"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="small text-gray-500">${new Date(notification.created_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
+                                    <span class="font-weight-bold">${notification.data.message}</span>
+                                </div>
+                            </a>`;
+                    });
+
+                    // Actualiza la lista desplegable con el nuevo HTML
+                    $('#notificationList').html(notificationsHtml);
+                }
+            });
+        }
+
+        // Llama a fetchNotifications regularmente para actualizar la lista
+        setInterval(fetchNotifications, 10000); // Actualiza cada 10 segundos
+    </script>
 
   </body>
 
