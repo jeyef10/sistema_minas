@@ -25,9 +25,9 @@
                             {{-- <h3 class="font-weight-bold text-primary mb1" style="margin-left: 44%;">Inspección</h3> --}}
                                 <div class="row">
 
-                                    @foreach ($solicitudes as $solicitud)
+                                    {{-- @foreach ($solicitudes as $solicitud)
                                         <input type="hidden" class="form-control" id="id_solicitud" name="id_solicitud" style="background: white;" value="{{ isset($solicitud->id)?$solicitud->id:'' }}" placeholder="" autocomplete="off">                                  
-                                    @endforeach
+                                    @endforeach --}}
                                     
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Municipio</label>

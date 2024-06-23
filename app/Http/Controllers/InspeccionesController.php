@@ -31,14 +31,15 @@ class InspeccionesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        $solicitudes = Solicitudes::all();
-        $solicitudesrecaudos = SolicitudesRecaudos::all();
+        $planificacion = Planificacion::findOrFail($id);
+        /* $solicitudes = Solicitudes::all();
+        $solicitudesrecaudos = SolicitudesRecaudos::all(); */
         $municipios = Municipio::all();
         $comisionados = Comisionados::all();
 
-        return view('inspeccion.create', compact('solicitudes', 'solicitudesrecaudos', 'municipios', 'comisionados'));
+        return view('inspeccion.create', compact('planificacion', 'municipios', 'comisionados'));
     }
 
     /* public function getParroquias($municipioId)

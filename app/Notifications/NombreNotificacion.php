@@ -12,15 +12,17 @@ class NombreNotificacion extends Notification
     use Queueable;
 
     protected $datos;
+    protected $planificacion;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($datos)
+    public function __construct($datos, $planificacion)
     {
         $this->datos = $datos;
+        $this->planificacion = $planificacion;
     }
 
     /**
@@ -60,6 +62,17 @@ class NombreNotificacion extends Notification
         return [
                 'message' => $this->datos['mensaje'],
                 // Agrega más datos según sea necesario
+        ];
+    }
+
+    public function toDatabase($notifiable)
+    {
+        return [
+            // 'message' => 'Se ha creado una nueva planificación de inspección',
+            /* 'link' => route('create', ['id' => $this->planificacion->id]), */
+            'id_planificacion' => $this->planificacion->id,
+
+            // Agrega más datos según sea necesario
         ];
     }
 }

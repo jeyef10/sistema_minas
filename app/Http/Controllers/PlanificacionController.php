@@ -19,6 +19,9 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\BitacoraController;
+use App\Models\User;
+use App\Notifications\NombreNotificacion;
+use Illuminate\Support\Facades\Notification;
 
 class PlanificacionController extends Controller
 {
@@ -106,6 +109,19 @@ class PlanificacionController extends Controller
         $planificacionComisionado->id_planificacion = $planificacion->id; // Usamos el ID de la planificación creada
         $planificacionComisionado->id_comisionado = $request->input('comisionado');
         $planificacionComisionado->save();
+
+        // Crear y enviar la notificación
+        
+        $usuariosNotificar = User::role(['Administrador', 'Comisionado'])->get();
+        $datosNotificacion = [
+            /* 'mensaje' => 'Se ha creado una nueva planificación.', */
+            /* 'link' => route('create', ['id' => $planificacion->id]), */
+            'id_planificacion' => $planificacion->id,
+        ];
+
+        // dd( $datosNotificacion);
+
+        Notification::send($usuariosNotificar, new NombreNotificacion($datosNotificacion, $planificacion));
 
         $bitacora = new BitacoraController;
         $bitacora->update();

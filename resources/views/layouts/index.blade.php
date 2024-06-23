@@ -49,12 +49,30 @@
                 </a>
                 <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
                   <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="{{ url('solicitante') }}">Solicitante</a>
+
+                    @can('ver-solicitante')
+                      <a class="collapse-item" href="{{ url('solicitante') }}">Solicitante</a>
+                    @endcan
+
+                    @can('ver-recaudo')
                     <a class="collapse-item" href="{{ url('recaudo') }}">Recaudo</a>
+                    @endcan
+
+                    @can('ver-comisionado')
                     <a class="collapse-item" href="{{ url('comisionado') }}">Comisionado</a>
+                    @endcan
+
+                    @can('ver-mineral')
                     <a class="collapse-item" href="{{ url('mineral') }}">Mineral</a>
+                    @endcan
+
+                    @can('ver-regalia')
                     <a class="collapse-item" href="{{ url('regalia') }}">Tasa de Regalias</a>
+                    @endcan
+
+                    @can('ver-plazo')
                     <a class="collapse-item" href="{{ url('plazo') }}">Plazos de Vigencia</a>
+                    @endcan
                     {{-- <a class="collapse-item" href="{{ url('categoria') }}">Categoria</a> --}}
                   </div>
                 </div>
@@ -301,14 +319,14 @@
 
     @yield('sweetalert')
 
-    <script>
+                                                     {{-- Codigo para la notificación --}} 
+
+{{--     <script>
         function fetchNotifications() {
             $.ajax({
                 url: '/notifications/fetch', // Asegúrate de que esta URL coincida con tu ruta definida
                 method: 'GET',
                 success: function(data) {
-
-                  console.log(data);
 
                     $('#notificationCounter').text(data.unreadCount); // Actualiza el contador
                     var notificationsHtml = ''; // Inicializa el HTML para las notificaciones
@@ -319,12 +337,12 @@
                             <a class="dropdown-item d-flex align-items-center" href="">
                                 <div class="mr-3">
                                     <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
+                                        <i class="fa fa-user-secret text-white" aria-hidden="true"></i>
                                     </div>
                                 </div>
                                 <div>
                                     <div class="small text-gray-500">${new Date(notification.created_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
-                                    <span class="font-weight-bold">${notification.data.message}</span>
+                                    <span class="font-weight-bold">Se ha creado una nueva planificación de inspección</span>
                                 </div>
                             </a>`;
                     });
@@ -335,9 +353,99 @@
             });
         }
 
-        // Llama a fetchNotifications regularmente para actualizar la lista
-        setInterval(fetchNotifications, 10000); // Actualiza cada 10 segundos
-    </script>
+        fetchNotifications(); // Llama a fetchNotifications cuando la página esté lista
+
+        /* // Llama a fetchNotifications regularmente para actualizar la lista
+        setInterval(fetchNotifications, 1000); // Actualiza cada 1 segundos */
+    </script> --}}
+
+    {{-- <script>
+        function fetchNotifications() {
+            $.ajax({
+                url: '/notifications/fetch', // Asegúrate de que esta URL coincida con tu ruta definida
+                method: 'GET',
+                success: function(data) {
+
+                  console.log(data);
+
+                    $('#notificationCounter').text(data.unreadCount); // Actualiza el contador
+                    var notificationsHtml = ''; // Inicializa el HTML para las notificaciones
+    
+                    // Construye el HTML para cada notificación
+                      $.each(data.notifications, function(i, notification) {
+                        notificationsHtml += `
+                            <a class="dropdown-item d-flex align-items-center" href="${notification.link}">
+                                <div class="mr-3">
+                                    <div class="icon-circle bg-primary">
+                                        <i class="fa fa-user-secret text-white" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="small text-gray-500">${new Date(notification.created_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
+                                    <span class="font-weight-bold">Se ha creado una nueva planificación de inspección</span>
+                                </div>
+                            </a>`;
+                    });
+    
+                    // Actualiza la lista desplegable con el nuevo HTML
+                    $('#notificationList').html(notificationsHtml);
+                }
+            });
+        }
+  
+        // Llama a fetchNotifications cuando la página esté lista
+        $(document).ready(function() {
+            fetchNotifications();
+        });
+    
+        /* // Llama a fetchNotifications regularmente para actualizar la lista
+        setInterval(fetchNotifications, 1000); // Actualiza cada 1 segundo */
+    </script> --}}
+
+    <script>
+      function fetchNotifications() {
+          $.ajax({
+              url: '/notifications/fetch', // Asegúrate de que esta URL coincida con tu ruta definida
+              method: 'GET',
+              success: function(data) {
+                  $('#notificationCounter').text(data.unreadCount); // Actualiza el contador
+                  var notificationsHtml = ''; // Inicializa el HTML para las notificaciones
+  
+                  // Construye el HTML para cada notificación
+                  $.each(data.notifications, function(i, notification) {
+                      notificationsHtml += `
+                          <a class="dropdown-item d-flex align-items-center" href="#" data-notification-id="${notification.data.id_planificacion}">
+                              <div class="mr-3">
+                                  <div class="icon-circle bg-primary">
+                                      <i class="fa fa-user-secret text-white" aria-hidden="true"></i>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="small text-gray-500">${new Date(notification.created_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
+                                  <span class="font-weight-bold">Se ha creado una nueva planificación de inspección</span>
+                              </div>
+                          </a>`;
+                  });
+  
+                  // Actualiza la lista desplegable con el nuevo HTML
+                  $('#notificationList').html(notificationsHtml);
+  
+                  // Agrega un evento de clic a los enlaces de notificación
+                  $('.dropdown-item').on('click', function(e) {
+                      // e.preventDefault(); // Evita la redirección predeterminada del enlace
+                      const id = $(this).data('notification-id');
+                      // Redirige a la URL del formulario con el ID de la planificación
+                      window.location.href = `/inspeccion/create/${id}`; // Cambia la ruta según tu definición
+                  });
+              }
+          });
+      }
+  
+      // Llama a fetchNotifications cuando la página esté lista
+      $(document).ready(function() {
+          fetchNotifications();
+      });
+  </script>
 
   </body>
 
