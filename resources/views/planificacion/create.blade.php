@@ -129,16 +129,6 @@
 
                                 <input type="hidden" name="estatus" value="Asignado">
 
-                                {{-- <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">Estatus</label>
-                                    <select class="select2-single form-control" id="estatus" name="estatus">
-                                        <option value="0">Seleccione un estatus</option>
-                                        <option value="Asignado">Asignado</option>
-                                        <option value="Ejecutado">Ejecutado</option>
-                                        
-                                    </select>                                   
-                                </div>  --}}
-
                             </div>
                         </div>
                          
@@ -267,40 +257,6 @@
             })
     </script>
     @endif
-
-    {{-- * FUNCION PARA TRAER DATOS AL ACODION --}}
-
-    {{-- <script>
-        $(document).ready(function() {
-          const recepcionId = $('#recepcionId').val();
-            console.log(recepcionId);
-          // Fetch reception data using AJAX
-          $.ajax({
-            url: "/planificacion/create/getRecepcionDatos/" + recepcionId, // Replace with your actual route
-            type: "GET",
-            
-            success: function(data) {
-              // Process and display the received data
-              displayReceptionDetails(data);
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-              console.error("Error fetching reception data:", textStatus, errorThrown);
-              // Handle errors appropriately (e.g., display an error message)
-            }
-          });
-        });
-        
-        function displayReceptionDetails(data) {
-            const detailsHtml = `
-                <div class="card-body">
-                <p>Tipo de Solicitante: ${data.solicitante.tipo}</p>
-                </div>
-            `;
-            $('#receptionDetails').html(detailsHtml);
-        }
-
-        </script>
-         --}}
 
 @endsection
 

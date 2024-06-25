@@ -11,6 +11,12 @@ class Inspecciones extends Model
     protected $table = 'inspecciones';
     protected $primaryKey = 'id';
     public $timestamps = true;
-    protected $fillable = ['id_planificacion', 'id_municipio', 'funcionario_acomp', 'lugar_direccion', 'fecha_inspeccion', 'observaciones', 'conclusiones', 'latitud',
-    'longitud', 'res_fotos', 'estatus'];
+    protected $fillable = ['id_planificacion', 'funcionario_acomp', 'lugar_direccion', 'observaciones', 'conclusiones', 'latitud',
+    'longitud', 'res_fotos', 'fecha_inspeccion', 'estatus'];
+
+    public function planificacion()
+    {
+        return $this->belongsTo(Planificacion::class, 'id_planificacion');
+    }
+
 }

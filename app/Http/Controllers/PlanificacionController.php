@@ -50,16 +50,17 @@ class PlanificacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         $planificacioncomisionados = PlanificacionComisionados::all();
         $comisionados = Comisionados::all();
         $municipios = Municipio::all();
         $solicitantes = Solicitante::with('solicitanteEspecifico')->get();
+        $recepcion = Recepcion::findOrFail($id);
 
-        $id = Recepcion::all()->random()->id;
+        // $id = Recepcion::all()->random()->id;
 
-        $recepcion = Recepcion::find($id);
+        // $recepcion = Recepcion::find($id);
         
         return view('planificacion.create', compact('planificacioncomisionados', 'comisionados', 'municipios', 'solicitantes','recepcion'));
     }
@@ -163,7 +164,7 @@ class PlanificacionController extends Controller
         $fecha_final = $planificacion->fecha_final;
         $estatus = $planificacion->estatus;
 
-        $id = Recepcion::all()->random()->id;
+        // $id = Recepcion::all()->random()->id;
 
         $recepcion = Recepcion::find($id);
 

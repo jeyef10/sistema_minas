@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Inspecciones;
 use App\Models\Planificacion;
 use App\Models\PlanificacionComisionados;
@@ -10,6 +9,11 @@ use App\Models\Comisionados;
 use App\Models\Municipio;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\BitacoraController;
 
 class InspeccionesController extends Controller
 {
@@ -34,19 +38,11 @@ class InspeccionesController extends Controller
     public function create($id)
     {
         $planificacion = Planificacion::findOrFail($id);
-        /* $solicitudes = Solicitudes::all();
-        $solicitudesrecaudos = SolicitudesRecaudos::all(); */
         $municipios = Municipio::all();
         $comisionados = Comisionados::all();
 
         return view('inspeccion.create', compact('planificacion', 'municipios', 'comisionados'));
     }
-
-    /* public function getParroquias($municipioId)
-    {
-        $parroquias = Parroquia::where('id_municipio', $municipioId)->pluck('nom_parroquia', 'id');
-        return response()->json($parroquias);
-    } */
 
     // public function fetchComisionados(Request $request, $municipioId)
     // {
@@ -62,23 +58,22 @@ class InspeccionesController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function store(Request $request)
+    public function store(Request $request)
     {
-        // Obtén los datos del formulario
-        $solicitud = $request->input('id_solicitud');
-        $municipio = $request->input('municipio');
-        $comisionado = $request->input('comisionado');
-        $acompañante = $request->input('acompañante');
-        $lugar = $request->input('lugar');
-        $observaciones = $request->input('observaciones');
-        $conclusiones = $request->input('conclusiones');
-        $latitud = $request->input('latitud');
-        $longitud = $request->input('longitud');
-        $direccion = $request->input('direccion');
-
+    
+        // Crear una nueva Inspección
+        $inspecciones = new Inspecciones ();
+        $inspecciones->id_planificacion = $request->input('id_planificacion');
+        $inspecciones->funcionario_acomp = $request->input('funcionario_acomp');
+        $inspecciones->lugar_direccion = $request->input('lugar_direccion');
+        $inspecciones->observaciones = $request->input('observaciones');
+        $inspecciones->conclusiones = $request->input('conclusiones');
+        $inspecciones->latitud = $request->input('latitud');
+        $inspecciones->longitud = $request->input('longitud');
+        
         // Subir la imagen
-        if ($request->hasFile('reseña')) {
-            $imagen = $request->file('reseña'); // Obtiene el archivo de imagen del formulario
+        if ($request->hasFile('res_fotos')) {
+            $imagen = $request->file('res_fotos'); // Obtiene el archivo de imagen del formulario
             $nombreArchivo = time() . '.' . $imagen->getClientOriginalExtension(); // Genera un nombre único para el archivo basado en la hora actual y la extensión original
             $ruta = $imagen->storeAs('images', $nombreArchivo); // Guarda la imagen en el directorio público 'images'
             //$ruta = storage_path('app/public/images/' . $nombreArchivo); // Define la ruta completa donde se guardará la imagen (en caso de usar storage_path)
@@ -86,81 +81,24 @@ class InspeccionesController extends Controller
             $ruta = null; // Si no se subió una imagen, guarda null
         }
 
-        // Guarda los datos en la base de datos
-        Inspecciones::create([
-            'id_solicitud' => $solicitud,
-            'id_municipio' => $municipio,
-            'id_comisionado' => $comisionado,
-            'funcionario_acomp' => $acompañante,
-            'lugar_direccion' => $lugar,
-            'fecha_inspeccion' => $request->input('fecha'),
-            'observaciones' => $observaciones,
-            'conclusiones' => $conclusiones,
-            'latitud' => $latitud,
-            'longitud' => $longitud,
-            'direccion' => $direccion,
-            'res_fotos' => $ruta, // Guarda la ruta pública de la imagen
-            'estatus' => $request->input('estatus'),
-        ]);
+        $inspecciones->res_fotos = $ruta;
+        $inspecciones->fecha_inspeccion = $request->input('fecha_inspeccion');
+        $inspecciones->estatus = $request->input('estatus');
 
-        // Redirige a la página deseada (por ejemplo, la vista de confirmación)
-        return redirect()->back()->with('success', 'Datos guardados correctamente.');
-    }
+        $inspecciones->save();
 
+        $bitacora = new BitacoraController;
+        $bitacora->update();
 
-    public function guardar(Request $request)
-    {
-         /* // Validación de campos (puedes agregar más reglas según tus necesidades)
-         $request->validate([
-            'resena' => 'required',
-            'fecha' => 'required|date',
-            'estatus' => 'required|in:1,2,3', // Valores permitidos: 1, 2 o 3
-            // Agrega más reglas de validación según tus campos
-        ]); */
+        try {
+        
+            return redirect('licencia');
+    
+            } catch (QueryException $exception) {
+                $errorMessage = 'Error: .';
+                return redirect()->back()->withErrors($errorMessage);
+            }
 
-        // Obtén los datos del formulario
-        $municipio = $request->input('municipio');
-        $comisionado = $request->input('comisionado');
-        $acompañante = $request->input('acompañante');
-        $lugar = $request->input('lugar');
-        $observaciones = $request->input('observaciones');
-        $conclusiones = $request->input('conclusiones');
-        $latitud = $request->input('latitud');
-        $longitud = $request->input('longitud');
-        $direccion = $request->input('direccion');
-
-        // Subir la imagen
-        if ($request->hasFile('reseña')) {
-            $imagen = $request->file('reseña'); // Obtiene el archivo de imagen del formulario
-            $nombreArchivo = time() . '.' . $imagen->getClientOriginalExtension(); // Genera un nombre único para el archivo basado en la hora actual y la extensión original
-            $ruta = public_path('images/' . $nombreArchivo); // Define la ruta completa donde se guardará la imagen
-            $imagen->move(public_path('images'), $nombreArchivo); // Mueve la imagen al directorio público
-        }
-
-        // Obtén los datos del formulario
-        $reseña = $ruta ?? null; // Si se subió una imagen, guarda la ruta; de lo contrario, guarda null
-
-        $fecha = $request->input('fecha');
-        $estatus = $request->input('estatus');
-
-        // Guarda los datos en la base de datos
-        Inspecciones::create([
-            'id_municipio' => $municipio,
-            'id_comisionado' => $comisionado,
-            'funcionario_acomp' => $acompañante,
-            'lugar_direccion' => $lugar,
-            'fecha_inspeccion' => $fecha,
-            'observaciones' => $observaciones,
-            'conclusiones' => $conclusiones,
-            'latitud' => $latitud,
-            'longitud' => $longitud,
-            'direccion' => $direccion,
-            'res_fotos' => $ruta,
-            'estatus' => $estatus,
-        ]);
-
-        // Redirige a la página deseada (por ejemplo, la vista de confirmación)
-        return redirect()->route('nombre.de.la.ruta')->with('success', 'Datos guardados correctamente.');
     }
 
     /**
@@ -180,9 +118,24 @@ class InspeccionesController extends Controller
      * @param  \App\Models\Inspecciones  $inspecciones
      * @return \Illuminate\Http\Response
      */
-    public function edit(Inspecciones $inspecciones)
+    public function edit($id)
     {
-        //
+        $inspeccion = Inspecciones::find($id);
+        $planificacion = Planificacion::findOrFail($id);
+        $municipios = Municipio::all();
+        $comisionados = Comisionados::all();
+        $funcionario_acomp = $inspeccion->funcionario_acomp;
+        $lugar_direccion = $inspeccion->lugar_direccion;
+        $observaciones = $inspeccion->observaciones;
+        $conclusiones = $inspeccion->conclusiones;
+        $latitud = $inspeccion->latitud;
+        $longitud = $inspeccion->longitud;
+        $res_fotos = $inspeccion->res_fotos;
+        $fecha_inspeccion = $inspeccion->fecha_inspeccion;
+        $estatus = $inspeccion->estatus;
+
+        return view('inspeccion.edit' , compact('inspeccion', 'planificacion', 'municipios', 'comisionados', 'funcionario_acomp', 'lugar_direccion', 'observaciones', 'conclusiones',
+        'latitud', 'longitud', 'res_fotos', 'fecha_inspeccion', 'estatus'));
     }
 
     /**
@@ -192,9 +145,42 @@ class InspeccionesController extends Controller
      * @param  \App\Models\Inspecciones  $inspecciones
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Inspecciones $inspecciones)
+    public function update(Request $request, $id)
     {
-        //
+        // Encuentra la inspección por su ID
+        $inspeccion = Inspecciones::find($id);
+
+        // Actualiza los campos según los datos del formulario
+        $inspeccion->id_planificacion = $request->input('id_planificacion');
+        $inspeccion->funcionario_acomp = $request->input('funcionario_acomp');
+        $inspeccion->lugar_direccion = $request->input('lugar_direccion');
+        $inspeccion->observaciones = $request->input('observaciones');
+        $inspeccion->conclusiones = $request->input('conclusiones');
+        $inspeccion->latitud = $request->input('latitud');
+        $inspeccion->longitud = $request->input('longitud');
+        $inspeccion->fecha_inspeccion = $request->input('fecha_inspeccion');
+        $inspeccion->estatus = $request->input('estatus');
+
+        // Subir la imagen si se proporciona
+        if ($request->hasFile('res_fotos')) {
+            $imagen = $request->file('res_fotos');
+            $nombreArchivo = time() . '.' . $imagen->getClientOriginalExtension();
+            $ruta = $imagen->storeAs('images', $nombreArchivo);
+            $inspeccion->res_fotos = $ruta;
+        }
+
+        // Guarda los cambios
+        $inspeccion->save();
+        
+        try {
+            
+            // Redirige a la página deseada
+            return redirect('licencia');
+
+            } catch (QueryException $exception) {
+                $errorMessage = 'Error: .';
+                return redirect()->back()->withErrors($errorMessage);
+            }
     }
 
     /**

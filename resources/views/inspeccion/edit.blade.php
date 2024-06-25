@@ -1,6 +1,6 @@
 @extends('layouts.index')
 
-<title>@yield('title') Registrar Inspección</title>
+<title>@yield('title') Actualizar Inspección</title>
 <script src="{{ asset('js/validaciones.js') }}"></script>
 <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
 
@@ -13,12 +13,13 @@
 
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
     
-                        <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Registrar Inspección</h2>
+                        <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Actualizar Inspección</h2>
 
                     </div>
  
-                <form method="post" action="{{ route('inspeccion.store') }}" enctype="multipart/form-data" onsubmit="return Inspeccion(this)">
+                <form method="post" action="{{ route('inspeccion.update', $inspeccion->id) }}" enctype="multipart/form-data" onsubmit="return Inspeccion(this)" >
                     @csrf
+                    @method('PUT')
                     
                             <div class="card-body">
 
@@ -49,7 +50,7 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Funcionario Acompañante</label>
-                                        <textarea class="form-control" id="funcionario_acomp" name="funcionario_acomp" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
+                                        <textarea class="form-control" id="funcionario_acomp" name="funcionario_acomp" cols="10" rows="10" style="max-height: 6rem;">{{ $funcionario_acomp }}</textarea>                                   
                                     </div>
 
                                 </div>
@@ -64,17 +65,17 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Lugar</label>
-                                        <textarea class="form-control" id="lugar_direccion" name="lugar_direccion" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
+                                        <textarea class="form-control" id="lugar_direccion" name="lugar_direccion" cols="10" rows="10" style="max-height: 6rem;">{{ $lugar_direccion }}</textarea>                                   
                                     </div>
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Observaciones</label>
-                                        <textarea class="form-control" id="observaciones" name="observaciones" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
+                                        <textarea class="form-control" id="observaciones" name="observaciones" cols="10" rows="10" style="max-height: 6rem;">{{ $observaciones }}</textarea>                                   
                                     </div>
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Conclusiones</label>
-                                        <textarea class="form-control" id="conclusiones" name="conclusiones" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
+                                        <textarea class="form-control" id="conclusiones" name="conclusiones" cols="10" rows="10" style="max-height: 6rem;">{{ $conclusiones }}</textarea>                                   
                                     </div>
 
                                 </div>
@@ -89,12 +90,12 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Latitud</label>
-                                        <input type="text" class="form-control" id="latitud" name="latitud" style="background: white;" value="" placeholder="Ingrese la Latitud" autocomplete="off" onkeypress="return solonum(event);">                                  
+                                        <input type="text" class="form-control" id="latitud" name="latitud" style="background: white;" value="{{ isset($inspeccion->latitud)?$inspeccion->latitud:'' }}" placeholder="Ingrese la Latitud" autocomplete="off" onkeypress="return solonum(event);">                                  
                                     </div>
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Longitud</label>
-                                        <input type="text" class="form-control" id="longitud" name="longitud" style="background: white;" value="" placeholder="Ingrese la Longitud" autocomplete="off" onkeypress="return solonum(event);">                                  
+                                        <input type="text" class="form-control" id="longitud" name="longitud" style="background: white;" value="{{ isset($inspeccion->longitud)?$inspeccion->longitud:'' }}" placeholder="Ingrese la Longitud" autocomplete="off" onkeypress="return solonum(event);">                                  
                                     </div>
                                 
                                 </div>
@@ -113,7 +114,7 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Reseña Fotográfica</label>
-                                        <input type="file" name="res_fotos" id="res_fotos" class="btn btn-outline-info">
+                                        <input type="file" name="res_fotos" id="res_fotos" class="btn btn-outline-info" value="{{ $res_fotos }}">
                                     </div>
 
                                     <div class="col-4">                                     
@@ -123,7 +124,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" id="fecha_inspeccion" name="fecha_inspeccion" class="form-control" value="<?php echo date('d/m/Y'); ?>" id="simpleDataInput">
+                                                <input type="text" id="fecha_inspeccion" name="fecha_inspeccion" class="form-control" value="{{ $fecha_inspeccion }}" id="simpleDataInput">
                                             </div>
                                         </div>
                                     </div>
@@ -140,7 +141,7 @@
                             <button type="submit" class="btn btn-success btn-lg"><span class="icon text-white-60"><i class="fas fa-check"></i></span>
                             <span class="text">Guardar</span>
                             </button>
-                            <a  class="btn btn-info btn-lg" href="{{ url('inspeccion/') }}"><span class="icon text-white-50">
+                            <a  class="btn btn-info btn-lg" href="{{ url('licencia/') }}"><span class="icon text-white-50">
                                 <i class="fas fa-info-circle"></i>
                             </span>
                             <span class="text">Regresar</span></a>
@@ -234,10 +235,9 @@
         }
         });
 
-
     </script>
 
-     {{-- * FUNCION PARA MOSTRAR LA FOTO --}}
+    {{-- * FUNCION PARA MOSTRAR LA FOTO --}}
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         
@@ -255,5 +255,5 @@
 
     </script>
 
-
+    
 @endsection

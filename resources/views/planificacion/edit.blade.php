@@ -134,14 +134,14 @@
                                     </div>
                                 </div>
 
-                                <div class="col-4">
+                                {{-- <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Estatus</label>
                                     <select class="select2-single form-control" id="estatus" name="estatus">
                                         <option value="0">Seleccione un estatus</option>
                                         <option value="Asignado" {{ (old('estatus', $planificacion->estatus ?? '') === 'Asignado') ? 'selected' : '' }}>Asignado</option>
                                         <option value="Ejecutado" {{ (old('estatus', $planificacion->estatus ?? '') === 'Ejecutado') ? 'selected' : '' }}>Ejecutado</option>
                                     </select>                                   
-                                </div> 
+                                </div>  --}}
 
                             </div>
                         </div>
