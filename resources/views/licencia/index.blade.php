@@ -40,8 +40,8 @@
                                     <th class="font-weight-bold text-Secondary">Lugar</th>
                                     {{-- <th class="font-weight-bold text-Secondary">Observaciones</th>
                                     <th class="font-weight-bold text-Secondary">Conclusiones</th> --}}
-                                    {{-- <th class="font-weight-bold text-Secondary">Latitud</th>
-                                    <th class="font-weight-bold text-Secondary">Longitud</th> --}}
+                                    {{-- <th class="font-weight-bold text-Secondary">Latitud</th>--}}
+                                    <th class="font-weight-bold text-Secondary">Fotos</th> 
                                     <th class="font-weight-bold text-Secondary">Fecha</th>
                                     <th class="font-weight-bold text-Secondary">Estatus</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center></th>
@@ -57,8 +57,8 @@
                                         <td class="font-weight-bold text-Secondary">{{ $inspeccion->lugar_direccion}}</td>
                                         {{-- <td class="font-weight-bold text-Secondary">{{ $inspeccion->observaciones}}</td>
                                         <td class="font-weight-bold text-Secondary">{{ $inspeccion->conclusiones}}</td>
-                                        <td class="font-weight-bold text-Secondary">{{ $inspeccion->latitud}}</td>
-                                        <td class="font-weight-bold text-Secondary">{{ $inspeccion->longitud}}</td> --}}
+                                        <td class="font-weight-bold text-Secondary">{{ $inspeccion->latitud}}</td>--}}
+                                        <td class="font-weight-bold text-Secondary">{{ $inspeccion->res_fotos}}</td> 
                                         <td class="font-weight-bold text-Secondary">{{ $inspeccion->fecha_inspeccion}}</td>
                                         <td class="font-weight-bold text-Secondary">{{ $inspeccion->estatus}}</td>
 
@@ -298,17 +298,20 @@
                     success: function(data) {
                         console.log(data);
                         // Construye el contenido del modal
-                        let inspeccionesHtml = '<ul>';
-
+                        let inspeccionesHtml = '<main>';
+                           
                         $('#exampleModalScrollable .modal-body').html(`
-                            <h5 class="font-weight-bold text-primary" style="text-align: center">Recaudos entregados para Recepción #${data.inspeccion.id}</h5>
+                            <h5 class="font-weight-bold text-primary" style="text-align: center">Detalles de la Inspección</h5>
                             ${inspeccionesHtml}
-                            <p><b>Observaciones:</b> ${data.inspeccion.observaciones}</p>
-                            <p><b>Conclusiones:</b> ${data.inspeccion.conclusiones}</p>
-                            <p><b>Latitud:</b> ${data.inspeccion.latitud}</p>
-                            <p><b>Longitud:</b> ${data.inspeccion.longitud}</p>
-                            
+                            <p><b>Observaciones:</b> ${data.observaciones}</p>
+                            <p><b>Conclusiones:</b> ${data.conclusiones}</p>
+                            <p><b>Latitud:</b> ${data.latitud}</p>
+                            <p><b>Longitud:</b> ${data.longitud}</p>
+                        
                         `);
+
+                        
+                        inspeccionesHtml += '</main>';
 
                         // Muestra el modal si aún no está visible
                         if (!$('#exampleModalScrollable').is(':visible')) {
