@@ -41,6 +41,7 @@ class LicenciaController extends Controller
             'conclusiones' => $inspeccion->conclusiones,
             'latitud' => $inspeccion->latitud,
             'longitud' => $inspeccion->longitud,
+            'res_fotos' => $inspeccion->res_fotos,
         ]);
 
     }

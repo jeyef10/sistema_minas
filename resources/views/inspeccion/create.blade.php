@@ -3,6 +3,8 @@
 <title>@yield('title') Registrar Inspección</title>
 <script src="{{ asset('js/validaciones.js') }}"></script>
 <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
+<link  href="{{ asset('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css')}}" rel="stylesheet" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="{{ asset('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js')}}" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
 @section('contenido')
 
@@ -96,7 +98,11 @@
                                         <label  class="font-weight-bold text-primary">Longitud</label>
                                         <input type="text" class="form-control" id="longitud" name="longitud" style="background: white;" value="" placeholder="Ingrese la Longitud" autocomplete="off" onkeypress="return solonum(event);">                                  
                                     </div>
-                                
+
+                                    <div class="col-4">
+                                        <div id="mapa" style="height: 280px; width:370px;"></div>
+                                    </div>    
+
                                 </div>
                                 
                             </div>
@@ -128,9 +134,9 @@
                                         </div>
                                     </div>
 
-                                    <input type="hidden" name="estatus" value="Ejecutado">
+                                    <input type="hidden" name="estatus" value="Aprobado">
 
-                                </div>
+                                </div> 
                                 
                             </div>
 
@@ -154,7 +160,6 @@
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
     <script src="{{asset('path/to/bootstrap-datepicker.es.min.js')}}"></script>
-    <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js')}}"></script>
 
     {{--! ESTILOS DE LA FECHA PARA QUE SE DESPLIEGUE  --}}
 
@@ -237,7 +242,7 @@
 
     </script>
 
-     {{-- * FUNCION PARA MOSTRAR LA FOTO --}}
+    {{-- * FUNCION PARA MOSTRAR LA FOTO --}}
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         
@@ -255,5 +260,74 @@
 
     </script>
 
+    {{-- * FUNCION PARA EL MAPA Y PARA CAPTURAR LOS DATOS DE LA LATITUD Y LONGITUD --}}
+
+    <script>
+
+        // Importa Leaflet
+        // import L from 'leaflet';
+
+        // Inicializa el mapa en el contenedor con ID "map"
+        const map = L.map('mapa').setView([10.2825,-68.7222], 9.2); // Latitud y longitud iniciales de Yaracuy
+
+        // Agrega el mapa base de OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Agrega un marcador cuando se hace clic en el mapa
+        map.on('click', (e) => {
+            const latitud = e.latlng.lat;
+            const longitud = e.latlng.lng;
+
+            // Actualiza los campos de texto con las coordenadas
+            document.getElementById('latitud').value = latitud;
+            document.getElementById('longitud').value = longitud;
+        });
+
+        // var map = L.map('mapa').setView([10.2825,-68.7222], 10); // Coordenadas iniciales
+
+        // // Agrega el mapa base de OpenStreetMap
+        // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        //     attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        // }).addTo(map);
+
+        // // Agrega un marcador interactivo
+        // var marker = L.marker([10.2825,-68.7222], { draggable: true }).addTo(map);
+        // marker.on('dragend', function (e) {
+        //     var latLng = e.target.getLatLng();
+        //     document.getElementById('latitud').value = latLng.lat;
+        //     document.getElementById('longitud').value = latLng.lng;
+        // });
+
+        // let map = L.map('mapa').setView([10.2825,-68.7222], 10)
+
+        // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        // attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        // }).addTo(map);
+
+    </script>
+
+    {{--! FUNCIÓN PARA MOSTRAR LA ALERTA DE LA FECHA --}}
+
+    @if ($errors->any())
+    <script>
+        var errorMessage = @json($errors->first());
+        Swal.fire({
+                title: 'Recaudo',
+                text: "La fecha registrada no es válida. Por favor, asegúrese de ingresar la fecha actual.",
+                icon: 'warning',
+                showconfirmButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: '¡OK!',
+                
+                }).then((result) => {
+            if (result.isConfirmed) {
+
+                this.submit();
+            }
+            })
+    </script>
+    @endif
 
 @endsection

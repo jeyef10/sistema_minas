@@ -41,16 +41,14 @@
                                     {{-- <th class="font-weight-bold text-Secondary">Observaciones</th>
                                     <th class="font-weight-bold text-Secondary">Conclusiones</th> --}}
                                     {{-- <th class="font-weight-bold text-Secondary">Latitud</th>--}}
-                                    <th class="font-weight-bold text-Secondary">Fotos</th> 
-                                    <th class="font-weight-bold text-Secondary">Fecha</th>
-                                    <th class="font-weight-bold text-Secondary">Estatus</th>
+                                    {{-- <th class="font-weight-bold text-Secondary">Fotos</th>  --}}
+                                    <th class="font-weight-bold text-Secondary">Fecha de Inspección</th>
+                                    <th class="font-weight-bold text-Secondary">Estatus Inspección</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center></th>
                                   </tr>
                             </thead>
                             <tbody>
-                                {{-- @php
-                                    echo $planificaciones;
-                                @endphp --}}
+    
                                 @foreach ($inspecciones as $inspeccion)
                                     <tr>
                                         <td class="font-weight-bold text-Secondary">{{ $inspeccion->funcionario_acomp }}</td>
@@ -58,7 +56,7 @@
                                         {{-- <td class="font-weight-bold text-Secondary">{{ $inspeccion->observaciones}}</td>
                                         <td class="font-weight-bold text-Secondary">{{ $inspeccion->conclusiones}}</td>
                                         <td class="font-weight-bold text-Secondary">{{ $inspeccion->latitud}}</td>--}}
-                                        <td class="font-weight-bold text-Secondary">{{ $inspeccion->res_fotos}}</td> 
+                                        {{-- <td class="font-weight-bold text-Secondary"><img src="/imagen/{{ $inspeccion->res_fotos}}" width="20%"></td>  --}}
                                         <td class="font-weight-bold text-Secondary">{{ $inspeccion->fecha_inspeccion}}</td>
                                         <td class="font-weight-bold text-Secondary">{{ $inspeccion->estatus}}</td>
 
@@ -249,43 +247,9 @@
             </script>
 
 
-    {{-- * FUNCIÓN PARA MOSTRAR DATOS DE LOS RECAUDOS, MINERAL Y DIRECCIÓN EN EL MODAL --}}
+    {{-- * FUNCIÓN PARA MOSTRAR DATOS DE LA INSPECCIÓN EN EL MODAL --}}
 
     <script>
-
-        // $(document).ready(function() {
-        //     $('#t_Aprovechamiento').on('click', '.btn-info', function(event) {
-        //         event.preventDefault();
-        //         var inspeccionId = $(this).data('inspeccion-id'); // Obtén el ID de la recepción
-
-        //         $.ajax({
-        //             url: '/licencia/detalles/' +  inspeccionId,
-        //             type: 'GET',
-        //             success: function(data) {
-        //                 let inspeccionesHtml = '<ul>';
-
-        //                 $('#exampleModalScrollable .modal-body').html(`
-        //                     <h5 class="font-weight-bold text-primary" style="text-align: center">Recaudos entregados para Recepción #${data.inspeccion.id}</h5>
-        //                     ${inspeccionesHtml}
-        //                     <p><b>Observaciones:</b> ${data.inspeccion.observaciones}</p>
-        //                     <p><b>Conclusiones:</b> ${data.inspeccion.conclusiones}</p>
-        //                     <p><b>Latitud:</b> ${data.inspeccion.latitud}</p>
-        //                     <p><b>Longitud:</b> ${data.inspeccion.longitud}</p>
-                            
-        //                 `);
-
-        //                 if (!$('#exampleModalScrollable').is(':visible')) {
-        //                     $('#exampleModalScrollable').modal('show');
-        //                 }
-        //             },
-        //             error: function(error) {
-        //                 console.error("Error al obtener los datos:", error);
-        //                 alert("Error al cargar los recaudos. Por favor, inténtalo de nuevo.");
-        //             }
-        //         });
-        //     });
-        // });
-
 
         $(document).ready(function() {
             $('#t_Aprovechamiento').on('click', '.btn-info', function(event) {
@@ -296,7 +260,6 @@
                     url: '/licencia/detalles/' + inspeccionId,
                     type: 'GET',
                     success: function(data) {
-                        console.log(data);
                         // Construye el contenido del modal
                         let inspeccionesHtml = '<main>';
                            
@@ -307,9 +270,9 @@
                             <p><b>Conclusiones:</b> ${data.conclusiones}</p>
                             <p><b>Latitud:</b> ${data.latitud}</p>
                             <p><b>Longitud:</b> ${data.longitud}</p>
-                        
+                            <p><b>Fotos:</b></p>
+                            <img src="/imagen/${data.res_fotos}" width="60%">  
                         `);
-
                         
                         inspeccionesHtml += '</main>';
 
