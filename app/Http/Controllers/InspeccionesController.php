@@ -44,13 +44,6 @@ class InspeccionesController extends Controller
         return view('inspeccion.create', compact('planificacion', 'municipios', 'comisionados'));
     }
 
-    // public function fetchComisionados(Request $request, $municipioId)
-    // {
-    //     $municipiocomisionados = Comisionados::where('id_municipio', $municipioId)->get();
-    
-    //     return response()->json($municipiocomisionados);
-    // }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -60,10 +53,18 @@ class InspeccionesController extends Controller
 
     public function store(Request $request)
     {
+<<<<<<< HEAD
         $this->validate($request, [
             'fecha_inspeccion' => 'required|date_format:d/m/Y|after_or_equal:today',
             ]);
 
+=======
+
+        $this->validate($request, [
+            'fecha_inspeccion' => 'required|date_format:d/m/Y|after_or_equal:today',
+        ]);
+    
+>>>>>>> 94e313f02cefcfcc3f75efd285f160ca88604759
         // Crear una nueva Inspección
         $inspecciones = new Inspecciones ();
         $inspecciones->id_planificacion = $request->input('id_planificacion');
@@ -73,18 +74,15 @@ class InspeccionesController extends Controller
         $inspecciones->conclusiones = $request->input('conclusiones');
         $inspecciones->latitud = $request->input('latitud');
         $inspecciones->longitud = $request->input('longitud');
-        
-        // Subir la imagen
+
         if ($request->hasFile('res_fotos')) {
-            $imagen = $request->file('res_fotos'); // Obtiene el archivo de imagen del formulario
-            $nombreArchivo = time() . '.' . $imagen->getClientOriginalExtension(); // Genera un nombre único para el archivo basado en la hora actual y la extensión original
-            $ruta = $imagen->storeAs('images', $nombreArchivo); // Guarda la imagen en el directorio público 'images'
-            //$ruta = storage_path('app/public/images/' . $nombreArchivo); // Define la ruta completa donde se guardará la imagen (en caso de usar storage_path)
-        } else {
-            $ruta = null; // Si no se subió una imagen, guarda null
+            $res_fotos = $request->file('res_fotos');
+            $rutaGuadarImg = 'imagen/';
+            $imagenInspeccion = date('YmdHis') . "." . $res_fotos->getClientOriginalExtension();
+            $res_fotos->move($rutaGuadarImg, $imagenInspeccion);
+            $inspecciones->res_fotos = $imagenInspeccion;
         }
 
-        $inspecciones->res_fotos = $ruta;
         $inspecciones->fecha_inspeccion = $request->input('fecha_inspeccion');
         $inspecciones->estatus = $request->input('estatus');
 

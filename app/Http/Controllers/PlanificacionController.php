@@ -57,10 +57,6 @@ class PlanificacionController extends Controller
         $municipios = Municipio::all();
         $solicitantes = Solicitante::with('solicitanteEspecifico')->get();
         $recepcion = Recepcion::findOrFail($id);
-
-        // $id = Recepcion::all()->random()->id;
-
-        // $recepcion = Recepcion::find($id);
         
         return view('planificacion.create', compact('planificacioncomisionados', 'comisionados', 'municipios', 'solicitantes','recepcion'));
     }
