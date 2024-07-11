@@ -53,18 +53,10 @@ class InspeccionesController extends Controller
 
     public function store(Request $request)
     {
-<<<<<<< HEAD
         $this->validate($request, [
-            'fecha_inspeccion' => 'required|date_format:d/m/Y|after_or_equal:today',
+            'fecha_inspeccion' => 'required|date_format:d/m/Y|after_or_equal:today|before_or_equal:'. date('d/m/Y', strtotime('+7 days')),
             ]);
 
-=======
-
-        $this->validate($request, [
-            'fecha_inspeccion' => 'required|date_format:d/m/Y|after_or_equal:today',
-        ]);
-    
->>>>>>> 94e313f02cefcfcc3f75efd285f160ca88604759
         // Crear una nueva Inspección
         $inspecciones = new Inspecciones ();
         $inspecciones->id_planificacion = $request->input('id_planificacion');
@@ -75,13 +67,36 @@ class InspeccionesController extends Controller
         $inspecciones->latitud = $request->input('latitud');
         $inspecciones->longitud = $request->input('longitud');
 
+       // Verificar si se han cargado archivos
         if ($request->hasFile('res_fotos')) {
-            $res_fotos = $request->file('res_fotos');
-            $rutaGuadarImg = 'imagen/';
-            $imagenInspeccion = date('YmdHis') . "." . $res_fotos->getClientOriginalExtension();
-            $res_fotos->move($rutaGuadarImg, $imagenInspeccion);
-            $inspecciones->res_fotos = $imagenInspeccion;
+            $rutaGuardarImg = 'imagen/';
+            $nombresImagenes = [];
+        
+            foreach ($request->file('res_fotos') as $foto) {
+            $imagenInspeccion = date('YmdHis') . '.' . $foto->getClientOriginalExtension();
+            $foto->move($rutaGuardarImg, $imagenInspeccion);
+            $nombresImagenes[] = $imagenInspeccion;
+            }
+        
+            $inspecciones->res_fotos = json_encode($nombresImagenes);
+        } else {
+            $inspecciones->res_fotos = ''; // null
         }
+  
+
+        // // Verificar si se han cargado archivos
+        // if ($request->hasFile('res_fotos')) {
+        //     $rutaGuardarImg = 'imagen/';
+        //     foreach ($request->file('res_fotos') as $foto) {
+        //         $imagenInspeccion = date('YmdHis') . '.' . $foto->getClientOriginalExtension();
+        //         $foto->move($rutaGuardarImg, $imagenInspeccion);
+        //         // Asignar el nombre de la imagen a la columna "res_fotos"
+        //         $inspecciones->res_fotos = $imagenInspeccion;
+        //     }
+        // } else {
+        //     // Asignar un valor predeterminado si no se cargaron archivos
+        //     $inspecciones->res_fotos = ''; // null
+        // }
 
         $inspecciones->fecha_inspeccion = $request->input('fecha_inspeccion');
         $inspecciones->estatus = $request->input('estatus');
@@ -148,6 +163,10 @@ class InspeccionesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'fecha_inspeccion' => 'required|date_format:d/m/Y|after_or_equal:today|before_or_equal:'. date('d/m/Y', strtotime('+7 days')),
+            ]);
+
         // Encuentra la inspección por su ID
         $inspeccion = Inspecciones::find($id);
 

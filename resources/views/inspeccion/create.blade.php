@@ -114,12 +114,15 @@
                                 <div class="row">
 
                                     <div class="grid grid-cols-1 mt-5 mx-7">
-                                        <img id="imagenSeleccionada" style="max-heigth: 300px;">
+                                        <img id="miniaturas">
                                     </div>
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Reseña Fotográfica</label>
-                                        <input type="file" name="res_fotos" id="res_fotos" class="btn btn-outline-info">
+                                        <input type="file" id="res_fotos" name="res_fotos[]" multiple>
+                                            <div id="foto_container">
+
+                                            </div>
                                     </div>
 
                                     <div class="col-4">                                     
@@ -159,7 +162,7 @@
 
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
-    <script src="{{asset('path/to/bootstrap-datepicker.es.min.js')}}"></script>
+    <script src="{{ asset('path/to/bootstrap-datepicker.es.min.js')}}"></script>
 
     {{--! ESTILOS DE LA FECHA PARA QUE SE DESPLIEGUE  --}}
 
@@ -244,51 +247,34 @@
 
     {{-- * FUNCION PARA MOSTRAR LA FOTO --}}
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-        
-    <script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
-        $(document).ready(function (e) {
-            $('#res_fotos').change(function(){
-                let reader = new FileReader();
-                reader.onload = (e) => {
-                    $('#imagenSeleccionada').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(this.files[0]);
-            });
+    <script>
+        $(document).ready(function () {
+        $('#res_fotos').change(function () {
+            const reader = new FileReader();
+            const fotoContainer = document.getElementById('foto_container');
+
+            reader.onload = (e) => {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.style.maxWidth = '40%';
+            img.style.maxHeight = '40%';
+
+            fotoContainer.appendChild(img);
+            };
+
+            for (const file of this.files) {
+            reader.readAsDataURL(file);
+            }
+        });
         });
 
     </script>
 
-<<<<<<< HEAD
-{{--! FUNCIÓN PARA MOSTRAR LA ALERTA DE LA FECHA --}}
-
-@if ($errors->any())
-<script>
-    var errorMessage = @json($errors->first());
-    Swal.fire({
-            title: 'Inspección',
-            text: "La fecha registrada no es válida. Por favor, asegúrese de ingresar la fecha actual.",
-            icon: 'warning',
-            showconfirmButton: true,
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: '¡OK!',
-            
-            }).then((result) => {
-        if (result.isConfirmed) {
-
-            this.submit();
-        }
-        })
-</script>
-@endif
-=======
     {{-- * FUNCION PARA EL MAPA Y PARA CAPTURAR LOS DATOS DE LA LATITUD Y LONGITUD --}}
 
     <script>
-
-        // Importa Leaflet
-        // import L from 'leaflet';
 
         // Inicializa el mapa en el contenedor con ID "map"
         const map = L.map('mapa').setView([10.2825,-68.7222], 9.2); // Latitud y longitud iniciales de Yaracuy
@@ -298,36 +284,34 @@
             attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
+        // Declara una variable para el marcador
+        // let marcador = null;
+
         // Agrega un marcador cuando se hace clic en el mapa
         map.on('click', (e) => {
             const latitud = e.latlng.lat;
             const longitud = e.latlng.lng;
+
+        // Elimina cualquier marcador existente
+        map.eachLayer((layer) => {
+            if (layer instanceof L.Marker) {
+                map.removeLayer(layer);
+            }
+        });
+
+        // Crea un marcador en la posición del clic
+        L.marker([latitud, longitud]).addTo(map);
 
             // Actualiza los campos de texto con las coordenadas
             document.getElementById('latitud').value = latitud;
             document.getElementById('longitud').value = longitud;
         });
 
-        // var map = L.map('mapa').setView([10.2825,-68.7222], 10); // Coordenadas iniciales
-
-        // // Agrega el mapa base de OpenStreetMap
-        // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        //     attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        // }).addTo(map);
-
-        // // Agrega un marcador interactivo
-        // var marker = L.marker([10.2825,-68.7222], { draggable: true }).addTo(map);
-        // marker.on('dragend', function (e) {
-        //     var latLng = e.target.getLatLng();
-        //     document.getElementById('latitud').value = latLng.lat;
-        //     document.getElementById('longitud').value = latLng.lng;
-        // });
-
-        // let map = L.map('mapa').setView([10.2825,-68.7222], 10)
-
-        // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        // attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        // }).addTo(map);
+        // Agrega un marcador
+        const marker = new google.maps.Marker({
+            map: map,
+            position: { lat: latitude, lng: longitude },
+        });
 
     </script>
 
@@ -337,7 +321,7 @@
     <script>
         var errorMessage = @json($errors->first());
         Swal.fire({
-                title: 'Recaudo',
+                title: 'Inspeccion',
                 text: "La fecha registrada no es válida. Por favor, asegúrese de ingresar la fecha actual.",
                 icon: 'warning',
                 showconfirmButton: true,
@@ -352,6 +336,5 @@
             })
     </script>
     @endif
->>>>>>> 94e313f02cefcfcc3f75efd285f160ca88604759
 
 @endsection

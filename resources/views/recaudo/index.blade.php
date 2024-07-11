@@ -50,7 +50,7 @@
                                     <tr>
                                         {{-- <td class="font-weight-bold text-Secondary">{{ $recaudo->id}}</td>  --}}
                                         <td class="font-weight-bold text-Secondary">{{ $recaudo->nombre }}</td>
-                                        <td class="font-weight-bold text-Secondary">{{ implode(', ', json_decode($recaudo->categoria_recaudos, true)) }}</td>
+                                        <td class="font-weight-bold text-Secondary">{{ implode(json_decode($recaudo->categoria_recaudos, true)) }}</td>
                                        
                                         <td>
                                             @can('editar-recaudo')
