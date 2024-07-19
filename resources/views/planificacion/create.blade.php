@@ -242,7 +242,7 @@
     <script>
         var errorMessage = @json($errors->first());
         Swal.fire({
-                title: 'Recaudo',
+                title: 'Planificación',
                 text: "La fecha registrada no es válida. Por favor, asegúrese de ingresar la fecha actual y que esté dentro del lapso permitido.",
                 icon: 'warning',
                 showconfirmButton: true,

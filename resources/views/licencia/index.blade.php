@@ -289,49 +289,6 @@
             });
         });
 
-    //   $(document).ready(function() {
-    //   $('#t_Aprovechamiento').on('click', '.btn-info', function(event) {
-    //     event.preventDefault();
-    //     var inspeccionId = $(this).data('inspeccion-id');
-
-    //     $.ajax({
-    //       url: '/licencia/detalles/' + inspeccionId,
-    //       type: 'GET',
-    //       success: function(data) {
-    //         const fotos = JSON.parse(data.res_fotos); // Decodificar el JSON a un array
-    //         console.log("fotos:", fotos);
-            
-    //         $('#exampleModalScrollable .modal-body').html(`
-    //           <main>
-    //             <h5 class="font-weight-bold text-primary" style="text-align: center">Detalles de la Inspección</h5>
-    //             <p><b>Observaciones:</b> ${data.observaciones}</p>
-    //             <p><b>Conclusiones:</b> ${data.conclusiones}</p>
-    //             <p><b>Latitud:</b> ${data.latitud}</p>
-    //             <p><b>Longitud:</b> ${data.longitud}</p>
-    //             <p><b>Fotos:</b></p>
-    //             <div class="row">
-    //               {% for foto in fotos %}
-    //                 <div class="col-md-4">
-    //                   <img src="/imagen/{{ foto }}" width="30%" class="img-thumbnail">
-    //                 </div>
-    //               {% endfor %}
-    //             </div>
-    //           </main>
-    //         `);
-
-    //         if (!$('#exampleModalScrollable').is(':visible')) {
-    //           $('#exampleModalScrollable').modal('show');
-    //         }
-    //       },
-    //       error: function(error) {
-    //         console.error("Error al obtener los datos:", error);
-    //         alert("Error al cargar los recaudos. Por favor, inténtalo de nuevo.");
-    //       }
-    //     });
-    //   });
-    // });
-
-
     </script>
 
 @endsection

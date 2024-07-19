@@ -82,21 +82,6 @@ class InspeccionesController extends Controller
         } else {
             $inspecciones->res_fotos = ''; // null
         }
-  
-
-        // // Verificar si se han cargado archivos
-        // if ($request->hasFile('res_fotos')) {
-        //     $rutaGuardarImg = 'imagen/';
-        //     foreach ($request->file('res_fotos') as $foto) {
-        //         $imagenInspeccion = date('YmdHis') . '.' . $foto->getClientOriginalExtension();
-        //         $foto->move($rutaGuardarImg, $imagenInspeccion);
-        //         // Asignar el nombre de la imagen a la columna "res_fotos"
-        //         $inspecciones->res_fotos = $imagenInspeccion;
-        //     }
-        // } else {
-        //     // Asignar un valor predeterminado si no se cargaron archivos
-        //     $inspecciones->res_fotos = ''; // null
-        // }
 
         $inspecciones->fecha_inspeccion = $request->input('fecha_inspeccion');
         $inspecciones->estatus = $request->input('estatus');
@@ -181,14 +166,28 @@ class InspeccionesController extends Controller
         $inspeccion->fecha_inspeccion = $request->input('fecha_inspeccion');
         $inspeccion->estatus = $request->input('estatus');
 
-        // Subir la imagen si se proporciona
+        // Verificar si se han cargado archivos
         if ($request->hasFile('res_fotos')) {
-            $imagen = $request->file('res_fotos');
-            $nombreArchivo = time() . '.' . $imagen->getClientOriginalExtension();
-            $ruta = $imagen->storeAs('images', $nombreArchivo);
-            $inspeccion->res_fotos = $ruta;
+            $rutaGuardarImg = 'imagen/';
+            $nombresImagenes = [];
+
+            foreach ($request->file('res_fotos') as $foto) {
+                $imagenInspeccion = date('YmdHis') . '.' . $foto->getClientOriginalExtension();
+                $foto->move($rutaGuardarImg, $imagenInspeccion);
+                $nombresImagenes[] = $imagenInspeccion;
+            }
+
+            // Combinar imágenes anteriores con las nuevas
+            $imagenesAnteriores = json_decode($inspeccion->res_fotos);
+            $nombresImagenes = array_merge($imagenesAnteriores, $nombresImagenes);
+
+            $inspeccion->res_fotos = json_encode($nombresImagenes);
         }
 
+        // Actualizar la fecha de inspección y el estutus
+        $inspeccion->fecha_inspeccion = $request->input('fecha_inspeccion');
+        $inspeccion->estatus = $request->input('estatus');
+        
         // Guarda los cambios
         $inspeccion->save();
         

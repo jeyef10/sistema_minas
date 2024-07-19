@@ -1782,6 +1782,7 @@ function Regalia(obj) {
         
         return false;
     }
+    
     var moneda_longitud = obj.moneda_longitud.value;
     if (moneda_longitud==0){
         Swal.fire({
@@ -1800,98 +1801,6 @@ function Regalia(obj) {
         return (false);
     }
 
-    if (nombre_sede.length < 4){
-        Swal.fire({
-            title: 'Sede',
-            text: "Faltan dígitos en este campo de texto.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
-
-            this.submit();
-        }
-        })
-        
-        obj.nombre_sede.focus();
-        return (false);
-    }
-    if (nombre_sede.trim() == "") {
-         Swal.fire({
-            title: 'Sede',
-            text: "El campo de la sede no debe contener espacios en blancos.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
-
-            this.submit();
-        }
-        })
-       
-        obj.nombre_sede.focus();
-        return false;
-    }
-    if (/^([a-zA-Z0-9])\1+$/.test(nombre_sede)) {
-         Swal.fire({
-            title: 'Sede',
-            text: "El campo de la sede no debe contener caracteres repetidos.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
-
-            this.submit();
-        }
-        })
-       
-        obj.nombre_sede.focus();
-        return false;
-    }
-    if (!/^[A-Z][a-ñ-z]+$/.test(nombre_sede)) {
-        Swal.fire({
-            title: 'Sede',
-            text: "El nombre debe comenzar con una letra mayúscula y las demás en minúscula.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
-
-            this.submit();
-        }
-        })
-       
-        obj.nombre_sede.focus();
-        return false;
-    }
-    var checkboxes = document.getElementsByName("divisiones[]");
-        var isChecked = false;
-        for (var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].checked) {
-                isChecked = true;
-                break;
-            }
-        }
-        if (!isChecked) {
-            Swal.fire({
-                title: 'Sede',
-                text: "Debe seleccionar al menos una división.",
-                icon: 'warning',
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                }).then((result) => {
-            if (result.isConfirmed) {
-    
-                this.submit();
-            }
-            })
-            return false;
-        }
-        return true;
 }
     
 //Validar PLAZO DE VIGENCIA
@@ -1933,10 +1842,623 @@ function Plazo(obj) {
         obj.medida_tiempo.focus();
         return false;
     }
+}    
+
+// Validar RECEPCIÓN DE RECAUDOS
+function Recepcion (obj) {
+    var tipo_solicitante = obj.tipo_solicitante.value;
+    if (tipo_solicitante==0){
+        Swal.fire({
+            title: 'Recepción de Recaudos',
+            text: "Debe seleccionar un tipo de solicitante.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return (false);
+    }
+
+    // var solicitante = obj.solicitante.value;
+    // if (!solicitante){
+    //     Swal.fire({
+    //         title: 'Recepción de Recaudos',
+    //         text: "Debe seleccionar un solicitante.",
+    //         icon: 'warning',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         }).then((result) => {
+    //     if (result.isConfirmed) {
+
+    //         this.submit();
+    //     }
+    //     })
+        
+    //     return (false);
+    // }
+
+    var municipio = obj.municipio.value;
+    if (!municipio){
+        Swal.fire({
+            title: 'Recepción de Recaudos',
+            text: "Debe seleccionar un municipio.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return (false);
+    }
+
+    var categoria = obj.categoria.value;
+    if (!categoria){
+        Swal.fire({
+            title: 'Recepción de Recaudos',
+            text: "Debe seleccionar una categoria.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return (false);
+    }
+
+    var nom_mineral = obj.nom_mineral.value;
+    if (!nom_mineral){
+        Swal.fire({
+            title: 'Recepción de Recaudos',
+            text: "Debe seleccionar un mineral.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return (false);
+    }
+
+    var direccion = obj.direccion.value;
+    if (!direccion) {
+        Swal.fire({
+            title: 'Recepción de Recaudos',
+            text: "Debe ingresar la dirección.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+
+        obj.direccion.focus();
+        return false;
+    }
+
+    if (direccion.trim() == "") {
+        Swal.fire({
+            title: 'Recepción de Recaudos',
+            text: "El campo de direccion no debe contener espacios en blanco.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+
+        obj.direccion.focus();
+        return false;
+    }
+
+    if (/(\w)\2+/i.test(direccion.toLowerCase())) {
+    Swal.fire({
+            title: 'Recepción de Recaudos',
+            text: "El campo nombre no debe contener caracteres repetidos.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        obj.direccion.focus();
+        return false;
+    }
+
+    if (direccion.length < 5){
+        Swal.fire({
+            title: 'Recepción de Recaudos',
+            text: "Faltan dígitos en este campo de texto.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+       
+        obj.direccion.focus();
+        return (false);
+    }
+
+    // var simpleDataInput = obj.simpleDataInput.value;
+    // if (!simpleDataInput){
+    //     Swal.fire({
+    //         title: 'Recepción de Recaudos',
+    //         text: "Debe seleccionar la fecha comisionado.",
+    //         icon: 'warning',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         }).then((result) => {
+    //     if (result.isConfirmed) {
+
+    //         this.submit();
+    //     }
+    //     })
+        
+    //     return (false);
+    // }
+
 
 }
 
-// Validar RECEPCIÓN DE RECAUDOS
+// Validar PLANIFICACIÓN 
+function Planificacion (obj) {
+    var municipio = obj.municipio.value;
+    if (municipio==0){
+        Swal.fire({
+            title: 'Planificación',
+            text: "Debe seleccionar un municipio.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return (false);
+    }
+
+    var comisionado = obj.comisionado.value;
+    if (!comisionado){
+        Swal.fire({
+            title: 'Planificación',
+            text: "Debe seleccionar un comisionado.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return (false);
+    }
+
+    var nom_mineral = obj.nom_mineral.value;
+    if (!nom_mineral){
+        Swal.fire({
+            title: 'Recepción de Recaudos',
+            text: "Debe seleccionar un mineral.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return (false);
+    }
+
+    var direccion = obj.direccion.value;
+    if (!direccion) {
+        Swal.fire({
+            title: 'Recepción de Recaudos',
+            text: "Debe ingresar la dirección.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+
+        obj.direccion.focus();
+        return false;
+    }
+
+}
+
+// Validar INSPECCIÓN
+// function Inspeccion (obj) {
+//     var funcionario_acomp = obj.funcionario_acomp.value;
+//     if (!funcionario_acomp) {
+//         Swal.fire({
+//             title: 'Inspección',
+//             text: "Debe registar el funcionario acomapañante.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
+
+//             this.submit();
+//         }
+//         })
+
+//         obj.funcionario_acomp.focus();
+//         return false;
+//     }
+
+//     if (funcionario_acomp.trim() == "") {
+//         Swal.fire({
+//             title: 'Inspección',
+//             text: "El campo de funcionario acomapañante no debe contener espacios en blanco.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
+
+//             this.submit();
+//         }
+//         })
+
+//         obj.funcionario_acomp.focus();
+//         return false;
+//     }
+
+//     if (/(\w)\2+/i.test(funcionario_acomp.toLowerCase())) {
+//     Swal.fire({
+//             title: 'Inspección',
+//             text: "El campo funcionario acomapañante no debe contener caracteres repetidos.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
+
+//             this.submit();
+//         }
+//         })
+        
+//         obj.funcionario_acomp.focus();
+//         return false;
+//     }
+
+//     if (funcionario_acomp.length < 5){
+//         Swal.fire({
+//             title: 'Inspección',
+//             text: "Faltan dígitos en este campo de texto.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
+
+//             this.submit();
+//         }
+//         })
+       
+//         obj.funcionario_acomp.focus();
+//         return (false);
+//     }
+
+//     var observaciones = obj.observaciones.value;
+//     if (!observaciones) {
+//         Swal.fire({
+//             title: 'Inspección',
+//             text: "Debe registar el funcionario acomapañante.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
+
+//             this.submit();
+//         }
+//         })
+
+//         obj.observaciones.focus();
+//         return false;
+//     }
+
+//     if (observaciones.trim() == "") {
+//         Swal.fire({
+//             title: 'Inspección',
+//             text: "El campo de funcionario acomapañante no debe contener espacios en blanco.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
+
+//             this.submit();
+//         }
+//         })
+
+//         obj.observaciones.focus();
+//         return false;
+//     }
+
+//     if (/(\w)\2+/i.test(observaciones.toLowerCase())) {
+//     Swal.fire({
+//             title: 'Inspección',
+//             text: "El campo funcionario acomapañante no debe contener caracteres repetidos.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
+
+//             this.submit();
+//         }
+//         })
+        
+//         obj.observaciones.focus();
+//         return false;
+//     }
+
+//     if (observaciones.length < 5){
+//         Swal.fire({
+//             title: 'Inspección',
+//             text: "Faltan dígitos en este campo de texto.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
+
+//             this.submit();
+//         }
+//         })
+       
+//         obj.observaciones.focus();
+//         return (false);
+//     }
+
+//     var conclusiones = obj.conclusiones.value;
+//     if (!conclusiones) {
+//         Swal.fire({
+//             title: 'Inspección',
+//             text: "Debe registar el funcionario acomapañante.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
+
+//             this.submit();
+//         }
+//         })
+
+//         obj.conclusiones.focus();
+//         return false;
+//     }
+
+//     if (conclusiones.trim() == "") {
+//         Swal.fire({
+//             title: 'Inspección',
+//             text: "El campo de funcionario acomapañante no debe contener espacios en blanco.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
+
+//             this.submit();
+//         }
+//         })
+
+//         obj.conclusiones.focus();
+//         return false;
+//     }
+
+//     if (/(\w)\2+/i.test(conclusiones.toLowerCase())) {
+//     Swal.fire({
+//             title: 'Inspección',
+//             text: "El campo funcionario acomapañante no debe contener caracteres repetidos.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
+
+//             this.submit();
+//         }
+//         })
+        
+//         obj.conclusiones.focus();
+//         return false;
+//     }
+
+//     if (conclusiones.length < 5){
+//         Swal.fire({
+//             title: 'Inspección',
+//             text: "Faltan dígitos en este campo de texto.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
+
+//             this.submit();
+//         }
+//         })
+       
+//         obj.conclusiones.focus();
+//         return (false);
+//     }
+
+//     var conclusiones = obj.conclusiones.value;
+//     if (!conclusiones) {
+//         Swal.fire({
+//             title: 'Inspección',
+//             text: "Debe registar el funcionario acomapañante.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
+
+//             this.submit();
+//         }
+//         })
+
+//         obj.conclusiones.focus();
+//         return false;
+//     }
+
+//     if (conclusiones.trim() == "") {
+//         Swal.fire({
+//             title: 'Inspección',
+//             text: "El campo de funcionario acomapañante no debe contener espacios en blanco.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
+
+//             this.submit();
+//         }
+//         })
+
+//         obj.conclusiones.focus();
+//         return false;
+//     }
+
+//     if (/(\w)\2+/i.test(conclusiones.toLowerCase())) {
+//     Swal.fire({
+//             title: 'Inspección',
+//             text: "El campo funcionario acomapañante no debe contener caracteres repetidos.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
+
+//             this.submit();
+//         }
+//         })
+        
+//         obj.conclusiones.focus();
+//         return false;
+//     }
+
+//     if (conclusiones.length < 5){
+//         Swal.fire({
+//             title: 'Inspección',
+//             text: "Faltan dígitos en este campo de texto.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
+
+//             this.submit();
+//         }
+//         })
+       
+//         obj.conclusiones.focus();
+//         return (false);
+//     }
+
+//     var latitud = obj.latitud.value;
+//     if (!latitud){
+//         Swal.fire({
+//             title: 'Inspección',
+//             text: "Debe registrar la latitud.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
+
+//             this.submit();
+//         }
+//         })
+        
+//         return (false);
+//     }
+
+//     var longitud = obj.longitud.value;
+//     if (!longitud){
+//         Swal.fire({
+//             title: 'Inspección',
+//             text: "Debe registrar la longitud.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
+
+//             this.submit();
+//         }
+//         })
+        
+//         return (false);
+//     }
+
+//     var res_fotos = obj.res_fotos.value;
+//     if (!res_fotos){
+//         Swal.fire({
+//             title: 'Inspección',
+//             text: "Debe registrar una o mas fotos.",
+//             icon: 'warning',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             }).then((result) => {
+//         if (result.isConfirmed) {
+
+//             this.submit();
+//         }
+//         })
+        
+//         return (false);
+//     }
+
+// }
+
+
+
 
 // Fin de la validación del Sistema Minas //
 

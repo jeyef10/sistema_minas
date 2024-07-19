@@ -51,7 +51,7 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Funcionario Acompañante</label>
-                                        <textarea class="form-control" id="funcionario_acomp" name="funcionario_acomp" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
+                                        <textarea class="form-control" id="funcionario_acomp" name="funcionario_acomp" cols="10" rows="10" style="max-height: 6rem;"  oninput="capitalizarInput('funcionario_acomp')"></textarea>                                   
                                     </div>
 
                                 </div>
@@ -66,17 +66,17 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Lugar</label>
-                                        <textarea class="form-control" id="lugar_direccion" name="lugar_direccion" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
+                                        <textarea class="form-control" id="lugar_direccion" name="lugar_direccion" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('lugar_direccion')"></textarea>                                   
                                     </div>
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Observaciones</label>
-                                        <textarea class="form-control" id="observaciones" name="observaciones" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
+                                        <textarea class="form-control" id="observaciones" name="observaciones" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('observaciones')"></textarea>                                   
                                     </div>
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Conclusiones</label>
-                                        <textarea class="form-control" id="conclusiones" name="conclusiones" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
+                                        <textarea class="form-control" id="conclusiones" name="conclusiones" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('conclusiones')"></textarea>                                   
                                     </div>
 
                                 </div>
@@ -100,7 +100,7 @@
                                     </div>
 
                                     <div class="col-4">
-                                        <div id="mapa" style="height: 280px; width:370px;"></div>
+                                        <div id="mapa" style="height: 200px; width:100%;"></div>
                                     </div>    
 
                                 </div>
@@ -119,10 +119,8 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Reseña Fotográfica</label>
-                                        <input type="file" id="res_fotos" name="res_fotos[]" multiple>
-                                            <div id="foto_container">
-
-                                            </div>
+                                        <input type="file" id="res_fotos" name="res_fotos[]" multiple class="btn btn-outline-info">
+                                            <div id="foto_container"></div>
                                     </div>
 
                                     <div class="col-4">                                     
@@ -163,6 +161,19 @@
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
     <script src="{{ asset('path/to/bootstrap-datepicker.es.min.js')}}"></script>
+
+    {{-- ? FUNCIÓN PARA CONVERTIR UNA LETRA EN MAYÚSCULAS Y LOS DEMAS EN MINÚSCULAS --}}
+
+    <script>
+        function capitalizarPrimeraLetra(texto) {
+            return texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
+        }
+
+        function capitalizarInput(idInput) {
+            const inputElement = document.getElementById(idInput);
+            inputElement.value = capitalizarPrimeraLetra(inputElement.value);
+        }
+    </script>
 
     {{--! ESTILOS DE LA FECHA PARA QUE SE DESPLIEGUE  --}}
 
@@ -321,7 +332,7 @@
     <script>
         var errorMessage = @json($errors->first());
         Swal.fire({
-                title: 'Inspeccion',
+                title: 'Inspección',
                 text: "La fecha registrada no es válida. Por favor, asegúrese de ingresar la fecha actual.",
                 icon: 'warning',
                 showconfirmButton: true,
