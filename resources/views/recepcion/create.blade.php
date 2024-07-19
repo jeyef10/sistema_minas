@@ -80,7 +80,7 @@
 
                                  <div class="col-4 mt-2">
                                     <label  class="font-weight-bold text-primary">Dirección / Lugar</label>
-                                    <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
+                                    <textarea name="direccion" class="form-control" id="direccion" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
                                 </div>
 
                             </div>

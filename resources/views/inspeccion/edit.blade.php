@@ -3,6 +3,8 @@
 <title>@yield('title') Actualizar Inspección</title>
 <script src="{{ asset('js/validaciones.js') }}"></script>
 <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
+<link  href="{{ asset('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css')}}" rel="stylesheet" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="{{ asset('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js')}}" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
 @section('contenido')
 
@@ -97,6 +99,10 @@
                                         <label  class="font-weight-bold text-primary">Longitud</label>
                                         <input type="text" class="form-control" id="longitud" name="longitud" style="background: white;" value="{{ isset($inspeccion->longitud)?$inspeccion->longitud:'' }}" placeholder="Ingrese la Longitud" autocomplete="off" onkeypress="return solonum(event);">                                  
                                     </div>
+
+                                    <div class="col-4">
+                                        <div id="mapa" style="height: 250px; width:100%;"></div>
+                                    </div> 
                                 
                                 </div>
                                 
@@ -109,12 +115,13 @@
                                 <div class="row">
 
                                     <div class="grid grid-cols-1 mt-5 mx-7">
-                                        <img id="imagenSeleccionada" style="max-heigth: 300px;">
+                                        <img id="miniaturas">
                                     </div>
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Reseña Fotográfica</label>
-                                        <input type="file" name="res_fotos" id="res_fotos" class="btn btn-outline-info" value="{{ $res_fotos }}">
+                                        <input type="file" id="res_fotos" name="res_fotos[]" multiple value="{{ $res_fotos }}" class="btn btn-outline-info">
+                                            <div id="foto_container"></div>
                                     </div>
 
                                     <div class="col-4">                                     
@@ -237,23 +244,75 @@
 
     </script>
 
-    {{-- * FUNCION PARA MOSTRAR LA FOTO --}}
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-        
+    {{-- * FUNCION PARA EL MAPA Y PARA CAPTURAR LOS DATOS DE LA LATITUD Y LONGITUD --}}
+
     <script>
 
-        $(document).ready(function (e) {
-            $('#res_fotos').change(function(){
-                let reader = new FileReader();
-                reader.onload = (e) => {
-                    $('#imagenSeleccionada').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(this.files[0]);
-            });
+        // Inicializa el mapa en el contenedor con ID "map"
+        const map = L.map('mapa').setView([10.2825,-68.7222], 9.2); // Latitud y longitud iniciales de Yaracuy
+
+        // Agrega el mapa base de OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Declara una variable para el marcador
+        // let marcador = null;
+
+        // Agrega un marcador cuando se hace clic en el mapa
+        map.on('click', (e) => {
+            const latitud = e.latlng.lat;
+            const longitud = e.latlng.lng;
+
+        // Elimina cualquier marcador existente
+        map.eachLayer((layer) => {
+            if (layer instanceof L.Marker) {
+                map.removeLayer(layer);
+            }
+        });
+
+        // Crea un marcador en la posición del clic
+        L.marker([latitud, longitud]).addTo(map);
+
+            // Actualiza los campos de texto con las coordenadas
+            document.getElementById('latitud').value = latitud;
+            document.getElementById('longitud').value = longitud;
+        });
+
+        // Agrega un marcador
+        const marker = new google.maps.Marker({
+            map: map,
+            position: { lat: latitude, lng: longitude },
         });
 
     </script>
 
+    {{-- * FUNCION PARA MOSTRAR LA FOTO --}}
+
+    {{-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+        $('#res_fotos').change(function () {
+            const reader = new FileReader();
+            const fotoContainer = document.getElementById('foto_container');
+
+            reader.onload = (e) => {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.style.maxWidth = '40%';
+            img.style.maxHeight = '40%';
+
+            fotoContainer.appendChild(img);
+            };
+
+            for (const file of this.files) {
+            reader.readAsDataURL(file);
+            }
+        });
+        });
+
+    </script> --}}
     
 @endsection

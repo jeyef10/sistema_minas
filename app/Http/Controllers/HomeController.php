@@ -12,6 +12,7 @@ use App\Models\Comisionados;
 use App\Models\Minerales;
 use App\Models\Regalia;
 use App\Models\Plazos;
+use App\Models\Inspecciones;
 
 
 class homeController extends Controller
@@ -51,8 +52,13 @@ class homeController extends Controller
         $count_plazo= DB::table('plazos')
         ->count();
 
-        return view('home.inicio' , compact('count_solicitante', 'count_natural', 'count_juridico', 'count_recaudo','count_comisionado', 'count_mineral','count_regalia', 'count_plazo'  ) , [
-        'count' => $count_solicitante, $count_natural, $count_juridico, $count_recaudo,  $count_comisionado,  $count_mineral,   $count_regalia, $count_plazo
+        $mapa = Inspecciones::all();
+        $count_inspecciones= DB::table('inspecciones')
+        ->count();
+
+        return view('home.inicio' , compact('count_solicitante', 'count_natural', 'count_juridico', 'count_recaudo','count_comisionado', 'count_mineral','count_regalia', 'count_plazo',
+        'count_inspecciones'  ) , [
+        'count' => $count_solicitante, $count_natural, $count_juridico, $count_recaudo,  $count_comisionado,  $count_mineral,   $count_regalia, $count_plazo, $count_inspecciones
 
     ]); ;
 
