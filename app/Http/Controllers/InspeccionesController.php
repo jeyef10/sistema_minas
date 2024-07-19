@@ -53,18 +53,10 @@ class InspeccionesController extends Controller
 
     public function store(Request $request)
     {
-<<<<<<< HEAD
         $this->validate($request, [
             'fecha_inspeccion' => 'required|date_format:d/m/Y|after_or_equal:today',
             ]);
 
-=======
-
-        $this->validate($request, [
-            'fecha_inspeccion' => 'required|date_format:d/m/Y|after_or_equal:today',
-        ]);
-    
->>>>>>> 94e313f02cefcfcc3f75efd285f160ca88604759
         // Crear una nueva Inspección
         $inspecciones = new Inspecciones ();
         $inspecciones->id_planificacion = $request->input('id_planificacion');
