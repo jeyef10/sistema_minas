@@ -87,10 +87,23 @@
                   <div class="bg-white py-2 collapse-inner rounded">
                     {{-- <h6 class="collapse-header">Forms</h6>
                     <a class="collapse-item" href="form_basics.html">Form Basics</a>--}}
+                    
+                    @can('ver-recepcion')
                     <a class="collapse-item" href="{{ route('recepcion.create') }}">Recepción de Recaudos</a>
+                    @endcan
+
+                    @can('ver-planificacion')
                     <a class="collapse-item" href="{{ url('planificacion') }}">Planificación</a>
+                    @endcan
+
+                    @can('ver-inspeccion')
                     <a class="collapse-item" href="{{ url('inspeccion') }}">Inspección</a>
+                    @endcan
+
+                    @can('ver-licencia')
                     <a class="collapse-item" href="{{ url('licencia') }}">Licencia</a>
+                    @endcan
+
                     {{-- <a class="collapse-item" href="{{ url('Pago') }}">Pago / Talonario</a> --}}
                   </div>
                 </div>

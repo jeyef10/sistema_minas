@@ -72,6 +72,30 @@ class SeederTablaPermisos extends Seeder
             // 'crear-categoria',
             // 'editar-categoria',
             // 'borrar-categoria',
+
+            //Operaciones sobre tabla Recepción
+            'ver-recepcion',
+            'crear-recepcion',
+            'editar-recepcion',
+            'borrar-recepcion',
+
+            //Operaciones sobre tabla Planificación
+            'ver-planificacion',
+            'crear-planificacion',
+            'editar-planificacion',
+            'borrar-planificacion',
+
+            //Operaciones sobre tabla Inspección
+            'ver-inspeccion',
+            'crear-inspeccion',
+            'editar-inspeccion',
+            'borrar-inspeccion',
+
+            //Operaciones sobre tabla licencia
+            'ver-licencia',
+            'crear-licencia',
+            'editar-licencia',
+            'borrar-licencia',
  
         ];
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Solicitante;
 use App\Models\PersonaNatural;
 use App\Models\PersonaJuridica;
+use App\Models\Recepcion;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -248,22 +249,36 @@ class SolicitanteController extends Controller
      */
     public function destroy($id)
     {
-        // Busca el Solicitante con el ID proporcionado en la base de datos
-        $solicitante = Solicitante::with('solicitanteEspecifico')->find($id);
+        try {
+            // Busca el Solicitante con el ID proporcionado en la base de datos
+            $solicitante = Solicitante::find($id);
 
-        // Si el Solicitante tiene un solicitanteEspecifico asociado (Persona Natural o Jurídica), lo elimina
-        if ($solicitante->solicitanteEspecifico !== null) {
-            $solicitante->solicitanteEspecifico->delete();
+            if ($solicitante) {
+                // Verifica si hay alguna recepción de recaudos asociada al Solicitante
+                $recepciones = Recepcion::where('id_solicitante', $id)->count();
+
+                if ($recepciones === 0) {
+                    // Si no hay recepciones de recaudos, elimina el Solicitante
+                    if ($solicitante->solicitanteEspecifico !== null) {
+                        $solicitante->solicitanteEspecifico->delete();
+                    }
+                    $solicitante->delete();
+                    $bitacora = new BitacoraController;
+                    $bitacora->update();
+                    return redirect('solicitante')->with('eliminar', 'ok');
+                } else {
+                    // Si hay recepciones de recaudos, muestra un mensaje de advertencia
+                    $errorMessage = 'Advertencia: El solicitante está asociado a una recepción de recaudos. No se puede eliminar.';
+                    return redirect()->back()->withErrors($errorMessage);
+                }
+            } else {
+                // El Solicitante no existe, muestra un mensaje de error
+                $errorMessage = 'Error: No se encontró el solicitante con el ID proporcionado.';
+                return redirect()->back()->withErrors($errorMessage);
+            }
+        } catch (QueryException $exception) {
+            $errorMessage = 'Error: No se puede eliminar el solicitante debido a que tiene otros registros.';
+            return redirect()->back()->withErrors($errorMessage);
         }
-
-        // Elimina el Solicitante de la base de datos
-        $solicitante->delete();
-
-        $bitacora = new BitacoraController;
-        $bitacora->update();
-
-        // Redirige al usuario a la página de solicitantes
-        return redirect('solicitante')->with('eliminar', 'ok');
-
     }
 }

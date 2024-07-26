@@ -148,9 +148,17 @@ class MineralController extends Controller
      */
     public function destroy($id)
     {
-        Minerales::destroy($id);
-        $bitacora = new BitacoraController;
-        $bitacora->update();
-        return redirect('mineral')->with('eliminar', 'ok');
+        try {
+            $mineral = Minerales::findOrFail($id);
+        
+            $mineral->delete();
+            $bitacora = new BitacoraController;
+            $bitacora->update();
+            return redirect('mineral')->with('eliminar', 'ok');
+
+        } catch (QueryException $exception) {
+            $errorMessage = 'Error: No se puede eliminar el mineral debido a que tiene otros registros.';
+            return redirect()->back()->withErrors($errorMessage);
+        }
     }
 }

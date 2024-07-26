@@ -17,6 +17,14 @@ use App\Http\Controllers\BitacoraController;
 
 class InspeccionesController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:ver-inspeccion|crear-inspeccion|editar-inspeccion|borrar-inspeccion', ['only' => ['index']]);
+         $this->middleware('permission:crear-inspeccion', ['only' => ['create','store']]);
+         $this->middleware('permission:editar-inspeccion', ['only' => ['edit','update']]);
+         $this->middleware('permission:borrar-inspeccion', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

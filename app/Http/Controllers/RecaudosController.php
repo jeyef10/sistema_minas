@@ -160,9 +160,17 @@ class RecaudosController extends Controller
      */
     public function destroy($id)
     {
-        Recaudos::destroy($id);
-        $bitacora = new BitacoraController;
-        $bitacora->update();
-        return redirect('recaudo')->with('eliminar', 'ok');
+        try {
+            $recaudo = Recaudos::findOrFail($id);
+        
+            $recaudo->delete();
+            $bitacora = new BitacoraController;
+            $bitacora->update();
+            return redirect('recaudo')->with('eliminar', 'ok');
+
+        } catch (QueryException $exception) {
+            $errorMessage = 'Error: No se puede eliminar el recaudo debido a que tiene otros registros.';
+            return redirect()->back()->withErrors($errorMessage);
+        }
     }
 }

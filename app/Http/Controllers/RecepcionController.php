@@ -18,6 +18,14 @@ use Illuminate\Database\QueryException;
 
 class RecepcionController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:ver-recepcion|crear-recepcion|editar-recepcion|borrar-recepcion', ['only' => ['index']]);
+         $this->middleware('permission:crear-recepcion', ['only' => ['create','store']]);
+         $this->middleware('permission:editar-recepcion', ['only' => ['edit','update']]);
+         $this->middleware('permission:borrar-recepcion', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

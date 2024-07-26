@@ -25,6 +25,14 @@ use Illuminate\Support\Facades\Notification;
 
 class PlanificacionController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:ver-planificacion|crear-planificacion|editar-planificacion|borrar-planificacion', ['only' => ['index']]);
+         $this->middleware('permission:crear-planificacion', ['only' => ['create','store']]);
+         $this->middleware('permission:editar-planificacion', ['only' => ['edit','update']]);
+         $this->middleware('permission:borrar-planificacion', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
