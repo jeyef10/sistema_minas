@@ -157,10 +157,18 @@ class ComisionadosController extends Controller
      */
     public function destroy($id)
     {
-       Comisionados::destroy($id);
-        $bitacora = new BitacoraController;
-        $bitacora->update();
-        return redirect('comisionado')->with('eliminar', 'ok');
+        try {
+            $comisionado = Comisionados::findOrFail($id);
+        
+            $comisionado->delete();
+            $bitacora = new BitacoraController;
+            $bitacora->update();
+            return redirect('comisionado')->with('eliminar', 'ok');
+
+        } catch (QueryException $exception) {
+            $errorMessage = 'Error: No se puede eliminar el comisionado debido a que tiene otros registros.';
+            return redirect()->back()->withErrors($errorMessage);
+        }
     }
 }
 

@@ -13,6 +13,14 @@ use App\Http\Controllers\BitacoraController;
 
 class LicenciaController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:ver-licencia|crear-licencia|editar-licencia|borrar-licencia', ['only' => ['index']]);
+         $this->middleware('permission:crear-licencia', ['only' => ['create','store']]);
+         $this->middleware('permission:editar-licencia', ['only' => ['edit','update']]);
+         $this->middleware('permission:borrar-licencia', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
