@@ -26,7 +26,7 @@ class InspeccionesController extends Controller
     {
         $planificaciones = Planificacion::with('comisionados', 'planificacioncomisionados')->get();
 
-        return view('inspeccion.index', compact('planificaciones'));
+        return view ('inspeccion.index', compact('planificaciones'));
 
     }
 
@@ -42,6 +42,13 @@ class InspeccionesController extends Controller
         $comisionados = Comisionados::all();
 
         return view('inspeccion.create', compact('planificacion', 'municipios', 'comisionados'));
+    }
+
+    public function fetchComisionados(Request $request, $municipioId)
+    {
+        $municipiocomisionados = Comisionados::where('id_municipio', $municipioId)->get();
+    
+        return response()->json($municipiocomisionados);
     }
 
     /**
@@ -66,24 +73,40 @@ class InspeccionesController extends Controller
         $inspecciones->conclusiones = $request->input('conclusiones');
         $inspecciones->latitud = $request->input('latitud');
         $inspecciones->longitud = $request->input('longitud');
+        $inspecciones->utm_norte = $request->input('utm_norte');
+        $inspecciones->utm_este = $request->input('utm_este');
+        
+    
 
-       // Verificar si se han cargado archivos
+        // Verificar si se han cargado archivos
         if ($request->hasFile('res_fotos')) {
             $rutaGuardarImg = 'imagen/';
             $nombresImagenes = [];
-        
+
             foreach ($request->file('res_fotos') as $foto) {
-            $imagenInspeccion = date('YmdHis') . '.' . $foto->getClientOriginalExtension();
-            $foto->move($rutaGuardarImg, $imagenInspeccion);
-            $nombresImagenes[] = $imagenInspeccion;
+                $imagenInspeccion = date('YmdHis') . '_' . uniqid() . '_' . pathinfo($foto->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $foto->getClientOriginalExtension();
+                $foto->move(public_path($rutaGuardarImg), $imagenInspeccion);
+                $nombresImagenes[] = $imagenInspeccion;
             }
-        
+
+            
             $inspecciones->res_fotos = json_encode($nombresImagenes);
         } else {
-            $inspecciones->res_fotos = ''; // null
+            $inspecciones->res_fotos = '[]'; // null
+            
         }
-
+           
         $inspecciones->fecha_inspeccion = $request->input('fecha_inspeccion');
+        $inspecciones->longitud_terreno = $request->input('longitud_terreno');
+        $inspecciones->ancho = $request->input('ancho');
+        $inspecciones->profundidad = $request->input('profundidad');
+        $inspecciones->volumen = $request->input('volumen');
+        $inspecciones->lindero_norte = $request->input('lindero_norte');
+        $inspecciones->lindero_sur = $request->input('lindero_sur');
+        $inspecciones->lindero_este = $request->input('lindero_este');
+        $inspecciones->lindero_oeste = $request->input('lindero_oeste');
+        $inspecciones->superficie = $request->input('superficie');
+
         $inspecciones->estatus = $request->input('estatus');
 
         $inspecciones->save();
@@ -121,8 +144,8 @@ class InspeccionesController extends Controller
      */
     public function edit($id)
     {
-        $inspeccion = Inspecciones::find($id);
-        $planificacion = Planificacion::findOrFail($id);
+        $inspeccion = Inspecciones::findOrFail($id);
+        $planificacion = Planificacion::find($id);
         $municipios = Municipio::all();
         $comisionados = Comisionados::all();
         $funcionario_acomp = $inspeccion->funcionario_acomp;
@@ -131,12 +154,24 @@ class InspeccionesController extends Controller
         $conclusiones = $inspeccion->conclusiones;
         $latitud = $inspeccion->latitud;
         $longitud = $inspeccion->longitud;
+        $utm_norte = $inspeccion->utm_norte;
+        $utm_este = $inspeccion->utm_este;
         $res_fotos = $inspeccion->res_fotos;
         $fecha_inspeccion = $inspeccion->fecha_inspeccion;
+        $longitud_terreno = $inspeccion->longitud_terreno;
+        $ancho = $inspeccion->ancho;
+        $profundidad = $inspeccion->profundidad;
+        $volumen = $inspeccion->volumen;
+        $lindero_norte = $inspeccion->lindero_norte;
+        $lindero_sur = $inspeccion->lindero_sur;
+        $lindero_este = $inspeccion->lindero_este;
+        $lindero_oeste = $inspeccion->lindero_oeste;
+        $superficie = $inspeccion->superficie;
         $estatus = $inspeccion->estatus;
 
-        return view('inspeccion.edit' , compact('inspeccion', 'planificacion', 'municipios', 'comisionados', 'funcionario_acomp', 'lugar_direccion', 'observaciones', 'conclusiones',
-        'latitud', 'longitud', 'res_fotos', 'fecha_inspeccion', 'estatus'));
+        return view('inspeccion.edit' , compact('inspeccion', 'planificacion', 'municipios', 'comisionados', 'funcionario_acomp', 'lugar_direccion', 
+        'observaciones','conclusiones', 'latitud', 'longitud', 'utm_norte', 'utm_este', 'res_fotos', 'fecha_inspeccion', 'longitud_terreno', 'ancho', 
+        'profundidad', 'volumen', 'lindero_norte', 'lindero_sur', 'lindero_este', 'lindero_oeste', 'superficie', 'estatus'));
     }
 
     /**
@@ -150,12 +185,10 @@ class InspeccionesController extends Controller
     {
         $this->validate($request, [
             'fecha_inspeccion' => 'required|date_format:d/m/Y|after_or_equal:today|before_or_equal:'. date('d/m/Y', strtotime('+7 days')),
-            ]);
+        ]);
 
-        // Encuentra la inspección por su ID
-        $inspeccion = Inspecciones::find($id);
-
-        // Actualiza los campos según los datos del formulario
+        // Buscar la inspección existente
+        $inspeccion = Inspecciones::findOrFail($id);
         $inspeccion->id_planificacion = $request->input('id_planificacion');
         $inspeccion->funcionario_acomp = $request->input('funcionario_acomp');
         $inspeccion->lugar_direccion = $request->input('lugar_direccion');
@@ -163,43 +196,47 @@ class InspeccionesController extends Controller
         $inspeccion->conclusiones = $request->input('conclusiones');
         $inspeccion->latitud = $request->input('latitud');
         $inspeccion->longitud = $request->input('longitud');
-        $inspeccion->fecha_inspeccion = $request->input('fecha_inspeccion');
-        $inspeccion->estatus = $request->input('estatus');
+        $inspeccion->utm_norte = $request->input('utm_norte');
+        $inspeccion->utm_este = $request->input('utm_este');
 
-        // Verificar si se han cargado archivos
+        // Verificar si se han cargado nuevos archivos
         if ($request->hasFile('res_fotos')) {
             $rutaGuardarImg = 'imagen/';
             $nombresImagenes = [];
 
             foreach ($request->file('res_fotos') as $foto) {
-                $imagenInspeccion = date('YmdHis') . '.' . $foto->getClientOriginalExtension();
-                $foto->move($rutaGuardarImg, $imagenInspeccion);
+                $imagenInspeccion = date('YmdHis') . '_' . uniqid() . '_' . pathinfo($foto->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $foto->getClientOriginalExtension();
+                $foto->move(public_path($rutaGuardarImg), $imagenInspeccion);
                 $nombresImagenes[] = $imagenInspeccion;
             }
 
-            // Combinar imágenes anteriores con las nuevas
-            $imagenesAnteriores = json_decode($inspeccion->res_fotos);
-            $nombresImagenes = array_merge($imagenesAnteriores, $nombresImagenes);
-
+            // Actualizar las imágenes
             $inspeccion->res_fotos = json_encode($nombresImagenes);
         }
 
-        // Actualizar la fecha de inspección y el estutus
         $inspeccion->fecha_inspeccion = $request->input('fecha_inspeccion');
+        $inspeccion->longitud_terreno = $request->input('longitud_terreno');
+        $inspeccion->ancho = $request->input('ancho');
+        $inspeccion->profundidad = $request->input('profundidad');
+        $inspeccion->volumen = $request->input('volumen');
+        $inspeccion->lindero_norte = $request->input('lindero_norte');
+        $inspeccion->lindero_sur = $request->input('lindero_sur');
+        $inspeccion->lindero_este = $request->input('lindero_este');
+        $inspeccion->lindero_oeste = $request->input('lindero_oeste');
+        $inspeccion->superficie = $request->input('superficie');
         $inspeccion->estatus = $request->input('estatus');
-        
-        // Guarda los cambios
-        $inspeccion->save();
-        
-        try {
-            
-            // Redirige a la página deseada
-            return redirect('licencia');
 
-            } catch (QueryException $exception) {
-                $errorMessage = 'Error: .';
-                return redirect()->back()->withErrors($errorMessage);
-            }
+        $inspeccion->save();
+
+        $bitacora = new BitacoraController;
+        $bitacora->update();
+
+        try {
+            return redirect('licencia');
+        } catch (QueryException $exception) {
+            $errorMessage = 'Error: ' . $exception->getMessage();
+            return redirect()->back()->withErrors($errorMessage);
+        }
     }
 
     /**

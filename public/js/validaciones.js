@@ -2109,8 +2109,8 @@ function Planificacion (obj) {
 
 // Validar INSPECCIÓN
 // function Inspeccion (obj) {
-//     var funcionario_acomp = obj.funcionario_acomp.value;
-//     if (!funcionario_acomp) {
+//     var funcionario = obj.funcionario.value;
+//     if (!funcionario) {
 //         Swal.fire({
 //             title: 'Inspección',
 //             text: "Debe registar el funcionario acomapañante.",
@@ -2123,12 +2123,11 @@ function Planificacion (obj) {
 //             this.submit();
 //         }
 //         })
-
-//         obj.funcionario_acomp.focus();
-//         return false;
+        
+//         return (false);
 //     }
 
-//     if (funcionario_acomp.trim() == "") {
+//     if (funcionario.trim() == "") {
 //         Swal.fire({
 //             title: 'Inspección',
 //             text: "El campo de funcionario acomapañante no debe contener espacios en blanco.",
@@ -2142,11 +2141,10 @@ function Planificacion (obj) {
 //         }
 //         })
 
-//         obj.funcionario_acomp.focus();
 //         return false;
 //     }
 
-//     if (/(\w)\2+/i.test(funcionario_acomp.toLowerCase())) {
+//     if (/(\w)\2+/i.test(funcionario.toLowerCase())) {
 //     Swal.fire({
 //             title: 'Inspección',
 //             text: "El campo funcionario acomapañante no debe contener caracteres repetidos.",
@@ -2160,11 +2158,10 @@ function Planificacion (obj) {
 //         }
 //         })
         
-//         obj.funcionario_acomp.focus();
 //         return false;
 //     }
 
-//     if (funcionario_acomp.length < 5){
+//     if (funcionario.length < 5){
 //         Swal.fire({
 //             title: 'Inspección',
 //             text: "Faltan dígitos en este campo de texto.",
@@ -2178,7 +2175,6 @@ function Planificacion (obj) {
 //         }
 //         })
        
-//         obj.funcionario_acomp.focus();
 //         return (false);
 //     }
 

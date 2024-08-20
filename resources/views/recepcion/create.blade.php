@@ -3,6 +3,8 @@
 <title>@yield('title') Registrar Recepción</title>
 <script src="{{ asset('js/validaciones.js') }}"></script>
 <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
+<link  href="{{ asset('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css')}}" rel="stylesheet" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="{{ asset('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js')}}" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
 @section('contenido')
 
@@ -62,6 +64,34 @@
                             <div class="row">
 
                                 <div class="col-4">
+                                    <label  class="font-weight-bold text-primary">Latitud</label>
+                                    <input type="text" class="form-control" id="latitud" name="latitud" style="background: white;" value="" placeholder="Ingrese la Latitud" autocomplete="off" onkeypress="return solonum(event);">                                  
+                                </div>
+
+                                <div class="col-4">
+                                    <label  class="font-weight-bold text-primary">Longitud</label>
+                                    <input type="text" class="form-control" id="longitud" name="longitud" style="background: white;" value="" placeholder="Ingrese la Longitud" autocomplete="off" onkeypress="return solonum(event);">                                  
+                                </div>
+
+                                <div class="col-4">
+                                    <label  class="font-weight-bold text-primary">Dirección / Lugar</label>
+                                    <textarea name="direccion" class="form-control" id="direccion" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
+                                </div>
+
+                                <div class="col-4">
+                                    <div id="mapa" style="height: 350px; width:200%;"></div>
+                                </div>   
+
+                            </div>
+                        </div>
+
+                        <hr class="sidebar-divider">
+
+                        <div class="card-body">
+
+                            <div class="row">
+
+                                <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Categoria</label>
                                     <select class="select2-single form-control" name="categoria" id="categoria">
                                         <option value="" selected="true" disabled>Seleccione una Categoria</option>
@@ -78,12 +108,8 @@
                                     </select>                                  
                                  </div>
 
-                                 <div class="col-4 mt-2">
-                                    <label  class="font-weight-bold text-primary">Dirección / Lugar</label>
-                                    <textarea name="direccion" class="form-control" id="direccion" cols="10" rows="10" style="max-height: 6rem;"></textarea>                                   
-                                </div>
-
                             </div>
+                            
                         </div>
 
                         <hr class="sidebar-divider">
@@ -91,7 +117,7 @@
                         <div class="card-body">
                                 
                             <div class="row">
-                                
+
                                 <div class="col-4">
                                     <label for="recaudo" class="font-weight-bold text-primary">Recaudos</label>
                                     <div>
@@ -103,17 +129,17 @@
                                     </div>
                                 </div>
 
-                                    <div class="col-4">                                     
-                                        <div class="form-group" id="simple-date1">
-                                            <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha</label>
-                                            <div class="input-group date">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                                </div>
-                                                <input type="text" class="form-control" value="<?php echo date('d/m/Y'); ?>" id="simpleDataInput" name= "simpleDataInput">
+                                <div class="col-4">                                     
+                                    <div class="form-group" id="simple-date1">
+                                        <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha</label>
+                                        <div class="input-group date">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                             </div>
+                                            <input type="text" class="form-control" value="<?php echo date('d/m/Y'); ?>" id="simpleDataInput" name= "simpleDataInput">
                                         </div>
                                     </div>
+                                </div>
                                 
                                 </div>
                             </div>
@@ -278,6 +304,49 @@
         }
     });
 
+    </script>
+
+    {{-- * FUNCION PARA EL MAPA Y PARA CAPTURAR LOS DATOS DE LA LATITUD Y LONGITUD --}}
+
+    <script>
+
+        // Inicializa el mapa en el contenedor con ID "map"
+        const map = L.map('mapa').setView([10.2825,-68.7222], 9.6); // Latitud y longitud iniciales de Yaracuy
+      
+        // Agrega el mapa base de OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+      
+        // Declara una variable para el marcador
+        let marcador;
+      
+        // Agrega un marcador cuando se hace clic en el mapa
+        map.on('click', (e) => {
+          const latitud = e.latlng.lat;
+          const longitud = e.latlng.lng;
+      
+          // Utiliza la API Nominatim para obtener la dirección
+        fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitud}&lon=${longitud}&format=json&addressdetails=1&language=es`)
+            .then(response => response.json())
+            .then(data => {
+              const direccion = data.address.road + ", " + data.address.postcode + ", " + data.address.county + ", " + data.address.country;
+      
+              // Elimina cualquier marcador existente
+              if (marcador) {
+                map.removeLayer(marcador);
+              }
+      
+              // Crea un marcador en la posición del clic
+              marcador = L.marker([latitud, longitud], { title: direccion }).addTo(map);
+      
+              // Actualiza los campos de texto con las coordenadas y la dirección
+              document.getElementById('latitud').value = latitud;
+              document.getElementById('longitud').value = longitud;
+              document.getElementById('direccion').value = direccion;
+            });
+        });
+      
     </script>
 
     {{-- ! FUNCION PARA SELLECIONAR TODOS LOS RECAUDOS --}}

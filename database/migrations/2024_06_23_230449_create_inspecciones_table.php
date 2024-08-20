@@ -23,8 +23,20 @@ return new class extends Migration
             $table->text('conclusiones'); // Cambiado a 'text' para permitir más caracteres
             $table->string('latitud');
             $table->string('longitud');
-            $table->string('res_fotos');
+            $table->string('utm_norte');
+            $table->string('utm_este');
+            $table->json('res_fotos')->nullable(); // Para almacenar los nombres de las fotos en formato JSON
             $table->date('fecha_inspeccion');
+            $table->string('longitud_terreno')->nullable();
+            $table->string('ancho')->nullable();
+            $table->string('profundidad')->nullable();
+            $table->string('volumen')->nullable();
+            $table->string('lindero_norte')->nullable();
+            $table->string('lindero_sur')->nullable();
+            $table->string('lindero_este')->nullable();
+            $table->string('lindero_oeste')->nullable();
+            $table->string('superficie')->nullable();
+            
             $table->string('estatus');
 
             $table->timestamps();

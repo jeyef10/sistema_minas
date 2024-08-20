@@ -144,15 +144,16 @@ Route::resource('planificacion', PlanificacionController::class)->middleware('au
 Route::get('/planificacion/create/fetchComisionados/{municipioId}', [PlanificacionController::class, 'fetchComisionados']);
 Route::get('/planificacion/detalles/{id}', [PlanificacionController::class, 'getRecepcionDetalles']);
 
-
 Route::get('/planificacion/create/getRecepcionDatos/{recepcionId}', [PlanificacionController::class, 'getRecepcionDatos'])->name('recepcionId');
 Route::get('/notifications/fetch', [NotificationController::class, 'fetch']) ->name('notifications.fetch');
 Route::get('/notifications/user', [NotificationController::class, 'sendInspectionNotifications']) ->name('notifications.user');
 
 /* Ruta Inspección */
 Route::get('/inspeccion', [InspeccionesController::class,'index'])->name('inspeccion')->middleware('auth');
-Route::get('/inspeccion/create/{id}', [InspeccionesController::class, 'create'])->name('create')->middleware('auth');
+Route::get('/inspeccion/create', [InspeccionesController::class, 'create'])->name('create')->middleware('auth');
+Route::get('/inspeccion/create/{id}', [InspeccionesController::class, 'create'])->name('inspeccion.create')->middleware('auth');
 Route::resource('inspeccion', InspeccionesController::class)->middleware('auth');
+Route::get('/inspeccion/create/fetchComisionados/{municipioId}', [InspeccionesController::class, 'fetchComisionados']);
 
 /* Ruta Licencia */
 Route::get('/licencia', [LicenciaController::class,'index'])->name('licencia')->middleware('auth');

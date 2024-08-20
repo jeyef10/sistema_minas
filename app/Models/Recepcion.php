@@ -12,7 +12,7 @@ class Recepcion extends Model
     protected $table = 'recepcion'; 
     protected $primaryKey = 'id';
     public $timestamps = true;
-    protected $fillable = ['id_solicitante', 'id_municipio', 'id_mineral', 'direccion', 'fecha'];
+    protected $fillable = ['id_solicitante', 'id_municipio', 'id_mineral', 'latitud', 'longitud', 'direccion', 'categoria', 'fecha'];
 
     public function solicitante()
     {

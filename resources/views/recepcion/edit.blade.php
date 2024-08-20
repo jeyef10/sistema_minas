@@ -3,6 +3,9 @@
 <title>@yield('title') Editar Recepción</title>
 <script src="{{ asset('js/validaciones.js') }}"></script>
 <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
+<link  href="{{ asset('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css')}}" rel="stylesheet" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="{{ asset('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js')}}" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
 
 @section('contenido')
 
@@ -29,7 +32,7 @@
 
                                 <div class="col-4">
                                     <label for="persona" class="font-weight-bold text-primary">Tipo de Solicitante</label>
-                                    <select class="select2-single form-control" id="tipo_solicitante" name="solicitante">
+                                    <select class="select2-single form-control" id="tipo_solicitante" name="solicitante" disabled>
                                         <option value="0">Seleccione un tipo de Solicitante</option>
                                         @if ($tipoSolicitante->tipo == 'Natural')
                                             <option value="Natural" {{ (old('tipo', $tipoSolicitante->tipo ?? '') === 'Natural') ? 'selected' : '' }}>Natural</option>
@@ -42,7 +45,7 @@
                                 <div class="col-4">
                                     <label for="persona" class="font-weight-bold text-primary">Solicitante</label>
                                     <div style="display: flex;">
-                                        <select class="select2-single form-control" id="solicitante" name="solicitante_especifico_id" >
+                                        <select class="select2-single form-control" id="solicitante" name="solicitante_especifico_id" disabled>
                                             <option value="0">Seleccione una Persona</option>
                                             @if ($tipoSolicitante->tipo == 'Jurídico')
                                                 <option value="{{$datosSolicitante->solicitante_id}}" selected>{{$datosSolicitante->rif}} {{ $datosSolicitante->nombre }} {{ $datosSolicitante->correo }}</option>
@@ -72,6 +75,34 @@
                             <div class="row">
 
                                 <div class="col-4">
+                                    <label  class="font-weight-bold text-primary">Latitud</label>
+                                    <input type="text" class="form-control" id="latitud" name="latitud" value="{{ $latitud }}" style="background: white;" value="" placeholder="Ingrese la Latitud" autocomplete="off" onkeypress="return solonum(event);">                                  
+                                </div>
+
+                                <div class="col-4">
+                                    <label  class="font-weight-bold text-primary">Longitud</label>
+                                    <input type="text" class="form-control" id="longitud" name="longitud" value="{{ $longitud }}" style="background: white;" value="" placeholder="Ingrese la Longitud" autocomplete="off" onkeypress="return solonum(event);">                                  
+                                </div>
+
+                                <div class="col-4">
+                                    <label  class="font-weight-bold text-primary">Dirección / Lugar</label>
+                                    <textarea name="direccion" class="form-control" id="direccion" cols="10" rows="10" style="max-height: 6rem;">{{ $direccion }}</textarea>                                   
+                                </div>
+
+                                <div class="col-4">
+                                    <div id="mapa" style="height: 350px; width:200%;"></div>
+                                </div> 
+
+                            </div>
+                        </div>
+                        
+                        <hr class="sidebar-divider">
+                                
+                        <div class="card-body">
+        
+                            <div class="row">
+
+                                <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Categoria</label>
                                     <select class="select2-single form-control" name="categoria" id="categoria">
                                         <option value="0" selected="true" disabled>Seleccione una Categoria</option>
@@ -91,18 +122,13 @@
                                     </select>                                  
                                 </div>
 
-                                <div class="col-4 mt-2">
-                                    <label  class="font-weight-bold text-primary">Dirección / Lugar</label>
-                                    <textarea name="direccion" class="form-control" id="" cols="10" rows="10" style="max-height: 6rem;">{{ $direccion }}</textarea>                                   
-                                </div>
-
                             </div>
                         </div>
-                        
+
                         <hr class="sidebar-divider">
-                                
+                    
                         <div class="card-body">
-        
+
                             <div class="row">
                                 
                                 <div class="col-4">
@@ -304,6 +330,76 @@
             });
         }
     }
+
+    </script>
+
+    {{-- * FUNCION PARA EL MAPA Y PARA CAPTURAR LOS DATOS DE LA LATITUD Y LONGITUD --}}
+
+    <script>
+
+    let marcadorActual = null; // Variable global para almacenar el marcador actual
+
+    function cargarMapaYMarcador() {
+        // Obtener los valores de los inputs
+        const latitud = parseFloat(document.getElementById('latitud').value);
+        const longitud = parseFloat(document.getElementById('longitud').value);
+
+        // Validar los datos
+        if (isNaN(latitud) || isNaN(longitud)) {
+            alert('Por favor, ingresa valores numéricos válidos para la latitud y longitud.');
+            return;
+        }
+
+        // Crear el mapa
+        const map = L.map('mapa').setView([latitud, longitud], 15); // Latitud y longitud iniciales
+
+        // Agregar la capa base de OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Declara una variable para el marcador
+        let marcador;
+
+        // Crear el marcador
+       const marcadorActual = L.marker([latitud, longitud]).addTo(map);
+
+            // Agregar evento click al mapa
+            map.on('click', function(e) {
+        // Eliminar el marcador anterior si existe
+        if (marcadorActual) {
+             map.removeLayer(marcadorActual);
+         }
+
+        // Elimina cualquier marcador existente
+        if (marcador) {
+                map.removeLayer(marcador);
+              }
+      
+        // Obtener las coordenadas del clic
+        const lat = e.latlng.lat;
+        const lng = e.latlng.lng;
+
+        // Crear un nuevo marcador y almacenarlo
+        marcador = L.marker([lat, lng]).addTo(map)
+            .bindPopup('Nuevo marcador').openPopup();
+
+        // Actualizar los inputs
+        document.getElementById('latitud').value = lat;
+        document.getElementById('longitud').value = lng;
+        // document.getElementById('direccion').value = "";
+
+        // Obtener la dirección utilizando Nominatim 
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`)
+            .then(response => response.json())
+            .then(data => {
+                const direccion_nueva = data.address.road + ", " + data.address.postcode + ", " + data.address.county + ", " + data.address.country;
+                document.getElementById('direccion').textContent = direccion_nueva;
+            });
+    });
+    }
+    // Llamada a la función para cargar el mapa al inicio
+    cargarMapaYMarcador();
 
     </script>
 

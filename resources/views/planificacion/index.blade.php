@@ -30,6 +30,7 @@
                         <table class="table align-items-center table-flush" id="dataTable">
                             <thead class="thead-light">
                                 <tr>
+                                    <th class="font-weight-bold text-Secondary">Tipo de Solicitud</th>
                                     <th class="font-weight-bold text-Secondary">Tipo de Solicitante</th>
                                     <th class="font-weight-bold text-Secondary">Cédula/Rif</th>
                                     <th class="font-weight-bold text-Secondary">Solicitante</th>
@@ -43,6 +44,8 @@
                                 <tr>
                                    
                                     {{-- <td class="font-weight-bold text-Secondary">{{ $recepcion->id}}</td> --}}
+
+                                    <td class="font-weight-bold text-Secondary">{{ $recepcion->categoria }}</td>
 
                                         <!-- Muestra el tipo de solicitante (Natural o Jurídico) -->
                                         <td class="font-weight-bold text-Secondary">{{ $recepcion->solicitante->tipo }}</td>
@@ -286,6 +289,9 @@
                         $('#exampleModalScrollable .modal-body').html(`
                             <h5 class="font-weight-bold text-primary" style="text-align: center">Recaudos entregados para Recepción #${data.recepcion.id}</h5>
                             ${recaudosHtml}
+                            <p><b>Tipo de Solicitud:</b> ${data.recepcion.categoria}</p>
+                            <p><b>Latitud:</b> ${data.recepcion.latitud}</p>
+                            <p><b>Longitud:</b> ${data.recepcion.longitud}</p>
                             <p><b>Dirección:</b> ${data.recepcion.direccion}</p>
                             <p><b>Mineral:</b> ${data.recepcion.mineral ? data.recepcion.mineral.nombre : 'No especificado'}</p>
                         `);

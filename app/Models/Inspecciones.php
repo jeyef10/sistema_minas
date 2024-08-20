@@ -12,7 +12,8 @@ class Inspecciones extends Model
     protected $primaryKey = 'id';
     public $timestamps = true;
     protected $fillable = ['id_planificacion', 'funcionario_acomp', 'lugar_direccion', 'observaciones', 'conclusiones', 'latitud',
-    'longitud', 'res_fotos', 'fecha_inspeccion', 'estatus'];
+    'longitud', 'utm_norte', 'utm_este', 'longitud_terreno', 'res_fotos', 'fecha_inspeccion', 'ancho', 'profundidad', 'volumen', 
+    'lindero_norte', 'lindero_sur', 'lindero_este', 'lindero_oeste', 'superficie', 'estatus'];
 
     public function planificacion()
     {

@@ -17,17 +17,7 @@
                 <div class="card mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Gestión de Licencias</h2>
-                            {{-- @can('crear-solicitante')
-                                <form action="{{ route('solicitudes.create') }}" method="get" style="display:inline;">
-                                    <button type="submit" class="btn btn-primary btn-mb"> <span class="">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
-                                            <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                                            <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"/>
-                                        </svg>
-                                    </span>
-                                    <span class="text">Crear</span></button>
-                                </form>
-                            @endcan --}}
+                            
                     </div>
 
                                     {{-- ? TABLA PARA TODOS LOS SOLICITANTES --}}
@@ -38,10 +28,7 @@
                                 <tr>
                                     <th class="font-weight-bold text-Secondary">Funcionario Acompañante</th>
                                     <th class="font-weight-bold text-Secondary">Lugar</th>
-                                    {{-- <th class="font-weight-bold text-Secondary">Observaciones</th>
-                                    <th class="font-weight-bold text-Secondary">Conclusiones</th> --}}
-                                    {{-- <th class="font-weight-bold text-Secondary">Latitud</th>--}}
-                                    {{-- <th class="font-weight-bold text-Secondary">Fotos</th>  --}}
+                                    {{-- <th class="font-weight-bold text-Secondary">Foto</th> --}}
                                     <th class="font-weight-bold text-Secondary">Fecha de Inspección</th>
                                     <th class="font-weight-bold text-Secondary">Estatus Inspección</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center></th>
@@ -52,10 +39,7 @@
                                 @foreach ($inspecciones as $inspeccion)
                                     <tr>
                                         <td class="font-weight-bold text-Secondary">{{ $inspeccion->funcionario_acomp }}</td>
-                                        <td class="font-weight-bold text-Secondary">{{ $inspeccion->lugar_direccion}}</td>
-                                        {{-- <td class="font-weight-bold text-Secondary">{{ $inspeccion->observaciones}}</td>
-                                        <td class="font-weight-bold text-Secondary">{{ $inspeccion->conclusiones}}</td>
-                                        <td class="font-weight-bold text-Secondary">{{ $inspeccion->latitud}}</td>--}}
+                                        <td class="font-weight-bold text-Secondary">{{ $inspeccion->lugar_direccion}}</td>  
                                         {{-- <td class="font-weight-bold text-Secondary"><img src="/imagen/{{ $inspeccion->res_fotos}}" width="20%"></td>  --}}
                                         <td class="font-weight-bold text-Secondary">{{ $inspeccion->fecha_inspeccion}}</td>
                                         <td class="font-weight-bold text-Secondary">{{ $inspeccion->estatus}}</td>
@@ -250,45 +234,80 @@
     {{-- * FUNCIÓN PARA MOSTRAR DATOS DE LA INSPECCIÓN EN EL MODAL --}}
 
     <script>
-
         $(document).ready(function() {
-            $('#t_Aprovechamiento').on('click', '.btn-info', function(event) {
-                event.preventDefault();
-                var inspeccionId = $(this).data('inspeccion-id'); // Obtén el ID de la inspección
+        $('#t_Aprovechamiento').on('click', '.btn-info', function(event) {
+            event.preventDefault();
+            var inspeccionId = $(this).data('inspeccion-id');
 
-                $.ajax({
-                    url: '/licencia/detalles/' + inspeccionId,
-                    type: 'GET',
-                    success: function(data) {
-                        // Construye el contenido del modal
-                        let inspeccionesHtml = '<main>';
-                           
-                        $('#exampleModalScrollable .modal-body').html(`
-                            <h5 class="font-weight-bold text-primary" style="text-align: center">Detalles de la Inspección</h5>
-                            ${inspeccionesHtml}
-                            <p><b>Observaciones:</b> ${data.observaciones}</p>
-                            <p><b>Conclusiones:</b> ${data.conclusiones}</p>
-                            <p><b>Latitud:</b> ${data.latitud}</p>
-                            <p><b>Longitud:</b> ${data.longitud}</p>
-                            <p><b>Fotos:</b></p>
-                            <img src="/imagen/${data.res_fotos}" width="60%">  
-                        `);
-                        
-                        inspeccionesHtml += '</main>';
+            $.ajax({
+                url: '/licencia/detalles/' + inspeccionId,
+                type: 'GET',
+                success: function(data) {
+                    let inspeccionesHtml = '<main>';
+                    inspeccionesHtml += `
+                        <h5 class="font-weight-bold text-primary" style="text-align: center">Detalles de la Inspección</h5>
+                        <p><b>Tipo de Solicitud:</b> ${data.id_planificacion}</p>
+                        <p><b>Observaciones:</b> ${data.observaciones}</p>
+                        <p><b>Conclusiones:</b> ${data.conclusiones}</p>
+                        <p><b>Latitud:</b> ${data.latitud}</p>
+                        <p><b>Longitud:</b> ${data.longitud}</p>
+                        <p><b>UTM Norte:</b> ${data.utm_norte}</p>
+                        <p><b>UTM Este:</b> ${data.utm_este}</p>
+                    `;
 
-                        // Muestra el modal si aún no está visible
-                        if (!$('#exampleModalScrollable').is(':visible')) {
-                            $('#exampleModalScrollable').modal('show');
-                        }
-                    },
-                    error: function(error) {
-                        console.error("Error al obtener los datos:", error);
-                        alert("Error al cargar los recaudos. Por favor, inténtalo de nuevo.");
+                    // Condicionales para mostrar/ocultar datos según el id_planificacion (Se muestran los datos propios de Aprovechamiento)
+                    if (data.id_planificacion !== "Procesamiento") {
+                        inspeccionesHtml += `
+                            <p><b>Longitud Terreno:</b> ${data.longitud_terreno} mts</p>
+                            <p><b>Ancho Máximo:</b> ${data.ancho} mts</p>
+                            <p><b>Profundidad Máxima:</b> ${data.profundidad} mts</p>
+                            <p><b>Volumen a Extraer:</b> ${data.volumen} m³</p>
+                        `;
                     }
-                });
+
+                    // Condicionales para mostrar/ocultar datos según el id_planificacion (Se muestran los datos propios de Procesamiento)
+                    if (data.id_planificacion !== "Aprovechamiento") {
+                        inspeccionesHtml += `
+                            <p><b>Lindero Norte:</b> ${data.lindero_norte}</p>
+                            <p><b>Lindero Sur:</b> ${data.lindero_sur}</p>
+                            <p><b>Lindero Este:</b> ${data.lindero_este}</p>
+                            <p><b>Lindero Oeste:</b> ${data.lindero_oeste}</p>
+                            <p><b>Superficie:</b> ${data.superficie} ha</p>
+                        `;
+                    }
+
+                    // Resto del código para mostrar las fotos y el modal
+                    inspeccionesHtml += `
+                        <p><b>Fotos:</b></p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                    `;
+
+                    // Parsear el JSON de res_fotos
+                    let fotos = JSON.parse(data.res_fotos);
+
+                    // Itera sobre las fotos y agrégalas al HTML
+                    fotos.forEach(function(foto) {
+                        inspeccionesHtml += `<img src="/imagen/${foto}" width="60%" style="width: calc(50% - 10px); margin-bottom: 10px;">`;
+                    });
+
+                    inspeccionesHtml += '</div></main>';
+
+                    $('#exampleModalScrollable .modal-body').html(inspeccionesHtml);
+
+                    if (!$('#exampleModalScrollable').is(':visible')) {
+                        $('#exampleModalScrollable').modal('show');
+                    }
+                },
+                error: function(error) {
+                    console.error("Error al obtener los datos:", error);
+                    alert("Error al cargar los recaudos. Por favor, inténtalo de nuevo.");
+                }
             });
         });
-
+    });
     </script>
+
+    
+    
 
 @endsection

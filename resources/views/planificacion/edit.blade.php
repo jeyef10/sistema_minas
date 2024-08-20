@@ -16,65 +16,69 @@
                         <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Actualizar Planificación</h2>
 
                     </div>
- 
                
-                                                {{-- * FORMULARIO EDITAR DE RECEPCION DE RECAUDOS --}}
+                                                {{-- * FORMULARIO EDITAR DE LA PLANIFICACIÓN --}}
 
                 <form method="post" action="{{ route('planificacion.update', $planificacion->id) }}" enctype="multipart/form-data" onsubmit="return Plafinicacion(this)" >
                     @csrf
                     @method('PUT')
                                 
-                        <div class="card-body">
+                    <div class="card-body">
 
-                            <input type="hidden" class="form-control" id="id_recepcion" name="id_recepcion" style="background: white;" value="{{ isset($recepcion->id)?$recepcion->id:'' }}" placeholder="" autocomplete="off">
+                        <input type="hidden" class="form-control" id="id_recepcion" name="id_recepcion" style="background: white;" value="{{ isset($recepcion->id)?$recepcion->id:'' }}" placeholder="" autocomplete="off">
 
-                            <div class="accordion" id="accordionExample" style="display: flex; justify-content: center;">
-                                <div class="card" style="width: 90%; border-radius: 2.5%;">
-                                    {{-- <div class="card-header" id="headingOne">
-                                        <h2 class="font-weight-bold text-primary"> --}}
-                                        <button class="btn btn-block text-center" type="button" data-toggle="collapse" data-target="#collapseOne" style="margin-top: 0.3%;">
-                                            <label  class="font-weight-bold text-primary">Detalles Recepción</label>
-                                        </button>
-                                        {{-- </h2>
-                                    </div> --}}
-                        
-                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            {{-- <input type="hidden" id="recepcionId" value="{{ request()->route('id') }}"> --}}
-                                            <div class="row">
-                                                <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($recepcion) {{ $recepcion->id }} @endif</p>
-                                                <p style="margin-left: 0.5%"><strong>Tipo Solicitante: </strong>@if ($recepcion && $recepcion->solicitante) {{ $recepcion->solicitante->tipo }} @endif</p>
-                                                <p style="margin-left: 0.5%"><strong>Solicitante: </strong>
-                                                @if ($recepcion && $recepcion->solicitante)
-                                                    @if ($recepcion->solicitante->tipo == "Natural")
-                                                        {{ $recepcion->solicitante->solicitanteEspecifico->nombre }} {{ $recepcion->solicitante->solicitanteEspecifico->apellido }}
-                                                    @else
-                                                        {{ $recepcion->solicitante->solicitanteEspecifico->nombre }}
-                                                    @endif
+                        <div class="accordion" id="accordionExample" style="display: flex; justify-content: center;">
+                            <div class="card" style="width: 90%; border-radius: 2.5%;">
+                                
+                                    <button class="btn btn-block text-center" type="button" data-toggle="collapse" data-target="#collapseOne" style="margin-top: 0.3%;">
+                                        <label  class="font-weight-bold text-primary">Detalles Recepción</label>
+                                    </button>
+                    
+                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                    
+                                         <div class="form-group">
+                                            <p style="text-align: center" class="font-weight-bold text-primary">Datos del Solicitante</p>
+                                            <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($planificacion->recepcion) {{ $planificacion->recepcion->id }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Tipo Solicitante: </strong>@if ($planificacion->recepcion && $planificacion->recepcion->solicitante) {{ $planificacion->recepcion->solicitante->tipo }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Solicitante: </strong>
+                                            @if ($planificacion->recepcion && $planificacion->recepcion->solicitante)
+                                                @if ($planificacion->recepcion->solicitante->tipo == "Natural")
+                                                    {{ $planificacion->recepcion->solicitante->solicitanteEspecifico->nombre }} {{ $planificacion->recepcion->solicitante->solicitanteEspecifico->apellido }}
+                                                @else
+                                                    {{ $planificacion->recepcion->solicitante->solicitanteEspecifico->nombre }}
                                                 @endif
-                                                </p>
-                                                <p style="margin-left: 0.5%"><strong>Cédula/Rif: </strong>
-                                                @if ($recepcion && $recepcion->solicitante)
-                                                    @if ($recepcion->solicitante->tipo == "Natural")
-                                                        {{ $recepcion->solicitante->solicitanteEspecifico->cedula }}
-                                                    @else
-                                                        {{ $recepcion->solicitante->solicitanteEspecifico->rif }}
-                                                    @endif
+                                            @endif
+                                            </p>
+                                            <p style="margin-left: 0.5%"><strong>Cédula/Rif: </strong>
+                                            @if ($planificacion->recepcion && $planificacion->recepcion->solicitante)
+                                                @if ($planificacion->recepcion->solicitante->tipo == "Natural")
+                                                    {{ $planificacion->recepcion->solicitante->solicitanteEspecifico->cedula }}
+                                                @else
+                                                    {{ $planificacion->recepcion->solicitante->solicitanteEspecifico->rif }}
                                                 @endif
-                                                </p>
-                                                <p style="margin-left: 0.5%"><strong>Municipio: </strong>@if ($recepcion && $recepcion->municipio) {{ $recepcion->municipio->nom_municipio }} @endif</p>
-                                                <p style="margin-left: 0.5%"><strong>Direccion: </strong>@if ($recepcion) {{ $recepcion->direccion }} @endif</p>
-                                                <p style="margin-left: 0.5%"><strong>Mineral: </strong>@if ($recepcion && $recepcion->mineral) {{ $recepcion->mineral->nombre }} @endif</p>
+                                            @endif
+                                            </p>
 
-                                            </div>
-                                            
-                                        </div>
-                            
+                                            <p style="text-align: center" class="font-weight-bold text-primary">Datos de la Solicitud</p>
 
+                                            <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($planificacion->recepcion) {{ $planificacion->recepcion->id }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Tipo de Solicitud</strong>@if ($planificacion->recepcion) {{ $planificacion->recepcion->categoria }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Municipio: </strong>@if ($planificacion->recepcion && $planificacion->recepcion->municipio) {{ $planificacion->recepcion->municipio->nom_municipio }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Latitud: </strong>@if ($planificacion->recepcion) {{ $planificacion->recepcion->latitud }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Longitud: </strong>@if ($planificacion->recepcion) {{ $planificacion->recepcion->longitud }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Direccion: </strong>@if ($planificacion->recepcion) {{ $planificacion->recepcion->direccion }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Mineral: </strong>@if ($planificacion->recepcion && $planificacion->recepcion->mineral) {{ $planificacion->recepcion->mineral->nombre }} @endif</p>
+
+                                        </div> 
+                                        
                                     </div>
+                        
+
                                 </div>
-                        </div>
-    
+                            </div>
+                    </div>
+
                         <hr class="sidebar-divider">
 
                         <div class="card-body">
@@ -133,15 +137,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                {{-- <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">Estatus</label>
-                                    <select class="select2-single form-control" id="estatus" name="estatus">
-                                        <option value="0">Seleccione un estatus</option>
-                                        <option value="Asignado" {{ (old('estatus', $planificacion->estatus ?? '') === 'Asignado') ? 'selected' : '' }}>Asignado</option>
-                                        <option value="Ejecutado" {{ (old('estatus', $planificacion->estatus ?? '') === 'Ejecutado') ? 'selected' : '' }}>Ejecutado</option>
-                                    </select>                                   
-                                </div>  --}}
 
                             </div>
                         </div>

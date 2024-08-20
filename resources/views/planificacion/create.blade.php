@@ -26,18 +26,16 @@
 
                             <div class="accordion" id="accordionExample" style="display: flex; justify-content: center;">
                                 <div class="card" style="width: 90%; border-radius: 2.5%;">
-                                    {{-- <div class="card-header" id="headingOne">
-                                        <h2 class="font-weight-bold text-primary"> --}}
+                                    
                                         <button class="btn btn-block text-center" type="button" data-toggle="collapse" data-target="#collapseOne" style="margin-top: 0.3%;">
                                             <label  class="font-weight-bold text-primary">Detalles Recepción</label>
                                         </button>
-                                        {{-- </h2>
-                                    </div> --}}
                         
                                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                                         <div class="card-body">
-                                            {{-- <input type="hidden" id="recepcionId" value="{{ request()->route('id') }}"> --}}
-                                            <div class="row">
+                                        
+                                            <div class="form-group">
+                                                <p style="text-align: center" class="font-weight-bold text-primary">Datos del Solicitante</p>
                                                 <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($recepcion) {{ $recepcion->id }} @endif</p>
                                                 <p style="margin-left: 0.5%"><strong>Tipo Solicitante: </strong>@if ($recepcion && $recepcion->solicitante) {{ $recepcion->solicitante->tipo }} @endif</p>
                                                 <p style="margin-left: 0.5%"><strong>Solicitante: </strong>
@@ -58,7 +56,14 @@
                                                     @endif
                                                 @endif
                                                 </p>
+
+                                                <p style="text-align: center" class="font-weight-bold text-primary">Datos de la Solicitud</p>
+
+                                                <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($recepcion) {{ $recepcion->id }} @endif</p>
+                                                <p style="margin-left: 0.5%"><strong>Tipo de Solicitud</strong>@if ($recepcion) {{ $recepcion->categoria }} @endif</p>
                                                 <p style="margin-left: 0.5%"><strong>Municipio: </strong>@if ($recepcion && $recepcion->municipio) {{ $recepcion->municipio->nom_municipio }} @endif</p>
+                                                <p style="margin-left: 0.5%"><strong>Latitud: </strong>@if ($recepcion) {{ $recepcion->latitud }} @endif</p>
+                                                <p style="margin-left: 0.5%"><strong>Longitud: </strong>@if ($recepcion) {{ $recepcion->longitud }} @endif</p>
                                                 <p style="margin-left: 0.5%"><strong>Direccion: </strong>@if ($recepcion) {{ $recepcion->direccion }} @endif</p>
                                                 <p style="margin-left: 0.5%"><strong>Mineral: </strong>@if ($recepcion && $recepcion->mineral) {{ $recepcion->mineral->nombre }} @endif</p>
 

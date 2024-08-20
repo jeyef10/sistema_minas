@@ -91,7 +91,7 @@
                     <a class="collapse-item" href="{{ url('planificacion') }}">Planificación</a>
                     <a class="collapse-item" href="{{ url('inspeccion') }}">Inspección</a>
                     <a class="collapse-item" href="{{ url('licencia') }}">Licencia</a>
-                    {{-- <a class="collapse-item" href="{{ url('Pago') }}">Pago / Talonario</a> --}}
+                    <a class="collapse-item" href="{{ url('control_licencia') }}">Control de Licencia</a>
                   </div>
                 </div>
               </li>

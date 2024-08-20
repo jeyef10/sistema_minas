@@ -6,6 +6,7 @@
 <link  href="{{ asset('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css')}}" rel="stylesheet" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 <script src="{{ asset('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js')}}" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
+
 @section('contenido')
 
     <div class="container-fluid" id="container-wrapper">
@@ -22,6 +23,64 @@
                 <form method="post" action="{{ route('inspeccion.store') }}" enctype="multipart/form-data" onsubmit="return Inspeccion(this)">
                     @csrf
                     
+                            <div class="card-body">
+
+                                <div class="accordion" id="accordionExample" style="display: flex; justify-content: center;">
+                                    <div class="card" style="width: 90%; border-radius: 2.5%;">
+                                        
+                                            <button class="btn btn-block text-center" type="button" data-toggle="collapse" data-target="#collapseOne" style="margin-top: 0.3%;">
+                                                <label  class="font-weight-bold text-primary">Detalles Recepción</label>
+                                            </button>
+                            
+                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                            <div class="card-body">
+                                            
+                                                <div class="form-group">
+                                                   
+                                                    <p style="text-align: center" class="font-weight-bold text-primary">Datos del Solicitante</p>
+                                                    <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($planificacion->id_recepcion) {{ $planificacion->recepcion->id }} @endif</p>
+                                                    <p style="margin-left: 0.5%"><strong>Tipo Solicitante: </strong>@if ($planificacion->id_recepcion) {{ $planificacion->recepcion->solicitante->tipo }} @endif</p>
+                                                    <p style="margin-left: 0.5%"><strong>Solicitante: </strong>
+                                                    @if ($planificacion->id_recepcion && $planificacion->recepcion->solicitante)
+                                                        @if ($planificacion->recepcion->solicitante->tipo == "Natural")
+                                                            {{ $planificacion->recepcion->solicitante->solicitanteEspecifico->nombre }} {{ $planificacion->recepcion->solicitante->solicitanteEspecifico->apellido }}
+                                                        @else
+                                                            {{ $planificacion->recepcion->solicitante->solicitanteEspecifico->nombre }}
+                                                        @endif
+                                                    @endif
+                                                    </p>
+                                                    <p style="margin-left: 0.5%"><strong>Cédula/Rif: </strong>
+                                                    @if ($planificacion->id_recepcion && $planificacion->recepcion->solicitante)
+                                                        @if ($planificacion->recepcion->solicitante->tipo == "Natural")
+                                                            {{ $planificacion->recepcion->solicitante->solicitanteEspecifico->cedula }}
+                                                        @else
+                                                            {{ $planificacion->recepcion->solicitante->solicitanteEspecifico->rif }}
+                                                        @endif
+                                                    @endif
+                                                    </p>
+    
+                                                    <p style="text-align: center" class="font-weight-bold text-primary">Datos de la Solicitud</p>
+    
+                                                    <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($planificacion->id_recepcion) {{ $planificacion->recepcion->id }} @endif</p>
+                                                    <p style="margin-left: 0.5%"><strong>Tipo de Solicitud</strong>@if ($planificacion->id_recepcion) {{$planificacion->recepcion->categoria }} @endif</p>
+                                                    <p style="margin-left: 0.5%"><strong>Latitud: </strong>@if ($planificacion->id_recepcion) {{ $planificacion->recepcion->latitud }} @endif</p>
+                                                    <p style="margin-left: 0.5%"><strong>Longitud: </strong>@if ($planificacion->id_recepcion) {{ $planificacion->recepcion->longitud }} @endif</p>
+                                                    <p style="margin-left: 0.5%"><strong>Direccion: </strong>@if ($planificacion->id_recepcion) {{ $planificacion->recepcion->direccion }} @endif</p>
+                                                    <p style="margin-left: 0.5%"><strong>Mineral: </strong>@if ($planificacion->id_recepcion) {{ $planificacion->recepcion->mineral->nombre }} @endif</p>
+    
+                                                </div>
+                                                
+                                            </div>
+                                
+    
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        
+                        <hr class="sidebar-divider">
+
                             <div class="card-body">
 
                                 <div class="row">
@@ -50,13 +109,18 @@
                                     </div>
 
                                     <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Funcionario Acompañante</label>
-                                        <textarea class="form-control" id="funcionario_acomp" name="funcionario_acomp" cols="10" rows="10" style="max-height: 6rem;"  oninput="capitalizarInput('funcionario_acomp')"></textarea>                                   
+                                        <label for="comisionado" class="font-weight-bold text-primary">Fecha Inicial y Fecha Final</label>
+                                        <select class="select2-single form-control"disabled>
+                                            <option value="0">Seleccione un comisionado</option>
+                                            @foreach($planificacion as $planificaciones)
+                                            <option value="{{ $comisionado->id }}" @selected($planificacion->id == $planificacion->id)> {{ $planificacion->fecha_inicial }} - {{ $planificacion->fecha_final }} </option>
+                                            @endforeach
+                                        </select>
                                     </div>
 
                                 </div>
 
-                            </div>
+                            </div>  
 
                             <hr class="sidebar-divider">
 
@@ -65,8 +129,8 @@
                                 <div class="row">
 
                                     <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Lugar</label>
-                                        <textarea class="form-control" id="lugar_direccion" name="lugar_direccion" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('lugar_direccion')"></textarea>                                   
+                                        <label  class="font-weight-bold text-primary">Funcionario Acompañante</label>
+                                        <textarea class="form-control" id="funcionario" name="funcionario_acomp" cols="10" rows="10" style="max-height: 6rem;"  oninput="capitalizarInput('funcionario')"></textarea>                                   
                                     </div>
 
                                     <div class="col-4">
@@ -93,15 +157,28 @@
                                         <label  class="font-weight-bold text-primary">Latitud</label>
                                         <input type="text" class="form-control" id="latitud" name="latitud" style="background: white;" value="" placeholder="Ingrese la Latitud" autocomplete="off" onkeypress="return solonum(event);">                                  
                                     </div>
-
+    
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Longitud</label>
                                         <input type="text" class="form-control" id="longitud" name="longitud" style="background: white;" value="" placeholder="Ingrese la Longitud" autocomplete="off" onkeypress="return solonum(event);">                                  
                                     </div>
 
                                     <div class="col-4">
-                                        <div id="mapa" style="height: 200px; width:100%;"></div>
-                                    </div>    
+                                        <label  class="font-weight-bold text-primary">Lugar</label>
+                                        <textarea class="form-control" id="lugar_direccion" name="lugar_direccion" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('lugar_direccion')"></textarea>                                   
+                                    </div>
+
+                                    <div class="col-8">
+                                        <div id="mapa" style="height: 350px; width:100%; display:block;"></div>
+                                    </div> 
+
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">UTM Norte</label>
+                                        <input type="text" class="form-control" id="utm_norte" name="utm_norte" style="background: white;" value="" placeholder="Ingrese la Longitud" autocomplete="off" onkeypress="return solonum(event);">                                  
+                                    
+                                        <label  class="font-weight-bold text-primary">UTM Este</label>
+                                        <input type="text" class="form-control" id="utm_este" name="utm_este" style="background: white;" value="" placeholder="Ingrese la Longitud" autocomplete="off" onkeypress="return solonum(event);">                           
+                                    </div>
 
                                 </div>
                                 
@@ -141,6 +218,87 @@
                                 
                             </div>
 
+                            <hr class="sidebar-divider">
+
+                            <div class="card-body" id="inputs_aprovechamiento">
+
+                                <div class="row">
+
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Longitud</label>
+                                            <div style="display: flex">
+                                                <input type="text" class="form-control" id="longitud_terreno" name="longitud_terreno" style="background: white; width: 78%; margin-right: 2%;" value="" placeholder="Ingrese la Longitud" autocomplete="off" onkeypress="return solonum(event);">
+                                                <select class="select2-single form-control" style="width: 20%" disabled>
+                                                    <option value="mts" selected>mts</option>
+                                                </select>
+                                            </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Ancho Máximo</label>
+                                            <div style="display: flex">
+                                                <input type="text" class="form-control" id="ancho" name="ancho" style="background: white; width: 78%; margin-right: 2%;" value="" placeholder="Ingrese el Ancho" autocomplete="off" onkeypress="return solonum(event);">
+                                                <select class="select2-single form-control" style="width: 20%" disabled>
+                                                    <option value="mts" selected>mts</option>
+                                                </select>
+                                            </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Profundidad Máxima</label>
+                                            <div style="display: flex">
+                                                <input type="text" class="form-control" id="profundidad" name="profundidad" style="background: white; width: 78%; margin-right: 2%;" value="" placeholder="Ingrese la Profundidad" autocomplete="off" onkeypress="return solonum(event);">
+                                                <select class="select2-single form-control" style="width: 20%" disabled>
+                                                    <option value="mts" selected>mts</option>
+                                                </select>
+                                            </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Volumen a Extraer</label>
+                                            <div style="display: flex">
+                                                <input type="text" class="form-control" id="volumen" name="volumen" style="background: white; width: 78%; margin-right: 2%;" value="" placeholder="Ingrese la Volumen" autocomplete="off" onkeypress="return solonum(event);">
+                                                <select class="select2-single form-control" style="width: 20%" disabled>
+                                                    <option value="m3" selected>m³</option>
+                                                </select>
+                                            </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="card-body" id="inputs_procesamiento">
+
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Lindero Norte</label>
+                                        <input type="text" class="form-control" id="lind_norte" name="lindero_norte" style="background: white;" value="" placeholder="Ingrese El Lindero Norte" oninput="capitalizarInput('nombre')" autocomplete="off" >
+                                    </div>
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Lindero Sur</label>
+                                        <input type="text" class="form-control" id="lind_sur" name="lindero_sur" style="background: white;" value="" placeholder="Ingrese El Lindero Sur" oninput="capitalizarInput('nombre')" autocomplete="off" >
+                                    </div>
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Lindero Este</label>
+                                        <input type="text" class="form-control" id="lind_este" name="lindero_este" style="background: white;" value="" placeholder="Ingrese El Lindero Este" oninput="capitalizarInput('nombre')" autocomplete="off" >
+                                    </div>
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Lindero Oeste</label>
+                                        <input type="text" class="form-control" id="lind_oeste" name="lindero_oeste" style="background: white;" value="" placeholder="Ingrese El Lindero Oeste" oninput="capitalizarInput('nombre')" autocomplete="off" >
+                                    </div>
+
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Superficie</label>
+                                            <div style="display: flex">
+                                                <input type="text" class="form-control" id="superficie" name="superficie" style="background: white; width: 78%; margin-right: 2%;" value="" placeholder="Ingrese la Superficie" autocomplete="off" onkeypress="return solonum(event);">
+                                                <select class="select2-single form-control" style="width: 20%" disabled>
+                                                    <option value="ha" selected>ha</option>
+                                                </select>
+                                            </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
                         <br>
 
                         <center>
@@ -161,7 +319,9 @@
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
     <script src="{{ asset('path/to/bootstrap-datepicker.es.min.js')}}"></script>
-
+    
+    {{-- <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.6.2/proj4.js')}}"></script> --}}
+    
     {{-- ? FUNCIÓN PARA CONVERTIR UNA LETRA EN MAYÚSCULAS Y LOS DEMAS EN MINÚSCULAS --}}
 
     <script>
@@ -258,71 +418,118 @@
 
     {{-- * FUNCION PARA MOSTRAR LA FOTO --}}
 
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
     <script>
         $(document).ready(function () {
-        $('#res_fotos').change(function () {
-            const reader = new FileReader();
-            const fotoContainer = document.getElementById('foto_container');
-
-            reader.onload = (e) => {
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.style.maxWidth = '40%';
-            img.style.maxHeight = '40%';
-
-            fotoContainer.appendChild(img);
-            };
-
-            for (const file of this.files) {
-            reader.readAsDataURL(file);
-            }
+            $('#res_fotos').change(function () {
+                const fotoContainer = document.getElementById('foto_container');
+    
+                for (const file of this.files) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.style.maxWidth = '40%';
+                        img.style.maxHeight = '40%';
+                        fotoContainer.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
         });
-        });
-
     </script>
 
     {{-- * FUNCION PARA EL MAPA Y PARA CAPTURAR LOS DATOS DE LA LATITUD Y LONGITUD --}}
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.6.2/proj4.js"></script>
+
+        <script>
+            proj4.defs([
+                [
+                    'EPSG:32619',
+                    '+proj=utm +zone=19 +datum=WGS84 +units=m +no_defs'
+                ]
+            ]);
+        </script>
+        
     <script>
 
         // Inicializa el mapa en el contenedor con ID "map"
-        const map = L.map('mapa').setView([10.2825,-68.7222], 9.2); // Latitud y longitud iniciales de Yaracuy
-
+        const map = L.map('mapa').setView([10.2825,-68.7222], 9.6); // Latitud y longitud iniciales de Yaracuy
+      
         // Agrega el mapa base de OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
-
+      
         // Declara una variable para el marcador
-        // let marcador = null;
-
+        let marcador;
+      
         // Agrega un marcador cuando se hace clic en el mapa
         map.on('click', (e) => {
-            const latitud = e.latlng.lat;
-            const longitud = e.latlng.lng;
+          const latitud = e.latlng.lat;
+          const longitud = e.latlng.lng;
+      
+          // Utiliza la API Nominatim para obtener la dirección
+        fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitud}&lon=${longitud}&format=json&addressdetails=1&language=es`)
+            .then(response => response.json())
+            .then(data => {
+                let estado = data.address.state;
+                if (estado.includes('State')) {
+                    estado = estado.replace(' State', '');
+                }
+              const lugar_direccion = data.address.road + ", " + data.address.postcode + ", " + data.address.county + ", "  + estado + ", " + data.address.country;
+      
+              // Elimina cualquier marcador existente
+              if (marcador) {
+                map.removeLayer(marcador);
+              }
+      
+              // Crea un marcador en la posición del clic
+              marcador = L.marker([latitud, longitud], { title: lugar_direccion }).addTo(map);
 
-        // Elimina cualquier marcador existente
-        map.eachLayer((layer) => {
-            if (layer instanceof L.Marker) {
-                map.removeLayer(layer);
+              // Convierte las coordenadas a UTM
+                const utmCoords = proj4('EPSG:4326', 'EPSG:32619', [longitud, latitud]); // EPSG:32619 es para la zona UTM 19N
+      
+              // Actualiza los campos de texto con las coordenadas y la dirección
+              document.getElementById('latitud').value = latitud;
+              document.getElementById('longitud').value = longitud;
+              document.getElementById('lugar_direccion').value = lugar_direccion;
+              document.getElementById('utm_norte').value = utmCoords[1];
+              document.getElementById('utm_este').value = utmCoords[0];
+            });
+        });
+
+    </script>
+      
+
+    {{-- * FUNCIÓN PARA MOSTRAR LOS DIVS CON LOS CAMPOS CORRESPONDIENTES A SU CATEGORIA --}}
+
+    <script>
+
+        function mostrarDivCategoria(categoria) {
+            // Obtenemos los divs por su ID
+            const divAprovechamiento = document.getElementById('inputs_aprovechamiento');
+            const divProcesamiento = document.getElementById('inputs_procesamiento');
+
+            // Ocultamos ambos divs por defecto
+            divAprovechamiento.style.display = 'none';
+            divProcesamiento.style.display = 'none';
+
+            // Mostramos el div correspondiente a la categoría
+            if (categoria === 'Aprovechamiento') {
+                divAprovechamiento.style.display = 'block';
+            } else if (categoria === 'Procesamiento') {
+                divProcesamiento.style.display = 'block';
             }
-        });
+            }
 
-        // Crea un marcador en la posición del clic
-        L.marker([latitud, longitud]).addTo(map);
+            // Suponiendo que tienes una variable JavaScript con el valor de la categoría
+            const categoria = '{{$planificacion->recepcion->categoria}}';
 
-            // Actualiza los campos de texto con las coordenadas
-            document.getElementById('latitud').value = latitud;
-            document.getElementById('longitud').value = longitud;
-        });
-
-        // Agrega un marcador
-        const marker = new google.maps.Marker({
-            map: map,
-            position: { lat: latitude, lng: longitude },
-        });
+            // Llamamos a la función para mostrar el div correcto
+            mostrarDivCategoria(categoria);
 
     </script>
 

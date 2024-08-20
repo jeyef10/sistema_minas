@@ -17,36 +17,11 @@
                 <div class="card mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Gestión de Inspecciones</h2>
-                            {{-- @can('crear-solicitante')
-                                <form action="{{ route('solicitudes.create') }}" method="get" style="display:inline;">
-                                    <button type="submit" class="btn btn-primary btn-mb"> <span class="">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
-                                            <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                                            <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"/>
-                                        </svg>
-                                    </span>
-                                    <span class="text">Crear</span></button>
-                                </form>
-                            @endcan --}}
+                            
                     </div>
                     <div class="card-body">
 
                         <div class="row">
-
-                            {{-- <div class="custom-control custom-radio col-1">
-                                <input type="radio" id="todos" name="tipo" value="t_todos" class="custom-control-input">
-                                <label class="custom-control-label" for="todos">Todos</label>
-                            </div>
-
-                            <div class="custom-control custom-radio col-2">
-                                <input type="radio" id="aprovechamiento" name="tipo" value="t_Aprovechamiento" class="custom-control-input">
-                                <label class="custom-control-label" for="aprovechamiento">Aprovechamiento</label>
-                            </div>
-
-                            <div class="custom-control custom-radio col-1">
-                                <input type="radio" id="procesamiento" name="tipo" value="t_Procesamiento" class="custom-control-input">
-                                <label class="custom-control-label" for="procesamiento">Procesamiento</label>
-                            </div> --}}
 
                         </div>
 
@@ -85,7 +60,7 @@
                                         <td class="font-weight-bold text-Secondary">{{ $planificacion->estatus}}</td>
 
                                         <td>
-                                            <a class="btn btn-secondary btn-sm" title="Inspeccionar" href="{{ route('create', $planificacion->id) }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-incognito" viewBox="0 0 16 16" style="color: #ffff">
+                                            <a class="btn btn-secondary btn-sm" title="Inspeccionar" href="{{ route('inspeccion.create', ['id' => $planificacion->id]) }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-incognito" viewBox="0 0 16 16" style="color: #ffff">
                                                 <path fill-rule="evenodd" d="m4.736 1.968-.892 3.269-.014.058C2.113 5.568 1 6.006 1 6.5 1 7.328 4.134 8 8 8s7-.672 7-1.5c0-.494-1.113-.932-2.83-1.205l-.014-.058-.892-3.27c-.146-.533-.698-.849-1.239-.734C9.411 1.363 8.62 1.5 8 1.5s-1.411-.136-2.025-.267c-.541-.115-1.093.2-1.239.735m.015 3.867a.25.25 0 0 1 .274-.224c.9.092 1.91.143 2.975.143a30 30 0 0 0 2.975-.143.25.25 0 0 1 .05.498c-.918.093-1.944.145-3.025.145s-2.107-.052-3.025-.145a.25.25 0 0 1-.224-.274M3.5 10h2a.5.5 0 0 1 .5.5v1a1.5 1.5 0 0 1-3 0v-1a.5.5 0 0 1 .5-.5m-1.5.5q.001-.264.085-.5H2a.5.5 0 0 1 0-1h3.5a1.5 1.5 0 0 1 1.488 1.312 3.5 3.5 0 0 1 2.024 0A1.5 1.5 0 0 1 10.5 9H14a.5.5 0 0 1 0 1h-.085q.084.236.085.5v1a2.5 2.5 0 0 1-5 0v-.14l-.21-.07a2.5 2.5 0 0 0-1.58 0l-.21.07v.14a2.5 2.5 0 0 1-5 0zm8.5-.5h2a.5.5 0 0 1 .5.5v1a1.5 1.5 0 0 1-3 0v-1a.5.5 0 0 1 .5-.5"/>
                                             </svg></a>
 

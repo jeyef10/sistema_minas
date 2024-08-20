@@ -19,7 +19,9 @@ return new class extends Migration
             $table->bigInteger('id_municipio')->nullable(); // Agregar columna de clave foránea
             $table->unsignedBigInteger('id_mineral');// Agregar columna de clave foránea
             $table->string('direccion');
-            // $table->string('condernada');
+            $table->string('latitud');
+            $table->string('longitud');
+            $table->string('categoria');
             $table->string('fecha');
             
             $table->timestamps();

@@ -37,10 +37,22 @@ class LicenciaController extends Controller
 
         // Devuelve los datos relevantes en formato JSON
         return response()->json([
+            'id_planificacion' => $inspeccion->planificacion->recepcion->categoria,
             'observaciones' => $inspeccion->observaciones,
             'conclusiones' => $inspeccion->conclusiones,
             'latitud' => $inspeccion->latitud,
             'longitud' => $inspeccion->longitud,
+            'longitud_terreno' => $inspeccion->longitud_terreno,
+            'ancho' => $inspeccion->ancho,
+            'profundidad' => $inspeccion->profundidad,
+            'volumen' => $inspeccion->volumen,
+            'utm_norte' => $inspeccion->utm_norte,
+            'utm_este' => $inspeccion->utm_este,
+            'lindero_norte' => $inspeccion->lindero_norte,
+            'lindero_sur' => $inspeccion->lindero_sur,
+            'lindero_este' => $inspeccion->lindero_este,
+            'lindero_oeste' => $inspeccion->lindero_oeste,
+            'superficie' => $inspeccion->superficie,
             'res_fotos' => $inspeccion->res_fotos,
         ]);
 

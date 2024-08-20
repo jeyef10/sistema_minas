@@ -91,7 +91,10 @@ class RecepcionController extends Controller
         $recepcion = new Recepcion ();
         $recepcion->id_solicitante = $request->input('solicitante_especifico_id');
         $recepcion->id_municipio = $request->input('id_municipio');
+        $recepcion->latitud = $request->input('latitud');
+        $recepcion->longitud = $request->input('longitud');
         $recepcion->direccion = $request->input('direccion');
+        $recepcion->categoria = $request->input('categoria');
         $recepcion->id_mineral = $request->input('nom_mineral');
         $recepcion->fecha = $request->input('simpleDataInput');
         
@@ -157,7 +160,10 @@ class RecepcionController extends Controller
         $cat_mineral = $recepcion->mineral;
         $tipoSolicitante = $recepcion->solicitante;
         $datosSolicitante = $recepcion->solicitante->solicitanteEspecifico;
+        $latitud = $recepcion->latitud;
+        $longitud = $recepcion->longitud;
         $direccion = $recepcion->direccion;
+        $categoria = $recepcion->categoria;
         $fecha = $recepcion->fecha;
 
         // Obtener todos los recaudos
@@ -167,7 +173,7 @@ class RecepcionController extends Controller
         $recaudosSeleccionados = RecepcionRecaudos::where('id_recepcion', $id)->pluck('id_recaudo');
 
         return view('recepcion.edit' , compact('recepcion', 'tipoSolicitante', 'datosSolicitante', 'municipios',
-        'minerales', 'direccion', 'recaudos', 'fecha', 'cat_mineral', 'recaudosSeleccionados'));
+        'minerales', 'latitud', 'longitud', 'direccion', 'categoria', 'recaudos', 'fecha', 'cat_mineral', 'recaudosSeleccionados'));
 
     }
 
@@ -188,7 +194,10 @@ class RecepcionController extends Controller
         // Actualizar los campos según los datos del formulario
         $recepcion->id_solicitante = $request->input('solicitante_especifico_id');
         $recepcion->id_municipio = $request->input('id_municipio');
+        $recepcion->latitud = $request->input('latitud');
+        $recepcion->longitud = $request->input('longitud');
         $recepcion->direccion = $request->input('direccion');
+        $recepcion->categoria = $request->input('categoria');
         $recepcion->id_mineral = $request->input('nom_mineral');
         $recepcion->fecha = $request->input('simpleDataInput');
         $recepcion->save();
@@ -217,6 +226,6 @@ class RecepcionController extends Controller
      */
     public function destroy(Recepcion $recepcion)
     {
-        //
+        // NO ESTÁ IMPLEMENTADO!!!!
     }
 }

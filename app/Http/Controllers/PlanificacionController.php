@@ -85,9 +85,37 @@ class PlanificacionController extends Controller
     public function store(Request $request)
     {
 
+        // $this->validate($request, [
+        //     'fecha_inicial' => 'required|date_format:d/m/Y|after_or_equal:today',
+        //     'fecha_final' => 'required|date_format:d/m/Y|after:fecha_inicial|before_or_equal:' . date('d/m/Y', strtotime('+7 days')),
+        // ]);
+
         $this->validate($request, [
             'fecha_inicial' => 'required|date_format:d/m/Y|after_or_equal:today',
-            'fecha_final' => 'required|date_format:d/m/Y|after:fecha_inicial|before_or_equal:' . date('d/m/Y', strtotime('+7 days')),
+            'fecha_final' => [
+                'required',
+                'date_format:d/m/Y',
+                'after:fecha_inicial',
+
+                // Validación personalizada para contar 7 días hábiles
+                function ($attribute, $value, $fail) use ($request) {
+                    $fechaInicial = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_inicial'));
+                    $fechaFinal = \Carbon\Carbon::createFromFormat('d/m/Y', $value);
+                    $diasHabiles = 0;
+                
+                // Contar 7 días hábiles (excluyendo sábados y domingos)
+                    for ($date = $fechaInicial->copy(); $diasHabiles < 7; $date->addDay()) {
+                        if (!$date->isWeekend()) {
+                            $diasHabiles++;
+                        }
+                    }
+    
+                // Verificar si 'fecha_final' es exactamente 7 días hábiles después de 'fecha_inicial'
+                    if ($fechaFinal->ne($date->subDay())) {
+                        $fail('La fecha final debe ser exactamente 7 días hábiles después de la fecha inicial.');
+                    }
+                },
+            ],
         ]);
 
         // Crear una nueva Planificación
@@ -159,8 +187,6 @@ class PlanificacionController extends Controller
         $fecha_inicial = $planificacion->fecha_inicial;
         $fecha_final = $planificacion->fecha_final;
         $estatus = $planificacion->estatus;
-
-        // $id = Recepcion::all()->random()->id;
 
         $recepcion = Recepcion::find($id);
 
