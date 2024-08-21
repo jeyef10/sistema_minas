@@ -165,7 +165,7 @@ class InspeccionesController extends Controller
         $utm_norte = $inspeccion->utm_norte;
         $utm_este = $inspeccion->utm_este;
         $res_fotos = $inspeccion->res_fotos;
-        $fecha_inspeccion = $inspeccion->fecha_inspeccion;
+        $fecha_inspeccion = date('d/m/Y', strtotime($inspeccion->fecha_inspeccion));
         $longitud_terreno = $inspeccion->longitud_terreno;
         $ancho = $inspeccion->ancho;
         $profundidad = $inspeccion->profundidad;

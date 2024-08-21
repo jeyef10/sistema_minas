@@ -93,38 +93,32 @@ class PlanificacionController extends Controller
     public function store(Request $request)
     {
 
-        // $this->validate($request, [
-        //     'fecha_inicial' => 'required|date_format:d/m/Y|after_or_equal:today',
-        //     'fecha_final' => 'required|date_format:d/m/Y|after:fecha_inicial|before_or_equal:' . date('d/m/Y', strtotime('+7 days')),
-        // ]);
-
         $this->validate($request, [
             'fecha_inicial' => 'required|date_format:d/m/Y|after_or_equal:today',
             'fecha_final' => [
                 'required',
                 'date_format:d/m/Y',
-                'after:fecha_inicial',
-
-                // Validación personalizada para contar 7 días hábiles
+                'after_or_equal:fecha_inicial', // Permitir que sea igual a la fecha inicial
                 function ($attribute, $value, $fail) use ($request) {
                     $fechaInicial = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_inicial'));
                     $fechaFinal = \Carbon\Carbon::createFromFormat('d/m/Y', $value);
                     $diasHabiles = 0;
-                
-                // Contar 7 días hábiles (excluyendo sábados y domingos)
+        
+                    // Contar 7 días hábiles (excluyendo sábados y domingos)
                     for ($date = $fechaInicial->copy(); $diasHabiles < 7; $date->addDay()) {
                         if (!$date->isWeekend()) {
                             $diasHabiles++;
                         }
                     }
-    
-                // Verificar si 'fecha_final' es exactamente 7 días hábiles después de 'fecha_inicial'
-                    if ($fechaFinal->ne($date->subDay())) {
-                        $fail('La fecha final debe ser exactamente 7 días hábiles después de la fecha inicial.');
+        
+                    // Verificar si 'fecha_final' es exactamente 7 días hábiles después de 'fecha_inicial'
+                    if ($fechaFinal->ne($date->subDay()) && !$fechaFinal->eq($fechaInicial) && !$fechaFinal->eq($fechaInicial->copy()->addDay())) {
+                        $fail('La fecha final debe ser exactamente 7 días hábiles después de la fecha inicial, o igual a la fecha inicial o el día siguiente.');
                     }
                 },
             ],
         ]);
+        
 
         // Crear una nueva Planificación
         $planificacion = new Planificacion ();
@@ -192,8 +186,8 @@ class PlanificacionController extends Controller
         $planificacion = Planificacion::findOrFail($id);
         $municipios = Municipio::all();
         $comisionados = Comisionados::all();
-        $fecha_inicial = $planificacion->fecha_inicial;
-        $fecha_final = $planificacion->fecha_final;
+        $fecha_inicial = date('d/m/Y', strtotime($planificacion->fecha_inicial));
+        $fecha_final = date('d/m/Y', strtotime($planificacion->fecha_final));
         $estatus = $planificacion->estatus;
 
         $recepcion = Recepcion::find($id);

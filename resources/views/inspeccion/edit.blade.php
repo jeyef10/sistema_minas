@@ -84,8 +84,10 @@
 
                                 <div class="row">
 
-                                    <input type="hidden" class="form-control" id="id_planificacion" name="id_planificacion" style="background: white;" value="{{ isset($planificacion->id)?$planificacion->id:'' }}" placeholder="" autocomplete="off">                                  
+                                    <input type="hidden" class="form-control" id="id_planificacion" name="id_planificacion" style="background: white;" value="{{ isset($inspeccion->planificacion->id)?$inspeccion->planificacion->id:'' }}" placeholder="" autocomplete="off">                                  
                                    
+                                    
+                                    
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Municipio</label>
                                         <select class="select2-single form-control" id="municipio" name="municipio" disabled>
@@ -117,7 +119,7 @@
                                             @endforeach
                                         </select>
                                     </div> --}}
-
+                                    
                                 </div>
 
                             </div>
@@ -460,17 +462,10 @@
             const lng = e.latlng.lng;
     
             // Crear un nuevo marcador y almacenarlo
-            marcador = L.marker([lat, lng]).addTo(map)
-                .bindPopup('Nueva Inspección').openPopup();
+            marcador = L.marker([lat, lng]).addTo(map);
+                // .bindPopup('Nueva Inspección').openPopup();
 
-            // Convierte las coordenadas a UTM
-            const utmCoords = proj4('EPSG:4326', 'EPSG:32619', [longitud, latitud]); // EPSG:32619 es para la zona UTM 19N    
-    
-            // Actualizar los inputs
-            document.getElementById('latitud').value = lat;
-            document.getElementById('longitud').value = lng;
-            // document.getElementById('utm_norte').value = utmCoords1;
-            // document.getElementById('utm_este').value = utmCoords0;
+            
             
             // Obtener la dirección utilizando Nominatim 
             fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`)
@@ -481,8 +476,17 @@
                     estado = estado.replace(' State', '');
                 }
                 const lugar_direccion = data.address.road + ", " + data.address.postcode + ", " + data.address.county + ", "  + estado + ", " + data.address.country;
-                    document.getElementById('lugar_direccion').textContent = direccion_nueva;
+                    document.getElementById('lugar_direccion').textContent = lugar_direccion;
                 });
+            
+            // Convierte las coordenadas a UTM
+            const utmCoords = proj4('EPSG:4326', 'EPSG:32619', [lng, lat]); // EPSG:32619 es para la zona UTM 19N    
+    
+            // Actualizar los inputs
+            document.getElementById('latitud').value = lat;
+            document.getElementById('longitud').value = lng;
+            document.getElementById('utm_norte').value = utmCoords[1];
+            document.getElementById('utm_este').value = utmCoords[0];
         });
         }
         // Llamada a la función para cargar el mapa al inicio
@@ -587,5 +591,43 @@
             mostrarDivCategoria(categoria);
 
     </script>
+
+    {{-- ? FUNCION PARA MANTENER LA FECHA ACTUALIZADA EN EL CALENDARIO --}}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var dateInput = document.getElementById('fecha_inspeccion');
+            var today = new Date().toISOString().split('T')[0]; // Formato YYYY-MM-DD
+    
+            dateInput.addEventListener('focus', function() {
+                if (!dateInput.value) {
+                    dateInput.value = today;
+                }
+            });
+        });
+    </script>
+
+    {{--! FUNCIÓN PARA MOSTRAR LA ALERTA DE LA FECHA --}}
+
+    @if ($errors->any())
+    <script>
+        var errorMessage = @json($errors->first());
+        Swal.fire({
+                title: 'Inspección',
+                text: "La fecha registrada no es válida. Por favor, asegúrese de ingresar la fecha actual.",
+                icon: 'warning',
+                showconfirmButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: '¡OK!',
+                
+                }).then((result) => {
+            if (result.isConfirmed) {
+
+                this.submit();
+            }
+            })
+    </script>
+    @endif
+
     
 @endsection
