@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Licencias;
 use App\Models\Inspecciones;
+use App\Models\Plazos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -71,9 +72,12 @@ class LicenciaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $inspeccion = Inspecciones::findOrFail($id);
+        $plazos = Plazos::all();
+
+        return view('licencia.create', compact('inspeccion', 'plazos'));
     }
 
     /**

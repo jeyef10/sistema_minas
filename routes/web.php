@@ -157,6 +157,8 @@ Route::get('/inspeccion/create/fetchComisionados/{municipioId}', [InspeccionesCo
 
 /* Ruta Licencia */
 Route::get('/licencia', [LicenciaController::class,'index'])->name('licencia')->middleware('auth');
+Route::get('/licencia/create', [LicenciaController::class, 'create'])->name('create')->middleware('auth');
+Route::get('/licencia/create/{id}', [LicenciaController::class, 'create'])->name('licencia.create')->middleware('auth');
 Route::resource('licencia', LicenciaController::class)->middleware('auth');
 Route::get('/licencia/detalles/{id}', [LicenciaController::class, 'getInspeccionDetalles']);
 
