@@ -91,7 +91,7 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">N Resolución</label>
-                                        <input type="text" class="form-control" id="resolucion_apro" name="resolucion_apro" oninput="capitalizarInput('')"></input>                                   
+                                        <input type="text" class="form-control" id="resolucion_apro" name="resolucion_apro" value="{{ $codigo_apro }}" oninput="capitalizarInput('')"></input>                                   
                                     </div>
 
                                     <div class="col-4">
@@ -109,7 +109,7 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">N Resolución</label>
-                                        <input type="text" class="form-control" id="resolucion_hpc" name="resolucion_hpc" oninput="capitalizarInput('')"></input>
+                                        <input type="text" class="form-control" id="resolucion_hpc" name="resolucion_hpc" value="{{ $codigo_hpc }}" oninput="capitalizarInput('')"></input>
                                     </div>
 
                                     <div class="col-4">

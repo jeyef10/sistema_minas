@@ -24,6 +24,9 @@ return new class extends Migration
             $table->string('fecha_oficio')->nullable();
             $table->unsignedBigInteger('id_plazo');
             $table->string('talonario');
+
+            // Establecer relación con la tabla de plazos
+            $table->foreign('id_inspeccion')->references('id')->on('inspecciones');
             
             // Establecer relación con la tabla de plazos
             $table->foreign('id_plazo')->references('id')->on('plazos');

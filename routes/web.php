@@ -16,12 +16,12 @@ use App\Http\Controllers\ComisionadosController;
 use App\Http\Controllers\MineralController;
 use App\Http\Controllers\RegaliaController;
 use App\Http\Controllers\PlazosController;
-// use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\RecepcionController;
 use App\Http\Controllers\PlanificacionController;
 use App\Http\Controllers\InspeccionesController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\LicenciaController;
+use App\Http\Controllers\ControlController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ManualController;
 
@@ -123,12 +123,6 @@ Route::get('/plazo/create', [PlazosController::class, 'create'])->name('create')
 Route::get('/plazo/pdf',  [PlazosController::class,'pdf'])->name('plazo')->middleware('auth');
 Route::resource('plazo', PlazosController::class)->middleware('auth');
 
-/* Ruta Categoria*/
-// Route::get('/categoria',  [CategoriaController::class,'index'])->name('categoria')->middleware('auth');
-// Route::get('/categoria/create', [CategoriaController::class, 'create'])->name('create')->middleware('auth');
-// Route::get('/categoria/pdf',  [CategoriaController::class,'pdf'])->name('categoria')->middleware('auth');
-// Route::resource('categoria', CategoriaController::class)->middleware('auth');
-
 /* Ruta Recepcion de Recaudos */
 Route::get('/recepcion/create', [RecepcionController::class, 'create'])->name('create')->middleware('auth');
 Route::resource('recepcion', RecepcionController::class)->middleware('auth');
@@ -161,6 +155,13 @@ Route::get('/licencia/create', [LicenciaController::class, 'create'])->name('cre
 Route::get('/licencia/create/{id}', [LicenciaController::class, 'create'])->name('licencia.create')->middleware('auth');
 Route::resource('licencia', LicenciaController::class)->middleware('auth');
 Route::get('/licencia/detalles/{id}', [LicenciaController::class, 'getInspeccionDetalles']);
+
+/* Ruta Licencia */
+Route::get('/control', [ControlController::class,'index'])->name('control')->middleware('auth');
+Route::get('/control/create', [ControlController::class, 'create'])->name('create')->middleware('auth');
+Route::get('/control/create/{id}', [ControlController::class, 'create'])->name('control.create')->middleware('auth');
+Route::resource('control', ControlController::class)->middleware('auth');
+// Route::get('/licencia/detalles/{id}', [LicenciaController::class, 'getInspeccionDetalles']);
 
 /* Ruta Bitacora*/
 Route::get('bitacora', [ReporteController::class, 'bitacora'])->name('bitacora')->middleware('auth');

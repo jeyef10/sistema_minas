@@ -77,7 +77,60 @@ class LicenciaController extends Controller
         $inspeccion = Inspecciones::findOrFail($id);
         $plazos = Plazos::all();
 
-        return view('licencia.create', compact('inspeccion', 'plazos'));
+        $year = date('Y');
+        $contador = 1;
+        $codigo_apro = '';
+        $codigo_hpc = '';
+
+        // Obtener la categoría desde la tabla recepcion
+        $categoria = DB::table('inspecciones')
+            ->join('planificacion', 'inspecciones.id_planificacion', '=', 'planificacion.id')
+            ->join('recepcion', 'planificacion.id_recepcion', '=', 'recepcion.id')
+            ->where('inspecciones.id', $id)
+            ->value('recepcion.categoria');
+
+        // Obtener el último contador para la categoría y el año actual
+        $lastRecord = DB::table('licencias')
+            ->join('inspecciones', 'licencias.id_inspeccion', '=', 'inspecciones.id')
+            ->join('planificacion', 'inspecciones.id_planificacion', '=', 'planificacion.id')
+            ->join('recepcion', 'planificacion.id_recepcion', '=', 'recepcion.id')
+            ->where('recepcion.categoria', $categoria)
+            ->whereYear('licencias.created_at', $year)
+            ->orderBy('licencias.id', 'desc')
+            ->first();
+
+        if ($lastRecord) {
+            // Extraer el contador del último código generado
+            if ($categoria == 'Aprovechamiento') {
+                $lastCode = explode('/', $lastRecord->resolucion_apro);
+            } elseif ($categoria == 'Procesamiento') {
+                $lastCode = explode('/', $lastRecord->resolucion_hpc);
+            }
+            $contador = (int)$lastCode[0] + 1;
+        }
+
+        // Formatear el contador con ceros a la izquierda
+        $contadorFormatted = str_pad($contador, 3, '0', STR_PAD_LEFT);
+
+        // Generar el código basado en la categoría
+        if ($categoria == 'Aprovechamiento') {
+            $codigo_apro = "$contadorFormatted/$year";
+        } elseif ($categoria == 'Procesamiento') {
+            $codigo_hpc = "HPC-$contadorFormatted/$year";
+        }
+
+        // // Guardar el código en la base de datos en la columna correspondiente
+        // $licencia = new Licencia();
+        // $licencia->id_inspeccion = $id;
+        // if ($categoria == 'Aprovechamiento') {
+        //     $licencia->resolucion_apro = $codigo;
+        // } elseif ($categoria == 'Procesamiento') {
+        //     $licencia->resolucion_hpc = $codigo;
+        // }
+        // $licencia->save();
+
+        return view('licencia.create', compact('inspeccion', 'plazos', 'codigo_apro', 'codigo_hpc'));
+
     }
 
     /**
@@ -88,7 +141,32 @@ class LicenciaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Crear una nueva Licencia 
+        $licencias = new Licencias();
+        $licencias->id_inspeccion = $request->input('id_inspeccion');
+        $licencias->resolucion_apro = $request->input('resolucion_apro');
+        $licencias->resolucion_hpc = $request->input('resolucion_hpc');
+        $licencias->catastro_la = $request->input('catastro_la');
+        $licencias->catastro_lp = $request->input('catastro_lp');
+        $licencias->num_oficio = $request->input('num_oficio');
+        $licencias->fecha_oficio = $request->input('fecha_oficio');
+        $licencias->id_plazo = $request->input('id_plazo');
+        $licencias->talonario = $request->input('talonario');
+
+        $licencias->save();
+
+        $bitacora = new BitacoraController;
+        $bitacora->update();
+
+        try {
+        
+            return redirect('control');
+    
+            } catch (QueryException $exception) {
+                $errorMessage = 'Error: .';
+                return redirect()->back()->withErrors($errorMessage);
+            }
+
     }
 
     /**
