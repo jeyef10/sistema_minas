@@ -90,13 +90,18 @@
                                     <input type="hidden" class="form-control" id="id_inspeccion" name="id_inspeccion" style="background: white;" value="{{ isset($inspeccion->id)?$inspeccion->id:'' }}" placeholder="" autocomplete="off">                                  
 
                                     <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">N Resolución</label>
-                                        <input type="text" class="form-control" id="resolucion_apro" name="resolucion_apro" value="{{ $codigo_apro }}" oninput="capitalizarInput('')"></input>                                   
+                                        <label  class="font-weight-bold text-primary">N° Resolución</label>
+                                        <input type="text" class="form-control" id="resolucion_apro" name="resolucion_apro" value="{{ $codigo_apro }}" oninput="capitalizarInput('')" readonly></input>                                   
                                     </div>
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Catastro Minero</label>
                                         <input type="text" class="form-control" id="catastro_la" name="catastro_la"  oninput="capitalizarInput('')"></input>                                   
+                                    </div>
+
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Providencia Administrativa</label>
+                                        <input type="text" class="form-control" id="providencia" name="providencia" oninput="capitalizarInput('')"></input>                                 
                                     </div>
 
                                 </div>
@@ -108,13 +113,18 @@
                                 <div class="row">
 
                                     <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">N Resolución</label>
-                                        <input type="text" class="form-control" id="resolucion_hpc" name="resolucion_hpc" value="{{ $codigo_hpc }}" oninput="capitalizarInput('')"></input>
+                                        <label  class="font-weight-bold text-primary">N° Resolución</label>
+                                        <input type="text" class="form-control" id="resolucion_hpc" name="resolucion_hpc" value="{{ $codigo_hpc }}" oninput="capitalizarInput('')" readonly></input>
                                     </div>
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Catastro Minero</label>
                                         <input type="text" class="form-control" id="catastro_lp" name="catastro_lp" oninput="capitalizarInput('')"></input>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">N° de Ocupación de Territorio</label>
+                                        <input type="text" class="form-control" id="num_territorio" name="num_territorio" oninput="capitalizarInput('')"></input>                                 
                                     </div>
                                     
                                 </div>
@@ -126,11 +136,6 @@
                             <div class="card-body">
 
                                 <div class="row">
-
-                                    <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">N Oficio</label>
-                                        <input type="text" class="form-control" id="num_oficio" name="num_oficio" oninput="capitalizarInput('')"></input>                                 
-                                    </div>
 
                                     <div class="col-4">                                     
                                         <div class="form-group" id="simple-date1">

@@ -11,8 +11,8 @@ class Licencias extends Model
     protected $table = 'licencias';
     protected $primaryKey = 'id';
     public $timestamps = true;
-    protected $fillable = ['id_inspeccion','resolucion_apro', 'resolucion_hpc', 'catastro_la', 'catastro_lp', 'num_oficio',
-    'fecha_oficio', 'id_plazo', 'talonario'];
+    protected $fillable = ['id_inspeccion','resolucion_apro', 'resolucion_hpc', 'catastro_la', 'catastro_lp','providencia',
+    'num_territorio', 'fecha_oficio', 'id_plazo', 'talonario'];
 
     public function inspeccion()
     {

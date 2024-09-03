@@ -20,8 +20,9 @@ return new class extends Migration
             $table->string('resolucion_hpc')->nullable();
             $table->string('catastro_la')->nullable();
             $table->string('catastro_lp')->nullable();
-            $table->string('num_oficio')->nullable();
-            $table->string('fecha_oficio')->nullable();
+            $table->string('providencia')->nullable();
+            $table->string('num_territorio')->nullable();
+            $table->string('fecha_oficio');
             $table->unsignedBigInteger('id_plazo');
             $table->string('talonario');
 

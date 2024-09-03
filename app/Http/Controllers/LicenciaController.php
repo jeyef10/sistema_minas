@@ -119,16 +119,6 @@ class LicenciaController extends Controller
             $codigo_hpc = "HPC-$contadorFormatted/$year";
         }
 
-        // // Guardar el código en la base de datos en la columna correspondiente
-        // $licencia = new Licencia();
-        // $licencia->id_inspeccion = $id;
-        // if ($categoria == 'Aprovechamiento') {
-        //     $licencia->resolucion_apro = $codigo;
-        // } elseif ($categoria == 'Procesamiento') {
-        //     $licencia->resolucion_hpc = $codigo;
-        // }
-        // $licencia->save();
-
         return view('licencia.create', compact('inspeccion', 'plazos', 'codigo_apro', 'codigo_hpc'));
 
     }
@@ -148,7 +138,8 @@ class LicenciaController extends Controller
         $licencias->resolucion_hpc = $request->input('resolucion_hpc');
         $licencias->catastro_la = $request->input('catastro_la');
         $licencias->catastro_lp = $request->input('catastro_lp');
-        $licencias->num_oficio = $request->input('num_oficio');
+        $licencias->providencia = $request->input('providencia');
+        $licencias->num_territorio = $request->input('num_territorio');
         $licencias->fecha_oficio = $request->input('fecha_oficio');
         $licencias->id_plazo = $request->input('id_plazo');
         $licencias->talonario = $request->input('talonario');
@@ -177,7 +168,9 @@ class LicenciaController extends Controller
      */
     public function show($id)
     {
-        //
+        $licencia = Licencias::find($id);
+        return view('control.index', compact('licencia'));
+
     }
 
     /**
@@ -188,7 +181,22 @@ class LicenciaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $licencia = Licencias::findOrFail($id);
+        $inspeccion = Inspecciones::find($id);
+        $plazos = Plazos::all();
+        $resolucion_apro = $licencia->resolucion_apro;
+        $catastro_la = $licencia->catastro_la;
+        $resolucion_hpc = $licencia->resolucion_hpc;
+        $catastro_lp = $licencia->catastro_lp;
+        $providencia = $licencia->providencia;
+        $num_territorio = $licencia->num_territorio;
+        $fecha_oficio = $licencia->fecha_oficio;
+        $id_plazo = $licencia->plazo;
+        $talonario = $licencia->talonario;
+
+        return view('licencia.edit' , compact('licencia', 'inspeccion', 'plazos', 'resolucion_apro',
+        'catastro_la', 'num_territorio', 'resolucion_hpc', 'catastro_lp', 'providencia', 'fecha_oficio', 'id_plazo', 'talonario'));
+
     }
 
     /**
@@ -200,7 +208,31 @@ class LicenciaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        // Buscar la Licencia existente        
+        $licencia = licencias::findOrFail($id);
+        $licencia->id_inspeccion = $request->input('id_inspeccion');
+        $licencia->resolucion_apro = $request->input('resolucion_apro');
+        $licencia->resolucion_hpc = $request->input('resolucion_hpc');
+        $licencia->catastro_la = $request->input('catastro_la');
+        $licencia->catastro_lp = $request->input('catastro_lp');
+        $licencia->providencia = $request->input('providencia');
+        $licencia->num_territorio = $request->input('num_territorio');
+        $licencia->fecha_oficio = $request->input('fecha_oficio');
+        $licencia->id_plazo = $request->input('id_plazo');
+        $licencia->talonario = $request->input('talonario');
+
+        $licencia->save();
+
+        $bitacora = new BitacoraController;
+        $bitacora->update();
+
+        try {
+            return redirect('control');
+        } catch (QueryException $exception) {
+            $errorMessage = 'Error: ' . $exception->getMessage();
+            return redirect()->back()->withErrors($errorMessage);
+        }
     }
 
     /**
