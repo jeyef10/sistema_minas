@@ -73,6 +73,9 @@
                     @can('ver-plazo')
                     <a class="collapse-item" href="{{ url('plazo') }}">Plazos de Vigencia</a>
                     @endcan
+
+                    <a class="collapse-item" href="{{ url('tipopago') }}">Tipo de Pago</a>
+                    
                     {{-- <a class="collapse-item" href="{{ url('categoria') }}">Categoria</a> --}}
                   </div>
                 </div>
@@ -100,12 +103,15 @@
                     <a class="collapse-item" href="{{ url('inspeccion') }}">Inspección</a>
                     @endcan
 
+                    <a class="collapse-item" href="{{ url('comprobantepago') }}">Comprobante de Pago</a>
+                    
                     @can('ver-licencia')
                     <a class="collapse-item" href="{{ url('licencia') }}">Licencia</a>
                     @endcan
 
+                   
                     <a class="collapse-item" href="{{ url('control') }}">Control de Licencias</a>
-                    
+                   
 
                     {{-- <a class="collapse-item" href="{{ url('Pago') }}">Pago / Talonario</a> --}}
                   </div>

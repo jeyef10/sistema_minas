@@ -16,9 +16,11 @@ use App\Http\Controllers\ComisionadosController;
 use App\Http\Controllers\MineralController;
 use App\Http\Controllers\RegaliaController;
 use App\Http\Controllers\PlazosController;
+use App\Http\Controllers\TipoPagoController;
 use App\Http\Controllers\RecepcionController;
 use App\Http\Controllers\PlanificacionController;
 use App\Http\Controllers\InspeccionesController;
+use App\Http\Controllers\ComprobantePagoController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\LicenciaController;
 use App\Http\Controllers\ControlController;
@@ -123,6 +125,12 @@ Route::get('/plazo/create', [PlazosController::class, 'create'])->name('create')
 Route::get('/plazo/pdf',  [PlazosController::class,'pdf'])->name('plazo')->middleware('auth');
 Route::resource('plazo', PlazosController::class)->middleware('auth');
 
+/* Ruta TipoPago*/
+Route::get('/tipopago',  [TipoPagoController::class,'index'])->name('tipopago')->middleware('auth');
+Route::get('/tipopago/create', [TipoPagoController::class, 'create'])->name('create')->middleware('auth');
+Route::get('/tipopago/pdf',  [TipoPagoController::class,'pdf'])->name('tipopago')->middleware('auth');
+Route::resource('tipopago', TipoPagoController::class)->middleware('auth');
+
 /* Ruta Recepcion de Recaudos */
 Route::get('/recepcion/create', [RecepcionController::class, 'create'])->name('create')->middleware('auth');
 Route::resource('recepcion', RecepcionController::class)->middleware('auth');
@@ -149,12 +157,18 @@ Route::get('/inspeccion/create/{id}', [InspeccionesController::class, 'create'])
 Route::resource('inspeccion', InspeccionesController::class)->middleware('auth');
 Route::get('/inspeccion/create/fetchComisionados/{municipioId}', [InspeccionesController::class, 'fetchComisionados']);
 
+/* Ruta Comprobante de Pago */
+Route::get('/comprobantepago', [ComprobantePagoController::class,'index'])->name('comprobantepago')->middleware('auth');
+Route::get('/comprobantepago/create', [ComprobantePagoController::class, 'create'])->name('create')->middleware('auth');
+Route::get('/comprobantepago/create/{id}', [ComprobantePagoController::class, 'create'])->name('comprobantepago.create')->middleware('auth');
+Route::resource('comprobantepago', ComprobantePagoController::class)->middleware('auth');
+Route::get('/comprobantepago/detalles/{id}', [ComprobantePagoController::class, 'getInspeccionDetalles']);
+
 /* Ruta Licencia */
 Route::get('/licencia', [LicenciaController::class,'index'])->name('licencia')->middleware('auth');
 Route::get('/licencia/create', [LicenciaController::class, 'create'])->name('create')->middleware('auth');
 Route::get('/licencia/create/{id}', [LicenciaController::class, 'create'])->name('licencia.create')->middleware('auth');
 Route::resource('licencia', LicenciaController::class)->middleware('auth');
-Route::get('/licencia/detalles/{id}', [LicenciaController::class, 'getInspeccionDetalles']);
 
 /* Ruta Licencia */
 Route::get('/control', [ControlController::class,'index'])->name('control')->middleware('auth');

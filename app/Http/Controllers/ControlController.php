@@ -14,6 +14,16 @@ use App\Http\Controllers\BitacoraController;
 
 class ControlController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:ver-control|crear-control|editar-control|borrar-control', ['only' => ['index']]);
+         $this->middleware('permission:crear-control', ['only' => ['create','store']]);
+         $this->middleware('permission:editar-control', ['only' => ['edit','update']]);
+         $this->middleware('permission:borrar-control', ['only' => ['destroy']]);
+
+    }
+
+
     /**
      * Display a listing of the resource.
      *

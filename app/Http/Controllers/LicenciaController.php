@@ -20,6 +20,7 @@ class LicenciaController extends Controller
          $this->middleware('permission:crear-licencia', ['only' => ['create','store']]);
          $this->middleware('permission:editar-licencia', ['only' => ['edit','update']]);
          $this->middleware('permission:borrar-licencia', ['only' => ['destroy']]);
+
     }
 
     /**
@@ -34,39 +35,6 @@ class LicenciaController extends Controller
         return view('licencia.index', compact('inspecciones'));
     }
 
-    public function getInspeccionDetalles($id)
-    {
-        // Recupera la inspección por su ID
-        $inspeccion = Inspecciones::find($id);
-
-        if (!$inspeccion) {
-            // Maneja el caso en que no se encuentre la inspección
-            return response()->json(['error' => 'Inspección no encontrada'], 404);
-        }
-
-        // Devuelve los datos relevantes en formato JSON
-        return response()->json([
-            'id_planificacion' => $inspeccion->planificacion->recepcion->categoria,
-            'observaciones' => $inspeccion->observaciones,
-            'conclusiones' => $inspeccion->conclusiones,
-            'latitud' => $inspeccion->latitud,
-            'longitud' => $inspeccion->longitud,
-            'longitud_terreno' => $inspeccion->longitud_terreno,
-            'ancho' => $inspeccion->ancho,
-            'profundidad' => $inspeccion->profundidad,
-            'volumen' => $inspeccion->volumen,
-            'utm_norte' => $inspeccion->utm_norte,
-            'utm_este' => $inspeccion->utm_este,
-            'lindero_norte' => $inspeccion->lindero_norte,
-            'lindero_sur' => $inspeccion->lindero_sur,
-            'lindero_este' => $inspeccion->lindero_este,
-            'lindero_oeste' => $inspeccion->lindero_oeste,
-            'superficie' => $inspeccion->superficie,
-            'res_fotos' => $inspeccion->res_fotos,
-        ]);
-
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -74,8 +42,8 @@ class LicenciaController extends Controller
      */
     public function create($id)
     {
-        $inspeccion = Inspecciones::findOrFail($id);
-        $plazos = Plazos::all();
+        // $inspeccion = Inspecciones::findOrFail($id);
+        // $plazos = Plazos::all();
 
         $year = date('Y');
         $contador = 1;

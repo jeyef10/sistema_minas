@@ -96,6 +96,13 @@ class SeederTablaPermisos extends Seeder
             'crear-licencia',
             'editar-licencia',
             'borrar-licencia',
+
+
+              //Operaciones sobre tabla control
+              'ver-control',
+              'crear-control',
+              'editar-control',
+              'borrar-control',
  
         ];
 

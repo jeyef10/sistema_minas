@@ -205,7 +205,7 @@
                      }
                  } else {
                      // This block executes if no solicitante is selected
-                     numMineroInput.val('');  // Clear num_minero input
+                      um_minero input
                  }
                  });
                  // Trigger nested change event listener on programmatically updated solicitante
