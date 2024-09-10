@@ -206,7 +206,7 @@
         });
     </script>
 
-    {{-- * FUNCION PARA MOSTRAR LA FOTO --}}
+    {{-- * FUNCION PARA MOSTRAR El PDF --}}
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 

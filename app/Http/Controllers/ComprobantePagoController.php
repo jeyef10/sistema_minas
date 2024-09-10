@@ -141,7 +141,13 @@ class ComprobantePagoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $comprobante_pago = ComprobantePago::findOrFail($id);
+        $inspeccion = Inspecciones::find($id);
+        $tipo_pagos = TipoPago::all();
+        $fecha_pago = date('d/m/Y', strtotime($comprobante_pago->fecha_pago));
+        $comprobante_pdf = $comprobante_pago->comprobante_pdf;
+        $estatus_pago = $comprobante_pago->estatus_pago;
+        return view('comprobantepago.edit' , compact('comprobante_pago', 'inspeccion', 'tipo_pagos', 'fecha_pago', 'comprobante_pdf', 'estatus_pago'));
     }
 
     /**
@@ -153,7 +159,47 @@ class ComprobantePagoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Buscar El comprobante existente        
+        $comprobante_pago = ComprobantePago::findOrFail($id);
+        $comprobante_pago->id_inspeccion = $request->input('id_inspeccion');
+        $comprobante_pago->id_tipo_pago = $request->input('id_tipo_pago');
+        $comprobante_pago->fecha_pago = $request->input('fecha_pago');
+
+        // Verificar si se han cargado nuevos archivos
+        if ($request->hasFile('comprobante_pdf')) {
+            $rutaGuardarPdf = 'pdf/';
+            $nuevosNombresPdf = [];
+
+            foreach ($request->file('comprobante_pdf') as $pdf) {
+                $pdfComprobante = date('YmdHis') . '_' . uniqid() . '_' . pathinfo($pdf->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $pdf->getClientOriginalExtension();
+                $pdf->move(public_path($rutaGuardarPdf), $pdfComprobante);
+                $nuevosNombresPdf[] = $pdfComprobante;
+            }
+
+            // Combinar los nuevos archivos con los existentes
+            $archivosExistentes = json_decode($comprobantePago->comprobante_pdf, true) ?? [];
+            $todosLosArchivos = array_merge($archivosExistentes, $nuevosNombresPdf);
+
+            $comprobantePago->comprobante_pdf = json_encode($todosLosArchivos);
+        }
+
+        $comprobante_pago->estatus_pago = $request->input('estatus_pago');
+
+        $comprobante_pago->save();
+
+        $bitacora = new BitacoraController;
+        $bitacora->update();
+
+        try {
+        
+            return redirect('licencia');
+    
+            } catch (QueryException $exception) {
+                $errorMessage = 'Error: .';
+                return redirect()->back()->withErrors($errorMessage);
+            }
+
+
     }
 
     /**

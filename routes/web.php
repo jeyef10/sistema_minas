@@ -169,13 +169,13 @@ Route::get('/licencia', [LicenciaController::class,'index'])->name('licencia')->
 Route::get('/licencia/create', [LicenciaController::class, 'create'])->name('create')->middleware('auth');
 Route::get('/licencia/create/{id}', [LicenciaController::class, 'create'])->name('licencia.create')->middleware('auth');
 Route::resource('licencia', LicenciaController::class)->middleware('auth');
+Route::get('/licencia/detalles/{id}', [LicenciaController::class, 'getComprobanteDetalles']);
 
 /* Ruta Licencia */
 Route::get('/control', [ControlController::class,'index'])->name('control')->middleware('auth');
 Route::get('/control/create', [ControlController::class, 'create'])->name('create')->middleware('auth');
 Route::get('/control/create/{id}', [ControlController::class, 'create'])->name('control.create')->middleware('auth');
 Route::resource('control', ControlController::class)->middleware('auth');
-// Route::get('/licencia/detalles/{id}', [LicenciaController::class, 'getInspeccionDetalles']);
 
 /* Ruta Bitacora*/
 Route::get('bitacora', [ReporteController::class, 'bitacora'])->name('bitacora')->middleware('auth');

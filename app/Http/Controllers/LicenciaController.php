@@ -30,9 +30,30 @@ class LicenciaController extends Controller
      */
     public function index()
     {
-        $inspecciones = Inspecciones::all();
+        $comprobante_pagos = ComprobantePago::all();
 
-        return view('licencia.index', compact('inspecciones'));
+        return view('licencia.index', compact('comprobante_pagos'));
+    }
+
+    public function getComprobanteDetalles($id)
+    {
+        // Recupera la inspección por su ID
+        $comprobante_pago = ComprobantePago::find($id);
+
+        if (!$comprobante_pago) {
+            // Maneja el caso en que no se encuentre la inspección
+            return response()->json(['error' => 'Comprobante no encontrada'], 404);
+        }
+
+        $comprobante_pdf = json_decode($comprobante_pago->comprobante_pdf, true);
+
+        // Devuelve los datos relevantes en formato JSON
+        return response()->json([
+            'id_inspeccion' => $comprobante_pago->inspeccion->planificacion->recepcion->categoria,
+            'comprobante_pdf' => $comprobante_pago->comprobante_pdf,
+            
+        ]);
+
     }
 
     /**
@@ -42,8 +63,8 @@ class LicenciaController extends Controller
      */
     public function create($id)
     {
-        // $inspeccion = Inspecciones::findOrFail($id);
-        // $plazos = Plazos::all();
+        $inspeccion = Inspecciones::findOrFail($id);
+        $plazos = Plazos::all();
 
         $year = date('Y');
         $contador = 1;
