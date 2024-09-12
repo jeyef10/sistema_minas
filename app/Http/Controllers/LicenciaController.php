@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Licencias;
 use App\Models\Inspecciones;
+use App\Models\ComprobantePago;
 use App\Models\Plazos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

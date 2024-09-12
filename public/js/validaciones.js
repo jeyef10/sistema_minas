@@ -1864,23 +1864,23 @@ function Recepcion (obj) {
         return (false);
     }
 
-    // var solicitante = obj.solicitante.value;
-    // if (!solicitante){
-    //     Swal.fire({
-    //         title: 'Recepción de Recaudos',
-    //         text: "Debe seleccionar un solicitante.",
-    //         icon: 'warning',
-    //         confirmButtonColor: '#3085d6',
-    //         cancelButtonColor: '#d33',
-    //         }).then((result) => {
-    //     if (result.isConfirmed) {
+    var solicitante = document.getElementById('solicitante').value;
+    if (!solicitante){
+        Swal.fire({
+            title: 'Recepción de Recaudos',
+            text: "Debe seleccionar un solicitante.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
-    //         this.submit();
-    //     }
-    //     })
+            this.submit();
+        }
+        })
         
-    //     return (false);
-    // }
+        return (false);
+    }
 
     var municipio = obj.municipio.value;
     if (!municipio){
@@ -1900,11 +1900,11 @@ function Recepcion (obj) {
         return (false);
     }
 
-    var categoria = obj.categoria.value;
-    if (!categoria){
+    var latitud = obj.latitud.value;
+    if (!latitud) {
         Swal.fire({
             title: 'Recepción de Recaudos',
-            text: "Debe seleccionar una categoria.",
+            text: "Debe ingresar la latitud.",
             icon: 'warning',
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -1914,15 +1914,52 @@ function Recepcion (obj) {
             this.submit();
         }
         })
-        
+
+        obj.latitud.focus();
+        return false;
+    }
+
+    if (latitud.trim() == "") {
+        Swal.fire({
+            title: 'Recepción de Recaudos',
+            text: "El campo de latitud no debe contener espacios en blanco.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+
+        obj.latitud.focus();
+        return false;
+    }
+
+    if (latitud.length < 5){
+        Swal.fire({
+            title: 'Recepción de Recaudos',
+            text: "Faltan dígitos en este campo de texto.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+       
+        obj.latitud.focus();
         return (false);
     }
 
-    var nom_mineral = obj.nom_mineral.value;
-    if (!nom_mineral){
+    var longitud = obj.longitud.value;
+    if (!longitud) {
         Swal.fire({
             title: 'Recepción de Recaudos',
-            text: "Debe seleccionar un mineral.",
+            text: "Debe ingresar la longitud.",
             icon: 'warning',
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -1932,7 +1969,44 @@ function Recepcion (obj) {
             this.submit();
         }
         })
-        
+
+        obj.longitud.focus();
+        return false;
+    }
+
+    if (longitud.trim() == "") {
+        Swal.fire({
+            title: 'Recepción de Recaudos',
+            text: "El campo de longitud no debe contener espacios en blanco.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+
+        obj.longitud.focus();
+        return false;
+    }
+
+    if (longitud.length < 5){
+        Swal.fire({
+            title: 'Recepción de Recaudos',
+            text: "Faltan dígitos en este campo de texto.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+       
+        obj.longitud.focus();
         return (false);
     }
 
@@ -2006,6 +2080,42 @@ function Recepcion (obj) {
         })
        
         obj.direccion.focus();
+        return (false);
+    }
+    
+    var categoria = obj.categoria.value;
+    if (!categoria){
+        Swal.fire({
+            title: 'Recepción de Recaudos',
+            text: "Debe seleccionar una categoria.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return (false);
+    }
+
+    var nom_mineral = document.getElementById('nom_mineral').value;
+    if (nom_mineral === "0"){
+        Swal.fire({
+            title: 'Recepción de Recaudos',
+            text: "Debe seleccionar un mineral.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
         return (false);
     }
 
@@ -2108,353 +2218,597 @@ function Planificacion (obj) {
 }
 
 // Validar INSPECCIÓN
-// function Inspeccion (obj) {
-//     var funcionario = obj.funcionario.value;
-//     if (!funcionario) {
-//         Swal.fire({
-//             title: 'Inspección',
-//             text: "Debe registar el funcionario acomapañante.",
-//             icon: 'warning',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             }).then((result) => {
-//         if (result.isConfirmed) {
+function Inspeccion (obj) {
+    var funcionario_acomp = obj.funcionario_acomp.value;
+    if (!funcionario_acomp) {
+        Swal.fire({
+            title: 'Inspección',
+            text: "Debe registar el funcionario acomapañante.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
-//             this.submit();
-//         }
-//         })
+            this.submit();
+        }
+        })
         
-//         return (false);
-//     }
+        return (false);
+    }
 
-//     if (funcionario.trim() == "") {
-//         Swal.fire({
-//             title: 'Inspección',
-//             text: "El campo de funcionario acomapañante no debe contener espacios en blanco.",
-//             icon: 'warning',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             }).then((result) => {
-//         if (result.isConfirmed) {
+    if (funcionario_acomp.trim() == "") {
+        Swal.fire({
+            title: 'Inspección',
+            text: "El campo de funcionario acomapañante no debe contener espacios en blanco.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
-//             this.submit();
-//         }
-//         })
+            this.submit();
+        }
+        })
 
-//         return false;
-//     }
+        return false;
+    }
 
-//     if (/(\w)\2+/i.test(funcionario.toLowerCase())) {
-//     Swal.fire({
-//             title: 'Inspección',
-//             text: "El campo funcionario acomapañante no debe contener caracteres repetidos.",
-//             icon: 'warning',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             }).then((result) => {
-//         if (result.isConfirmed) {
+    if (/(\w)\2+/i.test(funcionario_acomp.toLowerCase())) {
+    Swal.fire({
+            title: 'Inspección',
+            text: "El campo funcionario acomapañante no debe contener caracteres repetidos.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
-//             this.submit();
-//         }
-//         })
+            this.submit();
+        }
+        })
         
-//         return false;
-//     }
+        return false;
+    }
 
-//     if (funcionario.length < 5){
-//         Swal.fire({
-//             title: 'Inspección',
-//             text: "Faltan dígitos en este campo de texto.",
-//             icon: 'warning',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             }).then((result) => {
-//         if (result.isConfirmed) {
+    if (funcionario_acomp.length < 5){
+        Swal.fire({
+            title: 'Inspección',
+            text: "Faltan dígitos en este campo de texto.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
-//             this.submit();
-//         }
-//         })
+            this.submit();
+        }
+        })
        
-//         return (false);
-//     }
+        return (false);
+    }
 
-//     var observaciones = obj.observaciones.value;
-//     if (!observaciones) {
-//         Swal.fire({
-//             title: 'Inspección',
-//             text: "Debe registar el funcionario acomapañante.",
-//             icon: 'warning',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             }).then((result) => {
-//         if (result.isConfirmed) {
+    var observaciones = obj.observaciones.value;
+    if (!observaciones) {
+        Swal.fire({
+            title: 'Inspección',
+            text: "Debe registar las observaciones.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
-//             this.submit();
-//         }
-//         })
+            this.submit();
+        }
+        })
 
-//         obj.observaciones.focus();
-//         return false;
-//     }
+        obj.observaciones.focus();
+        return false;
+    }
 
-//     if (observaciones.trim() == "") {
-//         Swal.fire({
-//             title: 'Inspección',
-//             text: "El campo de funcionario acomapañante no debe contener espacios en blanco.",
-//             icon: 'warning',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             }).then((result) => {
-//         if (result.isConfirmed) {
+    if (observaciones.trim() == "") {
+        Swal.fire({
+            title: 'Inspección',
+            text: "El campo de observaciones no debe contener espacios en blanco.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
-//             this.submit();
-//         }
-//         })
+            this.submit();
+        }
+        })
 
-//         obj.observaciones.focus();
-//         return false;
-//     }
+        obj.observaciones.focus();
+        return false;
+    }
 
-//     if (/(\w)\2+/i.test(observaciones.toLowerCase())) {
-//     Swal.fire({
-//             title: 'Inspección',
-//             text: "El campo funcionario acomapañante no debe contener caracteres repetidos.",
-//             icon: 'warning',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             }).then((result) => {
-//         if (result.isConfirmed) {
+    if (/(\w)\2+/i.test(observaciones.toLowerCase())) {
+    Swal.fire({
+            title: 'Inspección',
+            text: "El campo observaciones no debe contener caracteres repetidos.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
-//             this.submit();
-//         }
-//         })
+            this.submit();
+        }
+        })
         
-//         obj.observaciones.focus();
-//         return false;
-//     }
+        obj.observaciones.focus();
+        return false;
+    }
 
-//     if (observaciones.length < 5){
-//         Swal.fire({
-//             title: 'Inspección',
-//             text: "Faltan dígitos en este campo de texto.",
-//             icon: 'warning',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             }).then((result) => {
-//         if (result.isConfirmed) {
+    if (observaciones.length < 5){
+        Swal.fire({
+            title: 'Inspección',
+            text: "Faltan dígitos en este campo de texto.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
-//             this.submit();
-//         }
-//         })
+            this.submit();
+        }
+        })
        
-//         obj.observaciones.focus();
-//         return (false);
-//     }
+        obj.observaciones.focus();
+        return (false);
+    }
 
-//     var conclusiones = obj.conclusiones.value;
-//     if (!conclusiones) {
-//         Swal.fire({
-//             title: 'Inspección',
-//             text: "Debe registar el funcionario acomapañante.",
-//             icon: 'warning',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             }).then((result) => {
-//         if (result.isConfirmed) {
+    var conclusiones = obj.conclusiones.value;
+    if (!conclusiones) {
+        Swal.fire({
+            title: 'Inspección',
+            text: "Debe registar las conclusiones.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
-//             this.submit();
-//         }
-//         })
+            this.submit();
+        }
+        })
 
-//         obj.conclusiones.focus();
-//         return false;
-//     }
+        obj.conclusiones.focus();
+        return false;
+    }
 
-//     if (conclusiones.trim() == "") {
-//         Swal.fire({
-//             title: 'Inspección',
-//             text: "El campo de funcionario acomapañante no debe contener espacios en blanco.",
-//             icon: 'warning',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             }).then((result) => {
-//         if (result.isConfirmed) {
+    if (conclusiones.trim() == "") {
+        Swal.fire({
+            title: 'Inspección',
+            text: "El campo de conclusiones no debe contener espacios en blanco.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
-//             this.submit();
-//         }
-//         })
+            this.submit();
+        }
+        })
 
-//         obj.conclusiones.focus();
-//         return false;
-//     }
+        obj.conclusiones.focus();
+        return false;
+    }
 
-//     if (/(\w)\2+/i.test(conclusiones.toLowerCase())) {
-//     Swal.fire({
-//             title: 'Inspección',
-//             text: "El campo funcionario acomapañante no debe contener caracteres repetidos.",
-//             icon: 'warning',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             }).then((result) => {
-//         if (result.isConfirmed) {
+    if (/(\w)\2+/i.test(conclusiones.toLowerCase())) {
+    Swal.fire({
+            title: 'Inspección',
+            text: "El campo conclusiones no debe contener caracteres repetidos.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
-//             this.submit();
-//         }
-//         })
+            this.submit();
+        }
+        })
         
-//         obj.conclusiones.focus();
-//         return false;
-//     }
+        obj.conclusiones.focus();
+        return false;
+    }
 
-//     if (conclusiones.length < 5){
-//         Swal.fire({
-//             title: 'Inspección',
-//             text: "Faltan dígitos en este campo de texto.",
-//             icon: 'warning',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             }).then((result) => {
-//         if (result.isConfirmed) {
+    if (conclusiones.length < 5){
+        Swal.fire({
+            title: 'Inspección',
+            text: "Faltan dígitos en este campo de texto.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
-//             this.submit();
-//         }
-//         })
+            this.submit();
+        }
+        })
        
-//         obj.conclusiones.focus();
-//         return (false);
-//     }
+        obj.conclusiones.focus();
+        return (false);
+    }
 
-//     var conclusiones = obj.conclusiones.value;
-//     if (!conclusiones) {
-//         Swal.fire({
-//             title: 'Inspección',
-//             text: "Debe registar el funcionario acomapañante.",
-//             icon: 'warning',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             }).then((result) => {
-//         if (result.isConfirmed) {
+    var latitud = obj.latitud.value;
+    if (!latitud){
+        Swal.fire({
+            title: 'Inspección',
+            text: "Debe registrar la latitud.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
-//             this.submit();
-//         }
-//         })
-
-//         obj.conclusiones.focus();
-//         return false;
-//     }
-
-//     if (conclusiones.trim() == "") {
-//         Swal.fire({
-//             title: 'Inspección',
-//             text: "El campo de funcionario acomapañante no debe contener espacios en blanco.",
-//             icon: 'warning',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             }).then((result) => {
-//         if (result.isConfirmed) {
-
-//             this.submit();
-//         }
-//         })
-
-//         obj.conclusiones.focus();
-//         return false;
-//     }
-
-//     if (/(\w)\2+/i.test(conclusiones.toLowerCase())) {
-//     Swal.fire({
-//             title: 'Inspección',
-//             text: "El campo funcionario acomapañante no debe contener caracteres repetidos.",
-//             icon: 'warning',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             }).then((result) => {
-//         if (result.isConfirmed) {
-
-//             this.submit();
-//         }
-//         })
+            this.submit();
+        }
+        })
         
-//         obj.conclusiones.focus();
-//         return false;
-//     }
+        return (false);
+    }
 
-//     if (conclusiones.length < 5){
-//         Swal.fire({
-//             title: 'Inspección',
-//             text: "Faltan dígitos en este campo de texto.",
-//             icon: 'warning',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             }).then((result) => {
-//         if (result.isConfirmed) {
+    if (latitud.trim() == "") {
+        Swal.fire({
+            title: 'Inspección',
+            text: "El campo de latitud no debe contener espacios en blanco.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
-//             this.submit();
-//         }
-//         })
+            this.submit();
+        }
+        })
+
+        obj.latitud.focus();
+        return false;
+    }
+
+    var longitud = obj.longitud.value;
+    if (!longitud){
+        Swal.fire({
+            title: 'Inspección',
+            text: "Debe registrar la longitud.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return (false);
+    }
+
+    if (longitud.trim() == "") {
+        Swal.fire({
+            title: 'Inspección',
+            text: "El campo de longitud no debe contener espacios en blanco.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+
+        obj.longitud.focus();
+        return false;
+    }
+
+    var lugar_direccion = obj.lugar_direccion.value;
+    if (!lugar_direccion) {
+        Swal.fire({
+            title: 'Inspección',
+            text: "Debe registar el lugar.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+
+        obj.lugar_direccion.focus();
+        return false;
+    }
+
+    if (lugar_direccion.trim() == "") {
+        Swal.fire({
+            title: 'Inspección',
+            text: "El campo de lugar no debe contener espacios en blanco.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+
+        obj.lugar_direccion.focus();
+        return false;
+    }
+
+    if (/(\w)\2+/i.test(lugar_direccion.toLowerCase())) {
+    Swal.fire({
+            title: 'Inspección',
+            text: "El campo lugar no debe contener caracteres repetidos.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        obj.lugar_direccion.focus();
+        return false;
+    }
+
+    if (lugar_direccion.length < 5){
+        Swal.fire({
+            title: 'Inspección',
+            text: "Faltan dígitos en este campo de texto.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
        
-//         obj.conclusiones.focus();
-//         return (false);
-//     }
+        obj.lugar_direccion.focus();
+        return (false);
+    }
 
-//     var latitud = obj.latitud.value;
-//     if (!latitud){
-//         Swal.fire({
-//             title: 'Inspección',
-//             text: "Debe registrar la latitud.",
-//             icon: 'warning',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             }).then((result) => {
-//         if (result.isConfirmed) {
+    var utm_norte = obj.utm_norte.value;
+    if (!utm_norte){
+        Swal.fire({
+            title: 'Inspección',
+            text: "Debe registrar la utm norte.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
-//             this.submit();
-//         }
-//         })
+            this.submit();
+        }
+        })
         
-//         return (false);
-//     }
+        return (false);
+    }
 
-//     var longitud = obj.longitud.value;
-//     if (!longitud){
-//         Swal.fire({
-//             title: 'Inspección',
-//             text: "Debe registrar la longitud.",
-//             icon: 'warning',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             }).then((result) => {
-//         if (result.isConfirmed) {
+    if (utm_norte.trim() == "") {
+        Swal.fire({
+            title: 'Inspección',
+            text: "El campo de utm norte no debe contener espacios en blanco.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
-//             this.submit();
-//         }
-//         })
+            this.submit();
+        }
+        })
+
+        obj.utm_norte.focus();
+        return false;
+    }
+
+    var utm_este = obj.utm_este.value;
+    if (!utm_este){
+        Swal.fire({
+            title: 'Inspección',
+            text: "Debe registrar la utm este.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
         
-//         return (false);
-//     }
+        return (false);
+    }
 
-//     var res_fotos = obj.res_fotos.value;
-//     if (!res_fotos){
-//         Swal.fire({
-//             title: 'Inspección',
-//             text: "Debe registrar una o mas fotos.",
-//             icon: 'warning',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             }).then((result) => {
-//         if (result.isConfirmed) {
+    if (utm_este.trim() == "") {
+        Swal.fire({
+            title: 'Inspección',
+            text: "El campo de utm este no debe contener espacios en blanco.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
-//             this.submit();
-//         }
-//         })
+            this.submit();
+        }
+        })
+
+        obj.utm_este.focus();
+        return false;
+    }
+
+    // document.getElementById('res_fotos').addEventListener('change', function() {
+    //     var res_fotos = document.getElementById('res_fotos').files;
+    //     if (res_fotos.length === 0) {
+    //         Swal.fire({
+    //             title: 'Inspección',
+    //             text: "Debe registrar una o más fotos.",
+    //             icon: 'warning',
+    //             confirmButtonColor: '#3085d6',
+    //             cancelButtonColor: '#d33',
+    //         });
+    //     }
+    // });
+    
+    var longitud_terreno =  document.getElementById('longitud_terreno').value;
+    if (!longitud_terreno){
+        Swal.fire({
+            title: 'Inspección',
+            text: "Debe registrar la Longitud del terreno.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
         
-//         return (false);
-//     }
+        return (false);
+    }
 
-// }
+    if (longitud_terreno.trim() == "") {
+        Swal.fire({
+            title: 'Inspección',
+            text: "El campo de Longitud del terreno no debe contener espacios en blanco.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
 
+            this.submit();
+        }
+        })
 
+        obj.longitud_terreno.focus();
+        return false;
+    }
 
+    var ancho =  document.getElementById('ancho').value;
+    if (!ancho){
+        Swal.fire({
+            title: 'Inspección',
+            text: "Debe registrar el Ancho del terreno.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return (false);
+    }
+
+    if (ancho.trim() == "") {
+        Swal.fire({
+            title: 'Inspección',
+            text: "El campo de Ancho del terreno no debe contener espacios en blanco.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+
+        obj.ancho.focus();
+        return false;
+    }
+
+    var profundidad =  document.getElementById('profundidad').value;
+    if (!profundidad){
+        Swal.fire({
+            title: 'Inspección',
+            text: "Debe registrar la Profundidad del terreno.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return (false);
+    }
+
+    if (profundidad.trim() == "") {
+        Swal.fire({
+            title: 'Inspección',
+            text: "El campo de Profundidad del terreno no debe contener espacios en blanco.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+
+        obj.profundidad.focus();
+        return false;
+    }
+
+    var volumen =  document.getElementById('volumen').value;
+    if (!volumen){
+        Swal.fire({
+            title: 'Inspección',
+            text: "Debe registrar el Volumen del terreno.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return (false);
+    }
+
+    if (volumen.trim() == "") {
+        Swal.fire({
+            title: 'Inspección',
+            text: "El campo de Volumen del terreno no debe contener espacios en blanco.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+
+        obj.volumen.focus();
+        return false;
+    }
+
+}
 
 // Fin de la validación del Sistema Minas //
 

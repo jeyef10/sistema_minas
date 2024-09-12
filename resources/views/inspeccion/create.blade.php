@@ -130,17 +130,17 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Funcionario Acompañante</label>
-                                        <textarea class="form-control" id="funcionario" name="funcionario_acomp" cols="10" rows="10" style="max-height: 6rem;"  oninput="capitalizarInput('funcionario')"></textarea>                                   
+                                        <textarea class="form-control" id="funcionario_acomp" name="funcionario_acomp" cols="10" rows="10" style="max-height: 6rem;"  oninput="capitalizarInput('funcionario')"> {{ old('funcionario_acomp') }} </textarea>                                   
                                     </div>
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Observaciones</label>
-                                        <textarea class="form-control" id="observaciones" name="observaciones" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('observaciones')"></textarea>                                   
+                                        <textarea class="form-control" id="observaciones" name="observaciones" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('observaciones')"> {{ old('observaciones') }} </textarea>                                   
                                     </div>
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Conclusiones</label>
-                                        <textarea class="form-control" id="conclusiones" name="conclusiones" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('conclusiones')"></textarea>                                   
+                                        <textarea class="form-control" id="conclusiones" name="conclusiones" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('conclusiones')"> {{ old('conclusiones') }} </textarea>                                   
                                     </div>
 
                                 </div>
@@ -155,17 +155,17 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Latitud</label>
-                                        <input type="text" class="form-control" id="latitud" name="latitud" style="background: white;" value="" placeholder="Ingrese la Latitud" autocomplete="off" onkeypress="return solonum(event);">                                  
+                                        <input type="text" class="form-control" id="latitud" name="latitud" style="background: white;" value="{{ old('latitud') }}" placeholder="Ingrese la Latitud" autocomplete="off" onkeypress="return solonum(event);">                                  
                                     </div>
     
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Longitud</label>
-                                        <input type="text" class="form-control" id="longitud" name="longitud" style="background: white;" value="" placeholder="Ingrese la Longitud" autocomplete="off" onkeypress="return solonum(event);">                                  
+                                        <input type="text" class="form-control" id="longitud" name="longitud" style="background: white;" value="{{ old('longitud') }}" placeholder="Ingrese la Longitud" autocomplete="off" onkeypress="return solonum(event);">                                  
                                     </div>
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Lugar</label>
-                                        <textarea class="form-control" id="lugar_direccion" name="lugar_direccion" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('lugar_direccion')"></textarea>                                   
+                                        <textarea class="form-control" id="lugar_direccion" name="lugar_direccion" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('lugar_direccion')"> {{ old('lugar_direccion') }} </textarea>                                   
                                     </div>
 
                                     <div class="col-8">
@@ -174,10 +174,10 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">UTM Norte</label>
-                                        <input type="text" class="form-control" id="utm_norte" name="utm_norte" style="background: white;" value="" placeholder="Ingrese la Longitud" autocomplete="off" onkeypress="return solonum(event);">                                  
+                                        <input type="text" class="form-control" id="utm_norte" name="utm_norte" style="background: white;" value="{{ old('utm_norte') }}" placeholder="Ingrese la utm_norte" autocomplete="off" onkeypress="return solonum(event);">                                  
                                     
                                         <label  class="font-weight-bold text-primary">UTM Este</label>
-                                        <input type="text" class="form-control" id="utm_este" name="utm_este" style="background: white;" value="" placeholder="Ingrese la Longitud" autocomplete="off" onkeypress="return solonum(event);">                           
+                                        <input type="text" class="form-control" id="utm_este" name="utm_este" style="background: white;" value="{{ old('utm_este') }}" placeholder="Ingrese la utm_este" autocomplete="off" onkeypress="return solonum(event);">                           
                                     </div>
 
                                 </div>
@@ -227,7 +227,7 @@
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Longitud</label>
                                             <div style="display: flex">
-                                                <input type="text" class="form-control" id="longitud_terreno" name="longitud_terreno" style="background: white; width: 78%; margin-right: 2%;" value="" placeholder="Ingrese la Longitud" autocomplete="off" onkeypress="return solonum(event);">
+                                                <input type="text" class="form-control" id="longitud_terreno" name="longitud_terreno" style="background: white; width: 78%; margin-right: 2%;" value="{{ old('longitud_terreno') }}" placeholder="Ingrese la Longitud" autocomplete="off" onkeypress="return solonum(event);">
                                                 <select class="select2-single form-control" style="width: 20%" disabled>
                                                     <option value="mts" selected>mts</option>
                                                 </select>
@@ -236,7 +236,7 @@
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Ancho Máximo</label>
                                             <div style="display: flex">
-                                                <input type="text" class="form-control" id="ancho" name="ancho" style="background: white; width: 78%; margin-right: 2%;" value="" placeholder="Ingrese el Ancho" autocomplete="off" onkeypress="return solonum(event);">
+                                                <input type="text" class="form-control" id="ancho" name="ancho" style="background: white; width: 78%; margin-right: 2%;" value="{{ old('ancho') }}" placeholder="Ingrese el Ancho" autocomplete="off" onkeypress="return solonum(event);">
                                                 <select class="select2-single form-control" style="width: 20%" disabled>
                                                     <option value="mts" selected>mts</option>
                                                 </select>
@@ -245,7 +245,7 @@
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Profundidad Máxima</label>
                                             <div style="display: flex">
-                                                <input type="text" class="form-control" id="profundidad" name="profundidad" style="background: white; width: 78%; margin-right: 2%;" value="" placeholder="Ingrese la Profundidad" autocomplete="off" onkeypress="return solonum(event);">
+                                                <input type="text" class="form-control" id="profundidad" name="profundidad" style="background: white; width: 78%; margin-right: 2%;" value="{{ old('profundidad') }}" placeholder="Ingrese la Profundidad" autocomplete="off" onkeypress="return solonum(event);">
                                                 <select class="select2-single form-control" style="width: 20%" disabled>
                                                     <option value="mts" selected>mts</option>
                                                 </select>
@@ -254,7 +254,7 @@
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Volumen a Extraer</label>
                                             <div style="display: flex">
-                                                <input type="text" class="form-control" id="volumen" name="volumen" style="background: white; width: 78%; margin-right: 2%;" value="" placeholder="Ingrese la Volumen" autocomplete="off" onkeypress="return solonum(event);">
+                                                <input type="text" class="form-control" id="volumen" name="volumen" style="background: white; width: 78%; margin-right: 2%;" value="{{ old('volumen') }}" placeholder="Ingrese la Volumen" autocomplete="off" onkeypress="return solonum(event);">
                                                 <select class="select2-single form-control" style="width: 20%" disabled>
                                                     <option value="m3" selected>m³</option>
                                                 </select>
@@ -270,25 +270,25 @@
                                 <div class="row">
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Lindero Norte</label>
-                                        <input type="text" class="form-control" id="lind_norte" name="lindero_norte" style="background: white;" value="" placeholder="Ingrese El Lindero Norte" oninput="capitalizarInput('nombre')" autocomplete="off" >
+                                        <input type="text" class="form-control" id="lind_norte" name="lindero_norte" style="background: white;" value="{{ old('lindero_norte') }}" placeholder="Ingrese El Lindero Norte" oninput="capitalizarInput('nombre')" autocomplete="off" >
                                     </div>
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Lindero Sur</label>
-                                        <input type="text" class="form-control" id="lind_sur" name="lindero_sur" style="background: white;" value="" placeholder="Ingrese El Lindero Sur" oninput="capitalizarInput('nombre')" autocomplete="off" >
+                                        <input type="text" class="form-control" id="lind_sur" name="lindero_sur" style="background: white;" value="{{ old('lindero_sur') }}" placeholder="Ingrese El Lindero Sur" oninput="capitalizarInput('nombre')" autocomplete="off" >
                                     </div>
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Lindero Este</label>
-                                        <input type="text" class="form-control" id="lind_este" name="lindero_este" style="background: white;" value="" placeholder="Ingrese El Lindero Este" oninput="capitalizarInput('nombre')" autocomplete="off" >
+                                        <input type="text" class="form-control" id="lind_este" name="lindero_este" style="background: white;" value="{{ old('lindero_este') }}" placeholder="Ingrese El Lindero Este" oninput="capitalizarInput('nombre')" autocomplete="off" >
                                     </div>
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Lindero Oeste</label>
-                                        <input type="text" class="form-control" id="lind_oeste" name="lindero_oeste" style="background: white;" value="" placeholder="Ingrese El Lindero Oeste" oninput="capitalizarInput('nombre')" autocomplete="off" >
+                                        <input type="text" class="form-control" id="lind_oeste" name="lindero_oeste" style="background: white;" value="{{ old('lindero_oeste') }}" placeholder="Ingrese El Lindero Oeste" oninput="capitalizarInput('nombre')" autocomplete="off" >
                                     </div>
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Superficie</label>
                                             <div style="display: flex">
-                                                <input type="text" class="form-control" id="superficie" name="superficie" style="background: white; width: 78%; margin-right: 2%;" value="" placeholder="Ingrese la Superficie" autocomplete="off" onkeypress="return solonum(event);">
+                                                <input type="text" class="form-control" id="superficie" name="superficie" {{ old('superficie') }} style="background: white; width: 78%; margin-right: 2%;" value="" placeholder="Ingrese la Superficie" autocomplete="off" onkeypress="return solonum(event);">
                                                 <select class="select2-single form-control" style="width: 20%" disabled>
                                                     <option value="ha" selected>ha</option>
                                                 </select>
@@ -533,9 +533,31 @@
 
     </script>
 
+    {{--! FUNCIÓN PARA MOSTRAR LA ALERTA DE LA FOTO --}}
+
+    {{-- @if ($errors->any())
+    <script>
+        var errorMessage = @json($errors->first());
+        Swal.fire({
+                title: 'Inspección',
+                text: "Debe seleccionar al menos una o mas Fotos.",
+                icon: 'warning',
+                showconfirmButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: '¡OK!',
+                
+                }).then((result) => {
+            if (result.isConfirmed) {
+
+                this.submit();
+            }
+            })
+    </script>
+    @endif --}}
+
     {{--! FUNCIÓN PARA MOSTRAR LA ALERTA DE LA FECHA --}}
 
-    @if ($errors->any())
+    {{-- @if ($errors->any())
     <script>
         var errorMessage = @json($errors->first());
         Swal.fire({
@@ -553,6 +575,22 @@
             }
             })
     </script>
+    @endif --}}
+
+    @if ($errors->any())
+        <script>
+            var errors = @json($errors->all());
+            errors.forEach(function(error) {
+                Swal.fire({
+                    title: 'Inspección',
+                    text: error,
+                    icon: 'warning',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: '¡OK!',
+                });
+            });
+        </script>
     @endif
 
 @endsection

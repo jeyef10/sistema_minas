@@ -189,25 +189,25 @@
  
                  $('#solicitante').html(options); // Update the 'Solicitante' select with new options
  
-                 // Update num_minero input when option is selected
-                 $('#solicitante').change(function() {
-                 var selectedSolicitante = $(this).val();
-                 if (selectedSolicitante) {
-                     var selectedSolicitanteData = data.find(function(solicitante) {
-                     return solicitante.id == selectedSolicitante;
-                     });
+                //  // Update num_minero input when option is selected
+                //  $('#solicitante').change(function() {
+                //  var selectedSolicitante = $(this).val();
+                //  if (selectedSolicitante) {
+                //      var selectedSolicitanteData = data.find(function(solicitante) {
+                //      return solicitante.id == selectedSolicitante;
+                //      });
  
-                     if (selectedSolicitanteData) {
-                     numMineroInput.val(selectedSolicitanteData.num_minero);
-                     } else {
-                     // This could happen if no matching solicitante is found
-                     console.warn('No matching solicitante found for ID:', selectedSolicitante);
-                     }
-                 } else {
-                     // This block executes if no solicitante is selected
-                      um_minero input
-                 }
-                 });
+                //      if (selectedSolicitanteData) {
+                //      numMineroInput.val(selectedSolicitanteData.num_minero);
+                //      } else {
+                //      // This could happen if no matching solicitante is found
+                //      console.warn('No matching solicitante found for ID:', selectedSolicitante);
+                //      }
+                //  } else {
+                //      // This block executes if no solicitante is selected
+                //       um_minero input
+                //  }
+                //  });
                  // Trigger nested change event listener on programmatically updated solicitante
                  $('#solicitante').trigger('change');
              },

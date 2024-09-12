@@ -68,8 +68,25 @@ class InspeccionesController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [
+        /* $this->validate($request, [
+            'res_fotos' => 'required|array|min:1',
+            'res_fotos.*' => 'image|mimes:jpeg,png,jpg,gif,svg',
             'fecha_inspeccion' => 'required|date_format:d/m/Y|after_or_equal:today|before_or_equal:'. date('d/m/Y', strtotime('+7 days')),
+            ]); */
+
+            $this->validate($request, [
+                'res_fotos' => 'required|array|min:1',
+                'res_fotos.*' => 'image|mimes:jpeg,png,jpg,gif,svg',
+                'fecha_inspeccion' => 'required|date_format:d/m/Y|after_or_equal:today|before_or_equal:' . date('d/m/Y', strtotime('+7 days')),
+            ], [
+                'res_fotos.required' => 'Debe registrar una o más fotos.',
+                'res_fotos.min' => 'Debe registrar al menos una foto.',
+                'res_fotos.*.image' => 'Cada archivo debe ser una imagen.',
+                'res_fotos.*.mimes' => 'Las imágenes deben ser de tipo jpeg, png, jpg, gif o svg.',
+                'fecha_inspeccion.required' => 'La fecha de inspección es obligatoria.',
+                'fecha_inspeccion.date_format' => 'El formato de la fecha de inspección no es válido.',
+                'fecha_inspeccion.after_or_equal' => 'La fecha de inspección debe ser hoy o una fecha futura.',
+                'fecha_inspeccion.before_or_equal' => 'La fecha de inspección no puede ser más de 7 días en el futuro.',
             ]);
 
         // Crear una nueva Inspección
@@ -84,7 +101,6 @@ class InspeccionesController extends Controller
         $inspecciones->utm_norte = $request->input('utm_norte');
         $inspecciones->utm_este = $request->input('utm_este');
         
-    
 
         // Verificar si se han cargado archivos
         if ($request->hasFile('res_fotos')) {
@@ -124,7 +140,7 @@ class InspeccionesController extends Controller
 
         try {
         
-            return redirect('licencia');
+            return redirect('comprobantepago');
     
             } catch (QueryException $exception) {
                 $errorMessage = 'Error: .';
