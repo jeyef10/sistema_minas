@@ -23,7 +23,8 @@ use App\Http\Controllers\InspeccionesController;
 use App\Http\Controllers\ComprobantePagoController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\LicenciaController;
-use App\Http\Controllers\ControlController;
+use App\Http\Controllers\PagoRegaliaController;
+use App\Http\Controllers\ControlRegaliaController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ManualController;
 
@@ -171,11 +172,14 @@ Route::get('/licencia/create/{id}', [LicenciaController::class, 'create'])->name
 Route::resource('licencia', LicenciaController::class)->middleware('auth');
 Route::get('/licencia/detalles/{id}', [LicenciaController::class, 'getComprobanteDetalles']);
 
-/* Ruta Licencia */
-Route::get('/control', [ControlController::class,'index'])->name('control')->middleware('auth');
-Route::get('/control/create', [ControlController::class, 'create'])->name('create')->middleware('auth');
-Route::get('/control/create/{id}', [ControlController::class, 'create'])->name('control.create')->middleware('auth');
-Route::resource('control', ControlController::class)->middleware('auth');
+/* Ruta Poga Regalia */
+Route::get('/pago_regalia', [PagoRegaliaController::class,'index'])->name('pago_regalia')->middleware('auth');
+Route::get('/pago_regalia/create', [PagoRegaliaController::class, 'create'])->name('create')->middleware('auth');
+Route::get('/pago_regalia/create/{id}', [PagoRegaliaController::class, 'create'])->name('pago_regalia.create')->middleware('auth');
+Route::resource('pago_regalia', PagoRegaliaController::class)->middleware('auth');
+
+/* Ruta Control de Pago */
+Route::get('/control_regalia', [ControlRegaliaController::class,'index'])->name('control_regalia')->middleware('auth');
 
 /* Ruta Bitacora*/
 Route::get('bitacora', [ReporteController::class, 'bitacora'])->name('bitacora')->middleware('auth');

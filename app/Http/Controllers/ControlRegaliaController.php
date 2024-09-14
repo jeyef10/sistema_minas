@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Control;
-use App\Models\Licencias;
+use App\Models\ControlRegalia;
+use App\Models\PagoRegalia;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,10 +12,9 @@ use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\BitacoraController;
 
-class ControlController extends Controller
+
+class ControlRegaliaController extends Controller
 {
-
-
     /**
      * Display a listing of the resource.
      *
@@ -23,9 +22,9 @@ class ControlController extends Controller
      */
     public function index()
     {
-        $licencias = licencias::all();
+        $pago_regalias = PagoRegalia::all();
 
-        return view('control.index', compact('licencias'));
+        return view('control_regalia.index', compact('pago_regalias'));
     }
 
     /**
@@ -52,10 +51,10 @@ class ControlController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Control  $control
+     * @param  \App\Models\ControlRegalia  $controlRegalia
      * @return \Illuminate\Http\Response
      */
-    public function show(Control $control)
+    public function show(ControlRegalia $controlRegalia)
     {
         //
     }
@@ -63,10 +62,10 @@ class ControlController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Control  $control
+     * @param  \App\Models\ControlRegalia  $controlRegalia
      * @return \Illuminate\Http\Response
      */
-    public function edit(Control $control)
+    public function edit(ControlRegalia $controlRegalia)
     {
         //
     }
@@ -75,10 +74,10 @@ class ControlController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Control  $control
+     * @param  \App\Models\ControlRegalia  $controlRegalia
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Control $control)
+    public function update(Request $request, ControlRegalia $controlRegalia)
     {
         //
     }
@@ -86,10 +85,10 @@ class ControlController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Control  $control
+     * @param  \App\Models\ControlRegalia  $controlRegalia
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Control $control)
+    public function destroy(ControlRegalia $controlRegalia)
     {
         //
     }

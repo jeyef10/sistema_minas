@@ -110,10 +110,11 @@
                     @endcan
 
                    
-                    <a class="collapse-item" href="{{ url('control') }}">Control de Licencias</a>
+                    <a class="collapse-item" href="{{ url('pago_regalia') }}">Control de Licencias</a>
                    
 
-                    {{-- <a class="collapse-item" href="{{ url('Pago') }}">Pago / Talonario</a> --}}
+                    <a class="collapse-item" href="{{ url('control_regalia') }}">Control de Pago</a>
+
                   </div>
                 </div>
               </li>

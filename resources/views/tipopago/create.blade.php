@@ -31,7 +31,7 @@
                                 </div>
 
                                 <div class="col-3">
-                                    <label  class="font-weight-bold text-primary">Metedo de Pago</label>
+                                    <label  class="font-weight-bold text-primary">Metodo de Pago</label>
                                     <select class="select2single form-control" name="forma_pago" id="forma_pago">
                                         <option value="" selected="true" disabled>Seleccione un Metodo de Pago</option>
                                         <option value="Efectivo">Efectivo</option>
