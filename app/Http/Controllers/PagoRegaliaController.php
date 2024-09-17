@@ -50,7 +50,7 @@ class PagoRegaliaController extends Controller
      */
     public function store(Request $request)
     {
-        //Crear una nueva Licencia 
+        //Crear una nueva PagoRegalia 
         $pago_regalias = new PagoRegalia ();
         $pago_regalias->id_licencia = $request->input('id_licencia');
         $pago_regalias->id_regalia = $request->input('id_regalia');
@@ -94,9 +94,24 @@ class PagoRegaliaController extends Controller
      * @param  \App\Models\PagoRegalia  $PagoRegalia
      * @return \Illuminate\Http\Response
      */
-    public function edit(PagoRegalia $PagoRegalia)
+    public function edit($id)
     {
-        //
+        $pago_regalia = PagoRegalia::findOrFail($id);
+        $licencia = licencias::find($id);
+        $regalias = Regalia::all();
+        $id_licencia = $pago_regalia->id_licencia;
+        $id_regalia = $pago_regalia->id_regalia ;
+        $metodo_apro = $pago_regalia->metodo_apro;
+        $monto_apro = $pago_regalia->monto_apro;
+        $metodo_pro = $pago_regalia->metodo_pro;
+        $monto_pro = $pago_regalia->monto_pro;
+        $fecha_pago = $pago_regalia->fecha_pago;
+        $fecha_venci = $pago_regalia->fecha_venci;
+        $estatus_regalia = $pago_regalia->estatus_regalia;
+
+
+        return view('pago_regalia.edit' , compact('pago_regalia', 'licencia', 'regalias', 'id_licencia',
+        'id_regalia', 'metodo_apro', 'monto_apro', 'metodo_pro', 'monto_pro', 'fecha_pago', 'fecha_venci', 'estatus_regalia'));
     }
 
     /**
@@ -106,9 +121,33 @@ class PagoRegaliaController extends Controller
      * @param  \App\Models\PagoRegalia  $PagoRegalia
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PagoRegalia $PagoRegalia)
+    public function update(Request $request, $id)
     {
-        //
+        // Buscar El PagoRegalia existente 
+        $pago_regalia = PagoRegalia::findOrFail($id);
+        $pago_regalia->id_licencia = $request->input('id_licencia');
+        $pago_regalia->id_regalia = $request->input('id_regalia');
+        $pago_regalia->metodo_apro= $request->input('metodo_apro');
+        $pago_regalia->monto_apro = $request->input('monto_apro');
+        $pago_regalia->metodo_pro = $request->input('metodo_pro');
+        $pago_regalia->monto_pro = $request->input('monto_pro');
+        $pago_regalia->fecha_pago = $request->input('fecha_pago');
+        $pago_regalia->fecha_venci = $request->input('fecha_venci');
+        $pago_regalia->estatus_regalia = $request->input('estatus_regalia');
+        
+        $pago_regalia->save();
+
+        $bitacora = new BitacoraController;
+        $bitacora->update();
+
+        try {
+        
+            return redirect('control_regalia');
+    
+            } catch (QueryException $exception) {
+                $errorMessage = 'Error: .';
+                return redirect()->back()->withErrors($errorMessage);
+            }
     }
 
     /**

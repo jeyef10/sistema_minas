@@ -20,6 +20,6 @@ class PagoRegalia extends Model
 
     public function regalia()
     {
-        return $this->belongsTo(Regalias::class, 'id_regalia');
+        return $this->belongsTo(Regalia::class, 'id_regalia');
     }
 }

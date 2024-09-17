@@ -180,6 +180,12 @@ Route::resource('pago_regalia', PagoRegaliaController::class)->middleware('auth'
 
 /* Ruta Control de Pago */
 Route::get('/control_regalia', [ControlRegaliaController::class,'index'])->name('control_regalia')->middleware('auth');
+Route::get('/control_regalia/create', [ControlRegaliaController::class, 'create'])->name('create')->middleware('auth');
+Route::get('/control_regalia/create/{id}', [ControlRegaliaController::class, 'create'])->name('control_regalia.create')->middleware('auth');
+Route::resource('control_regalia', ControlRegaliaController::class)->middleware('auth');
+
+/*Reportes*/
+Route::get('reporte', [ReporteController::class, 'index'])->name('reporte')->middleware('auth');
 
 /* Ruta Bitacora*/
 Route::get('bitacora', [ReporteController::class, 'bitacora'])->name('bitacora')->middleware('auth');

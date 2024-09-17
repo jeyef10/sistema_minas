@@ -20,7 +20,7 @@
                             
                     </div>
 
-                                    {{-- ? TABLA PARA TODOS LOS SOLICITANTES --}}
+                                    {{-- ? TABLA PARA CONTROL DE REGALIA --}}
 
                     <div class="table-responsive p-3" id="t_Aprovechamiento">
                         <table class="table align-items-center table-flush" id="dataTable">
@@ -29,9 +29,9 @@
                                     <th class="font-weight-bold text-Secondary">Tasa de Regalgia</th>
                                     <th class="font-weight-bold text-Secondary">Metodo de pago</th>
                                     <th class="font-weight-bold text-Secondary">Monto</th>
-                                    <th class="font-weight-bold text-Secondary">Fecha de Oficio</th>
-                                    <th class="font-weight-bold text-Secondary">Vigencia de Licencia</th>
-                                    <th class="font-weight-bold text-Secondary">Talonario</th>
+                                    <th class="font-weight-bold text-Secondary">Fecha de Pago</th>
+                                    <th class="font-weight-bold text-Secondary">Fecha de Vecimiento</th>
+                                    <th class="font-weight-bold text-Secondary">Estatus</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center></th>
                                   </tr>
                             </thead>
@@ -46,7 +46,7 @@
                                     @endif
 
                                     </td>
-                                    <td class="font-weight-bold text-Secondary">No dispone</td>
+                                    
                                         <td class="font-weight-bold text-Secondary">
                                         @if ($pago_regalia->metodo_apro)
                                             {{ $pago_regalia->metodo_apro }}

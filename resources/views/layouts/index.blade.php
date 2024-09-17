@@ -76,7 +76,6 @@
 
                     <a class="collapse-item" href="{{ url('tipopago') }}">Tipo de Pago</a>
                     
-                    {{-- <a class="collapse-item" href="{{ url('categoria') }}">Categoria</a> --}}
                   </div>
                 </div>
               </li>
@@ -118,39 +117,22 @@
                   </div>
                 </div>
               </li>
-              {{-- <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable" aria-expanded="true"
-                  aria-controls="collapseTable">
-                  <i class="fas fa-fw fa-table"></i>
-                  <span>Tables</span>
-                </a>
-                <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
-                  <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Tables</h6>
-                    <a class="collapse-item" href="simple-tables.html">Simple Tables</a>
-                    <a class="collapse-item" href="datatables.html">DataTables</a>
-                  </div>
-                </div>
-              </li> --}}
               
               <hr class="sidebar-divider">
               <div class="sidebar-heading">
                 
               </div>
               <li class="nav-item">
-                <a class="nav-link collapsed" >
+                <a class="nav-link collapsed" href="{{ url('reporte') }}" >
                   <i class="fas fa-fw fa-columns"></i>
+                  <span>Reportes</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url('estadistica') }}">
+                  <i class="fas fa-fw fa-table"></i>
                   <span>Estadísticas</span>
                 </a>
-                <div id="collapsePage" class="collapse" aria-labelledby="headingPage" data-parent="#accordionSidebar">
-                  <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Example Pages</h6>
-                    <a class="collapse-item" href="login.html">Login</a>
-                    <a class="collapse-item" href="register.html">Register</a>
-                    <a class="collapse-item" href="404.html">404 Page</a>
-                    <a class="collapse-item" href="blank.html">Blank Page</a>
-                  </div>
-                </div>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{ url('bitacora') }}">
@@ -159,13 +141,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="">
-                  <i class="fas fa-fw fa-table"></i>
-                  <span>Reportes</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="{{ url('manual') }}">
                   <i class="fas fa-fw fa-table"></i>
                   <span>Manuales</span>
                 </a>
