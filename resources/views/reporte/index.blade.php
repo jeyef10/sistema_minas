@@ -26,42 +26,52 @@
                         <table class="table align-items-center table-flush" id="dataTable">
                             <thead class="thead-light">
                                 <tr>
-                                    <th class="font-weight-bold text-Secondary">N Resolución</th>
+                                    <th class="font-weight-bold text-Secondary">Tipo de Licencia</th>
                                     <th class="font-weight-bold text-Secondary">Catastro Minero</th>
-                                    <th class="font-weight-bold text-Secondary">N°Providencia/N°Territorio</th>
-                                    <th class="font-weight-bold text-Secondary">Fecha de Oficio</th>
+                                    <th class="font-weight-bold text-Secondary">Tipo Solicitante</th>
+                                    <th class="font-weight-bold text-Secondary">Solicitante</th>
+                                    <th class="font-weight-bold text-Secondary">Direccion</th>
                                     <th class="font-weight-bold text-Secondary">Vigencia de Licencia</th>
-                                    <th class="font-weight-bold text-Secondary">Talonario</th>
-                                    <th class="font-weight-bold text-Secondary"><center>Acciones</center></th>
                                   </tr>
                             </thead>
                             <tbody>
     
-                                @foreach($resultados as $resultado)
-                                    <tr>
-                                    <td class="font-weight-bold text-Secondary">{{ $resultado->solicitante->tipo }}</td>
-                                        <td class="font-weight-bold text-Secondary">
-                                        @if($resultado->solicitane->solicitanteEspecifico == 'App\Models\PersonaNatural')
-                                            {{ $resultado->solicitante_nombre_natural }}
+                            @foreach($resultados as $resultado)
+                                <tr>
+                                    <td class="font-weight-bold text-secondary">
+                                        @if ($resultado->resolucion_apro)
+                                            {{ $resultado->resolucion_apro }}
                                         @else
-                                            {{ $resultado->solicitante_nombre_juridico }}
+                                            {{ $resultado->resolucion_hpc }}
                                         @endif
-                                        </td>
+                                        {{ $resultado->categoria }}
+                                    </td>
 
-                                        <td class="font-weight-bold text-Secondary">
-                                        @if($resultado->tipo_solicitante == 'App\Models\PersonaNatural')
-                                            {{ $resultado->solicitante_apellido_natural }} / {{ $resultado->solicitante_cedula }}
+                                    <td class="font-weight-bold text-secondary">
+                                        @if ($resultado->catastro_la)
+                                            {{ $resultado->catastro_la }}
                                         @else
-                                            {{ $resultado->solicitante_empresa }}
+                                            {{ $resultado->catastro_lp }}
                                         @endif
-                                        </td>
+                                    </td>
 
-                                        <td class="font-weight-bold text-Secondary">{{ $resultado->lugar }}</td>
-                                        <td class="font-weight-bold text-Secondary">{{ $resultado->municipio }}</td>
-                                        <td class="font-weight-bold text-Secondary">{{ $resultado->licencia_estatus }}</td>
+                                    <td class="font-weight-bold text-secondary">{{ $resultado->solicitante_tipo }}</td>
 
-                                    </tr>
-                                @endforeach
+                                    <td class="font-weight-bold text-secondary">
+                                        @if($resultado->solicitante_tipo == 'App\\Models\\PersonaNatural')
+                                            {{ $resultado->solicitante_cedula ?? 'N/A' }}
+                                            {{ $resultado->solicitante_nombre_natural ?? 'N/A' }} {{ $resultado->solicitante_apellido ?? 'N/A' }}
+                                        @else
+                                            {{ $resultado->solicitante_rif ?? 'N/A' }}
+                                            {{ $resultado->solicitante_nombre_juridico ?? 'N/A' }}
+                                        @endif
+                                    </td>
+
+                                    <td class="font-weight-bold text-secondary">{{ $resultado->direccion }}</td>
+                                    <td class="font-weight-bold text-Secondary">{{ $resultado->plazo->medida_tiempo}} {{ $resultado->plazo->cantidad}}</td>
+                                </tr>
+                            @endforeach
+
                             </tbody>
                         </table>
                     </div>
