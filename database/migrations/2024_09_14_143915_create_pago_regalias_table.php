@@ -20,7 +20,9 @@ return new class extends Migration
             $table->string('metodo_apro')->nullable();
             $table->string('metodo_pro')->nullable(); 
             $table->string('monto_apro')->nullable();
-            $table->string('monto_pro')->nullable();
+            $table->string('resultado_apro')->nullable();
+            $table->string('resultado_pro')->nullable();
+            $table->json('comprobante');
             $table->date('fecha_pago');
             $table->date('fecha_venci');
             $table->string('estatus_regalia');

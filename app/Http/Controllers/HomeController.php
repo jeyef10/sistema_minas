@@ -53,21 +53,21 @@ class homeController extends Controller
         $count_plazo= DB::table('plazos')
         ->count();
 
-        // $mapa_recepcion = Recepcion::all();
-        // $count_recepcion= DB::table('recepcion')
-        // ->count();
+        $mapa_recepcion = Recepcion::all();
+        $count_recepcion = DB::table('recepcion')
+        ->count();
 
-        // $mapa_inspecciones = Inspecciones::all();
-        // $count_inspecciones= DB::table('inspecciones')
-        // ->count();
+        $mapa_inspecciones = Inspecciones::all();
+        $count_inspecciones = DB::table('inspecciones')
+        ->count();
 
         $mapa_recepciones = Recepcion::select('latitud', 'longitud')->get();
         $mapa_inspecciones = Inspecciones::select('latitud', 'longitud')->get();
 
         return view('home.inicio' , compact('count_solicitante', 'count_natural', 'count_juridico', 'count_recaudo','count_comisionado', 'count_mineral','count_regalia', 'count_plazo',
-        'mapa_recepciones','mapa_inspecciones'  ) , [
-        'count' => $count_solicitante, $count_natural, $count_juridico, $count_recaudo,  $count_comisionado,  $count_mineral,   $count_regalia, $count_plazo 
-        // $count_recepcion, $count_inspecciones
+        'count_recepcion','count_inspecciones', 'mapa_recepciones', 'mapa_inspecciones' ) , [
+        'count' => $count_solicitante, $count_natural, $count_juridico, $count_recaudo,  $count_comisionado,  $count_mineral,   
+        $count_regalia, $count_plazo ,$count_recepcion, $count_inspecciones
 
     ]); ;
 

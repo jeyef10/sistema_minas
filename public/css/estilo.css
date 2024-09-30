@@ -59,7 +59,7 @@ body{
 /*       Boton de restablecer contraseña        */
 
 .container a{
-    background-color: #512da8;
+    background-color: #5c6bc0;;
     color: #fff;
     font-size: 12px;
     padding: 10px 45px;
@@ -74,7 +74,7 @@ body{
 } 
 
 .container button{
-    background-color: #512da8;
+    background-color: #5c6bc0;;
     color: #fff;
     font-size: 12px;
     padding: 10px 45px;
@@ -114,12 +114,12 @@ body{
 }
 
 .container input[name="reset_Password"]{
-    background-color: #512da8;
+    background-color: #5c6bc0;;
     color: #fff;
 }
 
 #log-in-button{
-    background-color: #512da8;
+    background-color: #5c6bc0;;
     border: none;
     margin: 8px 0;
     padding: 10px 15px;
@@ -208,9 +208,9 @@ body{
 }
 
 .toggle{
-    background-color: #512da8;
+    background-color: #5c6bc0;;
     height: 100%;
-    background: linear-gradient(to right, #5c6bc0, #512da8);
+    background: linear-gradient(to right, #5c6bc0, #5c6bc0;);
     color: #fff;
     position: relative;
     left: -100%;

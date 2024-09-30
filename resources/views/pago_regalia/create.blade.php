@@ -91,7 +91,7 @@
 
                                     <div class="col-4">
                                         <label for="persona" class="font-weight-bold text-primary">Tasa de Regalias</label>
-                                        <select class="select2-single form-control" id="id_regalia" name="id_regalia">
+                                        <select class="select2-single form-control" id="id_regalia" name="id_regalia" onchange="calcularMonto()">
                                             <option value="0">Seleccione una tasa</option>
                                             @foreach($regalias as $regalia)
                                             <option value="{{ $regalia->id }}">{{ $regalia->monto }} - {{ $regalia->moneda_longitud }}</option>
@@ -99,9 +99,14 @@
                                         </select>
                                     </div>
 
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Monto Metro Cúbico</label>
+                                        <input type="text" class="form-control" id="monto_apro" name="monto_apro" oninput="calcularMonto()" ></input>
+                                    </div>
+
                                     <div class="col-3">
                                         <label  class="font-weight-bold text-primary">Metodo de Pago</label>
-                                        <select class="select2single form-control" name="metodo_apro" id="metodo_apro">
+                                        <select class="select2single form-control" name="metodo_apro" id="metodo_apro" onchange="calcularMonto()">
                                             <option value="" selected="true" disabled>Seleccione un Metodo de Pago</option>
                                             <option value="Pago unico">Pago unico</option>
                                             <option value="Pago 1 parte">Pago 1 parte</option>
@@ -111,8 +116,8 @@
                                     </div>
 
                                     <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Monto </label>
-                                        <input type="text" class="form-control" id="monto_apro" name="monto_apro" oninput="capitalizarInput('')" ></input>
+                                        <label class="font-weight-bold text-primary">Total a Cancelar</label>
+                                        <input type="text" class="form-control" id="resultado_apro" name="resultado_apro" readonly></input>
                                     </div>
 
                                 </div>
@@ -137,6 +142,12 @@
                                         <input type="text" class="form-control" id="monto_pro" name="monto_pro" oninput="capitalizarInput('')" ></input>
                                     </div>
 
+                                    <div class="col-4">
+                                        <label class="font-weight-bold text-primary">Total a Cancelar</label>
+                                        <input type="text" class="form-control" id="resultado_pro" name="resultado_pro" readonly></input>
+                                    </div>
+
+
                                 </div>
 
                             </div>
@@ -147,6 +158,16 @@
 
                                 <div class="row">
 
+                                    <div class="grid grid-cols-1 mt-5 mx-7">
+                                        <img id="miniaturas">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Comprobante</label>
+                                        <input type="file" id="comprobante" name="comprobante[]" multiple class="btn btn-outline-info">
+                                            <div id="pdf_container"></div>
+                                    </div>
+
                                     <div class="col-4">                                     
                                         <div class="form-group" id="simple-date1">
                                             <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha Pago</label>
@@ -154,7 +175,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" id="fecha_pago" name="fecha_pago" class="form-control" value="<?php echo date('d/m/Y'); ?>" id="simpleDataInput">
+                                                <input type="text" id="fecha_pago" name="fecha_pago" value="<?php echo date('d/m/Y'); ?>" class="form-control"  id="simpleDataInput">
                                             </div>
                                         </div>
                                     </div>
@@ -166,7 +187,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" id="fecha_venci" name="fecha_venci" class="form-control" value="<?php echo date('d/m/Y'); ?>" id="simpleDataInput">
+                                                <input type="text" id="fecha_venci" name="fecha_venci" value="<?php echo date('d/m/Y'); ?>" class="form-control"  id="simpleDataInput">
                                             </div>
                                         </div>
                                     </div>
@@ -262,7 +283,6 @@
         });
     </script>
       
-
     {{-- * FUNCIÓN PARA MOSTRAR LOS DIVS CON LOS CAMPOS CORRESPONDIENTES A SU CATEGORIA --}}
 
     <script>
@@ -292,26 +312,109 @@
 
     </script>
 
-    <!-- {{--! FUNCIÓN PARA MOSTRAR LA ALERTA DE LA FECHA --}}
+    {{-- * FUNCION PARA MOSTRAR El PDF --}}
 
-    @if ($errors->any())
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
     <script>
-        var errorMessage = @json($errors->first());
-        Swal.fire({
-                title: 'Inspección',
-                text: "La fecha registrada no es válida. Por favor, asegúrese de ingresar la fecha actual.",
-                icon: 'warning',
-                showconfirmButton: true,
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: '¡OK!',
-                
-                }).then((result) => {
-            if (result.isConfirmed) {
+        $(document).ready(function () {
+            $('#comprobante').change(function () {
+                const pdfcontainer = document.getElementById('pdf_container');
+                pdfcontainer.innerHTML = ''; // Limpiar el contenedor antes de agregar nuevos archivos
 
-                this.submit();
-            }
-            })
+                for (const file of this.files) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const embed = document.createElement('embed');
+                        embed.src = e.target.result;
+                        embed.type = 'application/pdf';
+                        embed.style.width = '100%';
+                        embed.style.height = '500px';
+                        pdfcontainer.appendChild(embed);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
     </script>
-    @endif -->
+
+    {{-- * FUNCION PARA CALCULAR LOS METROS CÚBICOS DE LA TASA REGALIA APROVECHAMIENTO --}}
+
+    <script>
+        function calcularMonto() {
+            const tasa = 1.5;
+            const metrosCubicos = parseFloat(document.getElementById('monto_apro').value);
+            const metodoPago = document.getElementById('metodo_apro').value;
+            let total = metrosCubicos * tasa;
+            let resultado_apro;
+
+            switch(metodoPago) {
+                case 'Pago unico':
+                    resultado_apro = total;
+                    break;
+                case 'Pago 1 parte':
+                    resultado_apro = total / 2;
+                    break;
+                case 'Pago 2 parte':
+                    resultado_apro = total / 3;
+                    break;
+                case 'Pago 3 parte':
+                    resultado_apro = total / 4;
+                    break;
+                default:
+                    resultado_apro = 0;
+            }
+
+            document.getElementById('resultado_apro').value = `$${resultado_apro.toFixed(2)}`;
+        }
+
+    </script>
+
+    {{-- * FUNCION PARA CALCULAR LA FECHA DE VENCIMIENTO DE PAGO DE REGALIA AUTOMATICAMENTE EN 45 DIAS  --}}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let fechaActual = new Date();
+            let dia = fechaActual.getDate().toString().padStart(2, '0');
+            let mes = (fechaActual.getMonth() + 1).toString().padStart(2, '0');
+            let año = fechaActual.getFullYear();
+
+            let fechaPagoStr = `${dia}/${mes}/${año}`;
+            document.getElementById('fecha_pago').value = fechaPagoStr;
+            console.log('Fecha de pago actualizada:', fechaPagoStr);
+
+            let fechaVencimiento = new Date(fechaActual);
+            fechaVencimiento.setDate(fechaActual.getDate() + 45);
+
+            let diaVenci = fechaVencimiento.getDate().toString().padStart(2, '0');
+            let mesVenci = (fechaVencimiento.getMonth() + 1).toString().padStart(2, '0');
+            let añoVenci = fechaVencimiento.getFullYear();
+
+            let fechaVenciStr = `${diaVenci}/${mesVenci}/${añoVenci}`;
+            document.getElementById('fecha_venci').value = fechaVenciStr;
+            console.log('Fecha de vencimiento calculada:', fechaVenciStr);
+        });
+
+        document.getElementById('fecha_pago').addEventListener('change', function() {
+            console.log('Fecha de pago ingresada:', this.value);
+            let fechaPago = new Date(this.value.split('/').reverse().join('-'));
+            console.log('Fecha de pago convertida:', fechaPago);
+
+            if (isNaN(fechaPago)) {
+                console.error('Fecha de pago no válida');
+                return;
+            }
+
+            let fechaVencimiento = new Date(fechaPago);
+            fechaVencimiento.setDate(fechaPago.getDate() + 45);
+
+            let dia = fechaVencimiento.getDate().toString().padStart(2, '0');
+            let mes = (fechaVencimiento.getMonth() + 1).toString().padStart(2, '0');
+            let año = fechaVencimiento.getFullYear();
+
+            document.getElementById('fecha_venci').value = `${dia}/${mes}/${año}`;
+            console.log('Fecha de vencimiento calculada:', document.getElementById('fecha_venci').value);
+        });
+    </script>
 
 @endsection

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+
 use App\Models\PagoRegalia;
 use App\Models\Licencias;
 use App\Models\Regalia;
@@ -50,6 +52,26 @@ class PagoRegaliaController extends Controller
      */
     public function store(Request $request)
     {
+
+        // Validar las fechas
+        // $this->validate($request, [
+        //     'fecha_pago' => 'required|date_format:d/m/Y|date_equals:'.Carbon::now()->format('d/m/Y'),
+        //     'fecha_venci' => [
+        //         'required',
+        //         'date_format:d/m/Y',
+        //         function ($attribute, $value, $fail) use ($request) {
+        //             $fechaPago = Carbon::createFromFormat('d/m/Y', $request->input('fecha_pago'));
+        //             $fechaVenci = Carbon::createFromFormat('d/m/Y', $value);
+        //             $fechaEsperada = $fechaPago->copy()->addDays(45);
+
+        //             // Verificar si 'fecha_venci' es exactamente 45 días después de 'fecha_pago'
+        //             if (!$fechaVenci->eq($fechaEsperada)) {
+        //                 $fail('La fecha de vencimiento debe ser exactamente 45 días después de la fecha de pago.');
+        //             }
+        //         },
+        //     ],
+        // ]);
+
         //Crear una nueva PagoRegalia 
         $pago_regalias = new PagoRegalia ();
         $pago_regalias->id_licencia = $request->input('id_licencia');
@@ -58,6 +80,25 @@ class PagoRegaliaController extends Controller
         $pago_regalias->monto_apro = $request->input('monto_apro');
         $pago_regalias->metodo_pro = $request->input('metodo_pro');
         $pago_regalias->monto_pro = $request->input('monto_pro');
+        $pago_regalias->resultado_apro = $request->input('resultado_apro');
+        $pago_regalias->resultado_pro = $request->input('resultado_pro');
+
+        // Verificar si se han cargado archivos
+        if ($request->hasFile('comprobante')) {
+            $rutaGuardarPdf = 'pdf/';
+            $nombresPdf = [];
+
+            foreach ($request->file('comprobante') as $pdf) {
+                $pdfComprobante = date('YmdHis') . '_' . uniqid() . '_' . pathinfo($pdf->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $pdf->getClientOriginalExtension();
+                $pdf->move(public_path($rutaGuardarPdf), $pdfComprobante);
+                $nombresPdf[] = $pdfComprobante;
+            }
+
+            $pago_regalias->comprobante = json_encode($nombresPdf);
+        } else {
+            $pago_regalias->comprobante = '[]'; // null
+        }
+        
         $pago_regalias->fecha_pago = $request->input('fecha_pago');
         $pago_regalias->fecha_venci = $request->input('fecha_venci');
         $pago_regalias->estatus_regalia = $request->input('estatus_regalia');
@@ -105,13 +146,16 @@ class PagoRegaliaController extends Controller
         $monto_apro = $pago_regalia->monto_apro;
         $metodo_pro = $pago_regalia->metodo_pro;
         $monto_pro = $pago_regalia->monto_pro;
+        $resultado_apro = $pago_regalia->resultado_apro;
+        $resultado_pro = $pago_regalia->resultado_pro;
+        $comprobante = $pago_regalia->comprobante;
         $fecha_pago = $pago_regalia->fecha_pago;
         $fecha_venci = $pago_regalia->fecha_venci;
         $estatus_regalia = $pago_regalia->estatus_regalia;
 
-
         return view('pago_regalia.edit' , compact('pago_regalia', 'licencia', 'regalias', 'id_licencia',
-        'id_regalia', 'metodo_apro', 'monto_apro', 'metodo_pro', 'monto_pro', 'fecha_pago', 'fecha_venci', 'estatus_regalia'));
+        'id_regalia', 'metodo_apro', 'monto_apro', 'metodo_pro', 'monto_pro', 'resultado_apro', 'resultado_pro',
+        'comprobante', 'fecha_pago', 'fecha_venci', 'estatus_regalia'));
     }
 
     /**
@@ -131,6 +175,27 @@ class PagoRegaliaController extends Controller
         $pago_regalia->monto_apro = $request->input('monto_apro');
         $pago_regalia->metodo_pro = $request->input('metodo_pro');
         $pago_regalia->monto_pro = $request->input('monto_pro');
+        $pago_regalia->resultado_apro = $request->input('resultado_apro');
+        $pago_regalia->resultado_pro = $request->input('resultado_pro');
+
+        // Verificar si se han cargado nuevos archivos
+        if ($request->hasFile('comprobante')) {
+            $rutaGuardarPdf = 'pdf/';
+            $nuevosNombresPdf = [];
+
+            foreach ($request->file('comprobante') as $pdf) {
+                $pdfComprobante = date('YmdHis') . '_' . uniqid() . '_' . pathinfo($pdf->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $pdf->getClientOriginalExtension();
+                $pdf->move(public_path($rutaGuardarPdf), $pdfComprobante);
+                $nuevosNombresPdf[] = $pdfComprobante;
+            }
+
+            // Combinar los nuevos archivos con los existentes
+            $archivosExistentes = json_decode( $pago_regalia->comprobante, true) ?? [];
+            $todosLosArchivos = array_merge($archivosExistentes, $nuevosNombresPdf);
+
+            $pago_regalia->comprobante = json_encode($todosLosArchivos);
+        }
+        
         $pago_regalia->fecha_pago = $request->input('fecha_pago');
         $pago_regalia->fecha_venci = $request->input('fecha_venci');
         $pago_regalia->estatus_regalia = $request->input('estatus_regalia');

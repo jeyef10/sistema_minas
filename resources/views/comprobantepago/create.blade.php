@@ -117,7 +117,7 @@
 
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Comprobante</label>
-                                    <input type="file" id="comprobante_pdf" name="comprobante_pdf[]" multiple class="btn btn-outline-info">
+                                    <input type="file" id="comprobante_pdf" name="comprobante[]" multiple class="btn btn-outline-info">
                                         <div id="pdf_container"></div>
                                 </div>
 
