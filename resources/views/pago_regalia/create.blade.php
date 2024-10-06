@@ -342,7 +342,7 @@
 
     <script>
         function calcularMonto() {
-            const tasa = 1.5;
+            const tasa = 1;
             const metrosCubicos = parseFloat(document.getElementById('monto_apro').value);
             const metodoPago = document.getElementById('metodo_apro').value;
             let total = metrosCubicos * tasa;

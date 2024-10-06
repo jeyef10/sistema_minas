@@ -12,6 +12,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\BitacoraController;
+use App\Models\User;
 
 class ComisionadosController extends Controller
 {
@@ -158,17 +159,32 @@ class ComisionadosController extends Controller
     public function destroy($id)
     {
         try {
-            $comisionado = Comisionados::findOrFail($id);
+
+        $comisionado = Comisionados::findOrFail($id);
         
-            $comisionado->delete();
-            $bitacora = new BitacoraController;
-            $bitacora->update();
-            return redirect('comisionado')->with('eliminar', 'ok');
+        // Elimina al comisionado
+        $comisionado->delete();
+
+        // Obtener el ID del usuario asociado
+        $userId = $comisionado->id_usuario;
+
+        // Eliminar el usuario asociado si existe
+        if ($userId) {
+            $user = User::find($userId);
+            
+            if ($user) {
+                $user->delete();
+            }
+        }
+
+        $bitacora = new BitacoraController;
+        $bitacora->update();
+        return redirect('comisionado')->with('eliminar', 'ok');
 
         } catch (QueryException $exception) {
             $errorMessage = 'Error: No se puede eliminar el comisionado debido a que tiene otros registros.';
             return redirect()->back()->withErrors($errorMessage);
-        }
+        } 
     }
 }
 
