@@ -26,6 +26,11 @@
                         <div class="row">
 
                             <div class="col-4">
+                                <label  class="font-weight-bold text-primary">Cédula</label>
+                                <input type="text" class="form-control" id="cedula" name="cedula" maxlength="8" style="background: white;" value="" placeholder="Ingrese La Cédula" autocomplete="off" onkeypress="return solonum(event);">
+                            </div>
+
+                            <div class="col-4">
                                 <label  class="font-weight-bold text-primary">Nombre</label>
                                 <input type="text" class="form-control" id="name" name="name" style="background: white;" value="" placeholder="Ingrese el Nombre" autocomplete="off" onkeypress="return soloLetras(event);">
                             </div>
@@ -75,7 +80,7 @@
         </div>    
 </div>
 
-@if ($errors->any())
+{{-- @if ($errors->any())
     <script>
         var errorMessage = @json($errors->first());
         Swal.fire({
@@ -93,6 +98,22 @@
             }
             })
     </script>
-@endif
+@endif --}}
+
+@if ($errors->any())
+        <script>
+            var errors = @json($errors->all());
+            errors.forEach(function(error) {
+                Swal.fire({
+                    title: 'Usuario',
+                    text: error,
+                    icon: 'warning',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: '¡OK!',
+                });
+            });
+        </script>
+    @endif
 
 @endsection

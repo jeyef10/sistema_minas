@@ -63,4 +63,13 @@ class User extends Authenticatable
         $this->notify(new ResetPasswordNotification($code));
     }
 
+    /* public function comisionado()
+    {
+        return $this->hasOne(Comisionados::class, 'id_usuario', 'id');
+    } */
+
+    public function comisionado()
+    {
+        return $this->belongsTo(Comisionados::class);
+    }
 }

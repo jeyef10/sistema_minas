@@ -13,6 +13,8 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Arr;
+use App\Models\Comisionados;
+use Illuminate\Database\QueryException;
 
 class UsuarioController extends Controller
 {
@@ -56,6 +58,11 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
+        
+        $cedula =  $request->input('cedula');
+
+             
+ 
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
@@ -67,12 +74,31 @@ class UsuarioController extends Controller
             'email.unique' => 'Este Email ya existe.'
             ]
         );
-    
+
+        // Verificar si el rol es "Comisionado"
+        if (in_array('Comisionado', $request->input('roles'))) {
+            // Verificar si la cédula existe en la tabla comisionado
+            $comisionado = Comisionados::where('cedula', $cedula)->first();
+            if (!$comisionado) {
+                return redirect()->back()->withErrors('Error: Este comisionado no existe.');
+            }
+        }
+        
+
         $input = $request->all();
+        $input = $request->except('cedula');
+        
+       
         // $input['password'] = Hash::make($input['password']);
     
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
+
+        // Actualizar la tabla comisionado con el ID del usuario recién creado
+        if (in_array('Comisionado', $request->input('roles'))) {
+            Comisionados::where('cedula', $cedula)->update(['id_usuario' => $user->id]);
+        }
+
         $bitacora = new BitacoraController;
         $bitacora->update();
 
@@ -81,7 +107,7 @@ class UsuarioController extends Controller
         return redirect()->route('usuarios.index');
     
         } catch (QueryException $exception) {
-            $errorMessage = 'Error: Está cedula ya existe en la base de datos.';
+            $errorMessage = 'Error: .';
             return redirect()->back()->withErrors($errorMessage);
         }
     }
