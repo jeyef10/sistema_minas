@@ -69,8 +69,11 @@ class LicenciaController extends Controller
 
         $year = date('Y');
         $contador = 1;
+        $contadores = 1;
         $codigo_apro = '';
         $codigo_hpc = '';
+        $codigo_la = '';
+        $codigo_lp = '';
 
         // Obtener la categoría desde la tabla recepcion
         $categoria = DB::table('inspecciones')
@@ -89,14 +92,14 @@ class LicenciaController extends Controller
             ->orderBy('licencias.id', 'desc')
             ->first();
 
+        // Ajustar el contador para la categoría
         if ($lastRecord) {
-            // Extraer el contador del último código generado
             if ($categoria == 'Aprovechamiento') {
                 $lastCode = explode('/', $lastRecord->resolucion_apro);
             } elseif ($categoria == 'Procesamiento') {
                 $lastCode = explode('/', $lastRecord->resolucion_hpc);
             }
-            $contador = (int)$lastCode[0] + 1;
+            $contador = 1; // Inicializar contador a 1 para cada nueva serie
         }
 
         // Formatear el contador con ceros a la izquierda
@@ -109,7 +112,38 @@ class LicenciaController extends Controller
             $codigo_hpc = "HPC-$contadorFormatted/$year";
         }
 
-        return view('licencia.create', compact('inspeccion', 'plazos', 'codigo_apro', 'codigo_hpc'));
+        // Obtener el último contador para catastro_la y catastro_lp para el año actual
+        $lastCatastroRecord = DB::table('licencias')
+            ->join('inspecciones', 'licencias.id_inspeccion', '=', 'inspecciones.id')
+            ->join('planificacion', 'inspecciones.id_planificacion', '=', 'planificacion.id')
+            ->join('recepcion', 'planificacion.id_recepcion', '=', 'recepcion.id')
+            ->where('recepcion.categoria', $categoria)
+            ->whereYear('licencias.created_at', $year)
+            ->orderBy('licencias.id', 'desc')
+            ->first();
+
+        // Ajustar el contador para catastro_la y catastro_lp
+        if ($lastCatastroRecord) {
+            if ($categoria == 'Aprovechamiento') {
+                $lastCode = explode('-', $lastCatastroRecord->catastro_la);
+                $contadores = 1; // Inicializar contador a 1 para cada nueva serie
+            } elseif ($categoria == 'Procesamiento') {
+                $lastCode = explode('-', $lastCatastroRecord->catastro_lp);
+                $contadores = 1; // Inicializar contador a 1 para cada nueva serie
+            }
+        }
+
+        // Formatear el contador con ceros a la izquierda
+        $contadorFormatted = str_pad($contadores, 3, '0', STR_PAD_LEFT);
+
+        // Generar el código basado en la categoría
+        if ($categoria == 'Aprovechamiento') {
+            $codigo_la = "YA-RMT/LA-$contadorFormatted";
+        } elseif ($categoria == 'Procesamiento') {
+            $codigo_lp = "YA-RMT/LP-$contadorFormatted";
+        }
+
+        return view('licencia.create', compact('inspeccion', 'plazos', 'codigo_apro', 'codigo_hpc', 'codigo_la', 'codigo_lp'));
 
     }
 
@@ -121,6 +155,16 @@ class LicenciaController extends Controller
      */
     public function store(Request $request)
     {
+
+        $this->validate($request, [
+            'fecha_oficio' => 'required|date|date_format:d/m/Y|after_or_equal:'.date('d/m/Y'),
+        ], [
+            'fecha_oficio.required' => 'La fecha de pago es obligatoria.',
+            'fecha_oficio.date' => 'La fecha de pago debe ser una fecha válida.',
+            'fecha_oficio.date_format' => 'La fecha de pago debe tener el formato AAAA-MM-DD.',
+            'fecha_oficio.after_or_equal' => 'La fecha de pago debe ser la fecha actual.',
+        ]);
+
         //Crear una nueva Licencia 
         $licencias = new Licencias();
         $licencias->id_inspeccion = $request->input('id_inspeccion');

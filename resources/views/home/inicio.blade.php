@@ -44,7 +44,7 @@
                     
                   </div>
                   <div class="col-auto">
-                  <i class="fas fa-users fa-2x text-info"></i>
+                  <i class="fas fa-users fa-2x text-danger"></i>
                   </div>
                 </div>
               </div>
@@ -61,7 +61,7 @@
                   </div>
 
                   <div class="col-auto">
-                    <i class=" fas fa-user-tie fa-2x text-info"></i>
+                    <i class=" fas fa-user-tie fa-2x text-secondary"></i>
                   </div>
                 </div>
               </div>
@@ -79,7 +79,7 @@
                   </div>
 
                   <div class="col-auto">
-                  <i class="fas fa-mountain fa-2x text-info"></i>
+                  <i class="fas fa-mountain fa-2x text-warning"></i>
                   </div>
                 </div>
               </div>
@@ -97,7 +97,7 @@
                     
                   </div>
                   <div class="col-auto">
-                  <i class="fas fa-users fa-2x text-info"></i>
+                  <i class="fas fa-users fa-2x text-primary"></i>
                   </div>
                 </div>
               </div>
@@ -115,7 +115,7 @@
 
                     </div>
                   <div class="col-auto">
-                  <i class="fa fa-folder-open fa-2x text-info" ></i>
+                  <i class="fa fa-folder-open fa-2x text-warning" ></i>
                   </div>
                 </div>
               </div>
@@ -128,12 +128,12 @@
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-uppercase mb-1">Tasa de Regalias</div>
+                  <div class="text-xs font-weight-bold text-uppercase mb-1">Tasa de Regalías</div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">{{ ($count_regalia) }}</div>
                  
                   </div>
                   <div class="col-auto">
-                    <i class="far fa-money-bill-alt fa-2x text-info"></i>
+                    <i class="far fa-money-bill-alt fa-2x text-success"></i>
                   </div>
                 </div>
               </div>
@@ -151,7 +151,7 @@
                  
                   </div>
                   <div class="col-auto">
-                    <i class="far fa-calendar-alt fa-2x text-warning"></i>
+                    <i class="far fa-calendar-alt fa-2x text-dark"></i>
                   </div>
                 </div>
               </div>
@@ -164,7 +164,7 @@
           <div class="col-xl-8 col-lg-7">
             <div class="card mb-4">
               <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Mapa de Recepcion y Inspeccion</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Mapa de Recepciones e Inspecciones</h6>
                 <div class="dropdown no-arrow">
                   <!-- <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
@@ -192,12 +192,12 @@
           <div class="col-xl-4 col-lg-5">
             <div class="card mb-4">
               <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Estadistica de Ubicaciones</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Estadística de Ubicaciones</h6>
                  <div class="h5 mb-0 font-weight-bold text-gray-800"></div> 
               </div>
               <div class="card-body">
                 <div class="mb-3">
-                  <div class="small text-gray-500">Recepcion
+                  <div class="small text-gray-500">Recepción
                     <div class="small float-right"><b>{{ ($count_recepcion) }}</b></div>
                   </div>
                   <div class="progress" style="height: 12px;">
@@ -214,15 +214,15 @@
                       aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
                 </div>
-                <!-- <div class="mb-3">
-                  <div class="small text-gray-500">Rounded Hat
-                    <div class="small float-right"><b>455 of 800 Items</b></div>
+                <div class="mb-3">
+                  <div class="small text-gray-500">Licencias Aprobadas
+                    <div class="small float-right"><b>{{ ($count_licencia) }}</b></div>
                   </div>
                   <div class="progress" style="height: 12px;">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 55%" aria-valuenow="55"
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 55%" aria-valuenow="55"
                       aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
-                </div> -->
+                </div>
                 <!-- <div class="mb-3">
                   <div class="small text-gray-500">Indomie Goreng
                     <div class="small float-right"><b>400 of 800 Items</b></div>

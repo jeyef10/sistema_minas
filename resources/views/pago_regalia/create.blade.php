@@ -18,7 +18,7 @@
 
                     </div>
  
-                <form method="post" action="{{ route('pago_regalia.store') }}" enctype="multipart/form-data" onsubmit="return Licencia(this)">
+                <form method="post" action="{{ route('pago_regalia.store') }}" enctype="multipart/form-data" onsubmit="return PagoRegalia (this)">
                     @csrf
 
                     <div class="card-body">
@@ -416,5 +416,21 @@
             console.log('Fecha de vencimiento calculada:', document.getElementById('fecha_venci').value);
         });
     </script>
+
+    @if ($errors->any())
+            <script>
+                var errors = @json($errors->all());
+                errors.forEach(function(error) {
+                    Swal.fire({
+                        title: 'Pago de regalia',
+                        text: error,
+                        icon: 'warning',
+                        showConfirmButton: true,
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: '¡OK!',
+                    });
+                });
+            </script>
+        @endif
 
 @endsection

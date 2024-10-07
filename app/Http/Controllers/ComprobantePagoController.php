@@ -83,6 +83,21 @@ class ComprobantePagoController extends Controller
     public function store(Request $request)
     {
 
+        $this->validate($request, [
+            'fecha_pago' => 'required|date|date_format:d/m/Y|after_or_equal:'.date('d/m/Y'),
+            'comprobante' => 'required|array|min:1',
+            'comprobante.*' => 'mimes:pdf',
+        ], [
+            'fecha_pago.required' => 'La fecha de pago es obligatoria.',
+            'fecha_pago.date' => 'La fecha de pago debe ser una fecha válida.',
+            'fecha_pago.date_format' => 'La fecha de pago debe tener el formato AAAA-MM-DD.',
+            'fecha_pago.after_or_equal' => 'La fecha de pago debe ser la fecha actual.',
+            'comprobante.required' => 'Debe registrar uno o más comprobantes en formato PDF.',
+            'comprobante.min' => 'Debe registrar al menos un comprobante.',
+            'comprobante.*.mimes' => 'Cada archivo debe ser un PDF.',
+            
+        ]);
+
         $comprabantepagos = new ComprobantePago ();
         $comprabantepagos->id_inspeccion = $request->input('id_inspeccion');
         $comprabantepagos->id_tipo_pago = $request->input('id_tipo_pago');

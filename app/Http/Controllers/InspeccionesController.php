@@ -68,11 +68,6 @@ class InspeccionesController extends Controller
 
     public function store(Request $request)
     {
-        /* $this->validate($request, [
-            'res_fotos' => 'required|array|min:1',
-            'res_fotos.*' => 'image|mimes:jpeg,png,jpg,gif,svg',
-            'fecha_inspeccion' => 'required|date_format:d/m/Y|after_or_equal:today|before_or_equal:'. date('d/m/Y', strtotime('+7 days')),
-            ]); */
 
             $this->validate($request, [
                 'res_fotos' => 'required|array|min:1',

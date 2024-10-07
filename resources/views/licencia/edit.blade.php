@@ -274,27 +274,20 @@
         });
     </script>
 
-    {{--! FUNCIÓN PARA MOSTRAR LA ALERTA DE LA FECHA --}}
-
-    @if ($errors->any())
-    <script>
-        var errorMessage = @json($errors->first());
-        Swal.fire({
-                title: 'Inspección',
-                text: "La fecha registrada no es válida. Por favor, asegúrese de ingresar la fecha actual.",
-                icon: 'warning',
-                showconfirmButton: true,
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: '¡OK!',
-                
-                }).then((result) => {
-            if (result.isConfirmed) {
-
-                this.submit();
-            }
-            })
-    </script>
+@if ($errors->any())
+        <script>
+            var errors = @json($errors->all());
+            errors.forEach(function(error) {
+                Swal.fire({
+                    title: 'Licencia',
+                    text: error,
+                    icon: 'warning',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: '¡OK!',
+                });
+            });
+        </script>
     @endif
 
-    
 @endsection

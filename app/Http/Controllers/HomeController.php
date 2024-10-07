@@ -14,6 +14,7 @@ use App\Models\Regalia;
 use App\Models\Plazos;
 use App\Models\Recepcion;
 use App\Models\Inspecciones;
+use App\Models\Licencias;
 
 
 class homeController extends Controller
@@ -64,10 +65,14 @@ class homeController extends Controller
         $mapa_recepciones = Recepcion::select('latitud', 'longitud')->get();
         $mapa_inspecciones = Inspecciones::select('latitud', 'longitud')->get();
 
+        $licencia= Licencias::all();
+        $count_licencia= DB::table('licencias')
+        ->count();
+
         return view('home.inicio' , compact('count_solicitante', 'count_natural', 'count_juridico', 'count_recaudo','count_comisionado', 'count_mineral','count_regalia', 'count_plazo',
-        'count_recepcion','count_inspecciones', 'mapa_recepciones', 'mapa_inspecciones' ) , [
+        'count_recepcion','count_inspecciones', 'mapa_recepciones', 'mapa_inspecciones', 'count_licencia' ) , [
         'count' => $count_solicitante, $count_natural, $count_juridico, $count_recaudo,  $count_comisionado,  $count_mineral,   
-        $count_regalia, $count_plazo ,$count_recepcion, $count_inspecciones
+        $count_regalia, $count_plazo ,$count_recepcion, $count_inspecciones, $count_licencia
 
     ]); ;
 

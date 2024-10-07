@@ -2650,19 +2650,6 @@ function Inspeccion (obj) {
         obj.utm_este.focus();
         return false;
     }
-
-    // document.getElementById('res_fotos').addEventListener('change', function() {
-    //     var res_fotos = document.getElementById('res_fotos').files;
-    //     if (res_fotos.length === 0) {
-    //         Swal.fire({
-    //             title: 'Inspección',
-    //             text: "Debe registrar una o más fotos.",
-    //             icon: 'warning',
-    //             confirmButtonColor: '#3085d6',
-    //             cancelButtonColor: '#d33',
-    //         });
-    //     }
-    // });
     
     var longitud_terreno =  document.getElementById('longitud_terreno').value;
     if (!longitud_terreno){
@@ -2809,6 +2796,310 @@ function Inspeccion (obj) {
     }
 
 }
+
+// Validar Comprbante de pago
+function ComprobantePago (obj) {
+    var tipo_pago = obj.tipo_pago.value;
+    if (tipo_pago==0){
+        Swal.fire({
+            title: 'Tipo de Pago',
+            text: "Debe seleccionar un tipo de pago ",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return (false);
+    }
+
+}
+
+// Validar Licencia
+function Licencia (obj) {
+    // var providencia =  document.getElementById('providencia').value;
+    // if (!providencia){
+    //     Swal.fire({
+    //         title: 'Licencia',
+    //         text: "Debe registrar la providencia administrativa",
+    //         icon: 'warning',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         }).then((result) => {
+    //     if (result.isConfirmed) {
+
+    //         this.submit();
+    //     }
+    //     })
+        
+    //     return (false);
+    // }
+
+    // if (providencia.trim() == "") {
+    //     Swal.fire({
+    //         title: 'Licencia',
+    //         text: "El campo de providencia administrativa no debe contener espacios en blanco.",
+    //         icon: 'warning',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         }).then((result) => {
+    //     if (result.isConfirmed) {
+
+    //         this.submit();
+    //     }
+    //     })
+
+    //     obj.providencia.focus();
+    //     return false;
+    // }
+
+    // var num_territorio =  document.getElementById('num_territorio').value;
+    // if (!num_territorio){
+    //     Swal.fire({
+    //         title: 'Licencia',
+    //         text: "Debe registrar el n° ocupación de territorio.",
+    //         icon: 'warning',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         }).then((result) => {
+    //     if (result.isConfirmed) {
+
+    //         this.submit();
+    //     }
+    //     })
+        
+    //     return (false);
+    // }
+
+    // if (num_territorio.trim() == "") {
+    //     Swal.fire({
+    //         title: 'Licencia',
+    //         text: "El campo de  n° ocupación de territorio no debe contener espacios en blanco.",
+    //         icon: 'warning',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         }).then((result) => {
+    //     if (result.isConfirmed) {
+
+    //         this.submit();
+    //     }
+    //     })
+
+    //     obj.num_territorio.focus();
+    //     return false;
+    // }
+
+    var plazo = obj.plazo.value;
+    if (plazo==0){
+        Swal.fire({
+            title: 'Licencia',
+            text: "Debe seleccionar un tipo de plazo ",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return (false);
+    }
+
+    var talonario = obj.talonario.value;
+    if (talonario==0){
+        Swal.fire({
+            title: 'Licencia',
+            text: "Debe ingresar un talonario ",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return (false);
+    }
+
+    if (talonario.trim() == "") {
+        Swal.fire({
+            title: 'Licencia',
+            text: "El campo de  talonario no debe contener espacios en blanco.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+
+        obj.talonario.focus();
+        return false;
+    }
+
+
+}
+
+// Validar Licencia
+function PagoRegalia (obj) {
+    var id_regalia = obj.id_regalia.value;
+    if (id_regalia==0){
+        Swal.fire({
+            title: 'Pago Regalias',
+            text: "Debe seleccionar una tasa de regalia ",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return (false);
+    }
+
+    var estatus_regalia = obj.estatus_regalia.value;
+    if (estatus_regalia==0){
+        Swal.fire({
+            title: 'Estatus',
+            text: "Debe seleccionar un estatus",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return (false);
+    }
+
+
+    // if (providencia.trim() == "") {
+    //     Swal.fire({
+    //         title: 'Licencia',
+    //         text: "El campo de providencia administrativa no debe contener espacios en blanco.",
+    //         icon: 'warning',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         }).then((result) => {
+    //     if (result.isConfirmed) {
+
+    //         this.submit();
+    //     }
+    //     })
+
+    //     obj.providencia.focus();
+    //     return false;
+    // }
+
+    // var num_territorio =  document.getElementById('num_territorio').value;
+    // if (!num_territorio){
+    //     Swal.fire({
+    //         title: 'Licencia',
+    //         text: "Debe registrar el n° ocupación de territorio.",
+    //         icon: 'warning',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         }).then((result) => {
+    //     if (result.isConfirmed) {
+
+    //         this.submit();
+    //     }
+    //     })
+        
+    //     return (false);
+    // }
+
+    // if (num_territorio.trim() == "") {
+    //     Swal.fire({
+    //         title: 'Licencia',
+    //         text: "El campo de  n° ocupación de territorio no debe contener espacios en blanco.",
+    //         icon: 'warning',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         }).then((result) => {
+    //     if (result.isConfirmed) {
+
+    //         this.submit();
+    //     }
+    //     })
+
+    //     obj.num_territorio.focus();
+    //     return false;
+    // }
+
+    // var plazo = obj.plazo.value;
+    // if (plazo==0){
+    //     Swal.fire({
+    //         title: 'Licencia',
+    //         text: "Debe seleccionar un tipo de plazo ",
+    //         icon: 'warning',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         }).then((result) => {
+    //     if (result.isConfirmed) {
+
+    //         this.submit();
+    //     }
+    //     })
+        
+    //     return (false);
+    // }
+
+    // var talonario = obj.talonario.value;
+    // if (talonario==0){
+    //     Swal.fire({
+    //         title: 'Licencia',
+    //         text: "Debe ingresar un talonario ",
+    //         icon: 'warning',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         }).then((result) => {
+    //     if (result.isConfirmed) {
+
+    //         this.submit();
+    //     }
+    //     })
+        
+    //     return (false);
+    // }
+
+    // if (talonario.trim() == "") {
+    //     Swal.fire({
+    //         title: 'Licencia',
+    //         text: "El campo de  talonario no debe contener espacios en blanco.",
+    //         icon: 'warning',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         }).then((result) => {
+    //     if (result.isConfirmed) {
+
+    //         this.submit();
+    //     }
+    //     })
+
+    //     obj.talonario.focus();
+    //     return false;
+    // }
+
+
+}
+
 
 // Fin de la validación del Sistema Minas //
 

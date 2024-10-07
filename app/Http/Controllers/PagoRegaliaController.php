@@ -53,24 +53,15 @@ class PagoRegaliaController extends Controller
     public function store(Request $request)
     {
 
-        // Validar las fechas
-        // $this->validate($request, [
-        //     'fecha_pago' => 'required|date_format:d/m/Y|date_equals:'.Carbon::now()->format('d/m/Y'),
-        //     'fecha_venci' => [
-        //         'required',
-        //         'date_format:d/m/Y',
-        //         function ($attribute, $value, $fail) use ($request) {
-        //             $fechaPago = Carbon::createFromFormat('d/m/Y', $request->input('fecha_pago'));
-        //             $fechaVenci = Carbon::createFromFormat('d/m/Y', $value);
-        //             $fechaEsperada = $fechaPago->copy()->addDays(45);
-
-        //             // Verificar si 'fecha_venci' es exactamente 45 días después de 'fecha_pago'
-        //             if (!$fechaVenci->eq($fechaEsperada)) {
-        //                 $fail('La fecha de vencimiento debe ser exactamente 45 días después de la fecha de pago.');
-        //             }
-        //         },
-        //     ],
-        // ]);
+        $this->validate($request, [
+            'comprobante' => 'required|array|min:1',
+            'comprobante.*' => 'mimes:pdf',
+            'fecha_pago' => 'required|date|date_format:d/m/Y|after_or_equal:'.date('d/m/Y'),
+        ], [
+            'comprobante.required' => 'Debe registrar uno o más comprobantes en formato PDF.',
+            'comprobante.min' => 'Debe registrar al menos un comprobante.',
+            'comprobante.*.mimes' => 'Cada archivo debe ser un PDF.',
+        ]);
 
         //Crear una nueva PagoRegalia 
         $pago_regalias = new PagoRegalia ();
