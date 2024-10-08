@@ -62,15 +62,34 @@ class homeController extends Controller
         $count_inspecciones = DB::table('inspecciones')
         ->count();
 
-        $mapa_recepciones = Recepcion::select('latitud', 'longitud')->get();
-        $mapa_inspecciones = Inspecciones::select('latitud', 'longitud')->get();
-
         $licencia= Licencias::all();
         $count_licencia= DB::table('licencias')
         ->count();
 
+        $mapa_recepciones = Recepcion::select('latitud', 'longitud')->get();
+        $mapa_inspecciones = Inspecciones::select('latitud', 'longitud')->get();
+        // $mapa_licencias = Licencias::with('inspeccion:latitud,longitud')
+        //     ->get()
+        //     ->map(function ($licencia) {
+        //         return [
+        //             'latitud' => $licencia->inspeccion->latitud,
+        //             'longitud' => $licencia->inspeccion->longitud
+        //         ];
+        //     });
+
+        $mapa_licencias = Licencias::with('inspeccion')
+        ->get()
+        ->filter(function ($licencia) {
+            return !is_null($licencia->inspeccion);
+        })
+        ->map(function ($licencia) {
+            return [
+                'latitud' => $licencia->inspeccion->latitud,
+                'longitud' => $licencia->inspeccion->longitud
+            ];
+        });
         return view('home.inicio' , compact('count_solicitante', 'count_natural', 'count_juridico', 'count_recaudo','count_comisionado', 'count_mineral','count_regalia', 'count_plazo',
-        'count_recepcion','count_inspecciones', 'mapa_recepciones', 'mapa_inspecciones', 'count_licencia' ) , [
+        'count_recepcion','count_inspecciones', 'count_licencia', 'mapa_recepciones', 'mapa_inspecciones', 'mapa_licencias' ) , [
         'count' => $count_solicitante, $count_natural, $count_juridico, $count_recaudo,  $count_comisionado,  $count_mineral,   
         $count_regalia, $count_plazo ,$count_recepcion, $count_inspecciones, $count_licencia
 

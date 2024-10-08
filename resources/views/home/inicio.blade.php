@@ -299,6 +299,7 @@
 
     var recepciones = @json($mapa_recepciones);
     var inspecciones = @json($mapa_inspecciones);
+    var licencias = @json($mapa_licencias);
 
     // Definir iconos personalizados
     var recepcionIcon = L.icon({
@@ -315,6 +316,15 @@
         popupAnchor: [1, -34]
     });
 
+
+    var licenciaIcon = L.icon({
+        iconUrl: '/icons/mapa_licencia.png', // Ruta al icono de recepcion
+        iconSize: [25, 41], // Tamaño del icono
+        iconAnchor: [12, 41], // Punto del icono que se corresponde con la posición del marcador
+        popupAnchor: [1, -34] // Punto desde el cual se abrirá el popup relativo al icono
+    });
+
+
     recepciones.forEach(function(recepcion) {
         if (recepcion.latitud && recepcion.longitud) {
             L.marker([recepcion.latitud, recepcion.longitud], { icon: recepcionIcon }).addTo(map)
@@ -326,6 +336,22 @@
             if (inspeccion.latitud && inspeccion.longitud) {
                 L.marker([inspeccion.latitud, inspeccion.longitud], { icon: inspeccionIcon }).addTo(map)
                     .bindPopup('Inspeccion');
+            }
+        });
+
+
+        // licencias.forEach(function(licencia) {
+        //     if (licencia.latitud licencia.longitud) {
+        //         L.marker([licencia.latitud, licencia.longitud], { icon: licenciaIcon }).addTo(map)
+        //             .bindPopup('Licencia');
+        //     }
+        // });
+
+
+         // Datos de licencias del backend
+        licencias.forEach(function(licencia) {
+            if (licencia.latitud && licencia.longitud) {
+                L.marker([licencia.latitud, licencia.longitud] , { icon: licenciaIcon }).addTo(map).bindPopup('Licencia');
             }
         });
 
