@@ -244,9 +244,28 @@
         window.addEventListener('DOMContentLoaded', showHideForms);
     </script> --}}
 
-<script>
+{{-- <script>
     function capitalizarPrimeraLetra(texto) {
         return texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
+    }
+
+    function capitalizarInput(idInput) {
+        const inputElement = document.getElementById(idInput);
+        inputElement.value = capitalizarPrimeraLetra(inputElement.value);
+    }
+</script> --}}
+
+<script>
+    function capitalizarPrimeraLetra(texto) {
+        // Si el texto está vacío, retornamos vacío
+        if (!texto) return '';
+
+        // Separamos la primera letra y el resto del texto
+        const primeraLetra = texto.charAt(0).toUpperCase();
+        const restoDelTexto = texto.slice(1);
+
+        // Combinamos la primera letra en mayúscula con el resto sin modificar
+        return primeraLetra + restoDelTexto;
     }
 
     function capitalizarInput(idInput) {
