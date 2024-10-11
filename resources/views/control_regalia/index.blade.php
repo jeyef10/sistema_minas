@@ -26,7 +26,7 @@
                         <table class="table align-items-center table-flush" id="dataTable">
                             <thead class="thead-light">
                                 <tr>
-                                    <th class="font-weight-bold text-Secondary">Tasa de Regalgia</th>
+                                    <th class="font-weight-bold text-Secondary">Tasa de Regalia</th>
                                     <th class="font-weight-bold text-Secondary">Metodo de pago</th>
                                     <th class="font-weight-bold text-Secondary">Monto</th>
                                     <th class="font-weight-bold text-Secondary">Fecha de Pago</th>

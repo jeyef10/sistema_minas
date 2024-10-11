@@ -186,7 +186,7 @@ class LicenciaController extends Controller
 
         try {
         
-            return redirect('control');
+            return redirect('pago_regalia');
     
             } catch (QueryException $exception) {
                 $errorMessage = 'Error: .';
