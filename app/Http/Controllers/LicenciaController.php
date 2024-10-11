@@ -262,7 +262,7 @@ class LicenciaController extends Controller
         $bitacora->update();
 
         try {
-            return redirect('control');
+            return redirect('pago_regalia');
         } catch (QueryException $exception) {
             $errorMessage = 'Error: ' . $exception->getMessage();
             return redirect()->back()->withErrors($errorMessage);
