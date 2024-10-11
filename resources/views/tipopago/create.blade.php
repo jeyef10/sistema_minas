@@ -26,8 +26,11 @@
                             <div class="row">
 
                                 <div class="col-4">
-                                    <label for="nombre_pago" class="font-weight-bold text-primary">Nombre del Pago</label>
-                                    <input type="text" class="form-control" id="nombre_pago" name="nombre_pago" style="background: white;" placeholder="Ingrese un TipoPago" autocomplete="off" oninput="capitalizarInput('nombre_pago')">
+                                    <label  class="font-weight-bold text-primary">Nombre del Pago</label>
+                                    <select class="select2single form-control" name="nombre_pago" id="nombre_pago">
+                                        <option value="" disabled>Seleccione un Pago</option>
+                                        <option value="Pago Licencia" selected="true">Pago Licencia</option>
+                                    </select>
                                 </div>
 
                                 <div class="col-3">

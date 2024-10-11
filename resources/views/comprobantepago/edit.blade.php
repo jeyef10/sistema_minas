@@ -11,9 +11,9 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
 
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
     
-                        <h2 class="font-weight-bold text-primary" style="margin-left: 31%;">Actualizar Comprobante de Pago </h2>
+                        <h2 class="font-weight-bold text-primary">Actualizar Comprobante de Pago de Licencia </h2>
 
                     </div>
  
@@ -70,7 +70,7 @@
 
                                             <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($comprobante_pago->inspeccion->id_planificacion) {{ $comprobante_pago->inspeccion->planificacion->id }} @endif</p>
                                             <p style="margin-left: 0.5%"><strong>Cedula </strong>@if ($comprobante_pago->inspeccion->id_planificacion) {{ $comprobante_pago->inspeccion->planificacion->comisionados->cedula }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Nombres y Apellidos </strong>@if ($comprobante_pago->inspeccion->id_planificacion) {{ $comprobante_pago->inspeccion->planificacion->comisionados->nombres }} {{ $inspeccion->planificacion->comisionados->apellidos }}@endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Nombres y Apellidos </strong>@if ($comprobante_pago->inspeccion->id_planificacion) {{ $comprobante_pago->inspeccion->planificacion->comisionados->nombres }} {{  $comprobante_pago->inspeccion->planificacion->comisionados->apellidos }}@endif</p>
                                             </div>
                                             
                                         </div>
@@ -119,6 +119,11 @@
                                     <label  class="font-weight-bold text-primary">Comprobante</label>
                                     <input type="file" id="comprobante_pdf" name="comprobante_pdf[]" multiple value="{{ $comprobante_pdf }}" class="btn btn-outline-info">
                                     <div id="pdf_container" style="margin-top: 3%; display: flex; flex-wrap: wrap;"></div>
+                                </div>
+
+                                <div class="col-4">
+                                    <label  class="font-weight-bold text-primary">Observaciones</label>
+                                    <textarea class="form-control" id="observaciones_com" name="observaciones_com" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('observaciones')">{{ $observaciones_com }}</textarea>                                   
                                 </div>
 
                                 <input type="hidden" name="estatus_pago" value="Aprobado">

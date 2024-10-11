@@ -12,9 +12,9 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
 
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
     
-                        <h2 class="font-weight-bold text-primary" style="margin-left: 31%;">Registrar Comprobante de Pago</h2>
+                        <h2 class="font-weight-bold text-primary">Registrar Comprobante de Pago de Licencia</h2>
 
                     </div>
  
@@ -117,9 +117,14 @@
 
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Comprobante</label>
-                                    <input type="file" id="comprobante_pdf" name="comprobante[]" multiple class="btn btn-outline-info">
+                                    <input type="file" id="comprobante_pdf" name="comprobante_pdf[]" multiple class="btn btn-outline-info">
                                         <div id="pdf_container"></div>
                                 </div>
+
+                                <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Observaciones</label>
+                                        <textarea class="form-control" id="observaciones_com" name="observaciones_com" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('observaciones')"> {{ old('observaciones') }} </textarea>                                   
+                                    </div>
 
                                 <input type="hidden" name="estatus_pago" value="Aprobado">
 

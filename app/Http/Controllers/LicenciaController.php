@@ -52,6 +52,7 @@ class LicenciaController extends Controller
         return response()->json([
             'id_inspeccion' => $comprobante_pago->inspeccion->planificacion->recepcion->categoria,
             'comprobante_pdf' => $comprobante_pago->comprobante_pdf,
+            'observaciones_com' => $comprobante_pago->observaciones_com,
             
         ]);
 
