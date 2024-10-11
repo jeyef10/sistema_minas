@@ -38,7 +38,7 @@ class ComprobantePagoController extends Controller
 
         // Devuelve los datos relevantes en formato JSON
         return response()->json([
-            'id_planificacion' => $inspeccion->planificacion->recepcion->categoria,
+            'funcionario_acomp' => $inspeccion->funcionario_acomp,
             'observaciones' => $inspeccion->observaciones,
             'conclusiones' => $inspeccion->conclusiones,
             'latitud' => $inspeccion->latitud,
@@ -85,16 +85,16 @@ class ComprobantePagoController extends Controller
 
         $this->validate($request, [
             'fecha_pago' => 'required|date|date_format:d/m/Y|after_or_equal:'.date('d/m/Y'),
-            'comprobante' => 'required|array|min:1',
-            'comprobante.*' => 'mimes:pdf',
+            // 'comprobante' => 'required|array|min:1',
+            // 'comprobante.*' => 'mimes:pdf',
         ], [
             'fecha_pago.required' => 'La fecha de pago es obligatoria.',
             'fecha_pago.date' => 'La fecha de pago debe ser una fecha válida.',
             'fecha_pago.date_format' => 'La fecha de pago debe tener el formato AAAA-MM-DD.',
             'fecha_pago.after_or_equal' => 'La fecha de pago debe ser la fecha actual.',
-            'comprobante.required' => 'Debe registrar uno o más comprobantes en formato PDF.',
-            'comprobante.min' => 'Debe registrar al menos un comprobante.',
-            'comprobante.*.mimes' => 'Cada archivo debe ser un PDF.',
+            // 'comprobante.required' => 'Debe registrar uno o más comprobantes en formato PDF.',
+            // 'comprobante.min' => 'Debe registrar al menos un comprobante.',
+            // 'comprobante.*.mimes' => 'Cada archivo debe ser un PDF.',
             
         ]);
 
@@ -119,6 +119,7 @@ class ComprobantePagoController extends Controller
             $comprabantepagos->comprobante_pdf = '[]'; // null
         }
 
+        $comprabantepagos->observaciones_com = $request->input('observaciones_com');
         $comprabantepagos->estatus_pago = $request->input('estatus_pago');
 
         $comprabantepagos->save();
@@ -161,8 +162,9 @@ class ComprobantePagoController extends Controller
         $tipo_pagos = TipoPago::all();
         $fecha_pago = date('d/m/Y', strtotime($comprobante_pago->fecha_pago));
         $comprobante_pdf = $comprobante_pago->comprobante_pdf;
+        $observaciones_com = $comprobante_pago->observaciones_com;
         $estatus_pago = $comprobante_pago->estatus_pago;
-        return view('comprobantepago.edit' , compact('comprobante_pago', 'inspeccion', 'tipo_pagos', 'fecha_pago', 'comprobante_pdf', 'estatus_pago'));
+        return view('comprobantepago.edit' , compact('comprobante_pago', 'inspeccion', 'tipo_pagos', 'fecha_pago', 'comprobante_pdf', 'observaciones_com', 'estatus_pago'));
     }
 
     /**
@@ -198,6 +200,7 @@ class ComprobantePagoController extends Controller
             $comprobantePago->comprobante_pdf = json_encode($todosLosArchivos);
         }
 
+        $comprabante_pago->observaciones_com = $request->input('observaciones_com');
         $comprobante_pago->estatus_pago = $request->input('estatus_pago');
 
         $comprobante_pago->save();

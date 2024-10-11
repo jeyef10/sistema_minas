@@ -15,8 +15,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card mb-4">
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h2 class="font-weight-bold text-primary" style="margin-left: 30%;">Gestión de Comprobante de Pago</h2>
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
+                        <h2 class="font-weight-bold text-primary">Gestión de Comprobante de Pago de Licencia</h2>
                             
                     </div>
 
@@ -26,7 +26,8 @@
                         <table class="table align-items-center table-flush" id="dataTable">
                             <thead class="thead-light">
                                 <tr>
-                                    <th class="font-weight-bold text-Secondary">Funcionario Acompañante</th>
+                                    <th class="font-weight-bold text-Secondary">Tipo de Solicitud</th>
+                                    <th class="font-weight-bold text-Secondary">Tipo de Mineral</th>
                                     <th class="font-weight-bold text-Secondary">Lugar</th>
                                     <th class="font-weight-bold text-Secondary">Fecha de Inspección</th>
                                     <th class="font-weight-bold text-Secondary">Estatus Inspección</th>
@@ -37,9 +38,9 @@
     
                                 @foreach ($inspecciones as $inspeccion)
                                     <tr>
-                                        <td class="font-weight-bold text-Secondary">{{ $inspeccion->funcionario_acomp }}</td>
+                                        <td class="font-weight-bold text-Secondary">{{ $inspeccion->planificacion->recepcion->categoria }}</td>
+                                        <td class="font-weight-bold text-Secondary">{{ $inspeccion->planificacion->recepcion->mineral->nombre }}</td>
                                         <td class="font-weight-bold text-Secondary">{{ $inspeccion->lugar_direccion}}</td>  
-                                        {{-- <td class="font-weight-bold text-Secondary"><img src="/imagen/{{ $inspeccion->res_fotos}}" width="20%"></td>  --}}
                                         <td class="font-weight-bold text-Secondary">{{ $inspeccion->fecha_inspeccion}}</td>
                                         <td class="font-weight-bold text-Secondary">{{ $inspeccion->estatus}}</td>
 
@@ -248,7 +249,7 @@
                     let inspeccionesHtml = '<main>';
                     inspeccionesHtml += `
                         <h5 class="font-weight-bold text-primary" style="text-align: center">Detalles de la Inspección</h5>
-                        <p><b>Tipo de Solicitud:</b> ${data.id_planificacion}</p>
+                        <p><b>Funcionario Acompañante:</b> ${data.funcionario_acomp}</p>
                         <p><b>Observaciones:</b> ${data.observaciones}</p>
                         <p><b>Conclusiones:</b> ${data.conclusiones}</p>
                         <p><b>Latitud:</b> ${data.latitud}</p>

@@ -268,6 +268,7 @@
                     $('#exampleModalScrollable .modal-body').html(`
                         ${pdfHtml}
                         <p><b>Tipo de Solicitud:</b> ${data.id_inspeccion}</p>
+                        <p><b>Observaciones:</b> ${data.observaciones_com}</p>
                     `);
 
                     if (!$('#exampleModalScrollable').is(':visible')) {

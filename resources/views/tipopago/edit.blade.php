@@ -25,10 +25,13 @@
                         <div class="card-body">
                             
                             <div class="row">
-                            
+
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Nombre del Pago</label>
-                                    <input type="text" class="form-control" id="nombre_pago" name="nombre_pago" style="background: white;" value="{{ isset($tipo_pago->nombre_pago)?$tipo_pago->nombre_pago:'' }}" placeholder="Ingrese El Nombre" autocomplete="off" oninput="capitalizarInput('nombre')">
+                                    <select class="select2-single form-control" name="nombre_pago" id="nombre_pago">
+                                        <option value="0" disabled>Seleccione un Pago</option>
+                                            <option value="Pago Licencia" {{ (old('nombre_pago', $tipo_pago->nombre_pago ?? '') === 'Pago Licencia') ? 'selected' : '' }}>Pago Licencia</option>
+                                    </select>
                                 </div>
         
                                 <div class="col-4">
