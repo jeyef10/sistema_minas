@@ -128,6 +128,14 @@
                   <span>Reportes</span>
                 </a>
               </li>
+
+              <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ url('reporte_general') }}" >
+                  <i class="fas fa-fw fa-columns"></i>
+                  <span>Reportes</span>
+                </a>
+              </li>
+
               <li class="nav-item">
                 <a class="nav-link" href="{{ url('estadistica') }}">
                   <i class="fas fa-fw fa-table"></i>
@@ -303,6 +311,8 @@
     <script src="{{ asset('js/ruang-admin.min.j') }}s"></script>
     <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
     <script src="{{ asset('js/demo/chart-area-demo.js') }}"></script>
+    <script src="{{ asset('js/demo/chart-pie-demo.js')}}"></script>
+    <script src="{{ asset('js/demo/chart-bar-demo.js')}}"></script>
     <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
@@ -313,6 +323,7 @@
     <script src="{{ asset ('vendor/clock-picker/clockpicker.js') }}"></script>
     <script src="{{asset('path/to/bootstrap-datepicker.es.min.js')}}"></script>
     <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js')}}"></script>
+
 
     @yield('datatable')
 

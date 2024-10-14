@@ -2470,23 +2470,23 @@ function Inspeccion (obj) {
         return false;
     }
 
-    var longitud = obj.longitud.value;
-    if (!longitud){
-        Swal.fire({
-            title: 'Inspección',
-            text: "Debe registrar la longitud.",
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            }).then((result) => {
-        if (result.isConfirmed) {
+    // var longitud = obj.longitud.value;
+    // if (!longitud){
+    //     Swal.fire({
+    //         title: 'Inspección',
+    //         text: "Debe registrar la longitud.",
+    //         icon: 'warning',
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         }).then((result) => {
+    //     if (result.isConfirmed) {
 
-            this.submit();
-        }
-        })
+    //         this.submit();
+    //     }
+    //     })
         
-        return (false);
-    }
+    //     return (false);
+    // }
 
     if (longitud.trim() == "") {
         Swal.fire({

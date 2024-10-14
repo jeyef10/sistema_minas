@@ -201,7 +201,7 @@
                     <div class="small float-right"><b>{{ ($count_recepcion) }}</b></div>
                   </div>
                   <div class="progress" style="height: 12px;">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 80%" aria-valuenow="80"
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 80%" aria-valuenow="80"
                       aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
                 </div>
@@ -215,11 +215,21 @@
                   </div>
                 </div>
                 <div class="mb-3">
-                  <div class="small text-gray-500">Licencias Aprobadas
+                  <div class="small text-gray-500">Licencias Aprobadas Activas
                     <div class="small float-right"><b>{{ ($count_licencia) }}</b></div>
                   </div>
                   <div class="progress" style="height: 12px;">
                     <div class="progress-bar bg-success" role="progressbar" style="width: 55%" aria-valuenow="55"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <div class="small text-gray-500">Licencias Aprobadas Vencidas
+                    <div class="small float-right"><b>{{ ($count_licencia) }}</b></div>
+                  </div>
+                  <div class="progress" style="height: 12px;">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: 55%" aria-valuenow="55"
                       aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
                 </div>
@@ -303,7 +313,7 @@
 
     // Definir iconos personalizados
     var recepcionIcon = L.icon({
-        iconUrl: '/icons/mapa.png', // Ruta al icono de recepcion
+        iconUrl: '/icons/mapa1.png', // Ruta al icono de recepcion
         iconSize: [25, 41], // Tamaño del icono
         iconAnchor: [12, 41], // Punto del icono que se corresponde con la posición del marcador
         popupAnchor: [1, -34] // Punto desde el cual se abrirá el popup relativo al icono

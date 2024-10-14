@@ -25,6 +25,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\LicenciaController;
 use App\Http\Controllers\PagoRegaliaController;
 use App\Http\Controllers\ControlRegaliaController;
+use App\Http\Controllers\EstadisticaController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ManualController;
 
@@ -186,6 +187,9 @@ Route::resource('control_regalia', ControlRegaliaController::class)->middleware(
 
 /*Reportes*/
 Route::get('reporte', [ReporteController::class, 'index'])->name('reporte')->middleware('auth');
+
+/*Estadistica*/
+Route::get('/estadistica', [EstadisticaController::class, 'index'])->name('estadistica')->middleware('auth');
 
 /* Ruta Bitacora*/
 Route::get('bitacora', [ReporteController::class, 'bitacora'])->name('bitacora')->middleware('auth');

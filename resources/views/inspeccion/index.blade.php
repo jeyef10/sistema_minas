@@ -34,6 +34,8 @@
                             <thead class="thead-light">
                                 <tr>
                                     {{-- <th class="font-weight-bold text-Secondary">Recepcion</th> --}}
+                                    
+                                    <th class="font-weight-bold text-Secondary">Tipo de Solicitud</th>
                                     <th class="font-weight-bold text-Secondary">Municipio</th>
                                     <th class="font-weight-bold text-Secondary">Comisionado Asignado</th>
                                     <th class="font-weight-bold text-Secondary">Fecha Inicial</th>
@@ -43,12 +45,10 @@
                                   </tr>
                             </thead>
                             <tbody>
-                                {{-- @php
-                                    echo $planificaciones;
-                                @endphp --}}
+                                
                                 @foreach ($planificaciones as $planificacion)
                                     <tr>
-        
+                                        <td class="font-weight-bold text-Secondary">{{ $planificacion->recepcion->categoria }}
                                         <td class="font-weight-bold text-Secondary">
                                             @if ($planificacion->municipio)
                                                 {{$planificacion->municipio->nom_municipio }} @else
