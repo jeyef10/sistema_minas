@@ -18,11 +18,7 @@ return new class extends Migration
             $table->string('cedula');
             $table->string('nombres');
             $table->string('apellidos');
-            $table->bigInteger('id_municipio')->nullable();
             $table->unsignedBigInteger('id_usuario')->nullable();
-
-            // Establecer relación con la tabla de municipios
-            $table->foreign('id_municipio')->references('id')->on('municipios');
 
             // Establecer relación con la tabla de users
             $table->foreign('id_usuario')->references('id')->on('users');

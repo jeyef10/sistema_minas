@@ -92,8 +92,22 @@ class RecepcionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'recaudos' => 'required|array|min:13',
+            'recaudos' => 'required|array',
         ]);
+
+        // Obtener la categoría seleccionada
+        $categoria = $request->input('categoria');
+
+        // Obtener el número total de recaudos de esa categoría
+        $totalRecaudos = Recaudos::whereJsonContains('categoria_recaudos', $categoria)->count();
+
+        // Obtener los IDs de recaudos seleccionados (debe ser un array)
+        $recaudosSeleccionados = $request->input('recaudos');
+
+        // Verificar que el número de recaudos seleccionados coincida con el número total de recaudos de la categoría
+        if (count($recaudosSeleccionados) !== $totalRecaudos) {
+            return redirect()->back()->withErrors("Se requieren $totalRecaudos Recaudos para registrar la recepción. Por favor, seleccione $totalRecaudos Recaudos.");
+        }
 
         // Crear una nueva recepcion de recaudos
         $recepcion = new Recepcion ();
@@ -108,16 +122,18 @@ class RecepcionController extends Controller
         
         $recepcion->save();// Guardar la instancia de la tabla Recepcion
 
-        $recaudosSeleccionados = [];
+        // $recaudosSeleccionados = [];
+        // $totalRecaudos = Recaudos::count();
 
-        if (count($recaudosSeleccionados) !== 13) {
+
+        // if (count($recaudosSeleccionados) !== $totalRecaudos) {
             
-            $errorMessage = 'Se requieren 13 Recaudos para registrar la recepción. Por favor, seleccione 13 Recaudos.';// Mostrar el mensaje cuando no cumples con los 13 recaudos.
+        //     $errorMessage = 'Se requieren $totalRecaudos Recaudos para registrar la recepción. Por favor, seleccione 13 Recaudos.';// Mostrar el mensaje cuando no cumples con los 13 recaudos.
 
-        }
+        // }
         
         // Obtener los IDs de recaudos seleccionados (debe ser un array)
-        $recaudosSeleccionados = $request->input('recaudos');
+        // $recaudosSeleccionados = $request->input('recaudos');
 
         // Crear registros en la tabla puente para cada recaudo seleccionado
         foreach ($recaudosSeleccionados as $recaudo) {

@@ -45,6 +45,19 @@
                                         <option value="Procesamiento">Procesamiento</option>
                                     </select>
                                 </div>
+
+                                <div class="col-4">
+                                    <label  class="font-weight-bold text-primary">Tasa</label>
+                                    <input type="text" class="form-control" id="tasa" name="tasa" style="background: white;" value="" placeholder="Ingrese la tasa" autocomplete="off" onkeypress="return solonum(event);">
+                                </div>
+
+                                <div class="col-4">
+                                    <label  class="font-weight-bold text-primary">Moneda/Longitud</label>
+                                    <select class="select2-single form-control" name="moneda_longitud" id="moneda_longitud">
+                                        <option value="0" selected="true" disabled>Seleccione una Moneda</option>
+                                        <option value="$/mtrs3">$/mtrs3</option>
+                                    </select>
+                                </div>
                                 
                             </div>
 

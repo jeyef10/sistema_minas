@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cargo extends Model
+class MunicipioComisionado extends Model
 {
-    protected $table = 'cargos';
+    use HasFactory;
+
+    protected $table = 'municipio_comisionados';
     protected $primaryKey = 'id';
     public $timestamps = true;
-    protected $fillable = ['nombre_cargo'];
+    protected $fillable = ['id_comisionado', 'id_municipio'];
+
 }

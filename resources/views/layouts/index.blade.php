@@ -66,9 +66,9 @@
                     <a class="collapse-item" href="{{ url('mineral') }}">Mineral</a>
                     @endcan
 
-                    @can('ver-regalia')
+                    {{-- @can('ver-regalia')
                     <a class="collapse-item" href="{{ url('regalia') }}">Tasa de Regalias</a>
-                    @endcan
+                    @endcan --}}
 
                     @can('ver-plazo')
                     <a class="collapse-item" href="{{ url('plazo') }}">Plazos de Vigencia</a>

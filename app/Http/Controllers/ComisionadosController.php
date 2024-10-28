@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comisionados;
 use App\Models\Municipio;
+use App\Models\MunicipioComisionado;
 use App\Models\PlanificacionComisionados;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -31,7 +32,7 @@ class ComisionadosController extends Controller
      */
     public function index()
     {
-        $comisionados = Comisionados::with('municipio')->get();
+        $comisionados = Comisionados::with('municipios')->get();
         return view('comisionado.index',compact('comisionados'));
     }
 
@@ -50,8 +51,9 @@ class ComisionadosController extends Controller
     public function create()
     {
         $municipios = Municipio::all();
+        $municipiocomisionados = MunicipioComisionado::get();
         $planificacioncomisionados = PlanificacionComisionados::get();
-        return view('comisionado.create', compact('planificacioncomisionados','municipios'));
+        return view('comisionado.create', compact('planificacioncomisionados','municipios', 'municipiocomisionados'));
     }
 
     /**
@@ -71,10 +73,10 @@ class ComisionadosController extends Controller
             ]
         );
 
-        $datosComisionados = $request->except('_token');
-        $datosComisionados['id_municipio'] = $request->input('municipio');
-        // $datosComisionados['id_parroquia'] = $request->input('parroquia');
-        Comisionados::create($datosComisionados);
+        $comisionado = Comisionados::create($request->all());
+
+        // Asociar los municipios al comisionado
+        $comisionado->municipios()->sync($request->municipios);
 
         $bitacora = new BitacoraController;
         $bitacora->update();
@@ -106,7 +108,7 @@ class ComisionadosController extends Controller
      * @param  \App\Models\Comisionados  $comisionados
      * @return \Illuminate\Http\Response
      */
-    public function edit(comisionados $comisionados, $id)
+    public function edit($id)
     {
         $comisionado = Comisionados::find($id);
         $municipios = Municipio::all();
@@ -120,22 +122,28 @@ class ComisionadosController extends Controller
      * @param  \App\Models\Comisionados  $comisionados
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comisionados $comisionados, $id)
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            'cedula' => 'unique:comisionados,cedula,' . $id 
-        ], [
+        $request->validate(
+            [
+            'cedula' => 'unique:comisionados,cedula,' . $id,
+            ], 
+            [
             'cedula.unique' => 'Está cédula ya existe en la base de datos.'
-        ]);
-        
-       $comisionado = Comisionados::find($id);
+            ]
+        );
 
-       $comisionado->cedula = $request->input('cedula');
-       $comisionado->nombres = $request->input('nombres');
-       $comisionado->apellidos = $request->input('apellidos');
-       $comisionado->id_municipio = $request->input('id_municipio');
-       
-        $comisionado->save();
+        $comisionado = Comisionados::find($id);
+
+        // Actualiza los campos del comisionado
+        $comisionado->update([
+            'cedula' => $request->cedula,
+            'nombres' => $request->nombres,
+            'apellidos' => $request->apellidos,
+        ]);
+
+        // Sincroniza los municipios asociados
+        $comisionado->municipios()->sync($request->municipios);
 
         $bitacora = new BitacoraController;
         $bitacora->update();
@@ -161,6 +169,9 @@ class ComisionadosController extends Controller
         try {
 
         $comisionado = Comisionados::findOrFail($id);
+        
+        // Eliminar los registros relacionados en la tabla puente
+        $comisionado->municipios()->detach();
         
         // Elimina al comisionado
         $comisionado->delete();
