@@ -35,4 +35,9 @@ class Planificacion extends Model
         return $this->belongsToMany(PlanificacionComisionados::class, 'id_planificacion', 'id', 'id_comisionado');
     }
 
+    // public function recepcion()
+    // {
+    //     return $this->belongsTo(Recepcion::class);
+    // }
+
 }

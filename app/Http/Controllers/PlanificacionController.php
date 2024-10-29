@@ -8,6 +8,7 @@ use App\Models\Recepcion;
 use App\Models\Recaudos;
 use App\Models\Comisionados;
 use App\Models\Municipio;
+// use App\Models\MunicipioComisionado;
 use App\Models\RecepcionRecaudos;
 use App\Models\Solicitante;
 use App\Models\PersonaJuridica;
@@ -40,7 +41,15 @@ class PlanificacionController extends Controller
      */
     public function index()
     {
+        // Obtener todas las recepciones y cargar relaciones
         $recepciones = Recepcion::with('solicitante', 'recepcionrecaudos')->get();
+
+        // Iterar sobre cada recepción para verificar si está planificada
+            $recepciones->each(function ($recepcion) {
+                // Buscar en la tabla Planificacion si existe una planificación para esta recepción
+                $recepcion->yaPlanificada = Planificacion::where('id_recepcion', $recepcion->id)->exists();
+            });
+
         $recaudos = Recaudos::all();
 
         return view('planificacion.index', compact('recepciones', 'recaudos'));
@@ -63,27 +72,25 @@ class PlanificacionController extends Controller
         $planificacioncomisionados = PlanificacionComisionados::all();
         $comisionados = Comisionados::all();
         $municipios = Municipio::all();
+        // $municipiocomisionados = MunicipioComisionado::all();
         $solicitantes = Solicitante::with('solicitanteEspecifico')->get();
         $recepcion = Recepcion::findOrFail($id);
         
         return view('planificacion.create', compact('planificacioncomisionados', 'comisionados', 'municipios', 'solicitantes','recepcion'));
     }
 
+
     public function fetchComisionados(Request $request, $municipioId)
     {
-        $municipiocomisionados = Comisionados::where('id_municipio', $municipioId)->get();
-    
-        return response()->json($municipiocomisionados);
+        $comisionados = Comisionados::join('municipio_comisionados', 'comisionados.id', '=', 'municipio_comisionados.id_comisionado')
+                                ->where('municipio_comisionados.id_municipio', $municipioId)
+                                ->select('comisionados.id', 'comisionados.*')
+                                ->get();
+
+        return response()->json($comisionados);
     }
 
-    // public function getRecepcionDatos($recepcionId)
-    // {
-        
-    //     $datos_recepcion = Recepcion::where('id_recepcion', $recepcionId)->get();
-    //     dd($$datos_recepcion);
-    //     return response()->json($datos_recepcion);
-    
-    // }
+
     /**
      * Store a newly created resource in storage.
      *

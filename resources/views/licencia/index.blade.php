@@ -26,6 +26,8 @@
                         <table class="table align-items-center table-flush" id="dataTable">
                             <thead class="thead-light">
                                 <tr>
+                                    <th class="font-weight-bold text-Secondary">Tipo de Solicitud</th>
+                                    <th class="font-weight-bold text-Secondary">Solicitante</th>
                                     <th class="font-weight-bold text-Secondary">Tipo de Pago</th>
                                     <th class="font-weight-bold text-Secondary">Fecha Pago</th>
                                     <th class="font-weight-bold text-Secondary">Estatus Pago</th>
@@ -36,30 +38,45 @@
     
                                 @foreach ($comprobante_pagos as $comprobante_pago)
                                     <tr>
+                                        <td class="font-weight-bold text-Secondary"> {{$comprobante_pago->inspeccion->planificacion->recepcion->categoria }}</td>
+
+                                        <!-- Verifica si el solicitante es una Persona Natural -->
+                                        @if ($comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico instanceof \App\Models\PersonaNatural)
+                                            <!-- Si es una Persona Natural, muestra la cédula, el nombre y el apellido -->
+                                            <td class="font-weight-bold text-Secondary">{{ $comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->cedula }} -
+                                            {{ $comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->nombre }} {{ $comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->apellido }}</td>
+
+                                        <!-- Verifica si el solicitante es una Persona Jurídica -->
+                                        @elseif ($comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico instanceof \App\Models\PersonaJuridica)
+                                            <!-- Si es una Persona Jurídica, muestra el rif, el nombre y el correo -->
+                                            <td class="font-weight-bold text-Secondary">{{ $comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->rif }} -
+                                            {{ $comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->nombre }}</td>
+                                        @endif
+
                                         <td class="font-weight-bold text-Secondary">
                                             @if ($comprobante_pago->tipo_pago)
                                                 {{$comprobante_pago->tipo_pago->nombre_pago }} - {{$comprobante_pago->tipo_pago->forma_pago }} @else
                                             @endif
                                         </td>
 
-                                        <td class="font-weight-bold text-Secondary"> {{$comprobante_pago->fecha_pago }}</td>
+                                        <td class="font-weight-bold text-Secondary"> {{ date('d/m/Y', strtotime($comprobante_pago->fecha_pago)) }}</td>
                                         <td class="font-weight-bold text-Secondary"> {{$comprobante_pago->estatus_pago }}</td>
 
                                         <td>
 
                                             <div style="display: flex; justify-content: center;">
-                                            @can('crear-licencia')
-                                                <a class="btn btn-primary btn-sm" title="Registar Licencia" href="{{ route('licencia.create', ['id' => $comprobante_pago->id]) }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-vcard-fill" viewBox="0 0 16 16">
-                                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm9 1.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0-.5.5M9 8a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4A.5.5 0 0 0 9 8m1 2.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 0-1h-3a.5.5 0 0 0-.5.5m-1 2C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 0 2 13h6.96q.04-.245.04-.5M7 6a2 2 0 1 0-4 0 2 2 0 0 0 4 0"/>
-                                                </svg></a>
-                                            @endcan
-
-                                            
+                                                @if (!$comprobante_pago->yaLicenciado)   
+                                                    @can('crear-licencia')
+                                                        <a class="btn btn-primary btn-sm" title="Registar Licencia" href="{{ route('licencia.create', ['id' => $comprobante_pago->id]) }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-vcard-fill" viewBox="0 0 16 16">
+                                                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm9 1.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0-.5.5M9 8a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4A.5.5 0 0 0 9 8m1 2.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 0-1h-3a.5.5 0 0 0-.5.5m-1 2C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 0 2 13h6.96q.04-.245.04-.5M7 6a2 2 0 1 0-4 0 2 2 0 0 0 4 0"/></svg>
+                                                        </a>
+                                                    @endcan
+                                                @endif
+    
                                                 <a class="btn btn-warning btn-sm" style="margin: 0 3px;" title="Desea Editar el Comprobante de paago" href="{{ route('comprobantepago.edit', $comprobante_pago->id) }}"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                                     <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
                                                 </svg></a>
                                             
-
                                                 <a class="btn btn-info btn-sm" style="margin: 0 1px;" title="Ver Detalles" data-comprobante_pago-id='{{ $comprobante_pago->id }}' class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable" id="#modalScroll"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layout-text-window-reverse" viewBox="0 0 16 16"  style="color: #ffff; cursor: pointer;">
                                                     <path d="M13 6.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5m0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5m-.5 2.5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/>
                                                     <path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zM2 1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1zM1 4v10a1 1 0 0 0 1 1h2V4zm4 0v11h9a1 1 0 0 0 1-1V4z"/>
@@ -255,24 +272,24 @@
                     console.log(data);
 
                     let pdfHtml = '<div style="display: flex; flex-wrap: wrap;">';
-                    if (Array.isArray(data.comprobante_pdf) && data.comprobante_pdf.length > 0) {
-                        data.comprobante_pdf.forEach(function(pdf) {
-                            pdfHtml += `
-                                <div style="position: relative; display: inline-block; margin: 5px; width: calc(50% - 10px); box-sizing: border-box;">
-                                    <iframe src="{{ asset('pdf/') }}/${pdf}" style="width: 100%; height: 200px; display: block;"></iframe>
-                                    <button type="button" style="position: absolute; top: 0; right: 0; background-color: black; color: white; border: none; border-radius: 50%; cursor: pointer; transform: translate(-15%, 15%); width: 20px; height: 20px; font-size: 12px;">X</button>
-                                </div>
-                            `;
-                        });
-                    } else {
-                        pdfHtml += '<p>No se encontraron PDFs para esta recepción.</p>';
-                    }
-                    pdfHtml += '</div>';
+                        
+                    // Parsear el JSON de res_fotos
+                    let fotos = JSON.parse(data.comprobante_pdf);
+
+                    // Itera sobre las fotos y agrégalas al HTML
+                    fotos.forEach(function(foto) {
+                        pdfHtml += `<img src="/pdf/${foto}" width="60%" style="width: calc(50% - 10px); margin-bottom: 10px;">`;
+                    });
+
+                    pdfHtml += '</div></main>';
 
                     $('#exampleModalScrollable .modal-body').html(`
-                        ${pdfHtml}
+                    <h5 class="font-weight-bold text-primary" style="text-align: center">Detalles del Comprobante de Pago</h5>
+                        
                         <p><b>Tipo de Solicitud:</b> ${data.id_inspeccion}</p>
                         <p><b>Observaciones:</b> ${data.observaciones_com}</p>
+                        <p><b>Timbres Fiscales:</b> ${data.timbre_fiscal}</p>
+                        ${pdfHtml}
                     `);
 
                     if (!$('#exampleModalScrollable').is(':visible')) {
@@ -288,9 +305,5 @@
     });
 </script>
 
-
-
-    
-    
 
 @endsection

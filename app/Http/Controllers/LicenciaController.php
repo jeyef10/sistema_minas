@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 use App\Models\Licencias;
-use App\Models\Inspecciones;
 use App\Models\ComprobantePago;
 use App\Models\Plazos;
 use App\Http\Controllers\Controller;
@@ -33,6 +32,12 @@ class LicenciaController extends Controller
     {
         $comprobante_pagos = ComprobantePago::all();
 
+        // Iterar sobre cada planificación para verificar si fue inspeccionada
+        $comprobante_pagos ->each(function ($comprobante_pago) {
+            // Buscar en la tabla comprobante_pagoes si existe una comprobante_pago para esta comprobante_pagoe
+            $comprobante_pago->yaLicenciado = Licencias::where('id_comprobante_pago', $comprobante_pago->id)->exists();
+        });
+
         return view('licencia.index', compact('comprobante_pagos'));
     }
 
@@ -46,13 +51,12 @@ class LicenciaController extends Controller
             return response()->json(['error' => 'Comprobante no encontrada'], 404);
         }
 
-        $comprobante_pdf = json_decode($comprobante_pago->comprobante_pdf, true);
-
         // Devuelve los datos relevantes en formato JSON
         return response()->json([
             'id_inspeccion' => $comprobante_pago->inspeccion->planificacion->recepcion->categoria,
             'comprobante_pdf' => $comprobante_pago->comprobante_pdf,
             'observaciones_com' => $comprobante_pago->observaciones_com,
+            'timbre_fiscal' => $comprobante_pago->timbre_fiscal,
             
         ]);
 
@@ -65,7 +69,7 @@ class LicenciaController extends Controller
      */
     public function create($id)
     {
-        $inspeccion = Inspecciones::findOrFail($id);
+        $comprobante_pago = ComprobantePago::findOrFail($id);
         $plazos = Plazos::all();
 
         $year = date('Y');
@@ -77,15 +81,17 @@ class LicenciaController extends Controller
         $codigo_lp = '';
 
         // Obtener la categoría desde la tabla recepcion
-        $categoria = DB::table('inspecciones')
+        $categoria = DB::table('comprobante_pagos')
+            ->join('inspecciones', 'comprobante_pagos.id_inspeccion', '=', 'inspecciones.id')
             ->join('planificacion', 'inspecciones.id_planificacion', '=', 'planificacion.id')
             ->join('recepcion', 'planificacion.id_recepcion', '=', 'recepcion.id')
-            ->where('inspecciones.id', $id)
+            ->where('comprobante_pagos.id', $id)
             ->value('recepcion.categoria');
 
         // Obtener el último contador para la categoría y el año actual
         $lastRecord = DB::table('licencias')
-            ->join('inspecciones', 'licencias.id_inspeccion', '=', 'inspecciones.id')
+            ->join('comprobante_pagos', 'licencias.id_comprobante_pago', '=', 'comprobante_pagos.id')
+            ->join('inspecciones', 'comprobante_pagos.id_inspeccion', '=', 'inspecciones.id')
             ->join('planificacion', 'inspecciones.id_planificacion', '=', 'planificacion.id')
             ->join('recepcion', 'planificacion.id_recepcion', '=', 'recepcion.id')
             ->where('recepcion.categoria', $categoria)
@@ -115,7 +121,8 @@ class LicenciaController extends Controller
 
         // Obtener el último contador para catastro_la y catastro_lp para el año actual
         $lastCatastroRecord = DB::table('licencias')
-            ->join('inspecciones', 'licencias.id_inspeccion', '=', 'inspecciones.id')
+            ->join('comprobante_pagos', 'licencias.id_comprobante_pago', '=', 'comprobante_pagos.id')
+            ->join('inspecciones', 'comprobante_pagos.id_inspeccion', '=', 'inspecciones.id')
             ->join('planificacion', 'inspecciones.id_planificacion', '=', 'planificacion.id')
             ->join('recepcion', 'planificacion.id_recepcion', '=', 'recepcion.id')
             ->where('recepcion.categoria', $categoria)
@@ -144,7 +151,7 @@ class LicenciaController extends Controller
             $codigo_lp = "YA-RMT/LP-$contadorFormatted";
         }
 
-        return view('licencia.create', compact('inspeccion', 'plazos', 'codigo_apro', 'codigo_hpc', 'codigo_la', 'codigo_lp'));
+        return view('licencia.create', compact('comprobante_pago', 'plazos', 'codigo_apro', 'codigo_hpc', 'codigo_la', 'codigo_lp'));
 
     }
 
@@ -157,26 +164,30 @@ class LicenciaController extends Controller
     public function store(Request $request)
     {
 
-        $this->validate($request, [
-            'fecha_oficio' => 'required|date|date_format:d/m/Y|after_or_equal:'.date('d/m/Y'),
-        ], [
-            'fecha_oficio.required' => 'La fecha de pago es obligatoria.',
-            'fecha_oficio.date' => 'La fecha de pago debe ser una fecha válida.',
-            'fecha_oficio.date_format' => 'La fecha de pago debe tener el formato AAAA-MM-DD.',
-            'fecha_oficio.after_or_equal' => 'La fecha de pago debe ser la fecha actual.',
-        ]);
+        // $this->validate($request, [
+        //     'fecha_oficio' => 'required|date|date_format:d/m/Y|after_or_equal:'.date('d/m/Y'),
+        // ], [
+        //     'fecha_oficio.required' => 'La fecha de pago es obligatoria.',
+        //     'fecha_oficio.date' => 'La fecha de pago debe ser una fecha válida.',
+        //     'fecha_oficio.date_format' => 'La fecha de pago debe tener el formato AAAA-MM-DD.',
+        //     'fecha_oficio.after_or_equal' => 'La fecha de pago debe ser la fecha actual.',
+        // ]);
 
         //Crear una nueva Licencia 
         $licencias = new Licencias();
-        $licencias->id_inspeccion = $request->input('id_inspeccion');
+        $licencias->id_comprobante_pago = $request->input('id_comprobante_pago');
         $licencias->resolucion_apro = $request->input('resolucion_apro');
         $licencias->resolucion_hpc = $request->input('resolucion_hpc');
         $licencias->catastro_la = $request->input('catastro_la');
         $licencias->catastro_lp = $request->input('catastro_lp');
         $licencias->providencia = $request->input('providencia');
         $licencias->num_territorio = $request->input('num_territorio');
+        $licencias->metodo_licencia_apro = $request->input('metodo_licencia_apro');
+        $licencias->metodo_licencia_pro = $request->input('metodo_licencia_pro');
         $licencias->fecha_oficio = $request->input('fecha_oficio');
         $licencias->id_plazo = $request->input('id_plazo');
+        $licencias->fecha_inicial_ope = $request->input('fecha_inicial_ope');
+        $licencias->fecha_final_ope = $request->input('fecha_final_ope');
         $licencias->talonario = $request->input('talonario');
 
         $licencias->save();
@@ -217,7 +228,7 @@ class LicenciaController extends Controller
     public function edit($id)
     {
         $licencia = Licencias::findOrFail($id);
-        $inspeccion = Inspecciones::find($id);
+        $comprobante_pago = ComprobantePago::find($id);
         $plazos = Plazos::all();
         $resolucion_apro = $licencia->resolucion_apro;
         $catastro_la = $licencia->catastro_la;
@@ -229,7 +240,7 @@ class LicenciaController extends Controller
         $id_plazo = $licencia->plazo;
         $talonario = $licencia->talonario;
 
-        return view('licencia.edit' , compact('licencia', 'inspeccion', 'plazos', 'resolucion_apro',
+        return view('licencia.edit' , compact('licencia', 'comprobante_pago', 'plazos', 'resolucion_apro',
         'catastro_la', 'num_territorio', 'resolucion_hpc', 'catastro_lp', 'providencia', 'fecha_oficio', 'id_plazo', 'talonario'));
 
     }
@@ -246,7 +257,7 @@ class LicenciaController extends Controller
 
         // Buscar la Licencia existente        
         $licencia = licencias::findOrFail($id);
-        $licencia->id_inspeccion = $request->input('id_inspeccion');
+        $licencia->id_comprobante_pago = $request->input('id_comprobante_pago');
         $licencia->resolucion_apro = $request->input('resolucion_apro');
         $licencia->resolucion_hpc = $request->input('resolucion_hpc');
         $licencia->catastro_la = $request->input('catastro_la');

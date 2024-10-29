@@ -39,6 +39,10 @@ class Recepcion extends Model
         return $this->belongsTo(Recaudos::class, 'id_recaudo', 'id', 'nombre', 'categoria_recaudos');
     }
     
+    // public function planificacion()
+    // {
+    //     return $this->hasMany(Planificacion::class);
+    // }
 }
 
     

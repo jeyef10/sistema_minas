@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('pago_regalias', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_licencia');
-            $table->unsignedBigInteger('id_regalia');
+            $table->unsignedBigInteger('id_mineral');
             $table->string('metodo_apro')->nullable();
             $table->string('metodo_pro')->nullable(); 
             $table->string('monto_apro')->nullable();
@@ -28,11 +28,11 @@ return new class extends Migration
             $table->date('fecha_venci');
             $table->string('estatus_regalia');
 
-            // Establecer relación con la tabla de inspecciones
+            // Establecer relación con la tabla de la licencias
             $table->foreign('id_licencia')->references('id')->on('licencias');
 
-            // Establecer relación con la tabla de tipo_pagos
-            $table->foreign('id_regalia')->references('id')->on('regalias');
+            // Establecer relación con la tabla de minerales
+            $table->foreign('id_mineral')->references('id')->on('minerales');
 
 
             $table->timestamps();

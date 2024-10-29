@@ -7,6 +7,7 @@ use App\Models\PlanificacionComisionados;
 use App\Models\Recepcion;
 use App\Models\Comisionados;
 use App\Models\Municipio;
+use App\Models\MunicipioComisionado;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +33,15 @@ class InspeccionesController extends Controller
      */
     public function index()
     {
-        $planificaciones = Planificacion::with('comisionados', 'planificacioncomisionados')->get();
+        // $planificaciones = Planificacion::with('comisionados', 'planificacioncomisionados', 'municipio_comisionados')->get();
+        $planificaciones = Planificacion::all();
+
+            // Iterar sobre cada planificación para verificar si fue inspeccionada
+            $planificaciones->each(function ($planificacion) {
+                // Buscar en la tabla Inspecciones si existe una inspeccion para esta planificacion
+                $planificacion->yaInspeccionada = Inspecciones::where('id_planificacion', $planificacion->id)->exists();
+            });
+
 
         return view ('inspeccion.index', compact('planificaciones'));
 

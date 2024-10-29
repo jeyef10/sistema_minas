@@ -12,16 +12,6 @@ class PlanificacionComisionados extends Model
     protected $table = 'planificacion_comisionados'; 
     protected $primaryKey = 'id';
     public $timestamps = true;
-    protected $fillable = ['id_recepcion', 'id_comisionado',];
-
-    public function recepcion()
-    {
-        return $this->belongsTo(Recepcion::class, 'id_recepcion');
-    }
-
-    public function comisionado()
-    {
-        return $this->belongsTo(Comisionados::class, 'id_comisionado');
-    }
+    protected $fillable = ['id_planificacion', 'id_comisionado',];
 
 }

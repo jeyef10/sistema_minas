@@ -122,9 +122,24 @@
                                 </div>
 
                                 <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Observaciones</label>
-                                        <textarea class="form-control" id="observaciones_com" name="observaciones_com" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('observaciones')"> {{ old('observaciones') }} </textarea>                                   
+                                    <label  class="font-weight-bold text-primary">Observaciones</label>
+                                    <textarea class="form-control" id="observaciones_com" name="observaciones_com" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('observaciones')"> {{ old('observaciones') }} </textarea>                                   
+                                </div>
+
+                                <div class="card-body">
+                                    <label class="font-weight-bold text-primary">Timbres Fiscales</label>
+                                    <div class="row ml-1">
+                                        <div class="custom-control custom-radio col-1">
+                                            <input type="radio" id="natural" name="timbre_fiscal" value="Si" class="custom-control-input" checked>
+                                            <label class="custom-control-label" for="natural">Si</label>
+                                        </div>
+            
+                                        <div class="custom-control custom-radio col-1">
+                                            <input type="radio" id="juridico" name="timbre_fiscal" value="No" class="custom-control-input">
+                                            <label class="custom-control-label" for="juridico">No</label>
+                                        </div>
                                     </div>
+                                </div>
 
                                 <input type="hidden" name="estatus_pago" value="Aprobado">
 
