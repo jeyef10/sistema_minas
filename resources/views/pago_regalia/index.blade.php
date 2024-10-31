@@ -286,14 +286,14 @@
                     console.log(data);
 
                     // Condicionales para mostrar/ocultar datos según el id_planificacion (Se muestran los datos propios de Aprovechamiento)
-                    if (data.id_comprobante !== "Procesamiento") {
+                    if (data.id_comprobante_pago !== "Procesamiento") {
                        licenciasHtml += `
                             <p><b>N° Providencia:</b> ${data.providencia}</p>
                         `;
                     }
 
                     // Condicionales para mostrar/ocultar datos según el id_planificacion (Se muestran los datos propios de Procesamiento)
-                    if (data.id_comprobante !== "Aprovechamiento") {
+                    if (data.id_comprobante_pago !== "Aprovechamiento") {
                        licenciasHtml += `
                             <p><b>N° Territorio:</b> ${data.num_territorio}</p>
                         `;

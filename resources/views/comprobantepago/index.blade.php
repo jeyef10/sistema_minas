@@ -248,6 +248,7 @@
                 url: '/comprobantepago/detalles/' + inspeccionId,
                 type: 'GET',
                 success: function(data) {
+                    console.log(data);
                     let inspeccionesHtml = '<main>';
                     inspeccionesHtml += `
                         <h5 class="font-weight-bold text-primary" style="text-align: center">Detalles de la Inspección</h5>

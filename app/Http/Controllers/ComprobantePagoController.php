@@ -43,6 +43,7 @@ class ComprobantePagoController extends Controller
 
         // Devuelve los datos relevantes en formato JSON
         return response()->json([
+            'id_planificacion' => $inspeccion->planificacion->recepcion->categoria,
             'funcionario_acomp' => $inspeccion->funcionario_acomp,
             'observaciones' => $inspeccion->observaciones,
             'conclusiones' => $inspeccion->conclusiones,

@@ -51,7 +51,7 @@ class PagoRegaliaController extends Controller
 
         // Devuelve los datos relevantes en formato JSON
         return response()->json([
-            'id_comprobante' => $licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria,
+            'id_comprobante_pago' => $licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria,
             'providencia' => $licencia->providencia,
             'num_territorio' => $licencia->num_territorio,
             'fecha_oficio' => $licencia->fecha_oficio,

@@ -23,4 +23,11 @@ class Licencias extends Model
     {
         return $this->belongsTo(Plazos::class, 'id_plazo');
     }
+
+// NO ELIMINAR ESTA RELACION PORQUE DAR UN ERROR QUE LA INSPECCION NO ESTA DEFINIDA EN EL MODELO LICENCIAS 
+
+    public function inspeccion()
+    {
+        return $this->belongsTo(Inspecciones::class);
+    }
 }

@@ -296,6 +296,7 @@
                     url: '/control_regalia/detalles/' + pago_regaliaId,
                     type: 'GET',
                     success: function(data) {
+                        console.log(data);
                         let pago_regaliasHtml = '<main>';
                         if (data.tipo_licencia !== "Procesamiento") {
                             pago_regaliasHtml += `
