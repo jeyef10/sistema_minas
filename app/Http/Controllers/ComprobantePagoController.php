@@ -22,6 +22,11 @@ class ComprobantePagoController extends Controller
     public function index()
     {
         $inspecciones = Inspecciones::all();
+         // Iterar sobre cada planificación para verificar si fue inspeccionada
+         $inspecciones ->each(function ($inspeccion) {
+            // Buscar en la tabla Inspecciones si existe una inspeccion para esta inspeccione
+            $inspeccion->yaComprobado = ComprobantePago::where('id_inspeccion', $inspeccion->id)->exists();
+        });
 
         return view ('comprobantepago.index', compact('inspecciones'));
     }
@@ -38,6 +43,7 @@ class ComprobantePagoController extends Controller
 
         // Devuelve los datos relevantes en formato JSON
         return response()->json([
+            'id_planificacion' => $inspeccion->planificacion->recepcion->categoria,
             'funcionario_acomp' => $inspeccion->funcionario_acomp,
             'observaciones' => $inspeccion->observaciones,
             'conclusiones' => $inspeccion->conclusiones,
@@ -84,14 +90,14 @@ class ComprobantePagoController extends Controller
     {
 
         $this->validate($request, [
-            'fecha_pago' => 'required|date|date_format:d/m/Y|after_or_equal:'.date('d/m/Y'),
+            // 'fecha_pago' => 'required|date|date_format:d/m/Y|after_or_equal:'.date('d/m/Y'),
             // 'comprobante' => 'required|array|min:1',
             // 'comprobante.*' => 'mimes:pdf',
         ], [
-            'fecha_pago.required' => 'La fecha de pago es obligatoria.',
-            'fecha_pago.date' => 'La fecha de pago debe ser una fecha válida.',
-            'fecha_pago.date_format' => 'La fecha de pago debe tener el formato AAAA-MM-DD.',
-            'fecha_pago.after_or_equal' => 'La fecha de pago debe ser la fecha actual.',
+            // 'fecha_pago.required' => 'La fecha de pago es obligatoria.',
+            // 'fecha_pago.date' => 'La fecha de pago debe ser una fecha válida.',
+            // 'fecha_pago.date_format' => 'La fecha de pago debe tener el formato AAAA-MM-DD.',
+            // 'fecha_pago.after_or_equal' => 'La fecha de pago debe ser la fecha actual.',
             // 'comprobante.required' => 'Debe registrar uno o más comprobantes en formato PDF.',
             // 'comprobante.min' => 'Debe registrar al menos un comprobante.',
             // 'comprobante.*.mimes' => 'Cada archivo debe ser un PDF.',
@@ -120,6 +126,8 @@ class ComprobantePagoController extends Controller
         }
 
         $comprabantepagos->observaciones_com = $request->input('observaciones_com');
+        $comprabantepagos->timbre_fiscal = $request->input('timbre_fiscal');
+        $comprabantepagos->observaciones_timbres = $request->input('observaciones_timbres');
         $comprabantepagos->estatus_pago = $request->input('estatus_pago');
 
         $comprabantepagos->save();

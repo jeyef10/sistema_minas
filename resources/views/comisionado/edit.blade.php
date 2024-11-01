@@ -42,9 +42,13 @@
 
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Municipio</label>
-                                    <select class="select2-single form-control" id="municipio" name="id_municipio">
+                                    <select class="select2-single form-control" id="municipio" name="municipios[]" multiple="multiple" id="select2Multiple">
                                         @foreach($municipios as $municipio)
-                                            <option value="{{ $municipio->id }}" @selected($comisionado->id_municipio == $municipio->id)>{{ $municipio->nom_municipio }}</option>
+                                            <option value="{{ $municipio->id }}"
+                                            @foreach($comisionado->municipios as $comisionadoMunicipio)
+                                                {{ $comisionadoMunicipio->id === $municipio->id ? 'selected' : '' }}
+                                            @endforeach>{{ $municipio->nom_municipio }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -70,6 +74,23 @@
     </div>
 
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{asset('vendor/select2/dist/js/select2.min.js')}}"></script>
+  
+    <script>
+        $(document).ready(function () {
+
+        $('.select2-single').select2();
+
+        // Select2 Single  with Placeholder
+        $('.select2-single-placeholder').select2({
+            placeholder: "Select a Province",
+            allowClear: true
+        });      
+
+        // Select2 Multiple
+        $('.select2-multiple').select2();
+        });
+    </script>
 
     <script>
         function capitalizarPrimeraLetra(texto) {

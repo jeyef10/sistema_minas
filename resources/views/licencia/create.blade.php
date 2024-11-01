@@ -12,9 +12,9 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
 
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
     
-                        <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Registrar Licencia</h2>
+                        <h2 class="font-weight-bold text-primary" >Registrar Licencia</h2>
 
                     </div>
  
@@ -36,41 +36,41 @@
                                         <div class="form-group">
                                         
                                             <p style="text-align: center" class="font-weight-bold text-primary">Datos del Solicitante</p>
-                                            <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($inspeccion->planificacion->id_recepcion) {{ $inspeccion->planificacion->recepcion->id }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Tipo Solicitante: </strong>@if ($inspeccion->planificacion->id_recepcion) {{ $inspeccion->planificacion->recepcion->solicitante->tipo }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $comprobante_pago->inspeccion->planificacion->recepcion->id }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Tipo Solicitante: </strong>@if ($comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $comprobante_pago->inspeccion->planificacion->recepcion->solicitante->tipo }} @endif</p>
                                             <p style="margin-left: 0.5%"><strong>Solicitante: </strong>
-                                            @if ($inspeccion->planificacion->id_recepcion && $inspeccion->planificacion->recepcion->solicitante)
-                                                @if ($inspeccion->planificacion->recepcion->solicitante->tipo == "Natural")
-                                                    {{ $inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->nombre }} {{ $inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->apellido }}
+                                            @if ($comprobante_pago->inspeccion->planificacion->id_recepcion && $comprobante_pago->inspeccion->planificacion->recepcion->solicitante)
+                                                @if ($comprobante_pago->inspeccion->planificacion->recepcion->solicitante->tipo == "Natural")
+                                                    {{ $comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->nombre }} {{ $comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->apellido }}
                                                 @else
-                                                    {{ $inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->nombre }}
+                                                    {{ $comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->nombre }}
                                                 @endif
                                             @endif
                                             </p>
                                             <p style="margin-left: 0.5%"><strong>Cédula/Rif: </strong>
-                                            @if ($inspeccion->planificacion->id_recepcion && $inspeccion->planificacion->recepcion->solicitante)
-                                                @if ($inspeccion->planificacion->recepcion->solicitante->tipo == "Natural")
-                                                    {{ $inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->cedula }}
+                                            @if ($comprobante_pago->inspeccion->planificacion->id_recepcion && $comprobante_pago->inspeccion->planificacion->recepcion->solicitante)
+                                                @if ($comprobante_pago->inspeccion->planificacion->recepcion->solicitante->tipo == "Natural")
+                                                    {{ $comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->cedula }}
                                                 @else
-                                                    {{ $inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->rif }}
+                                                    {{ $comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->rif }}
                                                 @endif
                                             @endif
                                             </p>
 
                                             <p style="text-align: center" class="font-weight-bold text-primary">Datos de la Solicitud</p>
 
-                                            <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($inspeccion->planificacion->id_recepcion) {{ $inspeccion->planificacion->recepcion->id }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Tipo de Solicitud</strong>@if ($inspeccion->planificacion->id_recepcion) {{$inspeccion->planificacion->recepcion->categoria }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Latitud: </strong>@if ($inspeccion->planificacion->id_recepcion) {{ $inspeccion->planificacion->recepcion->latitud }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Longitud: </strong>@if ($inspeccion->planificacion->id_recepcion) {{ $inspeccion->planificacion->recepcion->longitud }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Direccion: </strong>@if ($inspeccion->planificacion->id_recepcion) {{ $inspeccion->planificacion->recepcion->direccion }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Mineral: </strong>@if ($inspeccion->planificacion->id_recepcion) {{ $inspeccion->planificacion->recepcion->mineral->nombre }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $comprobante_pago->inspeccion->planificacion->recepcion->id }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Tipo de Solicitud</strong>@if ($comprobante_pago->inspeccion->planificacion->id_recepcion) {{$comprobante_pago->inspeccion->planificacion->recepcion->categoria }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Latitud: </strong>@if ($comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $comprobante_pago->inspeccion->planificacion->recepcion->latitud }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Longitud: </strong>@if ($comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $comprobante_pago->inspeccion->planificacion->recepcion->longitud }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Direccion: </strong>@if ($comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $comprobante_pago->inspeccion->planificacion->recepcion->direccion }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Mineral: </strong>@if ($comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre }} @endif</p>
 
                                             <p style="text-align: center" class="font-weight-bold text-primary">Datos del Comisionado</p>
 
-                                            <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($inspeccion->id_planificacion) {{ $inspeccion->planificacion->id }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Cedula </strong>@if ($inspeccion->id_planificacion) {{ $inspeccion->planificacion->comisionados->cedula }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Nombres y Apellidos </strong>@if ($inspeccion->id_planificacion) {{ $inspeccion->planificacion->comisionados->nombres }} {{ $inspeccion->planificacion->comisionados->apellidos }}@endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($comprobante_pago->inspeccion->id_planificacion) {{ $comprobante_pago->inspeccion->planificacion->id }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Cedula </strong>@if ($comprobante_pago->inspeccion->id_planificacion) {{ $comprobante_pago->inspeccion->planificacion->comisionados->cedula }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Nombres y Apellidos </strong>@if ($comprobante_pago->inspeccion->id_planificacion) {{ $comprobante_pago->inspeccion->planificacion->comisionados->nombres }} {{ $comprobante_pago->inspeccion->planificacion->comisionados->apellidos }}@endif</p>
                                             
                                         </div>
                                         
@@ -87,7 +87,7 @@
 
                                 <div class="row">
 
-                                    <input type="hidden" class="form-control" id="id_inspeccion" name="id_inspeccion" style="background: white;" value="{{ isset($inspeccion->id)?$inspeccion->id:'' }}" placeholder="" autocomplete="off">                                  
+                                    <input type="hidden" class="form-control" id="id_comprobante_pago" name="id_comprobante_pago" style="background: white;" value="{{ isset($comprobante_pago->id)?$comprobante_pago->id:'' }}" placeholder="" autocomplete="off">                                  
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">N° Resolución</label>
@@ -102,6 +102,16 @@
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Providencia Administrativa</label>
                                         <input type="text" class="form-control" id="providencia" name="providencia" oninput="capitalizarInput('')"></input>                                 
+                                    </div>
+
+                                    <div class="col-3">
+                                        <label  class="font-weight-bold text-primary">Metodo de Pago</label>
+                                        <select class="select2single form-control" name="metodo_licencia_apro" id="metodo_licencia">
+                                            <option value="" selected="true" disabled>Seleccione un Metodo de Pago</option>
+                                            <option value="1">Pago unico</option>
+                                            <option value="2">Pago 2 parte</option>
+                                            <option value="3">Pago 3 parte</option>
+                                        </select>
                                     </div>
 
                                 </div>
@@ -125,6 +135,14 @@
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">N° de Ocupación de Territorio</label>
                                         <input type="text" class="form-control" id="num_territorio" name="num_territorio" oninput="capitalizarInput('')"></input>                                 
+                                    </div>
+
+                                    <div class="col-3">
+                                        <label  class="font-weight-bold text-primary">Metodo de Pago</label>
+                                        <select class="select2single form-control" name="metodo_licencia_pro" id="metodo_licencia">
+                                            <option value="" selected="true" disabled>Seleccione un Metodo de Pago</option>
+                                            <option value="4">Pago cuotas</option>
+                                        </select>
                                     </div>
                                     
                                 </div>
@@ -157,6 +175,30 @@
                                             <option value="{{ $plazo->id }}">{{ $plazo->cantidad }} - {{ $plazo->medida_tiempo }}</option>
                                         @endforeach
                                         </select>
+                                    </div>
+
+                                    <div class="col-4">                                     
+                                        <div class="form-group" id="simple-date1">
+                                            <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha Inicial Operación</label>
+                                            <div class="input-group date">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                                </div>
+                                                <input type="text" id="fecha_inicial_ope" name="fecha_inicial_ope" class="form-control" value="<?php echo date('d/m/Y'); ?>" id="simpleDataInput">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4">                                     
+                                        <div class="form-group" id="simple-date1">
+                                            <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha Final Operación</label>
+                                            <div class="input-group date">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                                </div>
+                                                <input type="text" id="fecha_final_ope" name="fecha_final_ope" class="form-control" value="<?php echo date('d/m/Y'); ?>" id="simpleDataInput">
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="col-4">
@@ -269,7 +311,7 @@
             }
 
             // Suponiendo que tienes una variable JavaScript con el valor de la categoría
-            const categoria = '{{$inspeccion->planificacion->recepcion->categoria}}';
+            const categoria = '{{$comprobante_pago->inspeccion->planificacion->recepcion->categoria}}';
 
             // Llamamos a la función para mostrar el div correcto
             mostrarDivCategoria(categoria);

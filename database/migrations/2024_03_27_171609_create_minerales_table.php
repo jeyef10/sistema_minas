@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('tipo');
             $table->string('nombre');
             $table->string('categoria');
+            $table->string('tasa')->nullable();
+            $table->string('moneda_longitud')->nullable();
             $table->timestamps();
         });
     }

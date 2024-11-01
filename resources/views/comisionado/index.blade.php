@@ -57,16 +57,11 @@
                                         <td class="font-weight-bold text-Secondary">{{ $comisionado->apellidos }}</td>
 
                                         <td class="font-weight-bold text-Secondary">
-                                            @if ($comisionado->municipio)
-                                                {{$comisionado->municipio->nom_municipio }} @else
+                                            @if ($comisionado->municipios->count())
+                                                {{ implode(', ', $comisionado->municipios->pluck('nom_municipio')->toArray()) }}
                                             @endif
                                         </td>
-                                        {{-- <td class="font-weight-bold text-Secondary">
-                                            @if ($comisionado->parroquia)
-                                                {{$comisionado->parroquia->nom_parroquia }} @else
-                                            @endif
-                                        </td> --}}
-                                       
+                                        
                                         <td>
 
                                             <div style="display: flex; justify-content: center;">

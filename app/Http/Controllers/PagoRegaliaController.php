@@ -6,7 +6,8 @@ use Carbon\Carbon;
 
 use App\Models\PagoRegalia;
 use App\Models\Licencias;
-use App\Models\Regalia;
+use App\Models\Minerales;
+use App\Models\Recepcion;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,7 +38,36 @@ class PagoRegaliaController extends Controller
     {
         $licencias = licencias::all();
 
+        // Iterar sobre cada planificación para verificar si fue inspeccionada
+        $licencias ->each(function ($licencia) {
+            // Buscar en la tabla comprobante_pagoes si existe una comprobante_pago para esta comprobante_pagoe
+            $licencia->yaPagado = PagoRegalia::where('id_licencia', $licencia->id)->exists();
+        });
+
+
         return view('pago_regalia.index', compact('licencias'));
+    }
+
+    public function getLicenciaDetalles($id)
+    {
+        // Recupera la inspección por su ID
+        $licencia = Licencias::find($id);
+
+        if (!$licencia) {
+            // Maneja el caso en que no se encuentre la licencia
+            return response()->json(['error' => 'Comprobante no encontrada'], 404);
+        }
+
+        // Devuelve los datos relevantes en formato JSON
+        return response()->json([
+            'id_comprobante_pago' => $licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria,
+            'providencia' => $licencia->providencia,
+            'num_territorio' => $licencia->num_territorio,
+            'fecha_oficio' => $licencia->fecha_oficio,
+            'talonario' => $licencia->talonario,
+
+        ]);
+
     }
 
     /**
@@ -48,9 +78,10 @@ class PagoRegaliaController extends Controller
     public function create($id)
     {
         $licencia = Licencias::findOrFail($id);
-        $regalias = Regalia::all();
+        $minerales = Minerales::all();
+        $recepciones = Recepcion::all();
 
-        return view('pago_regalia.create', compact('licencia', 'regalias'));
+        return view('pago_regalia.create', compact('licencia', 'minerales', 'recepciones'));
     }
 
     /**
@@ -62,20 +93,20 @@ class PagoRegaliaController extends Controller
     public function store(Request $request)
     {
 
-        $this->validate($request, [
-            'comprobante' => 'required|array|min:1',
-            'comprobante.*' => 'mimes:pdf',
-            'fecha_pago' => 'required|date|date_format:d/m/Y|after_or_equal:'.date('d/m/Y'),
-        ], [
-            'comprobante.required' => 'Debe registrar uno o más comprobantes en formato PDF.',
-            'comprobante.min' => 'Debe registrar al menos un comprobante.',
-            'comprobante.*.mimes' => 'Cada archivo debe ser un PDF.',
-        ]);
+        // $this->validate($request, [
+        //     'comprobante' => 'required|array|min:1',
+        //     'comprobante.*' => 'mimes:pdf',
+        //     'fecha_pago' => 'required|date|date_format:d/m/Y|after_or_equal:'.date('d/m/Y'),
+        // ], [
+        //     'comprobante.required' => 'Debe registrar uno o más comprobantes en formato PDF.',
+        //     'comprobante.min' => 'Debe registrar al menos un comprobante.',
+        //     'comprobante.*.mimes' => 'Cada archivo debe ser un PDF.',
+        // ]);
 
         //Crear una nueva PagoRegalia 
         $pago_regalias = new PagoRegalia ();
         $pago_regalias->id_licencia = $request->input('id_licencia');
-        $pago_regalias->id_regalia = $request->input('id_regalia');
+        $pago_regalias->id_mineral = $request->input('id_mineral');
         $pago_regalias->metodo_apro= $request->input('metodo_apro');
         $pago_regalias->monto_apro = $request->input('monto_apro');
         $pago_regalias->metodo_pro = $request->input('metodo_pro');
@@ -139,9 +170,9 @@ class PagoRegaliaController extends Controller
     {
         $pago_regalia = PagoRegalia::findOrFail($id);
         $licencia = licencias::find($id);
-        $regalias = Regalia::all();
+        $minerales = Minerales::all();
         $id_licencia = $pago_regalia->id_licencia;
-        $id_regalia = $pago_regalia->id_regalia ;
+        $id_mineral = $pago_regalia->id_mineral ;
         $metodo_apro = $pago_regalia->metodo_apro;
         $monto_apro = $pago_regalia->monto_apro;
         $metodo_pro = $pago_regalia->metodo_pro;
@@ -153,8 +184,8 @@ class PagoRegaliaController extends Controller
         $fecha_venci = $pago_regalia->fecha_venci;
         $estatus_regalia = $pago_regalia->estatus_regalia;
 
-        return view('pago_regalia.edit' , compact('pago_regalia', 'licencia', 'regalias', 'id_licencia',
-        'id_regalia', 'metodo_apro', 'monto_apro', 'metodo_pro', 'monto_pro', 'resultado_apro', 'resultado_pro',
+        return view('pago_regalia.edit' , compact('pago_regalia', 'licencia', 'minerales', 'id_licencia',
+        'id_mineral', 'metodo_apro', 'monto_apro', 'metodo_pro', 'monto_pro', 'resultado_apro', 'resultado_pro',
         'comprobante', 'fecha_pago', 'fecha_venci', 'estatus_regalia'));
     }
 
@@ -170,7 +201,7 @@ class PagoRegaliaController extends Controller
         // Buscar El PagoRegalia existente 
         $pago_regalia = PagoRegalia::findOrFail($id);
         $pago_regalia->id_licencia = $request->input('id_licencia');
-        $pago_regalia->id_regalia = $request->input('id_regalia');
+        $pago_regalia->id_mineral = $request->input('id_mineral');
         $pago_regalia->metodo_apro= $request->input('metodo_apro');
         $pago_regalia->monto_apro = $request->input('monto_apro');
         $pago_regalia->metodo_pro = $request->input('metodo_pro');

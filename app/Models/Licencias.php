@@ -11,16 +11,23 @@ class Licencias extends Model
     protected $table = 'licencias';
     protected $primaryKey = 'id';
     public $timestamps = true;
-    protected $fillable = ['id_inspeccion','resolucion_apro', 'resolucion_hpc', 'catastro_la', 'catastro_lp','providencia',
-    'num_territorio', 'fecha_oficio', 'id_plazo', 'talonario'];
+    protected $fillable = ['id_comprobante_pago','resolucion_apro', 'resolucion_hpc', 'catastro_la', 'catastro_lp','providencia',
+    'num_territorio', 'metodo_licencia_apro', 'metodo_licencia_pro' ,  'fecha_oficio', 'fecha_incial_ope', 'fecha_final_ope', 'id_plazo', 'talonario'];
 
-    public function inspeccion()
+    public function comprobante_pago()
     {
-        return $this->belongsTo(Inspecciones::class, 'id_inspeccion');
+        return $this->belongsTo(ComprobantePago::class, 'id_comprobante_pago');
     }
 
     public function  plazo()
     {
         return $this->belongsTo(Plazos::class, 'id_plazo');
+    }
+
+// NO ELIMINAR ESTA RELACION PORQUE DAR UN ERROR QUE LA INSPECCION NO ESTA DEFINIDA EN EL MODELO LICENCIAS 
+
+    public function inspeccion()
+    {
+        return $this->belongsTo(Inspecciones::class);
     }
 }

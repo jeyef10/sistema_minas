@@ -35,43 +35,43 @@
                                         
                                             <div class="form-group">
                                             
-                                            <p style="text-align: center" class="font-weight-bold text-primary">Datos del Solicitante</p>
-                                            <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($pago_regalia->licencia->inspeccion->planificacion->id_recepcion) {{ $pago_regalia->licencia->inspeccion->planificacion->recepcion->id }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Tipo Solicitante: </strong>@if ($pago_regalia->licencia->inspeccion->planificacion->id_recepcion) {{ $pago_regalia->licencia->inspeccion->planificacion->recepcion->solicitante->tipo }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Solicitante: </strong>
-                                            @if ($pago_regalia->licencia->inspeccion->planificacion->id_recepcion && $pago_regalia->licencia->inspeccion->planificacion->recepcion->solicitante)
-                                                @if ($pago_regalia->licencia->inspeccion->planificacion->recepcion->solicitante->tipo == "Natural")
-                                                    {{ $pago_regalia->licencia->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->nombre }} {{ $pago_regalia->licencia->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->apellido }}
-                                                @else
-                                                    {{ $pago_regalia->licencia->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->nombre }}
+                                                <p style="text-align: center" class="font-weight-bold text-primary">Datos del Solicitante</p>
+                                                <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->id }} @endif</p>
+                                                <p style="margin-left: 0.5%"><strong>Tipo Solicitante: </strong>@if ($pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante->tipo }} @endif</p>
+                                                <p style="margin-left: 0.5%"><strong>Solicitante: </strong>
+                                                @if ($pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->id_recepcion && $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante)
+                                                    @if ($pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante->tipo == "Natural")
+                                                        {{ $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->nombre }} {{ $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->apellido }}
+                                                    @else
+                                                        {{ $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->nombre }}
+                                                    @endif
                                                 @endif
-                                            @endif
-                                            </p>
-                                            <p style="margin-left: 0.5%"><strong>Cédula/Rif: </strong>
-                                            @if ($pago_regalia->licencia->inspeccion->planificacion->id_recepcion && $pago_regalia->licencia->inspeccion->planificacion->recepcion->solicitante)
-                                                @if ($pago_regalia->licencia->inspeccion->planificacion->recepcion->solicitante->tipo == "Natural")
-                                                    {{ $pago_regalia->licencia->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->cedula }}
-                                                @else
-                                                    {{ $pago_regalia->licencia->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->rif }}
+                                                </p>
+                                                <p style="margin-left: 0.5%"><strong>Cédula/Rif: </strong>
+                                                @if ($pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->id_recepcion && $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante)
+                                                    @if ($pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante->tipo == "Natural")
+                                                        {{ $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->cedula }}
+                                                    @else
+                                                        {{ $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->rif }}
+                                                    @endif
                                                 @endif
-                                            @endif
-                                            </p>
-
-                                            <p style="text-align: center" class="font-weight-bold text-primary">Datos de la Solicitud</p>
-
-                                            <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($pago_regalia->licencia->inspeccion->planificacion->id_recepcion) {{ $pago_regalia->licencia->inspeccion->planificacion->recepcion->id }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Tipo de Solicitud</strong>@if ($pago_regalia->licencia->inspeccion->planificacion->id_recepcion) {{$pago_regalia->licencia->inspeccion->planificacion->recepcion->categoria }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Latitud: </strong>@if ($pago_regalia->licencia->inspeccion->planificacion->id_recepcion) {{ $pago_regalia->licencia->inspeccion->planificacion->recepcion->latitud }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Longitud: </strong>@if ($pago_regalia->licencia->inspeccion->planificacion->id_recepcion) {{ $pago_regalia->licencia->inspeccion->planificacion->recepcion->longitud }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Direccion: </strong>@if ($pago_regalia->licencia->inspeccion->planificacion->id_recepcion) {{ $pago_regalia->licencia->inspeccion->planificacion->recepcion->direccion }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Mineral: </strong>@if ($pago_regalia->licencia->inspeccion->planificacion->id_recepcion) {{ $pago_regalia->licencia->inspeccion->planificacion->recepcion->mineral->nombre }} @endif</p>
-
-                                            <p style="text-align: center" class="font-weight-bold text-primary">Datos del Comisionado</p>
-
-                                            <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($pago_regalia->licencia->inspeccion->id_planificacion) {{ $pago_regalia->licencia->inspeccion->planificacion->id }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Cedula </strong>@if ($pago_regalia->licencia->inspeccion->id_planificacion) {{ $pago_regalia->licencia->inspeccion->planificacion->comisionados->cedula }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Nombres y Apellidos </strong>@if ($pago_regalia->licencia->inspeccion->id_planificacion) {{ $pago_regalia->licencia->inspeccion->planificacion->comisionados->nombres }} {{ $pago_regalia->licencia->inspeccion->planificacion->comisionados->apellidos }}@endif</p>
-                                            </div>
+                                                </p>
+    
+                                                <p style="text-align: center" class="font-weight-bold text-primary">Datos de la Solicitud</p>
+    
+                                                <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->id }} @endif</p>
+                                                <p style="margin-left: 0.5%"><strong>Tipo de Solicitud</strong>@if ($pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) {{$pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria }} @endif</p>
+                                                <p style="margin-left: 0.5%"><strong>Latitud: </strong>@if ($pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->latitud }} @endif</p>
+                                                <p style="margin-left: 0.5%"><strong>Longitud: </strong>@if ($pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->longitud }} @endif</p>
+                                                <p style="margin-left: 0.5%"><strong>Direccion: </strong>@if ($pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->direccion }} @endif</p>
+                                                <p style="margin-left: 0.5%"><strong>Mineral: </strong>@if ($pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre }} @endif</p>
+    
+                                                <p style="text-align: center" class="font-weight-bold text-primary">Datos del Comisionado</p>
+    
+                                                <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($pago_regalia->licencia->comprobante_pago->inspeccion->id_planificacion) {{ $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->id }} @endif</p>
+                                                <p style="margin-left: 0.5%"><strong>Cedula </strong>@if ($pago_regalia->licencia->comprobante_pago->inspeccion->id_planificacion) {{ $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->comisionados->cedula }} @endif</p>
+                                                <p style="margin-left: 0.5%"><strong>Nombres y Apellidos </strong>@if ($pago_regalia->licencia->comprobante_pago->inspeccion->id_planificacion) {{ $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->comisionados->nombres }} {{ $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->comisionados->apellidos }}@endif</p>
+                                                
                                             
                                         </div>
 
@@ -268,7 +268,7 @@
             }
 
             // Suponiendo que tienes una variable JavaScript con el valor de la categoría
-            const categoria = '{{$pago_regalia->licencia->inspeccion->planificacion->recepcion->categoria}}';
+            const categoria = '{{$pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria}}';
 
             // Llamamos a la función para mostrar el div correcto
             mostrarDivCategoria(categoria);

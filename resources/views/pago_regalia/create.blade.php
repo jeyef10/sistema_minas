@@ -12,9 +12,9 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
 
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
     
-                        <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Registrar Pago Regalias</h2>
+                        <h2 class="font-weight-bold text-primary">Registrar Pago Regalias</h2>
 
                     </div>
  
@@ -36,41 +36,41 @@
                                         <div class="form-group">
                                         
                                             <p style="text-align: center" class="font-weight-bold text-primary">Datos del Solicitante</p>
-                                            <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($licencia->inspeccion->planificacion->id_recepcion) {{ $licencia->inspeccion->planificacion->recepcion->id }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Tipo Solicitante: </strong>@if ($licencia->inspeccion->planificacion->id_recepcion) {{ $licencia->inspeccion->planificacion->recepcion->solicitante->tipo }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->id }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Tipo Solicitante: </strong>@if ($licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante->tipo }} @endif</p>
                                             <p style="margin-left: 0.5%"><strong>Solicitante: </strong>
-                                            @if ($licencia->inspeccion->planificacion->id_recepcion && $licencia->inspeccion->planificacion->recepcion->solicitante)
-                                                @if ($licencia->inspeccion->planificacion->recepcion->solicitante->tipo == "Natural")
-                                                    {{ $licencia->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->nombre }} {{ $licencia->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->apellido }}
+                                            @if ($licencia->comprobante_pago->inspeccion->planificacion->id_recepcion && $licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante)
+                                                @if ($licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante->tipo == "Natural")
+                                                    {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->nombre }} {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->apellido }}
                                                 @else
-                                                    {{ $licencia->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->nombre }}
+                                                    {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->nombre }}
                                                 @endif
                                             @endif
                                             </p>
                                             <p style="margin-left: 0.5%"><strong>Cédula/Rif: </strong>
-                                            @if ($licencia->inspeccion->planificacion->id_recepcion && $licencia->inspeccion->planificacion->recepcion->solicitante)
-                                                @if ($licencia->inspeccion->planificacion->recepcion->solicitante->tipo == "Natural")
-                                                    {{ $licencia->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->cedula }}
+                                            @if ($licencia->comprobante_pago->inspeccion->planificacion->id_recepcion && $licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante)
+                                                @if ($licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante->tipo == "Natural")
+                                                    {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->cedula }}
                                                 @else
-                                                    {{ $licencia->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->rif }}
+                                                    {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->rif }}
                                                 @endif
                                             @endif
                                             </p>
 
                                             <p style="text-align: center" class="font-weight-bold text-primary">Datos de la Solicitud</p>
 
-                                            <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($licencia->inspeccion->planificacion->id_recepcion) {{ $licencia->inspeccion->planificacion->recepcion->id }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Tipo de Solicitud</strong>@if ($licencia->inspeccion->planificacion->id_recepcion) {{$licencia->inspeccion->planificacion->recepcion->categoria }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Latitud: </strong>@if ($licencia->inspeccion->planificacion->id_recepcion) {{ $licencia->inspeccion->planificacion->recepcion->latitud }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Longitud: </strong>@if ($licencia->inspeccion->planificacion->id_recepcion) {{ $licencia->inspeccion->planificacion->recepcion->longitud }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Direccion: </strong>@if ($licencia->inspeccion->planificacion->id_recepcion) {{ $licencia->inspeccion->planificacion->recepcion->direccion }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Mineral: </strong>@if ($licencia->inspeccion->planificacion->id_recepcion) {{ $licencia->inspeccion->planificacion->recepcion->mineral->nombre }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->id }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Tipo de Solicitud</strong>@if ($licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) {{$licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Latitud: </strong>@if ($licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->latitud }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Longitud: </strong>@if ($licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->longitud }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Direccion: </strong>@if ($licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->direccion }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Mineral: </strong>@if ($licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre }} @endif</p>
 
                                             <p style="text-align: center" class="font-weight-bold text-primary">Datos del Comisionado</p>
 
-                                            <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($licencia->inspeccion->id_planificacion) {{ $licencia->inspeccion->planificacion->id }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Cedula </strong>@if ($licencia->inspeccion->id_planificacion) {{ $licencia->inspeccion->planificacion->comisionados->cedula }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Nombres y Apellidos </strong>@if ($licencia->inspeccion->id_planificacion) {{ $licencia->inspeccion->planificacion->comisionados->nombres }} {{ $licencia->inspeccion->planificacion->comisionados->apellidos }}@endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Nº: </strong>@if ($licencia->comprobante_pago->inspeccion->id_planificacion) {{ $licencia->comprobante_pago->inspeccion->planificacion->id }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Cedula </strong>@if ($licencia->comprobante_pago->inspeccion->id_planificacion) {{ $licencia->comprobante_pago->inspeccion->planificacion->comisionados->cedula }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Nombres y Apellidos </strong>@if ($licencia->comprobante_pago->inspeccion->id_planificacion) {{ $licencia->comprobante_pago->inspeccion->planificacion->comisionados->nombres }} {{ $licencia->comprobante_pago->inspeccion->planificacion->comisionados->apellidos }}@endif</p>
                                             
                                         </div>
                                         
@@ -91,16 +91,29 @@
 
                                     <div class="col-4">
                                         <label for="persona" class="font-weight-bold text-primary">Tasa de Regalias</label>
-                                        <select class="select2-single form-control" id="id_regalia" name="id_regalia" onchange="calcularMonto()">
+                                        <select class="select2-single form-control" id="id_mineral" name="id_mineral" onchange="calcularMonto()">
                                             <option value="0">Seleccione una tasa</option>
-                                            @foreach($regalias as $regalia)
-                                            <option value="{{ $regalia->id }}">{{ $regalia->monto }} - {{ $regalia->moneda_longitud }}</option>
-                                        @endforeach
+                                            {{-- @foreach($minerales as $mineral)
+                                            <option value="{{ $mineral->id }}">{{ $mineral->nombre }} {{ $mineral->tasa }} {{ $mineral->moneda_longitud }}</option>
+                                        @endforeach --}}
+                                        {{-- <option value="@if ($licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->id }}  @endif">  
+                                            {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre }} - 
+                                            {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->tasa }} 
+                                            {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->moneda_longitud }}
+                                        </option> --}}
+                                        @if ($licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) 
+                                            <option value="{{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->tasa }}"> 
+                                                {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre }} - 
+                                                {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->tasa }} 
+                                                {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->moneda_longitud }} 
+                                            </option> 
+                                        @endif
+                                        <option value="convenio">Convenio</option>
                                         </select>
                                     </div>
 
                                     <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Monto Metro Cúbico</label>
+                                        <label  class="font-weight-bold text-primary">Cantidad Metro Cúbico</label>
                                         <input type="text" class="form-control" id="monto_apro" name="monto_apro" oninput="calcularMonto()" ></input>
                                     </div>
 
@@ -305,7 +318,7 @@
             }
 
             // Suponiendo que tienes una variable JavaScript con el valor de la categoría
-            const categoria = '{{$licencia->inspeccion->planificacion->recepcion->categoria}}';
+            const categoria = '{{$licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria}}';
 
             // Llamamos a la función para mostrar el div correcto
             mostrarDivCategoria(categoria);
@@ -342,7 +355,7 @@
 
     <script>
         function calcularMonto() {
-            const tasa = 1;
+            const tasa = parseFloat(document.getElementById('id_mineral').value);
             const metrosCubicos = parseFloat(document.getElementById('monto_apro').value);
             const metodoPago = document.getElementById('metodo_apro').value;
             let total = metrosCubicos * tasa;

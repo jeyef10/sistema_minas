@@ -28,10 +28,10 @@
                                 <tr>
                                     <th class="font-weight-bold text-Secondary">N Resolución</th>
                                     <th class="font-weight-bold text-Secondary">Catastro Minero</th>
-                                    <th class="font-weight-bold text-Secondary">N°Providencia/N°Territorio</th>
-                                    <th class="font-weight-bold text-Secondary">Fecha de Oficio</th>
                                     <th class="font-weight-bold text-Secondary">Vigencia de Licencia</th>
-                                    <th class="font-weight-bold text-Secondary">Talonario</th>
+                                    <th class="font-weight-bold text-Secondary">Fecha Inicial</th>
+                                    <th class="font-weight-bold text-Secondary">Fecha Final</th>
+                                    {{-- <th class="font-weight-bold text-Secondary">Talonario</th> --}}
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center></th>
                                   </tr>
                             </thead>
@@ -46,7 +46,7 @@
                                             {{ $licencia->resolucion_hpc }}
                                         @endif
                                         </td>
-
+                                        
                                         <td class="font-weight-bold text-Secondary">
                                         @if ($licencia->catastro_la)
                                             {{ $licencia->catastro_la }}
@@ -55,33 +55,38 @@
                                         @endif
                                         </td>
 
-                                        <td class="font-weight-bold text-Secondary">
+                                        <td class="font-weight-bold text-Secondary">{{ $licencia->plazo->cantidad}} {{ $licencia->plazo->medida_tiempo}} </td>
+
+                                        {{-- <td class="font-weight-bold text-Secondary">
                                         @if ($licencia->providencia)
                                             {{ $licencia->providencia }}
                                         @else
                                             {{ $licencia->num_territorio }}
                                         @endif
-                                        </td>
+                                        </td> --}}
 
-                                        <td class="font-weight-bold text-Secondary">{{ $licencia->fecha_oficio}}</td>
-                                        <td class="font-weight-bold text-Secondary">{{ $licencia->plazo->medida_tiempo}} {{ $licencia->plazo->cantidad}}</td>
-                                        <td class="font-weight-bold text-Secondary">{{ $licencia->talonario}}</td>
+                                        <td class="font-weight-bold text-Secondary">{{ $licencia->fecha_inicial_ope}}</td>
+                                        <td class="font-weight-bold text-Secondary">{{ $licencia->fecha_final_ope}}</td>
+                                        {{-- <td class="font-weight-bold text-Secondary">{{ $licencia->talonario}}</td> --}}
 
                                         <td>
 
                                             <div style="display: flex; justify-content: center;">
-                                                <a class="btn btn-success btn-sm" title="Registar Pago de Regalia" href="{{ route('pago_regalia.create', ['id' => $licencia->id]) }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 16 16">
-                                                <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73z"/>
-                                                </svg></a>  
+                                                @if (!$licencia->yaPagado)
+                                                    <a class="btn btn-success btn-sm" title="Registar Pago de Regalia" href="{{ route('pago_regalia.create', ['id' => $licencia->id]) }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 16 16">
+                                                        <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73z"/></svg>
+                                                    </a> 
+                                                @endif 
 
                                                 <a class="btn btn-warning btn-sm" style="margin: 0 3px;" title="Desea Editar la licencia" href="{{ route('licencia.edit', $licencia->id) }}"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                                     <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
                                                 </svg></a>
 
-                                                <!-- <a class="btn btn-info btn-sm" title="Ver Detalles" data-inspeccion-id='{{ $licencia->id }}' class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable" id="#modalScroll"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layout-text-window-reverse" viewBox="0 0 16 16"  style="color: #ffff; cursor: pointer;">
+                                                <a class="btn btn-info btn-sm" style="margin: 0 1px;" title="Ver Detalles" data-licencia-id='{{ $licencia->id }}' class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable" id="#modalScroll"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layout-text-window-reverse" viewBox="0 0 16 16"  style="color: #ffff; cursor: pointer;">
                                                     <path d="M13 6.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5m0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5m-.5 2.5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/>
                                                     <path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zM2 1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1zM1 4v10a1 1 0 0 0 1 1h2V4zm4 0v11h9a1 1 0 0 0 1-1V4z"/>
-                                                </svg></a> -->
+                                                </svg></a>
+
                                             </div>
 
                                         </td>
@@ -136,6 +141,7 @@
             });
         });
     </script>
+    
 @endsection 
 
 @section('datatable')
@@ -255,6 +261,60 @@
 
             
             </script>
+
+
+
+    {{-- * FUNCIÓN PARA MOSTRAR DATOS DE LA INSPECCIÓN EN EL MODAL --}}
+
+    <script>
+        $(document).ready(function() {
+        $('#t_Aprovechamiento').on('click', '.btn-info', function(event) {
+            event.preventDefault();
+            var licenciaId = $(this).data('licencia-id');
+
+            $.ajax({
+                url: '/pago_regalia/detalles/' + licenciaId,
+                type: 'GET',
+                success: function(data) {
+                    let licenciasHtml = '<main>';
+                   licenciasHtml += `
+                        <h5 class="font-weight-bold text-primary" style="text-align: center">Detalles de la Licencia</h5>
+                        <p><b>Fecha de Oficio:</b> ${data.fecha_oficio}</p>
+                        <p><b>Talonario:</b> ${data.talonario}</p>
+                    `;
+
+                    console.log(data);
+
+                    // Condicionales para mostrar/ocultar datos según el id_planificacion (Se muestran los datos propios de Aprovechamiento)
+                    if (data.id_comprobante_pago !== "Procesamiento") {
+                       licenciasHtml += `
+                            <p><b>N° Providencia:</b> ${data.providencia}</p>
+                        `;
+                    }
+
+                    // Condicionales para mostrar/ocultar datos según el id_planificacion (Se muestran los datos propios de Procesamiento)
+                    if (data.id_comprobante_pago !== "Aprovechamiento") {
+                       licenciasHtml += `
+                            <p><b>N° Territorio:</b> ${data.num_territorio}</p>
+                        `;
+                    }
+
+                    $('#exampleModalScrollable .modal-body').html(licenciasHtml);
+
+                    if (!$('#exampleModalScrollable').is(':visible')) {
+                        $('#exampleModalScrollable').modal('show');
+                    }
+                },
+                error: function(error) {
+                    console.error("Error al obtener los datos:", error);
+                    alert("Error al cargar los recaudos. Por favor, inténtalo de nuevo.");
+                }
+            });
+        });
+    });
+
+    </script>
+
 
 
 @endsection

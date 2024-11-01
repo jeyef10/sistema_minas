@@ -39,6 +39,32 @@ class ControlRegaliaController extends Controller
         return view('control_regalia.index', compact('pago_regalias'));
     }
 
+    public function getPagoRegaliaDetalles($id)
+    {
+        // Recupera la inspección por su ID
+        $pago_regalia = PagoRegalia::find($id);
+
+        if (!$pago_regalia) {
+            // Maneja el caso en que no se encuentre la pago_regalia
+            return response()->json(['error' => 'Inspección no encontrada'], 404);
+        }
+
+        // Devuelve los datos relevantes en formato JSON
+        return response()->json([
+            'id_licencia'=> $pago_regalia->id_licencia,
+            'tipo_licencia' => $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria,
+            'id_mineral' => $pago_regalia->mineral->tasa,
+            'nombre_mineral' => $pago_regalia->mineral->nombre,
+            'metodo_apro' => $pago_regalia->metodo_apro,
+            'metodo_pro' => $pago_regalia->metodo_pro,
+            'monto_apro' => $pago_regalia->monto_apro,
+            'monto_pro' => $pago_regalia->monto_pro,
+            'resultado_apro' => $pago_regalia->resultado_apro,
+            'comprobante' => $pago_regalia->comprobante,
+        ]);
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *

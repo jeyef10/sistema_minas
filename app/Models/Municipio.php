@@ -15,15 +15,9 @@ class Municipio extends Model
     public $timestamps = true;
     protected $fillable = ['id', 'nom_municipio'];
 
-    public function municipio()
+    public function comisionados()
     {
-        return $this->hasmany(Parroquia::class, 'id_municipio');
+        return $this->belongsToMany(Comisionados::class, 'municipio_comisionados' , 'id_comisionado', 'id_municipio');
     }
-
-    public function municipio_comisinado()
-    {
-        return $this->hasmany(Comisionados::class, 'id_municipio');
-    }
-
 
 }

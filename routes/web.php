@@ -178,12 +178,14 @@ Route::get('/pago_regalia', [PagoRegaliaController::class,'index'])->name('pago_
 Route::get('/pago_regalia/create', [PagoRegaliaController::class, 'create'])->name('create')->middleware('auth');
 Route::get('/pago_regalia/create/{id}', [PagoRegaliaController::class, 'create'])->name('pago_regalia.create')->middleware('auth');
 Route::resource('pago_regalia', PagoRegaliaController::class)->middleware('auth');
+Route::get('/pago_regalia/detalles/{id}', [PagoRegaliaController::class, 'getLicenciaDetalles']);
 
 /* Ruta Control de Pago */
 Route::get('/control_regalia', [ControlRegaliaController::class,'index'])->name('control_regalia')->middleware('auth');
 Route::get('/control_regalia/create', [ControlRegaliaController::class, 'create'])->name('create')->middleware('auth');
 Route::get('/control_regalia/create/{id}', [ControlRegaliaController::class, 'create'])->name('control_regalia.create')->middleware('auth');
 Route::resource('control_regalia', ControlRegaliaController::class)->middleware('auth');
+Route::get('/control_regalia/detalles/{id}', [ControlRegaliaController::class, 'getPagoRegaliaDetalles']);
 
 /*Reportes*/
 Route::get('reporte', [ReporteController::class, 'index'])->name('reporte')->middleware('auth');

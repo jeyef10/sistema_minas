@@ -11,7 +11,7 @@ class ComprobantePago extends Model
     protected $table = 'comprobante_pagos';
     protected $primaryKey = 'id';
     public $timestamps = true;
-    protected $fillable = ['id_inspeccion', 'id_tipo_pago', 'fecha_pago', 'comprobante_pdf', 'observaciones_com', 'estatus_pago'];
+    protected $fillable = ['id_inspeccion', 'id_tipo_pago', 'fecha_pago', 'comprobante_pdf', 'observaciones_com', 'timbre_fiscal', 'observaciones_timbres', 'estatus_pago'];
 
     public function inspeccion()
     {
