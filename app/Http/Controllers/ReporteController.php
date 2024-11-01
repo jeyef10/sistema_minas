@@ -15,15 +15,17 @@ use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReporteController extends Controller
-{
-    public function bitacora()
-    { 
-        $bitacora = Bitacora::all();
-        return view('reporte.bitacora', compact('bitacora'));
-    }
 
+{
+    
     public function index(Request $request)
+    
     {
+
+        $desde = $request->input('desde'); 
+        $hasta = $request->input('hasta');
+
+
         $licencia = licencias::join('inspecciones', 'inspecciones.id', '=', 'licencias.id_inspeccion')
             ->join('planificacion', 'planificacion.id', '=', 'inspecciones.id_planificacion')
             ->join('recepcion', 'recepcion.id', '=', 'planificacion.id_recepcion')
@@ -56,6 +58,20 @@ class ReporteController extends Controller
 
         return view('reporte.index', ['resultados' => $resultados]);
     }
+
+    public function mensual (Request $request) {
+         ///
+        return view('reporte.mensual'); 
+    
+    }
+
+
+    public function bitacora()
+    { 
+        $bitacora = Bitacora::all();
+        return view('reporte.bitacora', compact('bitacora'));
+    }
+
 
 }
 

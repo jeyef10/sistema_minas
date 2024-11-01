@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 use App\Models\TipoPago;
-use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\BitacoraController;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TipoPagoController extends Controller
 {
@@ -21,6 +21,15 @@ class TipoPagoController extends Controller
     {
         $tipo_pagos = TipoPago::all();
         return view('tipopago.index',compact('tipo_pagos'));
+    }
+
+
+    public function pdf()
+    {
+          $tipo_pagos=TipoPago::all();
+          $pdf=Pdf::loadView('tipopago.pdf', compact('tipo_pagos'));
+          return $pdf->stream();
+
     }
 
     /**

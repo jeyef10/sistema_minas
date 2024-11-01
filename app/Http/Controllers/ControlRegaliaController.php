@@ -15,6 +15,18 @@ use App\Http\Controllers\BitacoraController;
 
 class ControlRegaliaController extends Controller
 {
+
+
+    function __construct()
+    {
+         $this->middleware('permission:ver-control_regalia|crear-control_regalia|editar-control_regalia|borrar-control_regalia', ['only' => ['index']]);
+         $this->middleware('permission:crear-control_regalia', ['only' => ['create','store']]);
+         $this->middleware('permission:editar-control_regalia', ['only' => ['edit','update']]);
+         $this->middleware('permission:borrar-control_regalia', ['only' => ['destroy']]);
+
+    }
+    
+
     /**
      * Display a listing of the resource.
      *

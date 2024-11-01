@@ -77,32 +77,44 @@ class SeederTablaPermisos extends Seeder
             'ver-recepcion',
             'crear-recepcion',
             'editar-recepcion',
-            'borrar-recepcion',
+            // 'borrar-recepcion',
 
             //Operaciones sobre tabla Planificación
             'ver-planificacion',
             'crear-planificacion',
             'editar-planificacion',
-            'borrar-planificacion',
+            // 'borrar-planificacion',
 
             //Operaciones sobre tabla Inspección
             'ver-inspeccion',
             'crear-inspeccion',
             'editar-inspeccion',
-            'borrar-inspeccion',
+            // 'borrar-inspeccion',
+
+            //Operaciones sobre tabla Comprobante Pago
+            'ver-comprobante_pago',
+            'crear-comprobante_pago',
+            'editar-comprobante_pago',
+            // 'borrar-inspeccion',
 
             //Operaciones sobre tabla licencia
             'ver-licencia',
             'crear-licencia',
             'editar-licencia',
-            'borrar-licencia',
+            // 'borrar-licencia',
+
+            //Operaciones sobre tabla la Pago Regalias
+            'ver-pago_regalia',
+            'crear-pago_regalia',
+            'editar-pago_regalia',
+            // 'borrar-pago_regalia',
 
 
               //Operaciones sobre tabla control
-              'ver-control',
-              'crear-control',
-              'editar-control',
-              'borrar-control',
+              'ver-control_regalia',
+              'crear-control_regalia',
+              'editar-control_regalia',
+            //   'borrar-control_regalia',
  
         ];
 

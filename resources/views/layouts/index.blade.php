@@ -108,12 +108,13 @@
                     <a class="collapse-item" href="{{ url('licencia') }}">Licencia</a>
                     @endcan
 
-                   
+                    @can('ver-pago_regalia')
                     <a class="collapse-item" href="{{ url('pago_regalia') }}">Control de Licencias</a>
-                   
+                    @endcan
 
+                    @can('ver-control_regalia')
                     <a class="collapse-item" href="{{ url('control_regalia') }}">Control de Pago</a>
-
+                    @endcan
                   </div>
                 </div>
               </li>
@@ -122,19 +123,31 @@
               <div class="sidebar-heading">
                 
               </div>
-              <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ url('reporte') }}" >
-                  <i class="fas fa-fw fa-columns"></i>
-                  <span>Reportes</span>
-                </a>
-              </li>
 
-              <li class="nav-item">
+             <li class="nav-item">
+               <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportes"
+                aria-expanded="true" aria-controls="collapseReportes">
+               <i class="fas fa-fw fa-columns"></i>
+                   <span>Reportes</span>
+                    </a>
+                      <div id="collapseReportes" class="collapse" aria-labelledby="headingReportes" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                           <a class="nav-link collapsed" href="{{ url('reporte') }}" >Reporte General</a>
+                           <a class="nav-link collapsed" href="{{ url('reporte/mensual') }}" >Reporte Mensual</a>
+                          
+                        </div>
+                    
+                    </div>
+             
+             </li>
+
+
+              <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ url('reporte_general') }}" >
                   <i class="fas fa-fw fa-columns"></i>
                   <span>Reportes</span>
                 </a>
-              </li>
+              </li> -->
 
               <li class="nav-item">
                 <a class="nav-link" href="{{ url('estadistica') }}">

@@ -187,6 +187,7 @@ Route::resource('control_regalia', ControlRegaliaController::class)->middleware(
 
 /*Reportes*/
 Route::get('reporte', [ReporteController::class, 'index'])->name('reporte')->middleware('auth');
+Route::get('reporte/mensual', [ReporteController::class, 'mensual'])->name('mensual')->middleware('auth');
 
 /*Estadistica*/
 Route::get('/estadistica', [EstadisticaController::class, 'index'])->name('estadistica')->middleware('auth');

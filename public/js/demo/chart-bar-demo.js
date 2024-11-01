@@ -32,13 +32,13 @@ var ctx = document.getElementById("myBarChart");
 var myBarChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ["January", "February", "March", "April", "May", "June"],
+    labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio','Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
     datasets: [{
-      label: "Revenue",
+      label: "Recepciones",
       backgroundColor: "#4e73df",
       hoverBackgroundColor: "#2e59d9",
       borderColor: "#4e73df",
-      data: [4215, 5312, 6251, 7841, 9821, 14984],
+      data: [4215, 5312, 6251, 7841, 9821, 14984, 10245, 11234, 12345, 13456, 14567, 15678],
     }],
   },
   options: {
@@ -66,16 +66,16 @@ var myBarChart = new Chart(ctx, {
         maxBarThickness: 25,
       }],
       yAxes: [{
-        ticks: {
-          min: 0,
-          max: 15000,
-          maxTicksLimit: 5,
-          padding: 10,
-          // Include a dollar sign in the ticks
-          callback: function(value, index, values) {
-            return '$' + number_format(value);
-          }
-        },
+        // ticks: {
+        //   min: 0,
+        //   max: 15000,
+        //   maxTicksLimit: 5,
+        //   padding: 10,
+        //   // Include a dollar sign in the ticks
+        //   callback: function(value, index, values) {
+        //     return '$' + number_format(value);
+        //   }
+        // },
         gridLines: {
           color: "rgb(234, 236, 244)",
           zeroLineColor: "rgb(234, 236, 244)",

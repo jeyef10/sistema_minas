@@ -16,36 +16,8 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
-                    
-                    
-                    <h2 class="font-weight-bold text-primary">Reporte General</h2>
-
-                  </div>
-<!-- 
-                <div class="card-body">
-
-                    <div class="row">
-                            <div class=" col-2">
-                                <label for="desde">Desde</label> 
-
-                                    <input type="date" id="desde" name="desde" value="{{ request('desde') }}" class="form-control "> 
-                            </div>
-
-                            <div class=" col-2">
-                                <label for="hasta">Hasta</label> 
-                                
-                                <input type="date" id="hasta" name="hasta" value="{{ request('hasta') }}" class="form-control"> 
-                            </div>  
-
-                                <div class="col-md-2 "> 
-                                   <button type="submit" class="btn btn-primary"   style="margin-top: 19%;">Filtrar</button>
-                                </div>
-                            
-                              
+                        <h2 class="font-weight-bold text-primary">Reporte General</h2>
                     </div>
-                     
-                </div> -->
-
 
                                     {{-- ? TABLA PARA TODOS LOS SOLICITANTES --}}
 
@@ -59,51 +31,14 @@
                                     <th class="font-weight-bold text-Secondary">Solicitante</th>
                                     <th class="font-weight-bold text-Secondary">Dirección</th>
                                     <th class="font-weight-bold text-Secondary">Vigencia de Licencia</th>
-                                  </tr>
+                                    </tr>
                             </thead>
-                            <tbody>
-    
-                            @foreach($resultados as $resultado)
-                                <tr>
-                                    <td class="font-weight-bold text-secondary">
-                                        @if ($resultado->resolucion_apro)
-                                            {{ $resultado->resolucion_apro }}
-                                        @else
-                                            {{ $resultado->resolucion_hpc }}
-                                        @endif
-                                        {{ $resultado->categoria }}
-                                    </td>
-
-                                    <td class="font-weight-bold text-secondary">
-                                        @if ($resultado->catastro_la)
-                                            {{ $resultado->catastro_la }}
-                                        @else
-                                            {{ $resultado->catastro_lp }}
-                                        @endif
-                                    </td>
-
-                                    <td class="font-weight-bold text-secondary">{{ $resultado->solicitante_tipo }}</td>
-
-                                    <td class="font-weight-bold text-secondary">
-                                        @if($resultado->solicitante_tipo == 'App\\Models\\PersonaNatural')
-                                            {{ $resultado->solicitante_cedula ?? 'N/A' }}
-                                            {{ $resultado->solicitante_nombre_natural ?? 'N/A' }} 
-                                            {{ $resultado->solicitante_apellido ?? 'N/A' }}
-                                        @else
-                                            {{ $resultado->solicitante_rif ?? 'N/A' }}
-                                            {{ $resultado->solicitante_nombre_juridico ?? 'N/A' }}
-                                        @endif
-                                    </td>
-
-                                    <td class="font-weight-bold text-secondary">{{ $resultado->direccion }}</td>
-                                    <td class="font-weight-bold text-Secondary">{{ $resultado->plazo->medida_tiempo}} {{ $resultado->plazo->cantidad}}</td>
-                                </tr>
-                            @endforeach
-
+                                <tbody>
+                                <!--  -->
                              </tbody>
-                         </table>
-                     </div>
-                  </div>   
+                        </table>
+                    </div>
+                </div>   
             </div>
         </div>
     </div>

@@ -18,6 +18,15 @@ use App\Http\Controllers\BitacoraController;
 class PagoRegaliaController extends Controller
 {
 
+    function __construct()
+    {
+         $this->middleware('permission:ver-pago_regalia|crear-pago_regalia|editar-pago_regalia|borrar-pago_regalia', ['only' => ['index']]);
+         $this->middleware('permission:crear-pago_regalia', ['only' => ['create','store']]);
+         $this->middleware('permission:editar-pago_regalia', ['only' => ['edit','update']]);
+         $this->middleware('permission:borrar-pago_regalia', ['only' => ['destroy']]);
+
+    }
+
 
     /**
      * Display a listing of the resource.
