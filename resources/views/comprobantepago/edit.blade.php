@@ -93,23 +93,30 @@
                                         <option value="0">Seleccione un Tipo de Pago</option>
                                         @foreach($tipo_pagos as $tipo_pago)
                                             <option value="{{ $tipo_pago->id }}" @if (old('id_tipo_pago', $comprobante_pago->id_tipo_pago) == $tipo_pago->id) selected @endif>
-                                            {{ $tipo_pago->nombre_pago }} - {{ $tipo_pago->forma_pago }}
+                                            {{ $tipo_pago->forma_pago }}
                                         </option>
                                         @endforeach
                                     </select>
                                 </div>
 
-                                <div class="col-4">                                     
-                                    <div class="form-group" id="simple-date1">
-                                        <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha de Pago</label>
-                                        <div class="input-group date">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                            </div>
-                                            <input type="text" id="fecha_pago" name="fecha_pago" class="form-control" value="{{ $fecha_pago }}" id="simpleDataInput">
-                                        </div>
-                                    </div>
+                                <div class="col-4">
+                                    <label class="font-weight-bold text-primary">Banco</label>
+                                    <input type="text" class="form-control" id="banco" name="banco" style="background: white;" value="{{ isset($comprobante_pago->banco)?$comprobante_pago->banco:'' }}" placeholder="Ingrese el tipo de Banco" autocomplete="off" onkeypress="return soloLetras(event);" oninput="capitalizarInput('banco')">
                                 </div>
+
+
+                                <div class="col-4">
+                                    <label class="font-weight-bold text-primary">N° Referencia</label>
+                                    <input type="text" class="form-control" id="n_referencia" name="n_referencia" style="background: white;" value="{{ isset($comprobante_pago->n_referencia)?$comprobante_pago->n_referencia:'' }}" placeholder="Ingrese la Referencia" autocomplete="off" onkeypress="return solonum(event);" >
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="row">
 
                                 <div class="grid grid-cols-1 mt-5 mx-7">
                                     <img id="miniaturas">
@@ -124,6 +131,33 @@
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Observaciones</label>
                                     <textarea class="form-control" id="observaciones_com" name="observaciones_com" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('observaciones')">{{ $observaciones_com }}</textarea>                                   
+                                </div>
+
+                                <div class="card-body">
+                                    <label class="font-weight-bold text-primary">Timbres Fiscales</label>
+                                    <div class="row ml-1">
+                                        <div class="custom-control custom-radio col-1">
+                                            <input type="radio" id="natural" name="timbre_fiscal" class="custom-control-input" checked value="Si" {{ ($comprobante_pago->timbre_fiscal=="Si")? "checked" : ""}}>
+                                            <label class="custom-control-label" for="natural">Si</label>
+                                        </div>
+            
+                                        <div class="custom-control custom-radio col-1">
+                                            <input type="radio" id="juridico" name="timbre_fiscal" class="custom-control-input" value="No" {{ ($comprobante_pago->timbre_fiscal=="No")? "checked" : ""}}>
+                                            <label class="custom-control-label" for="juridico">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-4">                                     
+                                    <div class="form-group" id="simple-date1">
+                                        <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha de Pago</label>
+                                        <div class="input-group date">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                            </div>
+                                            <input type="text" id="fecha_pago" name="fecha_pago" class="form-control" value="{{ $fecha_pago }}" id="simpleDataInput">
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <input type="hidden" name="estatus_pago" value="Aprobado">

@@ -40,8 +40,8 @@
                             <thead class="thead-light">
                                 <tr>
                                     {{-- <th class="font-weight-bold text-Secondary">Nº</th> --}}
-                                    <th class="font-weight-bold text-Secondary">Nombre del Pago</th>
-                                    <th class="font-weight-bold text-Secondary">Metodo de Pago</th>
+                                    <!-- <th class="font-weight-bold text-Secondary">Nombre del Pago</th> -->
+                                    <th class="font-weight-bold text-Secondary">Método de Pago</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center> </th>
                                 </tr>
                             </thead>
@@ -49,7 +49,7 @@
                                 @foreach ($tipo_pagos as $tipo_pago)
                                     <tr>
                                         {{-- <td class="font-weight-bold text-Secondary">{{ $tipo_pago->id}}</td>  --}}
-                                        <td class="font-weight-bold text-Secondary">{{ $tipo_pago->nombre_pago}}</td>
+                                        <!-- <td class="font-weight-bold text-Secondary">{{ $tipo_pago->nombre_pago}}</td> -->
                                         <td class="font-weight-bold text-Secondary">{{ $tipo_pago->forma_pago }}</td>
                                        
                                         <td>

@@ -107,7 +107,9 @@ class ComprobantePagoController extends Controller
         $comprabantepagos = new ComprobantePago ();
         $comprabantepagos->id_inspeccion = $request->input('id_inspeccion');
         $comprabantepagos->id_tipo_pago = $request->input('id_tipo_pago');
-        $comprabantepagos->fecha_pago = $request->input('fecha_pago');
+        $comprabantepagos->banco = $request->input('banco');
+        $comprabantepagos->n_referencia = $request->input('n_referencia');
+        
         
         // Verificar si se han cargado archivos
         if ($request->hasFile('comprobante_pdf')) {
@@ -128,6 +130,7 @@ class ComprobantePagoController extends Controller
         $comprabantepagos->observaciones_com = $request->input('observaciones_com');
         $comprabantepagos->timbre_fiscal = $request->input('timbre_fiscal');
         $comprabantepagos->observaciones_timbres = $request->input('observaciones_timbres');
+        $comprabantepagos->fecha_pago = $request->input('fecha_pago');
         $comprabantepagos->estatus_pago = $request->input('estatus_pago');
 
         $comprabantepagos->save();
@@ -168,11 +171,14 @@ class ComprobantePagoController extends Controller
         $comprobante_pago = ComprobantePago::findOrFail($id);
         $inspeccion = Inspecciones::find($id);
         $tipo_pagos = TipoPago::all();
-        $fecha_pago = date('d/m/Y', strtotime($comprobante_pago->fecha_pago));
+        $banco = $comprobante_pago->banco;
+        $n_referencia = $comprobante_pago->n_referencia;
         $comprobante_pdf = $comprobante_pago->comprobante_pdf;
         $observaciones_com = $comprobante_pago->observaciones_com;
+        $fecha_pago = date('d/m/Y', strtotime($comprobante_pago->fecha_pago));
         $estatus_pago = $comprobante_pago->estatus_pago;
-        return view('comprobantepago.edit' , compact('comprobante_pago', 'inspeccion', 'tipo_pagos', 'fecha_pago', 'comprobante_pdf', 'observaciones_com', 'estatus_pago'));
+        return view('comprobantepago.edit' , compact('comprobante_pago', 'inspeccion', 'tipo_pagos', 'banco', 'n_referencia',
+         'comprobante_pdf', 'observaciones_com', 'fecha_pago', 'estatus_pago'));
     }
 
     /**
@@ -184,11 +190,17 @@ class ComprobantePagoController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $request->validate([
+            'observaciones_com' => 'nullable|string|max:255', // Permite nulos y cadenas de hasta 255 caracteres
+        ]);
+
         // Buscar El comprobante existente        
         $comprobante_pago = ComprobantePago::findOrFail($id);
         $comprobante_pago->id_inspeccion = $request->input('id_inspeccion');
         $comprobante_pago->id_tipo_pago = $request->input('id_tipo_pago');
-        $comprobante_pago->fecha_pago = $request->input('fecha_pago');
+        $comprobante_pago->banco = $request->input('banco');
+        $comprobante_pago->n_referencia = $request->input('n_referencia');
 
         // Verificar si se han cargado nuevos archivos
         if ($request->hasFile('comprobante_pdf')) {
@@ -209,6 +221,7 @@ class ComprobantePagoController extends Controller
         }
 
         $comprabante_pago->observaciones_com = $request->input('observaciones_com');
+        $comprobante_pago->fecha_pago = $request->input('fecha_pago');
         $comprobante_pago->estatus_pago = $request->input('estatus_pago');
 
         $comprobante_pago->save();

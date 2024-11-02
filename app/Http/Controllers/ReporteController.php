@@ -26,7 +26,8 @@ class ReporteController extends Controller
         $hasta = $request->input('hasta');
 
 
-        $licencia = licencias::join('inspecciones', 'inspecciones.id', '=', 'licencias.id_inspeccion')
+        $licencia = licencias::join('comprobante_pagos', 'comprobante_pagos.id', '=', 'licencias.id_comprobante_pago')
+            ->join('inspecciones', 'inspecciones.id', '=', 'comprobante_pagos.id_inspeccion')
             ->join('planificacion', 'planificacion.id', '=', 'inspecciones.id_planificacion')
             ->join('recepcion', 'recepcion.id', '=', 'planificacion.id_recepcion')
             ->join('solicitantes', 'solicitantes.id', '=', 'recepcion.id_solicitante' )
@@ -34,6 +35,7 @@ class ReporteController extends Controller
                 $join->on('solicitantes.solicitante_especifico_id', '=', 'personas_naturales.id')
                     ->where('solicitantes.solicitante_especifico_type', '=', 'App\\Models\\PersonaNatural');
             })
+           
             ->leftJoin('personas_juridicas', function ($join) {
                 $join->on('solicitantes.solicitante_especifico_id', '=', 'personas_juridicas.id')
                     ->where('solicitantes.solicitante_especifico_type', '=', 'App\\Models\\PersonaJuridica');
@@ -52,11 +54,10 @@ class ReporteController extends Controller
                 'licencias.catastro_la',
                 'licencias.catastro_lp',
                 'licencias.id_plazo'
-            ]);
-
-        $resultados = $licencia->get();
-
-        return view('reporte.index', ['resultados' => $resultados]);
+            ])
+            ->get();
+            
+        return view('reporte.index', ['resultados' => $licencia]);
     }
 
     public function mensual (Request $request) {

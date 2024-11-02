@@ -18,11 +18,13 @@ return new class extends Migration
 
             $table->unsignedBigInteger('id_inspeccion');
             $table->unsignedBigInteger('id_tipo_pago');
-            $table->date('fecha_pago');
+            $table->string('banco')->nullable();
+            $table->string('n_referencia')->nullable();
             $table->json('comprobante_pdf')->nullable();
             $table->text('observaciones_com')->nullable();
             $table->string('timbre_fiscal');
-            $table->string('observaciones_timbres')->nullable(); // Cambiado a 'text' para permitir más caracteres 
+            $table->string('observaciones_timbres')->nullable(); // Cambiado a 'text' para permitir más caracteres
+            $table->date('fecha_pago');
             $table->string('estatus_pago');
 
             $table->timestamps();

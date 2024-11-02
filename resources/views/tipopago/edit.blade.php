@@ -25,23 +25,10 @@
                         <div class="card-body">
                             
                             <div class="row">
-
+                                
                                 <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">Nombre del Pago</label>
-                                    <select class="select2-single form-control" name="nombre_pago" id="nombre_pago">
-                                        <option value="0" disabled>Seleccione un Pago</option>
-                                            <option value="Pago Licencia" {{ (old('nombre_pago', $tipo_pago->nombre_pago ?? '') === 'Pago Licencia') ? 'selected' : '' }}>Pago Licencia</option>
-                                    </select>
-                                </div>
-        
-                                <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">Método de Pago</label>
-                                    <select class="select2single form-control" name="forma_pago" id="forma_pago">
-                                        <option value="0" selected="true" disabled>Seleccione un Método de pago</option>
-                                        <option value="Efectivo" {{ (old('forma_pago', $tipo_pago->forma_pago ?? '') === 'Efectivo') ? 'selected' : '' }}>Efectivo</option>
-                                        <option value="Pago Movil" {{ (old('forma_pago', $tipo_pago->forma_pago ?? '') === 'Pago Movil') ? 'selected' : '' }}>Pago Movil</option>
-                                        <option value="Transferencia Bancaria" {{ (old('forma_pago', $tipo_pago->forma_pago ?? '') === 'Transferencia Bancaria') ? 'selected' : '' }}>Transferencia Bancaria</option>
-                                    </select>
+                                    <label for="recaudo" class="font-weight-bold text-primary">Método de Pago</label>
+                                    <input type="text" class="form-control" id="forma_pago" name="forma_pago" style="background: white;" value="{{ isset($tipo_pago->forma_pago)?$tipo_pago->forma_pago:'' }}" placeholder="Ingrese un Recaudo" autocomplete="off" onkeypress="return soloLetras(event);" oninput="capitalizarInput('forma_pago')">
                                 </div>
 
                             </div>
@@ -78,23 +65,19 @@
     </script>
     
     @if ($errors->any())
-    <script>
-        var errorMessage = @json($errors->first());
-        Swal.fire({
-                    title: 'Mineral',
-                    text: " Este Mineral Ya Existe.",
+        <script>
+            var errors = @json($errors->all());
+            errors.forEach(function(error) {
+                Swal.fire({
+                    title: 'Tipo Pago',
+                    text: error,
                     icon: 'warning',
-                    showconfirmButton: true,
+                    showConfirmButton: true,
                     confirmButtonColor: '#3085d6',
                     confirmButtonText: '¡OK!',
-                    
-                    }).then((result) => {
-                if (result.isConfirmed) {
-
-                    this.submit();
-                }
-                })
-    </script>
-@endif
+                });
+            });
+        </script>
+    @endif
 
 @endsection

@@ -51,18 +51,17 @@ class TipoPagoController extends Controller
     public function store(Request $request)
     {
        
-        // $request->validate(
-        //     [
-        //     'nombre_pago' => 'unique:tipo_pagos,nombre_pago',
-        //     'forma_pago' => 'required|tipo_pagos, forma_pago',
-        //     ],
-        //     [
-        //     'nombre.unique' => ''
-        //     ]
-        // );
-    
+        $request->validate(
+            [
+            'forma_pago' => 'unique:tipo_pagos,forma_pago'
+            ],
+            [
+            'forma_pago.unique' => 'Está método de pago ya existe en la base de datos.'
+            ]
+        );
+
+
         $tipo_pagos= TipoPago::create([
-            'nombre_pago' => $request->input('nombre_pago'),
             'forma_pago' => $request->input('forma_pago') 
         ]);
 
@@ -113,11 +112,17 @@ class TipoPagoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+         $request->validate(
+            [
+            'forma_pago' => 'unique:tipo_pagos,forma_pago,' . $id, 
+            ],
+            [
+            'forma_pago.unique' => 'Está método de pago ya existe en la base de datos.'
+            ]
+        );
 
         $tipo_pago = TipoPago::find($id);
 
-        $tipo_pago->nombre_pago = $request->input('nombre_pago');
         $tipo_pago->forma_pago =$request->input('forma_pago');
 
         $tipo_pago->save();

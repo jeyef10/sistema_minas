@@ -11,6 +11,6 @@ class TipoPago extends Model
     protected $table = 'tipo_pagos';
     protected $primaryKey = 'id';
     public $timestamps = true;
-    protected $fillable = ['nombre_pago', 'forma_pago'];
+    protected $fillable = ['forma_pago'];
 
 }

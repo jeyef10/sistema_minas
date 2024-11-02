@@ -60,7 +60,7 @@
                                             @if ( $mineral->tasa )
                                                 {{ $mineral->tasa }}
                                             @else
-                                                No
+                                                No Posee
                                             @endif    
 
                                         </td>
@@ -70,7 +70,7 @@
                                             @if ( $mineral->moneda_longitud )
                                                 {{ $mineral->moneda_longitud }}
                                             @else
-                                                No
+                                                No Posee
                                             @endif   
                                         
                                         </td>

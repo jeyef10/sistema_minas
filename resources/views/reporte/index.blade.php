@@ -21,31 +21,6 @@
                     <h2 class="font-weight-bold text-primary">Reporte General</h2>
 
                   </div>
-<!-- 
-                <div class="card-body">
-
-                    <div class="row">
-                            <div class=" col-2">
-                                <label for="desde">Desde</label> 
-
-                                    <input type="date" id="desde" name="desde" value="{{ request('desde') }}" class="form-control "> 
-                            </div>
-
-                            <div class=" col-2">
-                                <label for="hasta">Hasta</label> 
-                                
-                                <input type="date" id="hasta" name="hasta" value="{{ request('hasta') }}" class="form-control"> 
-                            </div>  
-
-                                <div class="col-md-2 "> 
-                                   <button type="submit" class="btn btn-primary"   style="margin-top: 19%;">Filtrar</button>
-                                </div>
-                            
-                              
-                    </div>
-                     
-                </div> -->
-
 
                                     {{-- ? TABLA PARA TODOS LOS SOLICITANTES --}}
 
@@ -55,7 +30,6 @@
                                 <tr>
                                     <th class="font-weight-bold text-Secondary">Tipo de Licencia</th>
                                     <th class="font-weight-bold text-Secondary">Catastro Minero</th>
-                                    <th class="font-weight-bold text-Secondary">Tipo Solicitante</th>
                                     <th class="font-weight-bold text-Secondary">Solicitante</th>
                                     <th class="font-weight-bold text-Secondary">Dirección</th>
                                     <th class="font-weight-bold text-Secondary">Vigencia de Licencia</th>
@@ -82,17 +56,19 @@
                                         @endif
                                     </td>
 
-                                    <td class="font-weight-bold text-secondary">{{ $resultado->solicitante_tipo }}</td>
-
                                     <td class="font-weight-bold text-secondary">
-                                        @if($resultado->solicitante_tipo == 'App\\Models\\PersonaNatural')
-                                            {{ $resultado->solicitante_cedula ?? 'N/A' }}
-                                            {{ $resultado->solicitante_nombre_natural ?? 'N/A' }} 
-                                            {{ $resultado->solicitante_apellido ?? 'N/A' }}
-                                        @else
-                                            {{ $resultado->solicitante_rif ?? 'N/A' }}
-                                            {{ $resultado->solicitante_nombre_juridico ?? 'N/A' }}
+
+                                        @if($resultado->solicitante_tipo)
+                                            {{ $resultado->solicitante_cedula }}
+                                            {{ $resultado->solicitante_nombre_natural }}
+                                            {{ $resultado->solicitante_apellido }}
                                         @endif
+
+                                        @if($resultado->solicitante_tipo)
+                                            {{ $resultado->solicitante_rif }}
+                                            {{ $resultado->solicitante_nombre_juridico }}
+                                        @endif
+                                        
                                     </td>
 
                                     <td class="font-weight-bold text-secondary">{{ $resultado->direccion }}</td>
@@ -184,11 +160,7 @@
             });
         });
 
-        // function filtrar(){
-		// 	let desde = $("#desde").val();
-		// 	let hasta = $("#hasta").val();
-		// 	location.href="./Beneficiarios_activos.php?desde="+desde+"&hasta="+hasta;
-		// }
+      
 
     </script>
 @endsection

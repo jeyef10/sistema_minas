@@ -94,24 +94,31 @@
                                     <select class="select2-single form-control" id="tipo_pago" name="id_tipo_pago">
                                         <option value="0">Seleccione un Tipo de Pago</option>
                                         @foreach($tipo_pagos as $tipo_pago)
-                                        <option value="{{ $tipo_pago->id }}">{{ $tipo_pago->nombre_pago }} - {{ $tipo_pago->forma_pago }}</option>
+                                        <option value="{{ $tipo_pago->id }}">{{ $tipo_pago->forma_pago }}</option>
                                     @endforeach
                                     </select>
                                 </div>
 
-                                <div class="col-4">                                     
-                                    <div class="form-group" id="simple-date1">
-                                        <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha de Pago</label>
-                                        <div class="input-group date">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                            </div>
-                                            <input type="text" id="fecha_pago" name="fecha_pago" class="form-control" value="<?php echo date('d/m/Y'); ?>" id="simpleDataInput">
-                                        </div>
-                                    </div>
+                                <div class="col-4">
+                                    <label class="font-weight-bold text-primary">Banco</label>
+                                    <input type="text" class="form-control" id="banco" name="banco" style="background: white;" value="" placeholder="Ingrese el tipo de Banco" autocomplete="off" onkeypress="return soloLetras(event);" oninput="capitalizarInput('banco')">
                                 </div>
 
-                                <div class="grid grid-cols-1 mt-5 mx-7">
+
+                                <div class="col-4">
+                                    <label class="font-weight-bold text-primary">N° Referencia</label>
+                                    <input type="text" class="form-control" id="n_referencia" name="n_referencia" style="background: white;" value="" placeholder="Ingrese la Referencia" autocomplete="off" onkeypress="return solonum(event);" >
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="row">
+
+                            <div class="grid grid-cols-1 mt-5 mx-7">
                                     <img id="miniaturas">
                                 </div>
 
@@ -141,6 +148,18 @@
                                     </div>
                                 </div>
 
+                                <div class="col-4">                                     
+                                    <div class="form-group" id="simple-date1">
+                                        <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha de Pago</label>
+                                        <div class="input-group date">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                            </div>
+                                            <input type="text" id="fecha_pago" name="fecha_pago" class="form-control" value="<?php echo date('d/m/Y'); ?>" id="simpleDataInput">
+                                        </div>
+                                    </div>
+                                </div>
+                                
                                 <input type="hidden" name="estatus_pago" value="Aprobado">
 
                             </div>

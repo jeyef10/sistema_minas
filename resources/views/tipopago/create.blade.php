@@ -25,7 +25,7 @@
                             
                             <div class="row">
 
-                                <div class="col-4">
+                                <!-- <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Nombre del Pago</label>
                                     <select class="select2single form-control" name="nombre_pago" id="nombre_pago">
                                         <option value="" disabled>Seleccione un Pago</option>
@@ -41,6 +41,11 @@
                                         <option value="Pago Móvil">Pago Móvil</option>
                                         <option value="Transferecia Bancaria">Transferecia Bancaria</option>
                                     </select>
+                                </div> -->
+                                
+                                <div class="col-4">
+                                    <label for="recaudo" class="font-weight-bold text-primary">Método de Pago</label>
+                                    <input type="text" class="form-control" id="forma_pago" name="forma_pago" style="background: white;" value="" placeholder="Ingrese un Recaudo" autocomplete="off" onkeypress="return soloLetras(event);" oninput="capitalizarInput('forma_pago')">
                                 </div>
 
                             </div>
@@ -99,24 +104,19 @@
     
     
     @if ($errors->any())
-    <script>
-        var errorMessage = @json($errors->first());
-        Swal.fire({
-                            title: 'Recaudo',
-                            text: " Esta Recaudo Ya Existe.",
-                            icon: 'warning',
-                            showconfirmButton: true,
-                            confirmButtonColor: '#3085d6',
-                            confirmButtonText: '¡OK!',
-                            
-                            }).then((result) => {
-                        if (result.isConfirmed) {
-
-                            this.submit();
-                        }
-                        })
-    </script>
-
-@endif
+        <script>
+            var errors = @json($errors->all());
+            errors.forEach(function(error) {
+                Swal.fire({
+                    title: 'Tipo Pago',
+                    text: error,
+                    icon: 'warning',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: '¡OK!',
+                });
+            });
+        </script>
+    @endif
 
 @endsection

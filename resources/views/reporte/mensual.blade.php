@@ -16,8 +16,32 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
-                        <h2 class="font-weight-bold text-primary">Reporte General</h2>
+                        <h2 class="font-weight-bold text-primary">Reporte Mensual</h2>
                     </div>
+
+<!--                 
+                    <div class="card-body">
+
+                        <div class="row d-flex align-items-end">
+
+                            <div class=" col-2">
+                                <label for="desde">Desde</label> 
+                                <input type="date" id="desde" name="desde" value="{{ request('desde') }}" class="form-control "> 
+                            </div>
+
+                            <div class=" col-2">
+                                <label for="hasta">Hasta</label> 
+                                <input type="date" id="hasta" name="hasta" value="{{ request('hasta') }}" class="form-control"> 
+                            </div>  
+
+                            <div class="col-2 d-flex justify-content-start" style="margin-bottom: 4px; margin-left: -10px;"> 
+                                <button type="submit" class="btn btn-primary">Filtrar</button>
+                            </div>
+                            
+                        </div>
+                     
+                    </div> -->
+
 
                                     {{-- ? TABLA PARA TODOS LOS SOLICITANTES --}}
 
@@ -25,9 +49,9 @@
                         <table class="table align-items-center table-flush" id="dataTable">
                             <thead class="thead-light">
                                 <tr>
-                                    <th class="font-weight-bold text-Secondary">Tipo de Licencia</th>
-                                    <th class="font-weight-bold text-Secondary">Catastro Minero</th>
-                                    <th class="font-weight-bold text-Secondary">Tipo Solicitante</th>
+                                    <th class="font-weight-bold text-Secondary">Comisionado Asignado</th>
+                                    <th class="font-weight-bold text-Secondary">Municipio</th>
+                                    <th class="font-weight-bold text-Secondary">Fecha Inspeccion</th>
                                     <th class="font-weight-bold text-Secondary">Solicitante</th>
                                     <th class="font-weight-bold text-Secondary">Dirección</th>
                                     <th class="font-weight-bold text-Secondary">Vigencia de Licencia</th>
@@ -119,12 +143,16 @@
             });
         });
 
-        // function filtrar(){
-		// 	let desde = $("#desde").val();
-		// 	let hasta = $("#hasta").val();
-		// 	location.href="./Beneficiarios_activos.php?desde="+desde+"&hasta="+hasta;
-		// }
-
     </script>
+
+    <!-- <script>
+
+        function filtrar(){
+			let desde = $("#desde").val();
+			let hasta = $("#hasta").val();
+			location.href="./Beneficiarios_activos.php?desde="+desde+"&hasta="+hasta;
+		}
+
+    </script> -->
 @endsection
 
