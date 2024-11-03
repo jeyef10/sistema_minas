@@ -67,9 +67,7 @@
 
                             </div>
                         </div>
-
-                        <hr class="sidebar-divider">
-                                
+                              
                         <div class="card-body">
         
                             <div class="row">
@@ -95,8 +93,6 @@
 
                             </div>
                         </div>
-                        
-                        <hr class="sidebar-divider">
                                 
                         <div class="card-body">
         
@@ -124,8 +120,6 @@
 
                             </div>
                         </div>
-
-                        <hr class="sidebar-divider">
                     
                         <div class="card-body">
 

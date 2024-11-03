@@ -53,11 +53,7 @@
                                             {{ $comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->nombre }}</td>
                                         @endif
 
-                                        <td class="font-weight-bold text-Secondary">
-                                            @if ($comprobante_pago->tipo_pago)
-                                                {{$comprobante_pago->tipo_pago->nombre_pago }} - {{$comprobante_pago->tipo_pago->forma_pago }} @else
-                                            @endif
-                                        </td>
+                                        <td class="font-weight-bold text-Secondary"> {{$comprobante_pago->tipo_pago->forma_pago }}</td>
 
                                         <td class="font-weight-bold text-Secondary"> {{ date('d/m/Y', strtotime($comprobante_pago->fecha_pago)) }}</td>
                                         <td class="font-weight-bold text-Secondary"> {{$comprobante_pago->estatus_pago }}</td>
@@ -287,6 +283,8 @@
                     <h5 class="font-weight-bold text-primary" style="text-align: center">Detalles del Comprobante de Pago</h5>
                         
                         <p><b>Tipo de Solicitud:</b> ${data.id_inspeccion}</p>
+                        <p><b>Tipo de Banco:</b> ${data.banco}</p>
+                        <p><b>N° Referencia:</b> ${data.n_referencia}</p>
                         <p><b>Observaciones:</b> ${data.observaciones_com}</p>
                         <p><b>Timbres Fiscales:</b> ${data.timbre_fiscal}</p>
                         ${pdfHtml}

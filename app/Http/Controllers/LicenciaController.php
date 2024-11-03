@@ -54,6 +54,8 @@ class LicenciaController extends Controller
         // Devuelve los datos relevantes en formato JSON
         return response()->json([
             'id_inspeccion' => $comprobante_pago->inspeccion->planificacion->recepcion->categoria,
+            'banco' =>$comprobante_pago->banco,
+            'n_referencia' =>$comprobante_pago->n_referencia,
             'comprobante_pdf' => $comprobante_pago->comprobante_pdf,
             'observaciones_com' => $comprobante_pago->observaciones_com,
             'timbre_fiscal' => $comprobante_pago->timbre_fiscal,

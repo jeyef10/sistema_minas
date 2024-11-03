@@ -165,8 +165,6 @@
 
                             </div>
 
-                            <hr class="sidebar-divider">
-
                             <div class="card-body">
 
                                 <div class="row">
@@ -206,7 +204,7 @@
                                     </div>
 
                                     <div class="col-3">
-                                        <label  class="font-weight-bold text-primary">Estatus</label>
+                                        <label  class="font-weight-bold text-primary">Estatus Pago de Regalía</label>
                                         <select class="select2single form-control" name="estatus_regalia" id="estatus_regalia">
                                             <option value="" selected="true" disabled>Seleccione un Estatus</option>
                                             <option value="Aprobado">Aprobado</option>

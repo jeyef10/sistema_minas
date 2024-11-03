@@ -130,8 +130,6 @@
 
                                 </div>
 
-                            <hr class="sidebar-divider">
-
                             <div class="card-body">
 
                                 <div class="row">

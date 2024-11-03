@@ -14,7 +14,7 @@
 
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
     
-                        <h2 class="font-weight-bold text-primary">Registrar Comprobante de Pago de Licencia</h2>
+                        <h2 class="font-weight-bold text-primary">Registrar Aprobación de Licencia</h2>
 
                     </div>
  
@@ -100,7 +100,7 @@
                                 </div>
 
                                 <div class="col-4">
-                                    <label class="font-weight-bold text-primary">Banco</label>
+                                    <label class="font-weight-bold text-primary">Tipo de Banco</label>
                                     <input type="text" class="form-control" id="banco" name="banco" style="background: white;" value="" placeholder="Ingrese el tipo de Banco" autocomplete="off" onkeypress="return soloLetras(event);" oninput="capitalizarInput('banco')">
                                 </div>
 
@@ -118,7 +118,7 @@
 
                             <div class="row">
 
-                            <div class="grid grid-cols-1 mt-5 mx-7">
+                                <div class="grid grid-cols-1 mt-5 mx-7">
                                     <img id="miniaturas">
                                 </div>
 
@@ -135,15 +135,14 @@
 
                                 <div class="card-body">
                                     <label class="font-weight-bold text-primary">Timbres Fiscales</label>
-                                    <div class="row ml-1">
-                                        <div class="custom-control custom-radio col-1">
-                                            <input type="radio" id="natural" name="timbre_fiscal" value="Si" class="custom-control-input" checked>
-                                            <label class="custom-control-label" for="natural">Si</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="timbre_fiscal" id="natural" value="Si" checked>
+                                            <label class="form-check-label" for="natural">Si</label>
                                         </div>
-            
-                                        <div class="custom-control custom-radio col-1">
-                                            <input type="radio" id="juridico" name="timbre_fiscal" value="No" class="custom-control-input">
-                                            <label class="custom-control-label" for="juridico">No</label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="timbre_fiscal" id="juridico" value="No">
+                                            <label class="form-check-label" for="juridico">No</label>
                                         </div>
                                     </div>
                                 </div>
@@ -159,8 +158,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <input type="hidden" name="estatus_pago" value="Aprobado">
+
+                                <div class="col-3">
+                                    <label  class="font-weight-bold text-primary">Estatus Aprobación de Licencia</label>
+                                    <select class="select2single form-control" name="estatus_pago" id="estatus_pago">
+                                        <option value="" selected="true" disabled>Seleccione un Estatus</option>
+                                        <option value="Aprobado">Aprobado</option>
+                                        <option value="Pendiente">Pendiente</option>
+                                    </select>
+                                </div>
 
                             </div>
 
@@ -262,7 +268,7 @@
                         embed.src = e.target.result;
                         embed.type = 'application/pdf';
                         embed.style.width = '100%';
-                        embed.style.height = '500px';
+                        embed.style.height = '400px';
                         pdfcontainer.appendChild(embed);
                     };
                     reader.readAsDataURL(file);

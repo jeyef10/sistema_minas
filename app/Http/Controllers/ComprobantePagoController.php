@@ -220,7 +220,8 @@ class ComprobantePagoController extends Controller
             $comprobantePago->comprobante_pdf = json_encode($todosLosArchivos);
         }
 
-        $comprabante_pago->observaciones_com = $request->input('observaciones_com');
+        // $comprabante_pago->observaciones_com = $request->input('observaciones_com');
+        $comprobante_pago->observaciones_com = $comprobante_pago->observaciones_com ?? $request->input('observaciones_com');
         $comprobante_pago->fecha_pago = $request->input('fecha_pago');
         $comprobante_pago->estatus_pago = $request->input('estatus_pago');
 
@@ -237,7 +238,6 @@ class ComprobantePagoController extends Controller
                 $errorMessage = 'Error: .';
                 return redirect()->back()->withErrors($errorMessage);
             }
-
 
     }
 

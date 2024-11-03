@@ -16,7 +16,7 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
-                        <h2 class="font-weight-bold text-primary">Gestión de Comprobante de Pago de Licencia</h2>
+                        <h2 class="font-weight-bold text-primary">Gestión Pago de Licencia</h2>
                             
                     </div>
 

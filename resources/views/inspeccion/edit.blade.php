@@ -13,9 +13,9 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
 
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
     
-                        <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Actualizar Inspección</h2>
+                        <h2 class="font-weight-bold text-primary" >Actualizar Inspección</h2>
 
                     </div>
  
@@ -77,17 +77,13 @@
                             </div>
 
                         </div>
-                
-                        <hr class="sidebar-divider">
-                    
+                                                            
                             <div class="card-body">
 
                                 <div class="row">
 
                                     <input type="hidden" class="form-control" id="id_planificacion" name="id_planificacion" style="background: white;" value="{{ isset($inspeccion->planificacion->id)?$inspeccion->planificacion->id:'' }}" placeholder="" autocomplete="off">                                  
-                                   
-                                    
-                                    
+                                                                                                           
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Municipio</label>
                                         <select class="select2-single form-control" id="municipio" name="municipio" disabled>
@@ -109,23 +105,11 @@
                                             @endforeach  
                                         </select>                                   
                                     </div>
-
-                                    {{-- <div class="col-4">
-                                        <label for="comisionado" class="font-weight-bold text-primary">Fecha Inicial y Fecha Final</label>
-                                        <select class="select2-single form-control"disabled>
-                                            <option value="0">Seleccione un comisionado</option>
-                                            @foreach($planificacion as $planificaciones)
-                                            <option value="{{ $comisionado->id }}" @selected($inspeccion->planificacion->id == $planificacion->id)> {{ $planificacion->fecha_inicial }} - {{ $planificacion->fecha_final }} </option>
-                                            @endforeach
-                                        </select>
-                                    </div> --}}
-                                    
+                                                
                                 </div>
 
                             </div>
-
-                            <hr class="sidebar-divider">
-
+                           
                             <div class="card-body">
 
                                 <div class="row">
@@ -148,9 +132,7 @@
                                 </div>
 
                             </div>
-
-                            <hr class="sidebar-divider">
-
+                           
                             <div class="card-body">
 
                                 <div class="row">
@@ -185,9 +167,7 @@
                                 </div>
                                 
                             </div>
-
-                            <hr class="sidebar-divider">
-
+                           
                             <div class="card-body">
 
                                 <div class="row">
@@ -214,14 +194,19 @@
                                         </div>
                                     </div>
 
-                                    <input type="hidden" name="estatus" value="Ejecutado">
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Estatus</label>
+                                        <select class="select2single form-control" name="estatus" id="estatus">
+                                            <option value="0" selected="true" disabled>Seleccione un Estatus</option>
+                                            <option value="Aprobado" {{ (old('estatus', $inspeccion->estatus ?? '') === 'Aprobado') ? 'selected' : '' }}>Aprobado</option>
+                                            <option value="Pendiente" {{ (old('estatus', $inspeccion->estatus ?? '') === 'Pendiente') ? 'selected' : '' }}>Pendiente</option>
+                                        </select>
+                                    </div>
 
                                 </div>
                                 
                             </div>
-
-                            <hr class="sidebar-divider">
-
+                        
                             <div class="card-body" id="inputs_aprovechamiento">
 
                                 <div class="row">

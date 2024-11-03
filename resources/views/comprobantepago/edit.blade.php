@@ -13,7 +13,7 @@
 
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
     
-                        <h2 class="font-weight-bold text-primary">Actualizar Comprobante de Pago de Licencia </h2>
+                        <h2 class="font-weight-bold text-primary">Actualizar Aprobación de Licencia </h2>
 
                     </div>
  
@@ -100,7 +100,7 @@
                                 </div>
 
                                 <div class="col-4">
-                                    <label class="font-weight-bold text-primary">Banco</label>
+                                    <label class="font-weight-bold text-primary">Tipo de Banco</label>
                                     <input type="text" class="form-control" id="banco" name="banco" style="background: white;" value="{{ isset($comprobante_pago->banco)?$comprobante_pago->banco:'' }}" placeholder="Ingrese el tipo de Banco" autocomplete="off" onkeypress="return soloLetras(event);" oninput="capitalizarInput('banco')">
                                 </div>
 
@@ -135,16 +135,18 @@
 
                                 <div class="card-body">
                                     <label class="font-weight-bold text-primary">Timbres Fiscales</label>
-                                    <div class="row ml-1">
-                                        <div class="custom-control custom-radio col-1">
-                                            <input type="radio" id="natural" name="timbre_fiscal" class="custom-control-input" checked value="Si" {{ ($comprobante_pago->timbre_fiscal=="Si")? "checked" : ""}}>
-                                            <label class="custom-control-label" for="natural">Si</label>
+                                    <div class="form-group">
+
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="timbre_fiscal" id="natural" checked value="Si" {{ ($comprobante_pago->timbre_fiscal=="Si")? "checked" : ""}}>
+                                            <label class="form-check-label" for="natural">Si</label>
                                         </div>
-            
-                                        <div class="custom-control custom-radio col-1">
-                                            <input type="radio" id="juridico" name="timbre_fiscal" class="custom-control-input" value="No" {{ ($comprobante_pago->timbre_fiscal=="No")? "checked" : ""}}>
-                                            <label class="custom-control-label" for="juridico">No</label>
+
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="timbre_fiscal" id="juridico" value="No" {{ ($comprobante_pago->timbre_fiscal=="No")? "checked" : ""}}>
+                                            <label class="form-check-label" for="juridico">No</label>
                                         </div>
+
                                     </div>
                                 </div>
 
@@ -160,7 +162,14 @@
                                     </div>
                                 </div>
 
-                                <input type="hidden" name="estatus_pago" value="Aprobado">
+                                <div class="col-4">
+                                    <label  class="font-weight-bold text-primary">Estatus Aprobación de Licencia</label>
+                                    <select class="select2single form-control" name="estatus_pago" id="estatus_pago">
+                                        <option value="0" selected="true" disabled>Seleccione un Estatus</option>
+                                        <option value="Aprobado" {{ (old('estatus_pago', $comprobante_pago->estatus_pago ?? '') === 'Aprobado') ? 'selected' : '' }}>Aprobado</option>
+                                        <option value="Pendiente" {{ (old('estatus_pago', $comprobante_pago->estatus_pago ?? '') === 'Pendiente') ? 'selected' : '' }}>Pendiente</option>
+                                    </select>
+                                </div>
 
                             </div>
 
@@ -266,8 +275,8 @@
 
                 const iframe = document.createElement('iframe');
                 iframe.src = src;
-                iframe.style.width = '100%'; // Asegura que el iframe ocupe todo el div
-                iframe.style.height = '200px'; // Altura fija para el iframe
+                iframe.style.width = '200%'; // Asegura que el iframe ocupe todo el div
+                iframe.style.height = '400px'; // Altura fija para el iframe
                 iframe.style.display = 'block';
 
                 const btn = document.createElement('button');

@@ -260,7 +260,7 @@ class InspeccionesController extends Controller
         $bitacora->update();
 
         try {
-            return redirect('licencia');
+            return redirect('comprobantepago');
         } catch (QueryException $exception) {
             $errorMessage = 'Error: ' . $exception->getMessage();
             return redirect()->back()->withErrors($errorMessage);

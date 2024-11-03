@@ -56,9 +56,7 @@
 
                             </div>
                         </div>
-
-                        <hr class="sidebar-divider">
-
+                       
                         <div class="card-body">
                             
                             <div class="row">
@@ -84,9 +82,7 @@
 
                             </div>
                         </div>
-
-                        <hr class="sidebar-divider">
-
+                      
                         <div class="card-body">
 
                             <div class="row">
@@ -111,9 +107,7 @@
                             </div>
                             
                         </div>
-
-                        <hr class="sidebar-divider">
-                                
+                                                        
                         <div class="card-body">
                                 
                             <div class="row">
@@ -148,10 +142,10 @@
                                 <button type="submit" class="btn btn-success btn-lg"><span class="icon text-white-60"><i class="fas fa-check"></i></span>
                                 <span class="text">Guardar</span>
                                 </button>
-                               {{--  <a  class="btn btn-info btn-lg" href="{{ url('recepcion/') }}"><span class="icon text-white-50">
+                                <a  class="btn btn-info btn-lg" href="/home"><span class="icon text-white-50">
                                     <i class="fas fa-info-circle"></i>
                                 </span>
-                                <span class="text">Regresar</span></a> --}}
+                                <span class="text">Regresar</span></a>
                             </center>
                     </form>
                 </div>

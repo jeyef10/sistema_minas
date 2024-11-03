@@ -14,9 +14,9 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
 
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
     
-                        <h2 class="font-weight-bold text-primary" style="margin-left: 38%;">Registrar Inspección</h2>
+                        <h2 class="font-weight-bold text-primary">Registrar Inspección</h2>
 
                     </div>
  
@@ -78,9 +78,7 @@
                                 </div>
 
                             </div>
-                        
-                        <hr class="sidebar-divider">
-
+                                              
                             <div class="card-body">
 
                                 <div class="row">
@@ -121,9 +119,7 @@
                                 </div>
 
                             </div>  
-
-                            <hr class="sidebar-divider">
-
+                            
                             <div class="card-body">
 
                                 <div class="row">
@@ -146,9 +142,7 @@
                                 </div>
 
                             </div>
-
-                            <hr class="sidebar-divider">
-
+                         
                             <div class="card-body">
 
                                 <div class="row">
@@ -183,9 +177,7 @@
                                 </div>
                                 
                             </div>
-
-                            <hr class="sidebar-divider">
-
+                            
                             <div class="card-body">
 
                                 <div class="row">
@@ -212,13 +204,18 @@
                                         </div>
                                     </div>
 
-                                    <input type="hidden" name="estatus" value="Aprobado">
+                                    <div class="col-3">
+                                        <label  class="font-weight-bold text-primary">Estatus Inspección</label>
+                                        <select class="select2single form-control" name="estatus" id="estatus">
+                                            <option value="" selected="true" disabled>Seleccione un Estatus</option>
+                                            <option value="Aprobado">Aprobado</option>
+                                            <option value="Pendiente">Pendiente</option>
+                                        </select>
+                                    </div>
 
                                 </div> 
                                 
                             </div>
-
-                            <hr class="sidebar-divider">
 
                             <div class="card-body" id="inputs_aprovechamiento">
 
