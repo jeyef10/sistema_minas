@@ -73,6 +73,38 @@
                             </div>
                         </div>
 
+                        <div class="col-lg-12">
+                            <div class="card shadow mb-4">
+
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
+                                    <h6 class="m-0 font-weight-bold text-primary">Minereales de Aprovechamiento por Municpios</h6>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="chart-bar">
+                                        <canvas id="myBarChart2"></canvas>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-lg-6">
+                            <div class="card shadow mb-4">
+
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
+                                    <h6 class="m-0 font-weight-bold text-primary">Minereales de Procesamiento por Municpios </h6>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="chart-bar">
+                                        <canvas id=""></canvas>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div> -->
+
                     </div>
 
                 </div>
@@ -83,7 +115,7 @@
 
     </div>
 
-    {{-- <script src="{{ asset ('https://cdn.jsdelivr.net/npm/chart.js')  }}"></script> --}}
+    <script src="{{ asset ('https://cdn.jsdelivr.net/npm/chart.js')  }}"></script>
 
     {{-- ? FUNCIÓN PARA MOSTRAR LAS RECEPCIONES POR MES --}}
 
@@ -262,44 +294,141 @@
     {{-- * FUNCION PARA MOSTRAR LAS INSPECCIONES CON EL ESTATUS APROBADAS Y PENDIENTES POR MES --}}
 
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var ctx = document.getElementById("myHorizontalBarChart").getContext('2d');
-        var data = @json($data_inspecciones);
+        document.addEventListener("DOMContentLoaded", function() {
+            var ctx = document.getElementById("myHorizontalBarChart").getContext('2d');
+            var data = @json($data_inspecciones);
 
-        var myHorizontalBarChart = new Chart(ctx, {
-            type: 'horizontalBar',
-            data: {
-                labels: data.labels,
-                datasets: data.datasets
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false, // Permitir ajuste del tamaño
-                legend: {
-                    position: 'top'
+            var myHorizontalBarChart = new Chart(ctx, {
+                type: 'horizontalBar',
+                data: {
+                    labels: data.labels,
+                    datasets: data.datasets
                 },
-                scales: {
-                    xAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            max: Math.max(...data.datasets.flatMap(dataset => dataset.data)) + 9 // Ajustar el máximo dinámicamente
-                        }
-                    }]
-                },
-                tooltips: {
-                    callbacks: {
-                        label: function(tooltipItem, data) {
-                            var label = data.labels[tooltipItem.index] || '';
-                            var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                            return label + ': ' + value;
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // Permitir ajuste del tamaño
+                    legend: {
+                        position: 'top'
+                    },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                max: Math.max(...data.datasets.flatMap(dataset => dataset.data)) + 9 // Ajustar el máximo dinámicamente
+                            }
+                        }]
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                var label = data.labels[tooltipItem.index] || '';
+                                var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                                return label + ': ' + value;
+                            }
                         }
                     }
                 }
-            }
+            });
         });
-    });
-</script>
+    </script>
 
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var ctx = document.getElementById("myBarChart2").getContext('2d');
+            var dataFromServer = @json($data_mineral);
+
+            var labels = dataFromServer.map(function(item) {
+                return item.municipio;
+            });
+
+            var mineralsData = dataFromServer.map(function(item) {
+                return item.mineral ? 1 : 0;
+            });
+
+            var myBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Minerales en Aprovechamiento',
+                            data: mineralsData,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 3
+                        }
+                    ]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            left: 20,
+                            right: 25,
+                            top: 25,
+                            bottom: 20
+                        }
+                    },
+                    scales: {
+                        xAxes: [{
+                            gridLines: {
+                                display: false,
+                                drawBorder: false
+                            },
+                            ticks: {
+                                maxTicksLimit: 14
+                            },
+                            maxBarThickness: 25,
+                            barPercentage: 0.6,
+                            categoryPercentage: 0.4
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                max: 10,
+                                stepSize: 2,
+                                padding: 10,
+                                callback: function(value) {
+                                    return value;
+                                }
+                            },
+                            gridLines: {
+                                color: "rgb(234, 236, 244)",
+                                zeroLineColor: "rgb(234, 236, 244)",
+                                drawBorder: false,
+                                borderDash: [2],
+                                zeroLineBorderDash: [2]
+                            }
+                        }]
+                    },
+                    legend: {
+                        display: true
+                    },
+                    tooltips: {
+                        titleMarginBottom: 10,
+                        titleFontColor: '#6e707e',
+                        titleFontSize: 14,
+                        backgroundColor: "rgb(255,255,255)",
+                        bodyFontColor: "#858796",
+                        borderColor: '#dddfeb',
+                        borderWidth: 3,
+                        xPadding: 15,
+                        yPadding: 15,
+                        displayColors: false,
+                        caretPadding: 10,
+                        callbacks: {
+                            label: function(tooltipItem, chart) {
+                                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                var index = tooltipItem.index;
+                                var mineralName = dataFromServer[index].mineral;
+                                return datasetLabel + ': ' + mineralName;
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 
 @endsection 
-

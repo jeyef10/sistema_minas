@@ -42,7 +42,7 @@ class EstadisticaController extends Controller
         ->groupBy('municipios.nom_municipio')
         ->get();
 
-        // Asegurarse de que todos los municipios aparezcan, incluso si no tienen licencias
+        // Asegurarse de que todos los municipios aparezcan.
         $data = $municipios->map(function($municipio) use ($licencias) {
             $licencia = $licencias->firstWhere('municipio', $municipio->nom_municipio);
             return [
@@ -51,7 +51,30 @@ class EstadisticaController extends Controller
             ];
         });
 
-        return view('estadistica.index', compact('data_recepcion', 'data_inspecciones', 'data'));
+        $municipios = DB::table('municipios')->get();
+
+        // Obteniendo los nombres de los minerales de la categoría de aprovechamiento por municipio
+            $recepciones = DB::table('recepcion')
+            ->join('minerales', 'recepcion.id_mineral', '=', 'minerales.id')
+            ->select('recepcion.id_municipio', 'recepcion.categoria', 'minerales.nombre as mineral')
+            ->where('recepcion.categoria', 'Aprovechamiento')
+            ->get();
+
+        // Asegurarse de que todos los municipios aparezcan.
+        $data_mineral = $municipios->map(function($municipio) use ($recepciones) {
+            $recepcionesMunicipio = $recepciones->filter(function($recepcion) use ($municipio) {
+                return $recepcion->id_municipio == $municipio->id;
+            });
+
+            $minerales = $recepcionesMunicipio->pluck('mineral')->unique()->values()->all();
+
+            return [ 'municipio' => $municipio->nom_municipio,
+                      'minerales' => $minerales
+                      
+            ];
+        });
+
+        return view('estadistica.index', compact('data_recepcion', 'data_inspecciones', 'data', 'data_mineral'));
     }
 
     private function prepareChartData($recepciones)
@@ -185,4 +208,3 @@ class EstadisticaController extends Controller
         //
     }
 }
-
