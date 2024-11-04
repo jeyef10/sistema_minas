@@ -18,9 +18,40 @@ class EstadisticaController extends Controller
             ->groupBy(DB::raw('EXTRACT(MONTH FROM created_at)'))
             ->get();
 
-        $data = $this->prepareChartData($recepciones);
+        $data_recepcion = $this->prepareChartData($recepciones);
 
-        return view('estadistica.index', compact('data'));
+        $inspecciones = DB::table('inspecciones')
+        ->select(DB::raw('count(*) as total'), DB::raw('EXTRACT(MONTH FROM fecha_inspeccion) as mes'), 'estatus')
+        ->whereYear('fecha_inspeccion', date('Y'))
+        ->groupBy('estatus', DB::raw('EXTRACT(MONTH FROM fecha_inspeccion)'))
+        ->get();
+
+        $data_inspecciones = $this->preparePieChartData($inspecciones);
+
+        // Obteniendo todos los municipios 
+        $municipios = DB::table('municipios')->get();
+
+        // Obteniendo el conteo de licencias por municipio
+        $licencias = DB::table('municipios')
+        ->leftJoin('recepcion', 'municipios.id', '=', 'recepcion.id_municipio')
+        ->leftJoin('planificacion', 'recepcion.id', '=', 'planificacion.id_recepcion')
+        ->leftJoin('inspecciones', 'planificacion.id', '=', 'inspecciones.id_planificacion')
+        ->leftJoin('comprobante_pagos', 'inspecciones.id', '=', 'comprobante_pagos.id_inspeccion')
+        ->leftJoin('licencias', 'comprobante_pagos.id', '=', 'licencias.id_comprobante_pago')
+        ->select('municipios.nom_municipio as municipio', DB::raw('count(licencias.id) as total_licencias'))
+        ->groupBy('municipios.nom_municipio')
+        ->get();
+
+        // Asegurarse de que todos los municipios aparezcan, incluso si no tienen licencias
+        $data = $municipios->map(function($municipio) use ($licencias) {
+            $licencia = $licencias->firstWhere('municipio', $municipio->nom_municipio);
+            return [
+                'municipio' => $municipio->nom_municipio,
+                'total_licencias' => $licencia ? $licencia->total_licencias : 0,
+            ];
+        });
+
+        return view('estadistica.index', compact('data_recepcion', 'data_inspecciones', 'data'));
     }
 
     private function prepareChartData($recepciones)
@@ -40,7 +71,43 @@ class EstadisticaController extends Controller
                     'data' => $dataset,
                     'backgroundColor' => 'rgba(54, 162, 235, 0.2)',
                     'borderColor' => 'rgba(54, 162, 235, 1)',
-                    'borderWidth' => 1
+                    'borderWidth' => 3
+                ]
+            ]
+        ];
+    }
+
+    private function preparePieChartData($inspecciones)
+    {
+        $labels = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        
+        $aprobadas = array_fill(0, 12, 0); // Inicializar un array con 12 ceros para aprobadas
+        $pendientes = array_fill(0, 12, 0); // Inicializar un array con 12 ceros para pendientes
+
+        foreach ($inspecciones as $inspeccion) {
+            if ($inspeccion->estatus === 'Aprobado') {
+                $aprobadas[$inspeccion->mes - 1] = $inspeccion->total;
+            } elseif ($inspeccion->estatus === 'Pendiente') {
+                $pendientes[$inspeccion->mes - 1] = $inspeccion->total;
+            }
+        }
+
+        return [
+            'labels' => $labels,
+            'datasets' => [
+                [
+                    'label' => 'Aprobadas',
+                    'data' => $aprobadas,
+                    'backgroundColor' => 'rgba(54, 162, 235, 0.2)',
+                    'borderColor' => 'rgba(54, 162, 235, 1)',
+                    'borderWidth' => 3
+                ],
+                [
+                    'label' => 'Pendientes',
+                    'data' => $pendientes,
+                    'backgroundColor' => 'rgba(255, 159, 64, 0.2)',
+                    'borderColor' => 'rgba(255, 159, 64, 1)',
+                    'borderWidth' => 3
                 ]
             ]
         ];
@@ -118,3 +185,4 @@ class EstadisticaController extends Controller
         //
     }
 }
+
