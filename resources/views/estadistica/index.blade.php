@@ -262,41 +262,44 @@
     {{-- * FUNCION PARA MOSTRAR LAS INSPECCIONES CON EL ESTATUS APROBADAS Y PENDIENTES POR MES --}}
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var ctx = document.getElementById("myHorizontalBarChart").getContext('2d');
-            var data = @json($data_inspecciones);
+    document.addEventListener("DOMContentLoaded", function() {
+        var ctx = document.getElementById("myHorizontalBarChart").getContext('2d');
+        var data = @json($data_inspecciones);
 
-            var myHorizontalBarChart = new Chart(ctx, {
-                type: 'horizontalBar',
-                data: {
-                    labels: data.labels,
-                    datasets: data.datasets
+        var myHorizontalBarChart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+                labels: data.labels,
+                datasets: data.datasets
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, // Permitir ajuste del tamaño
+                legend: {
+                    position: 'top'
                 },
-                options: {
-                    responsive: true,
-                    legend: {
-                        position: 'top'
-                    },
-                    scales: {
-                        xAxes: [{
-                            ticks: {
-                                beginAtZero: true,
-                                max: Math.max(...data.datasets.flatMap(dataset => dataset.data)) + 9 // Ajustar el máximo dinámicamente
-                            }
-                        }]
-                    },
-                    tooltips: {
-                        callbacks: {
-                            label: function(tooltipItem, data) {
-                                var label = data.labels[tooltipItem.index] || '';
-                                var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                                return label + ': ' + value;
-                            }
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            max: Math.max(...data.datasets.flatMap(dataset => dataset.data)) + 9 // Ajustar el máximo dinámicamente
+                        }
+                    }]
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.labels[tooltipItem.index] || '';
+                            var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                            return label + ': ' + value;
                         }
                     }
                 }
-            });
+            }
         });
-    </script>
+    });
+</script>
+
 
 @endsection 
+
