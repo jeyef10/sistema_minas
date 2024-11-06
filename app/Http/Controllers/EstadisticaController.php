@@ -50,27 +50,34 @@ class EstadisticaController extends Controller
                 'total_licencias' => $licencia ? $licencia->total_licencias : 0,
             ];
         });
-
+        
         $municipios = DB::table('municipios')->get();
 
-        // Obteniendo los nombres de los minerales de la categoría de aprovechamiento por municipio
-            $recepciones = DB::table('recepcion')
+        // Obteniendo los nombres de los minerales y sus categorías de aprovechamiento y procesamiento por municipio
+        $recepciones = DB::table('recepcion')
             ->join('minerales', 'recepcion.id_mineral', '=', 'minerales.id')
             ->select('recepcion.id_municipio', 'recepcion.categoria', 'minerales.nombre as mineral')
-            ->where('recepcion.categoria', 'Aprovechamiento')
+            ->whereIn('recepcion.categoria', ['Aprovechamiento', 'Procesamiento'])
             ->get();
-
-        // Asegurarse de que todos los municipios aparezcan.
+    
+        // Asegurarse de que todos los municipios aparezcan
         $data_mineral = $municipios->map(function($municipio) use ($recepciones) {
             $recepcionesMunicipio = $recepciones->filter(function($recepcion) use ($municipio) {
                 return $recepcion->id_municipio == $municipio->id;
             });
-
-            $minerales = $recepcionesMunicipio->pluck('mineral')->unique()->values()->all();
-
-            return [ 'municipio' => $municipio->nom_municipio,
-                      'minerales' => $minerales
-                      
+    
+            $aprovechamiento = $recepcionesMunicipio->filter(function($recepcion) {
+                return $recepcion->categoria === 'Aprovechamiento';
+            })->pluck('mineral')->unique()->values()->all();
+    
+            $procesamiento = $recepcionesMunicipio->filter(function($recepcion) {
+                return $recepcion->categoria === 'Procesamiento';
+            })->pluck('mineral')->unique()->values()->all();
+    
+            return [
+                'municipio' => $municipio->nom_municipio,
+                'aprovechamiento' => $aprovechamiento,
+                'procesamiento' => $procesamiento
             ];
         });
 

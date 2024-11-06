@@ -24,4 +24,9 @@ class Minerales extends Model
    //  public function mineralcategoria() {
    //      return $this->hasMany(MineralCategoria::class);
    //   }
+
+   public function pago_regalia()
+    {
+        return $this->hasMany(PagoRegalia::class);
+    }
 }

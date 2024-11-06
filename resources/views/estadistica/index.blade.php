@@ -77,7 +77,7 @@
                             <div class="card shadow mb-4">
 
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
-                                    <h6 class="m-0 font-weight-bold text-primary">Minereales de Aprovechamiento por Municpios</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Minereales por Municpios</h6>
                                 </div>
 
                                 <div class="card-body">
@@ -88,22 +88,6 @@
                                 
                             </div>
                         </div>
-
-                        <!-- <div class="col-lg-6">
-                            <div class="card shadow mb-4">
-
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
-                                    <h6 class="m-0 font-weight-bold text-primary">Minereales de Procesamiento por Municpios </h6>
-                                </div>
-
-                                <div class="card-body">
-                                    <div class="chart-bar">
-                                        <canvas id=""></canvas>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div> -->
 
                     </div>
 
@@ -332,6 +316,7 @@
         });
     </script>
 
+    {{-- ? FUNCION PARA MOSTRAR LOS MINERALES APROVACHAMINETO Y PROCESAMINETO POR MUNICIPIOS --}}
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -342,8 +327,12 @@
                 return item.municipio;
             });
 
-            var mineralsData = dataFromServer.map(function(item) {
-                return item.mineral ? 1 : 0;
+            var aprovechamientoData = dataFromServer.map(function(item) {
+                return item.aprovechamiento.length;
+            });
+
+            var procesamientoData = dataFromServer.map(function(item) {
+                return item.procesamiento.length;
             });
 
             var myBarChart = new Chart(ctx, {
@@ -352,22 +341,30 @@
                     labels: labels,
                     datasets: [
                         {
-                            label: 'Minerales en Aprovechamiento',
-                            data: mineralsData,
+                            label: 'Aprovechamiento',
+                            data: aprovechamientoData,
                             backgroundColor: 'rgba(54, 162, 235, 0.2)',
                             borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 3
+                        },
+                        {
+                            label: 'Procesamiento',
+                            data: procesamientoData,
+                            backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                            borderColor: 'rgba(255, 159, 64, 1)',
                             borderWidth: 3
                         }
                     ]
                 },
                 options: {
+                    responsive: true,
                     maintainAspectRatio: false,
                     layout: {
                         padding: {
-                            left: 20,
-                            right: 25,
-                            top: 25,
-                            bottom: 20
+                            left: 5,
+                            right: 2,
+                            top: 2, // Aumentar espacio de padding superior para el título
+                            bottom: 10 // Aumentar espacio de padding inferior
                         }
                     },
                     scales: {
@@ -379,16 +376,16 @@
                             ticks: {
                                 maxTicksLimit: 14
                             },
-                            maxBarThickness: 25,
-                            barPercentage: 0.6,
-                            categoryPercentage: 0.4
+                            maxBarThickness: 50, // Aumentar el grosor de las barras
+                            barPercentage: 0.8, // Ajustar el porcentaje de la barra
+                            categoryPercentage: 0.5 // Ajustar el porcentaje de la categoría
                         }],
                         yAxes: [{
                             ticks: {
                                 min: 0,
-                                max: 10,
-                                stepSize: 2,
-                                padding: 10,
+                                max: 10, // Mantener el valor máximo en el eje y en 10
+                                stepSize: 1, // Asegura que las marcas incrementen de 1 en 1
+                                padding: 20, // Aumentar el padding entre las líneas
                                 callback: function(value) {
                                     return value;
                                 }
@@ -403,7 +400,11 @@
                         }]
                     },
                     legend: {
-                        display: true
+                        display: true,
+                        labels: {
+                            boxWidth: 20,
+                            padding: 10 // Aumentar el espacio de padding para el legend
+                        }
                     },
                     tooltips: {
                         titleMarginBottom: 10,
@@ -421,10 +422,14 @@
                             label: function(tooltipItem, chart) {
                                 var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
                                 var index = tooltipItem.index;
-                                var mineralName = dataFromServer[index].mineral;
-                                return datasetLabel + ': ' + mineralName;
+                                var mineralNames = dataFromServer[index][tooltipItem.datasetIndex === 0 ? 'aprovechamiento' : 'procesamiento'].join(', ');
+                                return datasetLabel + ': ' + mineralNames;
                             }
                         }
+                    },
+                    animation: {
+                        duration: 2000, // Duración de la animación de crecimiento de las barras
+                        easing: 'easeOutBounce'
                     }
                 }
             });

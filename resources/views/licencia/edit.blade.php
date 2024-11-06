@@ -103,6 +103,16 @@
                                             <input type="text" class="form-control" id="providencia" name="providencia" value="{{ isset($licencia->providencia)?$licencia->providencia:'' }}" oninput="capitalizarInput('')"></input>                                 
                                         </div>
 
+                                        <div class="col-3">
+                                            <label  class="font-weight-bold text-primary">Metodo de Pago</label>
+                                            <select class="select2single form-control" name="metodo_licencia_apro" id="metodo_licencia">
+                                                <option value="" selected="true" disabled>Seleccione un Metodo de Pago</option>
+                                                <option value="Pago unico" {{ (old('metodo_licencia_apro', $licencia->metodo_licencia_apro ?? '') === 'Pago unico') ? 'selected' : '' }}>Pago único</option>
+                                                <option value="Pago 2 parte" {{ (old('metodo_licencia_apro', $licencia->metodo_licencia_apro ?? '') === 'Pago 2 parte') ? 'selected' : '' }}>Pago 2 parte</option>
+                                                <option value="Pago 3 parte" {{ (old('metodo_licencia_apro', $licencia->metodo_licencia_apro ?? '') === 'Pago 3 parte') ? 'selected' : '' }}>Pago 3 parte</option>
+                                            </select>
+                                        </div>
+
                                     </div>
 
                                 </div>
@@ -122,9 +132,17 @@
                                         </div>
 
                                         <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">N° de Ocupación de Territorio</label>
-                                        <input type="text" class="form-control" id="num_territorio" name="num_territorio"  value="{{ isset($licencia->num_territorio)?$licencia->num_territorio:'' }}" oninput="capitalizarInput('')"></input>                                 
-                                    </div>
+                                            <label  class="font-weight-bold text-primary">N° de Ocupación de Territorio</label>
+                                            <input type="text" class="form-control" id="num_territorio" name="num_territorio"  value="{{ isset($licencia->num_territorio)?$licencia->num_territorio:'' }}" oninput="capitalizarInput('')"></input>                                 
+                                        </div>
+
+                                        <div class="col-3">
+                                            <label  class="font-weight-bold text-primary">Metodo de Pago</label>
+                                            <select class="select2single form-control" name="metodo_licencia_pro" id="metodo_licencia">
+                                                <option value="" selected="true" disabled>Seleccione un Metodo de Pago</option>
+                                                <option value="Pago cuotas" {{ (old('metodo_licencia_apro', $licencia->metodo_licencia_pro ?? '') === 'Pago cuotas') ? 'selected' : '' }}>Pago cuotas</option>
+                                            </select>
+                                        </div>
                                         
                                     </div>
 
@@ -155,6 +173,30 @@
                                         </option>
                                         @endforeach
                                         </select>
+                                    </div>
+
+                                    <div class="col-4">                                     
+                                        <div class="form-group" id="simple-date1">
+                                            <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha Inicial Operación</label>
+                                            <div class="input-group date">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                                </div>
+                                                <input type="text" id="fecha_inicial_ope" name="fecha_inicial_ope" class="form-control" value="{{ $fecha_inicial_ope }}" id="simpleDataInput">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4">                                     
+                                        <div class="form-group" id="simple-date1">
+                                            <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha Final Operación</label>
+                                            <div class="input-group date">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                                </div>
+                                                <input type="text" id="fecha_final_ope" name="fecha_final_ope" class="form-control" value="{{ $fecha_final_ope }}" id="simpleDataInput">
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="col-4">

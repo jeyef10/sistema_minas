@@ -93,22 +93,27 @@ class PagoRegaliaController extends Controller
     public function store(Request $request)
     {
 
-        // $this->validate($request, [
-        //     'comprobante' => 'required|array|min:1',
-        //     'comprobante.*' => 'mimes:pdf',
-        //     'fecha_pago' => 'required|date|date_format:d/m/Y|after_or_equal:'.date('d/m/Y'),
-        // ], [
-        //     'comprobante.required' => 'Debe registrar uno o más comprobantes en formato PDF.',
-        //     'comprobante.min' => 'Debe registrar al menos un comprobante.',
-        //     'comprobante.*.mimes' => 'Cada archivo debe ser un PDF.',
-        // ]);
-
         //Crear una nueva PagoRegalia 
         $pago_regalias = new PagoRegalia ();
         $pago_regalias->id_licencia = $request->input('id_licencia');
-        $pago_regalias->id_mineral = $request->input('id_mineral');
+
+        // Obtener los valores de los inputs
+        $id_mineral = $request->input('id_mineral');
+        $id_mineral_pro = $request->input('id_mineral_pro');
+
+        // Asignar el valor a id_mineral dependiendo de cuál no esté vacío
+        if (!empty($id_mineral)) {
+            $pago_regalias->id_mineral = $id_mineral;
+        } elseif (!empty($id_mineral_pro)) {
+            $pago_regalias->id_mineral = $id_mineral_pro;
+        } else {
+           
+        }
+
         $pago_regalias->metodo_apro= $request->input('metodo_apro');
         $pago_regalias->monto_apro = $request->input('monto_apro');
+        $pago_regalias->tasa_convenio = $request->input('tasa_convenio');
+        $pago_regalias->monto_decl = $request->input('monto_decl');
         $pago_regalias->metodo_pro = $request->input('metodo_pro');
         $pago_regalias->monto_pro = $request->input('monto_pro');
         $pago_regalias->resultado_apro = $request->input('resultado_apro');
@@ -175,6 +180,8 @@ class PagoRegaliaController extends Controller
         $id_mineral = $pago_regalia->id_mineral ;
         $metodo_apro = $pago_regalia->metodo_apro;
         $monto_apro = $pago_regalia->monto_apro;
+        $tasa_convenio = $pago_regalia->tasa_convenio;
+        $monto_decl = $pago_regalia->monto_decl;
         $metodo_pro = $pago_regalia->metodo_pro;
         $monto_pro = $pago_regalia->monto_pro;
         $resultado_apro = $pago_regalia->resultado_apro;
@@ -185,8 +192,8 @@ class PagoRegaliaController extends Controller
         $estatus_regalia = $pago_regalia->estatus_regalia;
 
         return view('pago_regalia.edit' , compact('pago_regalia', 'licencia', 'minerales', 'id_licencia',
-        'id_mineral', 'metodo_apro', 'monto_apro', 'metodo_pro', 'monto_pro', 'resultado_apro', 'resultado_pro',
-        'comprobante', 'fecha_pago', 'fecha_venci', 'estatus_regalia'));
+        'id_mineral', 'metodo_apro', 'monto_apro', 'tasa_convenio', 'monto_decl', 'metodo_pro', 'monto_pro',
+        'resultado_apro', 'resultado_pro','comprobante', 'fecha_pago', 'fecha_venci', 'estatus_regalia'));
     }
 
     /**
@@ -206,6 +213,8 @@ class PagoRegaliaController extends Controller
         $pago_regalia->monto_apro = $request->input('monto_apro');
         $pago_regalia->metodo_pro = $request->input('metodo_pro');
         $pago_regalia->monto_pro = $request->input('monto_pro');
+        $pago_regalia->tasa_convenio = $request->input('tasa_convenio');
+        $pago_regalia->monto_decl = $request->input('monto_decl');
         $pago_regalia->resultado_apro = $request->input('resultado_apro');
         $pago_regalia->resultado_pro = $request->input('resultado_pro');
 

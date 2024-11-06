@@ -83,6 +83,8 @@
 
                     </div>
 
+                                            {{-- * INPUTS CORRESPONDIENTE A PAGOS EN APROVECHAMIENTO --}}
+
                             <div class="card-body" id="inputs_aprovechamiento">
 
                                 <div class="row">
@@ -90,42 +92,40 @@
                                     <input type="hidden" class="form-control" id="id_licencia" name="id_licencia" style="background: white;" value="{{ isset($licencia->id)?$licencia->id:'' }}" placeholder="" autocomplete="off">                                  
 
                                     <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Metodo de Pago</label>
+                                        <select class="select2single form-control" name="metodo_apro" id="metodo_apro" onchange="calcularMonto()">
+                                            <option value="" selected="true" disabled>Seleccione un Metodo de Pago</option>
+                                            @if ($licencia) 
+                                            <option value="{{ $licencia->metodo_licencia_apro }}" selected> 
+                                                {{ $licencia->metodo_licencia_apro }}
+                                            </option> 
+                                        @endif
+                                        </select>
+                                    </div>
+
+                                    <div class="col-4">
                                         <label for="persona" class="font-weight-bold text-primary">Tasa de Regalias</label>
                                         <select class="select2-single form-control" id="id_mineral" name="id_mineral" onchange="calcularMonto()">
-                                            <option value="0">Seleccione una tasa</option>
-                                            {{-- @foreach($minerales as $mineral)
-                                            <option value="{{ $mineral->id }}">{{ $mineral->nombre }} {{ $mineral->tasa }} {{ $mineral->moneda_longitud }}</option>
-                                        @endforeach --}}
-                                        {{-- <option value="@if ($licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->id }}  @endif">  
-                                            {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre }} - 
-                                            {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->tasa }} 
-                                            {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->moneda_longitud }}
-                                        </option> --}}
+                                            <option value="">Seleccione una tasa</option>
                                         @if ($licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) 
-                                            <option value="{{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->tasa }}"> 
+                                            <option value="{{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->id }}"> 
                                                 {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre }} - 
                                                 {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->tasa }} 
                                                 {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->moneda_longitud }} 
-                                            </option> 
+                                            </option>
                                         @endif
                                         <option value="convenio">Convenio</option>
                                         </select>
                                     </div>
 
+                                    <div class="col-4" style="display: none;" id="convenio_container">
+                                        <label  class="font-weight-bold text-primary">Tasa Convenio ($)</label>
+                                        <input type="text" class="form-control" id="tasa_convenio" name="tasa_convenio" oninput="calcularMonto()" ></input>
+                                    </div>
+
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Cantidad Metro Cúbico</label>
                                         <input type="text" class="form-control" id="monto_apro" name="monto_apro" oninput="calcularMonto()" ></input>
-                                    </div>
-
-                                    <div class="col-3">
-                                        <label  class="font-weight-bold text-primary">Metodo de Pago</label>
-                                        <select class="select2single form-control" name="metodo_apro" id="metodo_apro" onchange="calcularMonto()">
-                                            <option value="" selected="true" disabled>Seleccione un Metodo de Pago</option>
-                                            <option value="Pago unico">Pago unico</option>
-                                            <option value="Pago 1 parte">Pago 1 parte</option>
-                                            <option value="Pago 2 parte">Pago 2 parte</option>
-                                            <option value="Pago 3 parte">Pago 3 parte</option>
-                                        </select>
                                     </div>
 
                                     <div class="col-4">
@@ -137,29 +137,55 @@
 
                             </div>
 
+
+                                                 {{-- ? INPUTS CORRESPONDIENTE A PAGOS EN PROCESAMIENTO --}}
+
                             <div class="card-body" id="inputs_procesamiento">
 
                                 <div class="row">
 
-                                    <div class="col-3">
+                                    <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Metodo de Pago</label>
                                         <select class="select2single form-control" name="metodo_pro" id="metodo_pro">
                                             <option value="" selected="true" disabled>Seleccione un Metodo de Pago</option>
-                                            <option value="Pago unico">Pago unico</option>
-                                            <option value="Hectárea 3%">Hectárea 3%</option>
+                                            @if ($licencia) 
+                                            <option value="{{ $licencia->metodo_licencia_pro }}" selected> 
+                                                {{ $licencia->metodo_licencia_pro }}
+                                            </option> 
+                                        @endif
                                         </select>
                                     </div>
 
                                     <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Monto</label>
-                                        <input type="text" class="form-control" id="monto_pro" name="monto_pro" oninput="capitalizarInput('')" ></input>
+                                        <label for="persona" class="font-weight-bold text-primary">Tasa de Regalias</label>
+                                        <select class="select2-single form-control" id="id_mineral_pro" name="id_mineral_pro" onchange="calcularMontoPro()">
+                                            <option value="">Seleccione una tasa</option>
+                                        @if ($licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) 
+                                            <option value="{{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->id }}"> 
+                                                {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre }} - 
+                                                {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->tasa }} 
+                                                {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->moneda_longitud }} 
+                                            </option> 
+                                        @endif
+                                        </select>
                                     </div>
+
+                                    @if ($licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre != "Roca caliza")
+                                        <div class="col-4">
+                                            <label  class="font-weight-bold text-primary">Cantidad Metro Cúbico</label>
+                                            <input type="text" class="form-control" id="monto_pro" name="monto_pro" oninput="calcularMontoPro()"></input>
+                                        </div>
+                                    @else
+                                        <div class="col-4">
+                                            <label  class="font-weight-bold text-primary">Monto Declaración</label>
+                                            <input type="text" class="form-control" id="monto_decl" name="monto_decl" oninput="calcularMontoPro()"></input>
+                                        </div>
+                                    @endif
 
                                     <div class="col-4">
                                         <label class="font-weight-bold text-primary">Total a Cancelar</label>
                                         <input type="text" class="form-control" id="resultado_pro" name="resultado_pro" readonly></input>
                                     </div>
-
 
                                 </div>
 
@@ -351,35 +377,196 @@
 
     {{-- * FUNCION PARA CALCULAR LOS METROS CÚBICOS DE LA TASA REGALIA APROVECHAMIENTO --}}
 
-    <script>
+    {{-- <script>
         function calcularMonto() {
-            const tasa = parseFloat(document.getElementById('id_mineral').value);
+            const tasaSelect = document.getElementById('id_mineral').value;
+            const tasa = parseFloat(tasaSelect.selectedOptions[0].text.split(' - ')[1]); // Extraemos la tasa del texto de la opción
+            const tasaConvenio = parseFloat(document.getElementById('tasa_convenio').value);
             const metrosCubicos = parseFloat(document.getElementById('monto_apro').value);
             const metodoPago = document.getElementById('metodo_apro').value;
+            console.log(tasaSelect);
             let total = metrosCubicos * tasa;
+            let totalConvenio = metrosCubicos * tasaConvenio;
+            
             let resultado_apro;
 
             switch(metodoPago) {
                 case 'Pago unico':
-                    resultado_apro = total;
-                    break;
-                case 'Pago 1 parte':
-                    resultado_apro = total / 2;
+                    if (tasaSelect != "0") {
+                        resultado_apro = total;
+                    } else {
+                        resultado_apro = totalConvenio;
+                    }
                     break;
                 case 'Pago 2 parte':
-                    resultado_apro = total / 3;
+                    if (tasaSelect != "0") {
+                            resultado_apro = total / 2;
+                        } else {
+                            resultado_apro = totalConvenio / 2;
+                    }
                     break;
                 case 'Pago 3 parte':
-                    resultado_apro = total / 4;
+                    if (tasaSelect != "0") {
+                            resultado_apro = total / 3;
+                        } else {
+                            resultado_apro = totalConvenio / 3;
+                    }
                     break;
+                // case 'Pago 3 parte':
+                //     if (tasa != "convenio") {
+                //             resultado_apro = total / 4;
+                //         } else {
+                //             resultado_apro = totalConvenio / 4;
+                //     }
+                //     break;
                 default:
                     resultado_apro = 0;
             }
 
             document.getElementById('resultado_apro').value = `$${resultado_apro.toFixed(2)}`;
-        }
+        } --}}
+
+        {{-- <script>
+
+            function calcularMonto() {
+                const mineralSelect = document.getElementById('id_mineral');
+                const selectedOption = mineralSelect.options[mineralSelect.selectedIndex];
+                const tasa = parseFloat(selectedOption.text.split('-')[1]) || 0;
+                const tasaConvenio = parseFloat(document.getElementById('tasa_convenio').value) || 0;
+                const metrosCubicos = parseFloat(document.getElementById('monto_apro').value) || 0;
+                const metodoPago = document.getElementById('metodo_apro').value;
+                
+                let total = metrosCubicos * tasa;
+                let totalConvenio = metrosCubicos * tasaConvenio;
+                let resultado_apro;
+        
+                switch(metodoPago) {
+                    case 'Pago unico':
+                        resultado_apro = tasa != 0 ? total : totalConvenio;
+                        break;
+                    case 'Pago 2 parte':
+                        resultado_apro = tasa != 0 ? total / 2 : totalConvenio / 2;
+                        break;
+                    case 'Pago 3 parte':
+                        resultado_apro = tasa != 0 ? total / 3 : totalConvenio / 3;
+                        break;
+                    default:
+                        resultado_apro = 0;
+                }
+        
+                document.getElementById('resultado_apro').value = `$${resultado_apro.toFixed(2)}`;
+            }
+
+        </script>
+         --}}
+
+         <script>
+            function calcularMonto() {
+                const mineralSelect = document.getElementById('id_mineral');
+                const selectedOption = mineralSelect.options[mineralSelect.selectedIndex];
+                const tasa = selectedOption.value === 'convenio' ? 0 : parseFloat(selectedOption.text.split('-')[1].trim()) || 0;
+                const tasaConvenio = parseFloat(document.getElementById('tasa_convenio').value) || 0;
+                const metrosCubicos = parseFloat(document.getElementById('monto_apro').value) || 0;
+                const metodoPago = document.getElementById('metodo_apro').value;
+                
+                let total = metrosCubicos * tasa;
+                let totalConvenio = metrosCubicos * tasaConvenio;
+                let resultado_apro;
+        
+                switch(metodoPago) {
+                    case 'Pago unico':
+                        resultado_apro = tasa != 0 ? total : totalConvenio;
+                        break;
+                    case 'Pago 2 parte':
+                        resultado_apro = tasa != 0 ? total / 2 : totalConvenio / 2;
+                        break;
+                    case 'Pago 3 parte':
+                        resultado_apro = tasa != 0 ? total / 3 : totalConvenio / 3;
+                        break;
+                    default:
+                        resultado_apro = 0;
+                }
+        
+                document.getElementById('resultado_apro').value = `$${resultado_apro.toFixed(2)}`;
+                
+                // Mostrar u ocultar el contenedor de convenio basado en la selección
+                const convenioContainer = document.getElementById('convenio_container');
+                if (selectedOption.value === 'convenio') {
+                    convenioContainer.style.display = 'block';
+                } else {
+                    convenioContainer.style.display = 'none';
+                }
+            }
+        
+            // Inicializar la visualización correcta basado en el valor inicial del select
+            document.addEventListener("DOMContentLoaded", function() {
+                calcularMonto();
+            });
+        </script>
+        
 
     </script>
+
+            {{-- * FUNCION PARA MOSTRAR LA TASA CONVENIO EN APROVECHAMIENTO --}}
+    
+    {{-- <script> 
+        document.addEventListener('DOMContentLoaded', function() {
+            const select = document.getElementById('id_mineral');
+            const convenioContainer = document.getElementById('convenio_container');
+            const tasa_convenio = document.getElementById('tasa_convenio');
+
+                // Función para mostrar/ocultar el contenedor
+            function mostrarOcultarConvenio() {
+                    convenioContainer.style.display = select.value == 'convenio' ? 'block' : 'none';
+
+                // Limpiar el campo tasa_convenio si el contenedor se oculta
+                if (select.value != 'convenio') {
+                    tasa_convenio.value = '';
+                }
+            }
+
+            // Ejecutar la función por primera vez
+            mostrarOcultarConvenio();
+
+            // Agregar un event listener para que se ejecute cada vez que cambie el valor del select
+            select.addEventListener('change', mostrarOcultarConvenio);
+        });
+    </script> --}}
+
+    {{-- ! FUNCIÓN PARA CALCULAR EL 3% SEGUN EL VOLUMEN/DECLARACION EN PROCESAMIENTO --}}
+
+    <script>
+        function calcularMontoPro() {
+            const mineral = '{{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre }}'; // Obtener el nombre del mineral desde Laravel
+            const montoDeclInput = document.getElementById('monto_decl');
+            const resultadoProInput = document.getElementById('resultado_pro');
+            const mineralProSelect = document.getElementById('id_mineral_pro');
+            const montoProInput = document.getElementById('monto_pro');
+            
+            let totalACancelar = 0;
+    
+            if (mineral === 'Roca caliza') {
+                const montoDecl = parseFloat(montoDeclInput.value) || 0;
+                totalACancelar = montoDecl * 0.03;
+                resultadoProInput.value = `$${totalACancelar.toFixed(2)}`;
+            } else {
+                const tasa = parseFloat(mineralProSelect.value) || 0;
+                const monto = parseFloat(montoProInput.value) || 0;
+                totalACancelar = (monto * tasa) * 0.03;
+                resultadoProInput.value = `$${totalACancelar.toFixed(2)}`;
+            }
+            
+            console.log(totalACancelar);
+            resultadoProInput.value = `$${totalACancelar.toFixed(2)}`;
+        }
+    
+        // Asignar el evento oninput al campo monto_decl para que se ejecute la función al cambiar su valor
+        document.getElementById('monto_decl').addEventListener('input', calcularMontoPro);
+        document.getElementById('monto_pro').addEventListener('input', calcularMontoPro);
+        document.getElementById('id_mineral_pro').addEventListener('change', calcularMontoPro);
+    </script>
+    
+
 
     {{-- * FUNCION PARA CALCULAR LA FECHA DE VENCIMIENTO DE PAGO DE REGALIA AUTOMATICAMENTE EN 45 DIAS  --}}
 

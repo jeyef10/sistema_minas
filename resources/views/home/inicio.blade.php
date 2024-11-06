@@ -195,97 +195,40 @@
                 <h6 class="m-0 font-weight-bold text-primary">Estadística de Ubicaciones</h6>
                  <div class="h5 mb-0 font-weight-bold text-gray-800"></div> 
               </div>
+
               <div class="card-body">
                 <div class="mb-3">
-                  <div class="small text-gray-500">Recepción
-                    <div class="small float-right"><b>{{ ($count_recepcion) }}</b></div>
-                  </div>
-                  <div class="progress" style="height: 12px;">
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: 80%" aria-valuenow="80"
-                      aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
+                    <div class="small text-gray-500">Recepción
+                        <div class="small float-right"><b>{{ $count_recepcion }}</b></div>
+                    </div>
+                    <div class="progress" style="height: 12px;">
+                        <div class="progress-bar bg-warning" role="progressbar" aria-valuemin="0" aria-valuemax="100" data-value="{{ $count_recepcion }}"></div>
+                    </div>
                 </div>
                 <div class="mb-3">
-                  <div class="small text-gray-500">Inspecciones
-                    <div class="small float-right"><b>{{ ($count_inspecciones) }}</b></div>
-                  </div>
-                  <div class="progress" style="height: 12px;">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 70%" aria-valuenow="70"
-                      aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
+                    <div class="small text-gray-500">Inspecciones
+                        <div class="small float-right"><b>{{ $count_inspecciones }}</b></div>
+                    </div>
+                    <div class="progress" style="height: 12px;">
+                        <div class="progress-bar bg-info" role="progressbar" aria-valuemin="0" aria-valuemax="100" data-value="{{ $count_inspecciones }}"></div>
+                    </div>
                 </div>
                 <div class="mb-3">
-                  <div class="small text-gray-500">Licencias Aprobadas Activas
-                    <div class="small float-right"><b>{{ ($count_licencia) }}</b></div>
-                  </div>
-                  <div class="progress" style="height: 12px;">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 55%" aria-valuenow="55"
-                      aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
+                    <div class="small text-gray-500">Licencias Aprobadas Activas
+                        <div class="small float-right"><b>{{ $count_licencia }}</b></div>
+                    </div>
+                    <div class="progress" style="height: 12px;">
+                        <div class="progress-bar bg-success" role="progressbar" aria-valuemin="0" aria-valuemax="100" data-value="{{ $count_licencia }}"></div>
+                    </div>
                 </div>
-
-                <div class="mb-3">
-                  <div class="small text-gray-500">Licencias Aprobadas Vencidas
-                    <div class="small float-right"><b>{{ ($count_licencia) }}</b></div>
-                  </div>
-                  <div class="progress" style="height: 12px;">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 55%" aria-valuenow="55"
-                      aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-                <!-- <div class="mb-3">
-                  <div class="small text-gray-500">Indomie Goreng
-                    <div class="small float-right"><b>400 of 800 Items</b></div>
-                  </div>
-                  <div class="progress" style="height: 12px;">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50"
-                      aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <div class="small text-gray-500">Remote Control Car Racing
-                    <div class="small float-right"><b>200 of 800 Items</b></div>
-                  </div>
-                  <div class="progress" style="height: 12px;">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30"
-                      aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div> -->
               </div>
+            </div>
               
             </div>
           </div>
         
         </div>
       </div>
-      
-
-                                                                  <!-- Area Chart Cuadro de Estadisticas -->
-          {{-- <div class="col-xl-12 col-lg-7">
-            <div class="card mb-4">
-              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Monthly Recap Report</h6>
-                <div class="dropdown no-arrow">
-                  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                  </a>
-                  <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                    aria-labelledby="dropdownMenuLink">
-                    <div class="dropdown-header">Dropdown Header:</div>
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="chart-area">
-                  <canvas id="myAreaChart"></canvas>
-                </div>
-              </div>
-          </div> --}}
 
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
@@ -296,9 +239,6 @@
 
 
           {{-- * FUNCION PARA EL MAPA Y PARA CAPTURAR LOS DATOS DE LA LATITUD Y LONGITUD --}}
-
-   
-    
 
 <script>
     const map = L.map('mapa').setView([10.2825, -68.7222], 9.6); // Latitud y longitud iniciales de Yaracuy
@@ -365,6 +305,19 @@
             }
         });
 
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      var progressBars = document.querySelectorAll('.progress-bar');
+      progressBars.forEach(function(bar) {
+          var value = bar.getAttribute('data-value');
+          bar.style.width = '0%';
+          setTimeout(function() {
+              bar.style.width = value + '%';
+          }, 100); // Añadir un pequeño retraso para empezar la animación
+      });
+  });
 </script>
 
 

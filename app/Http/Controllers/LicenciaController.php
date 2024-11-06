@@ -16,10 +16,10 @@ class LicenciaController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:ver-licencia|crear-licencia|editar-licencia|borrar-licencia', ['only' => ['index']]);
-         $this->middleware('permission:crear-licencia', ['only' => ['create','store']]);
-         $this->middleware('permission:editar-licencia', ['only' => ['edit','update']]);
-         $this->middleware('permission:borrar-licencia', ['only' => ['destroy']]);
+        $this->middleware('permission:ver-licencia|crear-licencia|editar-licencia|borrar-licencia', ['only' => ['index']]);
+        $this->middleware('permission:crear-licencia', ['only' => ['create','store']]);
+        $this->middleware('permission:editar-licencia', ['only' => ['edit','update']]);
+        $this->middleware('permission:borrar-licencia', ['only' => ['destroy']]);
 
     }
 
@@ -101,14 +101,16 @@ class LicenciaController extends Controller
             ->orderBy('licencias.id', 'desc')
             ->first();
 
-        // Ajustar el contador para la categoría
+         // Ajustar el contador para la categoría
         if ($lastRecord) {
             if ($categoria == 'Aprovechamiento') {
                 $lastCode = explode('/', $lastRecord->resolucion_apro);
+                $contador = intval($lastCode[0]) + 1; // Incrementar el contador basado en el último registro
             } elseif ($categoria == 'Procesamiento') {
-                $lastCode = explode('/', $lastRecord->resolucion_hpc);
+                $lastCode = explode('/', $lastRecord->resolucion_hpc); 
+                $lastCounter = explode('-', $lastCode[0]); // Separar "HPC" del contador 
+                $contador = intval($lastCounter[1]) + 1;
             }
-            $contador = 1; // Inicializar contador a 1 para cada nueva serie
         }
 
         // Formatear el contador con ceros a la izquierda
@@ -136,10 +138,10 @@ class LicenciaController extends Controller
         if ($lastCatastroRecord) {
             if ($categoria == 'Aprovechamiento') {
                 $lastCode = explode('-', $lastCatastroRecord->catastro_la);
-                $contadores = 1; // Inicializar contador a 1 para cada nueva serie
+                $contadores = intval($lastCode[2]) + 1; // Incrementar el contador basado en el último registro
             } elseif ($categoria == 'Procesamiento') {
                 $lastCode = explode('-', $lastCatastroRecord->catastro_lp);
-                $contadores = 1; // Inicializar contador a 1 para cada nueva serie
+                $contadores = intval($lastCode[2]) + 1; // Incrementar el contador basado en el último registro
             }
         }
 
@@ -238,12 +240,18 @@ class LicenciaController extends Controller
         $catastro_lp = $licencia->catastro_lp;
         $providencia = $licencia->providencia;
         $num_territorio = $licencia->num_territorio;
+        $metodo_licencia_apro = $licencia->metodo_licencia_apro;
+        $metodo_licencia_pro = $licencia->metodo_licencia_pro;
         $fecha_oficio = $licencia->fecha_oficio;
+        $fecha_inicial_ope = $licencia->fecha_inicial_ope;
+        $fecha_final_ope = $licencia->fecha_final_ope;
         $id_plazo = $licencia->plazo;
         $talonario = $licencia->talonario;
 
         return view('licencia.edit' , compact('licencia', 'comprobante_pago', 'plazos', 'resolucion_apro',
-        'catastro_la', 'num_territorio', 'resolucion_hpc', 'catastro_lp', 'providencia', 'fecha_oficio', 'id_plazo', 'talonario'));
+        'catastro_la', 'num_territorio', 'metodo_licencia_apro', 'metodo_licencia_pro', 'resolucion_hpc', 
+        'catastro_lp', 'providencia', 'fecha_oficio', 'fecha_inicial_ope', 'fecha_final_ope', 'id_plazo',
+        'talonario'));
 
     }
 
@@ -266,7 +274,11 @@ class LicenciaController extends Controller
         $licencia->catastro_lp = $request->input('catastro_lp');
         $licencia->providencia = $request->input('providencia');
         $licencia->num_territorio = $request->input('num_territorio');
+        $licencia->metodo_licencia_apro = $request->input('metodo_licencia_apro');
+        $licencia->metodo_licencia_pro = $request->input('metodo_licencia_pro');
         $licencia->fecha_oficio = $request->input('fecha_oficio');
+        $licencia->fecha_inicial_ope = $request->input('fecha_inicial_ope');
+        $licencia->fecha_final_ope = $request->input('fecha_final_ope');
         $licencia->id_plazo = $request->input('id_plazo');
         $licencia->talonario = $request->input('talonario');
 
@@ -294,3 +306,13 @@ class LicenciaController extends Controller
         //
     }
 }
+
+
+
+   
+
+   
+
+    
+
+ 

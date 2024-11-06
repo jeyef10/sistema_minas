@@ -108,9 +108,9 @@
                                         <label  class="font-weight-bold text-primary">Metodo de Pago</label>
                                         <select class="select2single form-control" name="metodo_licencia_apro" id="metodo_licencia">
                                             <option value="" selected="true" disabled>Seleccione un Metodo de Pago</option>
-                                            <option value="1">Pago unico</option>
-                                            <option value="2">Pago 2 parte</option>
-                                            <option value="3">Pago 3 parte</option>
+                                            <option value="Pago unico">Pago unico</option>
+                                            <option value="Pago 2 parte">Pago 2 parte</option>
+                                            <option value="Pago 3 parte">Pago 3 parte</option>
                                         </select>
                                     </div>
 
@@ -141,7 +141,7 @@
                                         <label  class="font-weight-bold text-primary">Metodo de Pago</label>
                                         <select class="select2single form-control" name="metodo_licencia_pro" id="metodo_licencia">
                                             <option value="" selected="true" disabled>Seleccione un Metodo de Pago</option>
-                                            <option value="4">Pago cuotas</option>
+                                            <option value="Pago cuotas">Pago cuotas</option>
                                         </select>
                                     </div>
                                     

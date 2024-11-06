@@ -11,8 +11,8 @@ class PagoRegalia extends Model
     protected $table = 'pago_regalias';
     protected $primaryKey = 'id';
     public $timestamps = true;
-    protected $fillable = ['id_licencia', 'id_mineral', 'metodo_apro', 'metodo_pro', 'monto_apro', 'monto_pro', 'resultado_apro', 'resultado_pro', 
-    'comprobante', 'fecha_pago' , 'fecha_venci', 'estatus_regalia'];
+    protected $fillable = ['id_licencia', 'id_mineral', 'metodo_apro', 'metodo_pro', 'monto_apro', 'monto_pro', 'tasa_convenio',
+    'monto_decl', 'resultado_apro', 'resultado_pro', 'comprobante', 'fecha_pago' , 'fecha_venci', 'estatus_regalia'];
 
     public function licencia()
     {
