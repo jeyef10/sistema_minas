@@ -25,8 +25,6 @@
                                 
                     <div class="card-body">
 
-                        <input type="hidden" class="form-control" id="id_recepcion" name="id_recepcion" style="background: white;" value="{{ isset($recepcion->id)?$recepcion->id:'' }}" placeholder="" autocomplete="off">
-
                         <div class="accordion" id="accordionExample" style="display: flex; justify-content: center;">
                             <div class="card" style="width: 90%; border-radius: 2.5%;">
                                 
@@ -85,6 +83,8 @@
 
                             <div class="row">
 
+                                <input type="hidden" class="form-control" id="id_recepcion" name="id_recepcion" style="background: white;" value="{{ isset($planificacion->id_recepcion)?$planificacion->id_recepcion:'' }}" placeholder="" autocomplete="off">
+
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Municipio</label>
                                     <select class="select2-single form-control" id="municipio" name="id_municipio">
@@ -136,6 +136,15 @@
                                             <input type="text" class="form-control" value="{{ $fecha_final }}" id="simpleDataInput" name="fecha_final">
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="col-4">
+                                    <label  class="font-weight-bold text-primary">Estatus de la Planificación</label>
+                                    <select class="select2single form-control" name="estatus" id="estatus">
+                                        <option value="0" selected="true" disabled>Seleccione un Estatus</option>
+                                        <option value="Asignado" {{ (old('estatus', $planificacion->estatus ?? '') === 'Asignado') ? 'selected' : '' }}>Asignado</option>
+                                        <option value="Pendiente" {{ (old('estatus', $planificacion->estatus ?? '') === 'Pendiente') ? 'selected' : '' }}>Pendiente</option>
+                                    </select>
                                 </div>
 
                             </div>
