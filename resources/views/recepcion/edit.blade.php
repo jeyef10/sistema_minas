@@ -45,7 +45,7 @@
                                 <div class="col-4">
                                     <label for="persona" class="font-weight-bold text-primary">Solicitante</label>
                                     <div style="display: flex;">
-                                        <select class="select2-single form-control" id="solicitante" name="solicitante_especifico_id">
+                                        <select class="select2-single form-control" id="solicitante" name="solicitante_especifico_id" @readonly(true)>
                                             <option value="0">Seleccione una Persona</option>
                                             @if ($tipoSolicitante->tipo == 'Jurídico')
                                                 <option value="{{$datosSolicitante->solicitante_id}}" selected>{{$datosSolicitante->rif}} {{ $datosSolicitante->nombre }} {{ $datosSolicitante->correo }}</option>
