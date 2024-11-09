@@ -116,6 +116,7 @@
                                         @endif
                                         <option value="convenio">Convenio</option>
                                         </select>
+                                        <input type="hidden" name="mineral_oculto" value="{{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->id }}">
                                     </div>
 
                                     <div class="col-4" style="display: none;" id="convenio_container">

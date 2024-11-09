@@ -100,14 +100,19 @@ class PagoRegaliaController extends Controller
         // Obtener los valores de los inputs
         $id_mineral = $request->input('id_mineral');
         $id_mineral_pro = $request->input('id_mineral_pro');
+        $mineral_oculto = $request->input('mineral_oculto');
 
         // Asignar el valor a id_mineral dependiendo de cuál no esté vacío
         if (!empty($id_mineral)) {
-            $pago_regalias->id_mineral = $id_mineral;
+
+            if ($id_mineral == "convenio") {
+                $pago_regalias->id_mineral =  $mineral_oculto;
+            } else {
+                $pago_regalias->id_mineral = $id_mineral;
+            }
+            
         } elseif (!empty($id_mineral_pro)) {
             $pago_regalias->id_mineral = $id_mineral_pro;
-        } else {
-           
         }
 
         $pago_regalias->metodo_apro= $request->input('metodo_apro');
@@ -175,7 +180,8 @@ class PagoRegaliaController extends Controller
     {
         $pago_regalia = PagoRegalia::findOrFail($id);
         $licencia = licencias::find($id);
-        $minerales = Minerales::all();
+        $mineral = Minerales::find($pago_regalia->id_mineral);
+        // $minerales = Minerales::all();
         $id_licencia = $pago_regalia->id_licencia;
         $id_mineral = $pago_regalia->id_mineral ;
         $metodo_apro = $pago_regalia->metodo_apro;
@@ -191,7 +197,7 @@ class PagoRegaliaController extends Controller
         $fecha_venci = $pago_regalia->fecha_venci;
         $estatus_regalia = $pago_regalia->estatus_regalia;
 
-        return view('pago_regalia.edit' , compact('pago_regalia', 'licencia', 'minerales', 'id_licencia',
+        return view('pago_regalia.edit' , compact('pago_regalia', 'licencia', 'mineral', 'id_licencia',
         'id_mineral', 'metodo_apro', 'monto_apro', 'tasa_convenio', 'monto_decl', 'metodo_pro', 'monto_pro',
         'resultado_apro', 'resultado_pro','comprobante', 'fecha_pago', 'fecha_venci', 'estatus_regalia'));
     }
@@ -205,10 +211,27 @@ class PagoRegaliaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Buscar El PagoRegalia existente 
+        
+        // Buscar el registro existente de PagoRegalia
         $pago_regalia = PagoRegalia::findOrFail($id);
         $pago_regalia->id_licencia = $request->input('id_licencia');
-        $pago_regalia->id_mineral = $request->input('id_mineral');
+
+        // Obtener los valores de los inputs
+        $id_mineral = $request->input('id_mineral');
+        $id_mineral_pro = $request->input('id_mineral_pro');
+        $mineral_oculto = $request->input('mineral_oculto');
+
+        // Asignar el valor a id_mineral dependiendo de cuál no esté vacío
+        if (!empty($id_mineral)) {
+            if ($id_mineral == "convenio") {
+                $pago_regalia->id_mineral = $mineral_oculto;
+            } else {
+                $pago_regalia->id_mineral = $id_mineral;
+            }
+        } elseif (!empty($id_mineral_pro)) {
+            $pago_regalia->id_mineral = $id_mineral_pro;
+        }
+        
         $pago_regalia->metodo_apro= $request->input('metodo_apro');
         $pago_regalia->monto_apro = $request->input('monto_apro');
         $pago_regalia->metodo_pro = $request->input('metodo_pro');
