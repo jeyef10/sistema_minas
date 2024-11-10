@@ -86,7 +86,8 @@ img {
                     <th>Tipo</th>
                     <th>Nombre</th>
                     <th>Categoria</th>
-                    <th>Tasa</th>
+                    <th>Tipo de Tasa</th>
+                    <th>Valor de la Tasa</th>
                     <th>Moneda/Longitud</th>
                     
                 </tr>
@@ -98,6 +99,7 @@ img {
                     <td>{{ $mineral->tipo }}</td>
                     <td>{{ $mineral->nombre }}</td>
                     <td>{{ $mineral->categoria}}</td>
+                    
 
 
                     <td class="font-weight-bold text-Secondary">
@@ -109,6 +111,8 @@ img {
                         @endif    
 
                     </td>
+
+                    <td>{{ $mineral->valor_tasa}}</td>
                     
                     <td class="font-weight-bold text-Secondary">
                     

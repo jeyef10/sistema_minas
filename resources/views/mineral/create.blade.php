@@ -46,9 +46,22 @@
                                     </select>
                                 </div>
 
+                                <div class="card-body">
+                                    <div class="row" id="tasa_options">
+                                        <div class="custom-control custom-radio col-3 mr-2">
+                                            <input class="custom-control-input" type="radio" name="tasa" value="Tasa Mineral" id="tasa_mineral">
+                                            <label class="custom-control-label font-weight-bold text-primary" for="tasa_mineral">Tasa Mineral</label>
+                                        </div>
+                                        <div class="custom-control custom-radio col-3 mr-2" id="tasa_convenio_container" style="display: none;">
+                                            <input class="custom-control-input" type="radio" name="tasa" value="Tasa Convenio" id="tasa_convenio">
+                                            <label class="custom-control-label font-weight-bold text-primary" for="tasa_convenio">Tasa Convenio</label>
+                                        </div>
+                                    </div>
+                                </div>      
+
                                 <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">Tasa</label>
-                                    <input type="text" class="form-control" id="tasa" name="tasa" style="background: white;" value="" placeholder="Ingrese la tasa" autocomplete="off" onkeypress="return solonum(event);">
+                                    <label  class="font-weight-bold text-primary">Valor de la Tasa</label>
+                                    <input type="text" class="form-control" id="valor" name="valor_tasa" style="background: white;" value="" placeholder="Ingrese la tasa" autocomplete="off" onkeypress="return solonum(event);">
                                 </div>
 
                                 <div class="col-4">
@@ -91,6 +104,34 @@
             inputElement.value = capitalizarPrimeraLetra(inputElement.value);
         }
     </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const categoriaSelect = document.getElementById('categoria');
+            const tasaMineral = document.getElementById('tasa_mineral').parentNode;
+            const tasaConvenio = document.getElementById('tasa_convenio_container');
+
+            function toggleTasaOptions() {
+                const selectedValue = categoriaSelect.value;
+                if (selectedValue === 'Aprovechamiento') {
+                    tasaMineral.style.display = 'block';
+                    tasaConvenio.style.display = 'block';
+                } else if (selectedValue === 'Procesamiento') {
+                    tasaMineral.style.display = 'block';
+                    tasaConvenio.style.display = 'none';
+                } else {
+                    tasaMineral.style.display = 'none';
+                    tasaConvenio.style.display = 'none';
+                }
+            }
+
+            // Inicialmente ocultar los radios hasta que se seleccione una categoría
+            toggleTasaOptions();
+
+            // Ejecutar al cambiar la selección
+            categoriaSelect.addEventListener('change', toggleTasaOptions);
+        });
+    </script>
    
     @if ($errors->any())
     <script>
@@ -111,4 +152,9 @@
                 })
     </script>
 @endif
+
+
 @endsection
+
+
+
