@@ -57,16 +57,25 @@ img {
   border-radius: 8% 
 } 
 
+.footer-image { 
+    width: 76%; 
+    height: auto; 
+    position: absolute;
+    bottom: 33px; 
+    left: 19%; 
+    transform: translateX(-29%); 
+}
+
+
 </style>
 {{-- Estilo al PDF --}}
 
 {{-- Index del PDF --}}
     <body> 
-        <div class="row">
-            <!-- <img class= "left" src="../public/img/escu.png" alt="">
-            <img class="right" src="../public/img/yara.png" alt="" > -->
-            <img class="centro" src="../public/img/centro.png" alt="" >
-        </div>
+
+            <div class="row">
+                <img class="centro" src="../public/img/centro1.png" alt="" >
+            </div>
     
         
         <h1>Listado de Minerales</h1><br>
@@ -77,6 +86,8 @@ img {
                     <th>Tipo</th>
                     <th>Nombre</th>
                     <th>Categoria</th>
+                    <th>Tasa</th>
+                    <th>Moneda/Longitud</th>
                     
                 </tr>
             </thead>
@@ -87,11 +98,38 @@ img {
                     <td>{{ $mineral->tipo }}</td>
                     <td>{{ $mineral->nombre }}</td>
                     <td>{{ $mineral->categoria}}</td>
+
+
+                    <td class="font-weight-bold text-Secondary">
+                                            
+                        @if ( $mineral->tasa )
+                            {{ $mineral->tasa }}
+                        @else
+                            No Posee
+                        @endif    
+
+                    </td>
+                    
+                    <td class="font-weight-bold text-Secondary">
+                    
+                        @if ( $mineral->moneda_longitud )
+                            {{ $mineral->moneda_longitud }}
+                        @else
+                            No Posee
+                        @endif   
+                    
+                    </td>
+
+
                    
                 </tr>
         @endforeach
             </tbody>
         </table>
+
+        <div class="row">
+            <img class="footer-image"  src="../public/img/piepagina.png" alt="Pie de Página">
+        </div>
     </body>
 {{-- Index del PDF --}}
 

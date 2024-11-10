@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>PDF Tipo de Pago</title>
-</head>
 
 {{-- Estilo al PDF --}}
 
@@ -14,7 +13,7 @@
 body{
     margin: 0;
 	padding: 0;
-    background: url(../img/centro.png);
+    background: url(../img/centro1.png);
 	background-size: cover;
 	font-family: sans-serif;
     font-size: 0.8rem;
@@ -33,7 +32,7 @@ h1{
 }
 
 .table{
-    font-size: 25px;
+    font-size: 20px;
     text-align: center;
 
 }
@@ -57,16 +56,23 @@ img {
   border-radius: 8% 
 } 
 
+.footer-image { 
+    width: 76%; 
+    height: auto; 
+    position: absolute;
+    bottom: 33px; 
+    left: 19%; 
+    transform: translateX(-29%); 
+}
+
 </style>
 {{-- Estilo al PDF --}}
 
 {{-- Index del PDF --}}
     <body> 
-        <div class="row">
-            <!-- <img class= "left" src="../public/img/escu.png" alt="">
-            <img class="right" src="../public/img/yara.png" alt="" > -->
-            <img class="centro" src="../public/img/centro.png" alt="" >
-        </div>
+            <div class="row">
+                <img class="centro" src="../public/img/centro1.png" alt="" >
+            </div>
     
         
         <h1>Listado de Tipo de Pagos</h1><br>
@@ -74,7 +80,6 @@ img {
             <thead class="header">
                 <tr>
                     <th>Lista</th>
-                    <th>Nombre del Pago</th>
                     <th>Metódo de Pago</th>
                     
                 </tr>
@@ -83,14 +88,18 @@ img {
             @foreach ($tipo_pagos as $tipo_pago)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $tipo_pago->nombre_pago}} </td>
-                    <td>{{ $tipo_pago->forma_pago }}</td>
+                     <td>{{ $tipo_pago->forma_pago }}</td>
                    
                 </tr>
         @endforeach
             </tbody>
         </table>
+
+        <div class="row">
+            <img class="footer-image"  src="../public/img/piepagina.png" alt="Pie de Página">
+        </div>
+
     </body>
 {{-- Index del PDF --}}
-
 </html>
+

@@ -16,9 +16,12 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
-                    
-                    
-                    <h2 class="font-weight-bold text-primary">Reporte General</h2>
+
+                        <!-- <a href="{{ url('reporte') }}" class="btn btn-sm btn-danger" target="_blank">
+                            {{ ('PDF') }}
+                         </a> -->
+                            
+                      <h2 class="font-weight-bold text-primary">Reporte General</h2>
 
                   </div>
 
