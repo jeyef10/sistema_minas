@@ -204,14 +204,36 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-3">
+                                    <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Estatus Inspección</label>
                                         <select class="select2single form-control" name="estatus" id="estatus">
                                             <option value="" selected="true" disabled>Seleccione un Estatus</option>
                                             <option value="Aprobado">Aprobado</option>
-                                            <option value="Pendiente">Pendiente</option>
+                                            <option value="Negado">Negado</option>
                                         </select>
                                     </div>
+
+                                    {{-- @if(auth()->user()->hasRole('Administrador'))
+                                    <div class="card-body">
+                                        <label class="font-weight-bold text-primary">Estatus Respuesta</label>
+                                        <div class="row">
+                                            <div class="custom-control custom-radio col-1 mr-2"> 
+                                                <input class="custom-control-input" type="radio" name="estatus_resp" id="estatus_resp_pen" value="Pendiente" checked>
+                                                <label class="custom-control-label" for="estatus_resp_pen">Pendiente</label>
+                                            </div>
+                                            <div class="custom-control custom-radio col-1 mr-2">
+                                                <input class="custom-control-input" type="radio" name="estatus_resp" id="estatus_resp_apro" value="Aprobado">
+                                                <label class="custom-control-label" for="estatus_resp_apro">Aprobado</label>
+                                            </div>
+                                            <div class="custom-control custom-radio col-1 mr-2">
+                                                <input class="custom-control-input" type="radio" name="estatus_resp" id="estatus_resp_neg" value="Negado">
+                                                <label class="custom-control-label" for="estatus_resp_neg">Negado</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif --}}
+
+                                    <input type="hidden" name="estatus_resp" value="Pendiente">
 
                                 </div> 
                                 

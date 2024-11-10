@@ -20,9 +20,9 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
 
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
     
-                        <h2 class="font-weight-bold text-primary" style="margin-left: 35%;">Registrar Solicitante</h2>
+                        <h2 class="font-weight-bold text-primary">Registrar Solicitante</h2>
 
                     </div>
 

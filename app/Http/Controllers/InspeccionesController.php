@@ -125,6 +125,12 @@ class InspeccionesController extends Controller
         }
            
         $inspecciones->fecha_inspeccion = $request->input('fecha_inspeccion');
+        $inspecciones->estatus = $request->input('estatus');
+            if ($inspecciones->estatus == "Aprobado") {
+                $inspecciones->estatus_resp = $request->input('estatus_resp');
+            } else {
+                $inspecciones->estatus_resp = '';
+            }
         $inspecciones->longitud_terreno = $request->input('longitud_terreno');
         $inspecciones->ancho = $request->input('ancho');
         $inspecciones->profundidad = $request->input('profundidad');
@@ -134,8 +140,6 @@ class InspeccionesController extends Controller
         $inspecciones->lindero_este = $request->input('lindero_este');
         $inspecciones->lindero_oeste = $request->input('lindero_oeste');
         $inspecciones->superficie = $request->input('superficie');
-
-        $inspecciones->estatus = $request->input('estatus');
 
         $inspecciones->save();
 
@@ -186,6 +190,8 @@ class InspeccionesController extends Controller
         $utm_este = $inspeccion->utm_este;
         $res_fotos = $inspeccion->res_fotos;
         $fecha_inspeccion = date('d/m/Y', strtotime($inspeccion->fecha_inspeccion));
+        $estatus = $inspeccion->estatus;
+        $estatus_resp = $inspeccion->estatus_resp;
         $longitud_terreno = $inspeccion->longitud_terreno;
         $ancho = $inspeccion->ancho;
         $profundidad = $inspeccion->profundidad;
@@ -195,11 +201,10 @@ class InspeccionesController extends Controller
         $lindero_este = $inspeccion->lindero_este;
         $lindero_oeste = $inspeccion->lindero_oeste;
         $superficie = $inspeccion->superficie;
-        $estatus = $inspeccion->estatus;
 
         return view('inspeccion.edit' , compact('inspeccion', 'planificacion', 'municipios', 'comisionados', 'funcionario_acomp', 'lugar_direccion', 
-        'observaciones','conclusiones', 'latitud', 'longitud', 'utm_norte', 'utm_este', 'res_fotos', 'fecha_inspeccion', 'longitud_terreno', 'ancho', 
-        'profundidad', 'volumen', 'lindero_norte', 'lindero_sur', 'lindero_este', 'lindero_oeste', 'superficie', 'estatus'));
+        'observaciones','conclusiones', 'latitud', 'longitud', 'utm_norte', 'utm_este', 'res_fotos', 'fecha_inspeccion', 'estatus', 'estatus_resp',
+        'longitud_terreno', 'ancho', 'profundidad', 'volumen', 'lindero_norte', 'lindero_sur', 'lindero_este', 'lindero_oeste', 'superficie'));
     }
 
     /**
@@ -243,6 +248,8 @@ class InspeccionesController extends Controller
         }
 
         $inspeccion->fecha_inspeccion = $request->input('fecha_inspeccion');
+        $inspeccion->estatus = $request->input('estatus');
+        $inspeccion->estatus_resp = $request->input('estatus_resp');
         $inspeccion->longitud_terreno = $request->input('longitud_terreno');
         $inspeccion->ancho = $request->input('ancho');
         $inspeccion->profundidad = $request->input('profundidad');
@@ -252,7 +259,6 @@ class InspeccionesController extends Controller
         $inspeccion->lindero_este = $request->input('lindero_este');
         $inspeccion->lindero_oeste = $request->input('lindero_oeste');
         $inspeccion->superficie = $request->input('superficie');
-        $inspeccion->estatus = $request->input('estatus');
 
         $inspeccion->save();
 

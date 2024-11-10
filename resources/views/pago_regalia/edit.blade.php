@@ -103,20 +103,18 @@
                                     <div class="col-4">
                                         <label for="persona" class="font-weight-bold text-primary">Tasa de Regalias</label>
                                         <select class="select2-single form-control" id="id_mineral" name="id_mineral" onchange="calcularMonto()">
-                                            {{-- <option value="">Seleccione una tasa</option> --}}
-                                            {{-- @if ($pago_regalia->mineral)
-                                                <option value="{{ $mineral->id }}" {{ $mineral->id == $pago_regalia->id_mineral ? 'selected' : '' }}>
-                                                    {{ $mineral->nombre }} - {{ $mineral->tasa }} {{ $mineral->moneda_longitud }}
-                                                </option>
-                                            @endif
-                                            <option value="convenio">Convenio</option> --}}
                                             <option value="">Seleccione una tasa</option>
-                                                @if ($pago_regalia->id_mineral != 'convenio' && $pago_regalia->mineral)
-                                                    <option value="{{ $mineral->id }}" {{ $mineral->id == $pago_regalia->id_mineral ? 'selected' : '' }}>
+                                                @if ($pago_regalia->tasa_convenio == '')
+                                                    <option value="{{ $mineral->id }}" selected>
                                                         {{ $mineral->nombre }} - {{ $mineral->tasa }} {{ $mineral->moneda_longitud }}
                                                     </option>
+                                                    {{-- <option value="convenio">Convenio</option>  --}}
+                                                @else
+                                                    {{-- <option value="{{ $mineral->id }}">
+                                                        {{ $mineral->nombre }} - {{ $mineral->tasa }} {{ $mineral->moneda_longitud }}
+                                                    </option> --}}
+                                                    <option value="convenio" selected>Convenio</option> 
                                                 @endif
-                                            <option value="convenio" {{ $pago_regalia->id_mineral == 'convenio' ? 'selected' : '' }}>Convenio</option>
                                         </select>
                                         <input type="hidden" name="mineral_oculto" value="{{ $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->id }}">
                                     </div>
