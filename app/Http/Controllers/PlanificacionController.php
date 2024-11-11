@@ -144,18 +144,32 @@ class PlanificacionController extends Controller
         $planificacionComisionado->id_comisionado = $request->input('comisionado');
         $planificacionComisionado->save();
 
-        // Crear y enviar la notificación
-        
-        $usuariosNotificar = User::role(['Administrador', 'Comisionado'])->get();
+        // Obtener al comisionado por ID de comisionado y luego el usuario correspondiente
+        $comisionado = Comisionados::findOrFail($request->input('comisionado'));
+        $usuarioComisionado = User::findOrFail($comisionado->id_usuario);
+
         $datosNotificacion = [
-            /* 'mensaje' => 'Se ha creado una nueva planificación.', */
-            /* 'link' => route('create', ['id' => $planificacion->id]), */
+            'mensaje' => 'Se le ha asignado una nueva inspección.',
             'id_planificacion' => $planificacion->id,
         ];
 
+        $usuarioComisionado->notify(new NombreNotificacion($datosNotificacion, $planificacion));
+
+        $administradores = User::role('Administrador')->get();
+        Notification::send($administradores, new NombreNotificacion($datosNotificacion, $planificacion));
+
+        // Crear y enviar la notificación
+        
+        // $usuariosNotificar = User::role(['Administrador', 'Comisionado'])->get();
+        // $datosNotificacion = [
+        //     /* 'mensaje' => 'Se ha creado una nueva planificación.', */
+        //     /* 'link' => route('create', ['id' => $planificacion->id]), */
+        //     'id_planificacion' => $planificacion->id,
+        // ];
+
         // dd( $datosNotificacion);
 
-        Notification::send($usuariosNotificar, new NombreNotificacion($datosNotificacion, $planificacion));
+        /*Notification::send($usuariosNotificar, new NombreNotificacion($datosNotificacion, $planificacion)); */
 
         $bitacora = new BitacoraController;
         $bitacora->update();

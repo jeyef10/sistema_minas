@@ -211,7 +211,7 @@
 
     {{-- * FUNCION PARA MOSTRAR COMISIONADOS SEGUN SU MUNICIPIO --}}
 
-    <script>
+    {{-- <script>
         
          $('#municipio').change(function() {
         var municipioId = $(this).val(); // Get selected municipio ID
@@ -229,7 +229,8 @@
                 options += '<option value="' + comisionado.id + '">' +
                     (comisionado.cedula || '') + ' - ' +
                     (comisionado.nombres || '') + ' ' +
-                    (comisionado.apellidos || '') + '</option>';
+                    (comisionado.apellidos || '') + ' - ' +
+                    (comisionado.id_usuario || '') + '</option>';
                 });
  
                 $('#comisionado').html(options); // Update the 'Solicitante' select with new options
@@ -246,7 +247,40 @@
 
         });
 
+    </script> --}}
+    
+    <script>
+        $('#municipio').change(function() {
+            var municipioId = $(this).val(); // Obtener ID del municipio seleccionado
+    
+            if (municipioId) {
+                $.ajax({
+                    url: '/planificacion/create/fetchComisionados/' + municipioId, // Reemplaza con tu URL de API
+                    method: 'GET',
+                    success: function(data) {
+                        console.log(data);
+                        // Suponiendo que 'data' es un array de objetos comisionado
+                        var options = '<option value="">Seleccione un Comisionado</option>';
+    
+                        data.forEach(function(comisionado) {
+                            options += '<option value="' + comisionado.id + '" data-id-usuario="' + comisionado.id_usuario + '">' +
+                                (comisionado.cedula || '') + ' - ' +
+                                (comisionado.nombres || '') + ' ' +
+                                (comisionado.apellidos || '') + '</option>';
+                        });
+    
+                        $('#comisionado').html(options); // Actualizar el select de 'Comisionado' con nuevas opciones
+                    },
+                    error: function(error) {
+                        console.error('Error fetching comisionados:', error);
+                    }
+                });
+            } else {
+                $('#comisionado').html('<option value="">Seleccione un Comisionado</option>'); // Limpiar el select de 'Comisionado'
+            }
+        });
     </script>
+    
 
     {{--! FUNCIÓN PARA MOSTRAR LA ALERTA DE LA FECHA --}}
 
