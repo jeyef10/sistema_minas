@@ -49,7 +49,7 @@
                                     </select>
                                 </div>
                                 
-                                <div class="card-body">
+                                <!-- <div class="card-body">
                                     <div class="row" id="tasa_options">
                                         <div class="custom-control custom-radio col-3 mr-2">
                                             <input class="custom-control-input" type="radio" name="tasa" value="Tasa Mineral" id="tasa_mineral" {{ ($mineral->tasa =="Tasa Mineral")? "checked" : ""}}>
@@ -60,11 +60,11 @@
                                             <label class="custom-control-label font-weight-bold text-primary" for="tasa_convenio">Tasa Convenio</label>
                                         </div>
                                     </div>
-                                </div>    
+                                </div>     -->
 
                                 <div class="col-4">
-                                    <label  class="font-weight-bold text-primary"> Valor de la Tasa</label>
-                                    <input type="text" class="form-control" id="valor_tasa" name="valor_tasa" style="background: white;" value="{{ isset($mineral->valor_tasa)?$mineral->valor_tasa:'' }}" placeholder="Ingrese El monto" autocomplete="off">
+                                    <label  class="font-weight-bold text-primary">Tasa</label>
+                                    <input type="text" class="form-control" id="tasa" name="tasa" style="background: white;" value="{{ isset($mineral->tasa)?$mineral->tasa:'' }}" placeholder="Ingrese El monto" autocomplete="off">
                                 </div>
         
                                 <div class="col-4">
@@ -111,7 +111,7 @@
     </script>
 
 
-    <script>
+    <!-- <script>
             document.addEventListener("DOMContentLoaded", function() {
                 const categoriaSelect = document.getElementById('categoria');
                 const tasaMineral = document.getElementById('tasa_mineral').parentNode;
@@ -138,7 +138,7 @@
                 categoriaSelect.addEventListener('change', toggleTasaOptions);
             });
 
-    </script>
+    </script> -->
     
     @if ($errors->any())
     <script>

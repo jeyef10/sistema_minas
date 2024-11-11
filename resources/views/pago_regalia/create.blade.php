@@ -123,7 +123,7 @@
                                         <label  class="font-weight-bold text-primary">Tasa Convenio ($)</label>
                                         <input type="text" class="form-control" id="tasa_convenio" name="tasa_convenio" oninput="calcularMonto()" ></input>
                                     </div>
-
+                                    
                                     <div class="col-4">
                                         <label class="font-weight-bold text-primary">Cantidad Metro Cúbico</label>
                                         <input type="text" class="form-control" id="monto_apro" name="monto_apro" oninput="calcularMonto()">
@@ -134,7 +134,7 @@
                                         <input type="text" class="form-control" id="resultado_apro" name="resultado_apro" readonly>
                                     </div>
 
-                                    {{-- <div class="col-4">
+                                    <!-- <div class="col-4">
                                         <label class="font-weight-bold text-primary">Metodo de Pago</label>
                                         <select class="select2single form-control" name="metodo_apro" id="metodo_apro" onchange="calcularMonto()">
                                             <option value="" selected="true" disabled>Seleccione un Metodo de Pago</option>
@@ -169,8 +169,8 @@
                                     <div class="col-4">
                                         <label class="font-weight-bold text-primary">Total a Cancelar</label>
                                         <input type="text" class="form-control" id="resultado_apro" name="resultado_apro" readonly>
-                                    </div>
-                                     --}}
+                                    </div> -->
+                                    
                                 </div>
 
                             </div>
@@ -529,6 +529,7 @@
             const resultadoProInput = document.getElementById('resultado_pro');
             const mineralProSelect = document.getElementById('id_mineral_pro');
             const montoProInput = document.getElementById('monto_pro');
+            const tasa_pro = '{{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->tasa }}';
             
             let totalACancelar = 0;
     
@@ -537,8 +538,10 @@
                 totalACancelar = montoDecl * 0.03;
                 resultadoProInput.value = `$${totalACancelar.toFixed(2)}`;
             } else {
-                const tasa = parseFloat(mineralProSelect.value) || 0;
+                const tasa = parseFloat(tasa_pro) || 0;
                 const monto = parseFloat(montoProInput.value) || 0;
+
+                console.log(tasa, monto);
                 totalACancelar = (monto * tasa) * 0.03;
                 resultadoProInput.value = `$${totalACancelar.toFixed(2)}`;
             }
