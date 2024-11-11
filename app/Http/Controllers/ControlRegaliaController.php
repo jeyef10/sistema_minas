@@ -53,7 +53,8 @@ class ControlRegaliaController extends Controller
         return response()->json([
             'id_licencia'=> $pago_regalia->id_licencia,
             'tipo_licencia' => $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria,
-            'id_mineral' => $pago_regalia->mineral->tasa,
+            'id_mineral' => $pago_regalia->mineral->valor_tasa,
+            'tasa_mineral' => $pago_regalia->mineral->tasa,
             'nombre_mineral' => $pago_regalia->mineral->nombre,
             'metodo_apro' => $pago_regalia->metodo_apro,
             'metodo_pro' => $pago_regalia->metodo_pro,

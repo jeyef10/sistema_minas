@@ -23,7 +23,7 @@ return new class extends Migration
             $table->json('comprobante_pdf')->nullable();
             $table->text('observaciones_com')->nullable();
             $table->string('timbre_fiscal');
-            $table->string('observaciones_timbres')->nullable(); // Cambiado a 'text' para permitir más caracteres
+            $table->string('observaciones_fiscal')->nullable(); // Cambiado a 'text' para permitir más caracteres
             $table->date('fecha_pago');
             $table->string('estatus_pago');
 

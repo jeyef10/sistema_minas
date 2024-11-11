@@ -59,6 +59,7 @@ class LicenciaController extends Controller
             'comprobante_pdf' => $comprobante_pago->comprobante_pdf,
             'observaciones_com' => $comprobante_pago->observaciones_com,
             'timbre_fiscal' => $comprobante_pago->timbre_fiscal,
+            'observaciones_fiscal' => $comprobante_pago->observaciones_fiscal,
             
         ]);
 

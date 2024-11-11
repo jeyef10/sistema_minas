@@ -136,18 +136,20 @@
                                 <div class="card-body">
                                     <label class="font-weight-bold text-primary">Timbres Fiscales</label>
                                     <div class="form-group">
-
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="timbre_fiscal" id="natural" checked value="Si" {{ ($comprobante_pago->timbre_fiscal=="Si")? "checked" : ""}}>
+                                            <input class="form-check-input" type="radio" name="timbre_fiscal" id="natural" value="Si" {{ ($comprobante_pago->timbre_fiscal=="Si")? "checked" : ""}} onchange="toggleObservaciones(this.value)">
                                             <label class="form-check-label" for="natural">Si</label>
                                         </div>
-
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="timbre_fiscal" id="juridico" value="No" {{ ($comprobante_pago->timbre_fiscal=="No")? "checked" : ""}}>
+                                            <input class="form-check-input" type="radio" name="timbre_fiscal" id="juridico" value="No" {{ ($comprobante_pago->timbre_fiscal=="No")? "checked" : ""}} onchange="toggleObservaciones(this.value)">
                                             <label class="form-check-label" for="juridico">No</label>
                                         </div>
-
                                     </div>
+                                </div>
+                                
+                                <div class="col-4" id="observaciones_div" style="display: none;">
+                                    <label class="font-weight-bold text-primary">Observaciones Fiscales</label>
+                                    <textarea class="form-control" id="observaciones_fiscal" name="observaciones_fiscal" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('observaciones_fiscal')">{{ $observaciones_fiscal }}</textarea>
                                 </div>
 
                                 <div class="col-4">                                     
@@ -322,6 +324,29 @@
             });
         });
 
+    </script>
+
+    {{-- * FUNCION PARA MOSTRAR LA OSBVARCIONES FISCAL CAUNDO SELECCIONE SI AL TIMBRE FISCAL --}}
+
+    <script>
+
+        function toggleObservaciones(value) {
+            var observacionesDiv = document.getElementById('observaciones_div');
+            if (value === 'Si') {
+                observacionesDiv.style.display = 'block';
+            } else {
+                observacionesDiv.style.display = 'none';
+            }
+        }
+        
+        // Inicializa el estado del campo de observaciones al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            var selectedValue = document.querySelector('input[name="timbre_fiscal"]:checked');
+            if (selectedValue) {
+                toggleObservaciones(selectedValue.value);
+            }
+        });
+        
     </script>
 
 @if ($errors->any())
