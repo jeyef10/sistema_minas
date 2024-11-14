@@ -503,7 +503,7 @@
                   // Construye el HTML para cada notificación
                   $.each(data.notifications, function(i, notification) {
                       notificationsHtml += `
-                          <a class="dropdown-item d-flex align-items-center" href="/inspeccion/create/${notification.data.id_planificacion}" data-notification-id="">
+                          <a class="dropdown-item d-flex align-items-center" href="/inspeccion/create/${notification.data.id_planificacion}/${notification.id}" data-notification-id="">
                               <div class="mr-3">
                                   <div class="icon-circle bg-primary">
                                       <i class="fa fa-user-secret text-white" aria-hidden="true"></i>

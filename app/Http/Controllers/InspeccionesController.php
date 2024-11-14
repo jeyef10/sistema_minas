@@ -52,13 +52,12 @@ class InspeccionesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create($id, $notification_id)
     {
         $planificacion = Planificacion::findOrFail($id);
         $municipios = Municipio::all();
         $comisionados = Comisionados::all();
-
-        return view('inspeccion.create', compact('planificacion', 'municipios', 'comisionados'));
+        return view('inspeccion.create', compact('planificacion', 'municipios', 'comisionados','notification_id'));
     }
 
     public function fetchComisionados(Request $request, $municipioId)
@@ -127,6 +126,16 @@ class InspeccionesController extends Controller
         $inspecciones->fecha_inspeccion = $request->input('fecha_inspeccion');
         $inspecciones->estatus = $request->input('estatus');
             if ($inspecciones->estatus == "Aprobado") {
+
+                //Notification how read
+                $notification = Auth::user()->unreadNotifications
+                                        ->where('id', $request->notification_id)
+                                        ->first();
+                if($notification){
+                    $notification->markAsRead();
+                }
+
+
                 $inspecciones->estatus_resp = $request->input('estatus_resp');
             } else {
                 $inspecciones->estatus_resp = '';

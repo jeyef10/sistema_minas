@@ -234,7 +234,7 @@
                                     @endif --}}
 
                                     <input type="hidden" name="estatus_resp" value="Pendiente">
-
+                                    <input type="hidden" name="notification_id" value="{{$notification_id}}" />
                                 </div> 
                                 
                             </div>

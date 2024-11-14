@@ -77,7 +77,7 @@
                             <div class="card shadow mb-4">
 
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
-                                    <h6 class="m-0 font-weight-bold text-primary">Minereales por Municpios</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Minerales por Municpios</h6>
                                 </div>
 
                                 <div class="card-body">

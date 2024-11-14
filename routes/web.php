@@ -155,7 +155,7 @@ Route::get('/notifications/user', [NotificationController::class, 'sendInspectio
 /* Ruta Inspección */
 Route::get('/inspeccion', [InspeccionesController::class,'index'])->name('inspeccion')->middleware('auth');
 Route::get('/inspeccion/create', [InspeccionesController::class, 'create'])->name('create')->middleware('auth');
-Route::get('/inspeccion/create/{id}', [InspeccionesController::class, 'create'])->name('inspeccion.create')->middleware('auth');
+Route::get('/inspeccion/create/{id}/{notification_id?}', [InspeccionesController::class, 'create'])->name('inspeccion.create')->middleware('auth');
 Route::resource('inspeccion', InspeccionesController::class)->middleware('auth');
 Route::get('/inspeccion/create/fetchComisionados/{municipioId}', [InspeccionesController::class, 'fetchComisionados']);
 
