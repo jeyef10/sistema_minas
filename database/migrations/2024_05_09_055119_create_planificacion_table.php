@@ -20,7 +20,7 @@ return new class extends Migration
             $table->bigInteger('id_municipio')->nullable();
             $table->date('fecha_inicial');
             $table->date('fecha_final');
-            $table->string('estatus');
+            // $table->string('estatus');
             $table->timestamps();
 
              // Establecer relación con la tabla de municipios

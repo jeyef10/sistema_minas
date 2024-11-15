@@ -99,7 +99,7 @@ class PlanificacionController extends Controller
      */
     public function store(Request $request)
     {
-
+        
         $this->validate($request, [
             'fecha_inicial' => 'required|date_format:d/m/Y|after_or_equal:today',
             'fecha_final' => [
@@ -118,9 +118,9 @@ class PlanificacionController extends Controller
                         }
                     }
         
-                    // Verificar si 'fecha_final' es exactamente 7 días hábiles después de 'fecha_inicial'
-                    if ($fechaFinal->ne($date->subDay()) && !$fechaFinal->eq($fechaInicial) && !$fechaFinal->eq($fechaInicial->copy()->addDay())) {
-                        $fail('La fecha final debe ser exactamente 7 días hábiles después de la fecha inicial, o igual a la fecha inicial o el día siguiente.');
+                    // Verificar si 'fecha_final' está dentro del rango de 7 días hábiles
+                    if ($fechaFinal->lt($fechaInicial) || $fechaFinal->gt($date->subDay())) {
+                        $fail('La fecha final debe estar dentro de los 7 días hábiles después de la fecha inicial.');
                     }
                 },
             ],
@@ -134,7 +134,7 @@ class PlanificacionController extends Controller
         $planificacion->id_comisionado = $request->input('comisionado');
         $planificacion->fecha_inicial = $request->input('fecha_inicial');
         $planificacion->fecha_final = $request->input('fecha_final');
-        $planificacion->estatus = $request->input('estatus');
+        // $planificacion->estatus = $request->input('estatus');
         
         $planificacion->save();
 

@@ -43,7 +43,6 @@
                                     <th class="font-weight-bold text-Secondary">Nombre</th>
                                     <th class="font-weight-bold text-Secondary">Categoria</th>
                                     <th class="font-weight-bold text-Secondary">Tipo de Tasa</th>
-                                    <th class="font-weight-bold text-Secondary">Valor de la Tasa</th>
                                     <th class="font-weight-bold text-Secondary">Moneda/Longitud</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center> </th>
                                 </tr>
@@ -65,8 +64,6 @@
                                             @endif    
 
                                         </td>
-
-                                        <td class="font-weight-bold text-Secondary">{{ $mineral->valor_tasa }}</td>
                                         
                                         <td class="font-weight-bold text-Secondary">
                                         

@@ -50,6 +50,24 @@ class UsuarioController extends Controller
         return view('usuarios.crear',compact('roles'));
     }
 
+    public function verificarCedula(Request $request)
+    {
+        $cedula = $request->query('cedula');
+        $comisionado = Comisionados::where('cedula', $cedula)->first();
+    
+        if ($comisionado) {
+            return response()->json([
+                'existe' => true,
+                'nombres' => $comisionado->nombres,
+                'apellidos' => $comisionado->apellidos
+            ]);
+        } else {
+            return response()->json(['existe' => false]);
+        }
+    }
+    
+
+
     /**
      * Store a newly created resource in storage.
      *

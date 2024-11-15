@@ -132,14 +132,14 @@
                                     </div>
                                 </div>
 
-                                <div class="col-3">
+                                {{-- <div class="col-3">
                                     <label  class="font-weight-bold text-primary">Estatus de la Planificación</label>
                                     <select class="select2single form-control" name="estatus" id="estatus">
                                         <option value="" selected="true" disabled>Seleccione un Estatus</option>
                                         <option value="Asignado">Asignado</option>
                                         <option value="Pendiente">Pendiente</option>
                                     </select>
-                                </div>
+                                </div> --}}
 
                             </div>
                         </div>

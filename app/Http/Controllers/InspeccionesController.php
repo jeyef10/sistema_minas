@@ -7,12 +7,14 @@ use App\Models\PlanificacionComisionados;
 use App\Models\Recepcion;
 use App\Models\Comisionados;
 use App\Models\Municipio;
+use App\Models\User;
 use App\Models\MunicipioComisionado;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\BitacoraController;
 
@@ -35,6 +37,7 @@ class InspeccionesController extends Controller
     {
         // $planificaciones = Planificacion::with('comisionados', 'planificacioncomisionados', 'municipio_comisionados')->get();
         $planificaciones = Planificacion::all();
+        $unreadNotifications = Auth::user()->unreadNotifications;
 
             // Iterar sobre cada planificación para verificar si fue inspeccionada
             $planificaciones->each(function ($planificacion) {
@@ -43,7 +46,7 @@ class InspeccionesController extends Controller
             });
 
 
-        return view ('inspeccion.index', compact('planificaciones'));
+        return view ('inspeccion.index', compact('planificaciones', 'unreadNotifications'));
 
     }
 
@@ -127,14 +130,43 @@ class InspeccionesController extends Controller
         $inspecciones->estatus = $request->input('estatus');
             if ($inspecciones->estatus == "Aprobado") {
 
-                //Notification how read
+                /* //Notification how read
                 $notification = Auth::user()->unreadNotifications
                                         ->where('id', $request->notification_id)
                                         ->first();
                 if($notification){
                     $notification->markAsRead();
-                }
+                } */
 
+        // Marcar la notificación como leída para el usuario autenticado
+        $notification = Auth::user()->unreadNotifications
+                                    ->where('id', $request->notification_id)
+                                    ->first();
+
+        // Si se encuentra la notificación, marcarla como leída
+        if ($notification) {
+            $notification->markAsRead();
+            
+            // Obtener el id_planificacion de la notificación
+            $id_planificacion = $notification->data['id_planificacion'];
+            
+            // Obtener todos los usuarios con el rol de "Administrador"
+            $administradores = User::role('Administrador')->get();
+
+            // Marcar las notificaciones relacionadas como leídas para cada administrador
+            foreach ($administradores as $admin) {
+                // Filtrar las notificaciones no leídas que tienen el mismo id_planificacion
+                $adminNotifications = $admin->unreadNotifications
+                                            ->filter(function ($adminNotification) use ($id_planificacion) {
+                                                return $adminNotification->data['id_planificacion'] == $id_planificacion;
+                                            });
+
+                // Marcar cada notificación como leída
+                foreach ($adminNotifications as $adminNotification) {
+                    $adminNotification->markAsRead();
+                }
+            }
+        }
 
                 $inspecciones->estatus_resp = $request->input('estatus_resp');
             } else {

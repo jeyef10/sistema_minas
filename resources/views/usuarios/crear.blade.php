@@ -26,8 +26,14 @@
                         <div class="row">
 
                             <div class="col-4">
-                                <label  class="font-weight-bold text-primary">Cédula</label>
-                                <input type="text" class="form-control" id="cedula" name="cedula" maxlength="8" style="background: white;" value="" placeholder="Ingrese La Cédula" autocomplete="off" onkeypress="return solonum(event);">
+                                <label  class="font-weight-bold text-primary">Roles</label>
+                                {!! Form::select('roles[]', $roles,[], array('class' => 'form-control mb-3', 'id' => 'roles', 'onchange' => 'mostrarCampoCedula()')) !!}
+                            </div>
+
+                            <div class="col-4" id="cedulaField" style="display: none;">
+                                <label  class="font-weight-bold text-primary">Cédula Comisionado</label>
+                                <input type="text" class="form-control" id="cedula" name="cedula" maxlength="8" style="background: white;" value="" placeholder="Ingrese La Cédula del Comisionado" autocomplete="off" onkeypress="return solonum(event);" onblur="verificarCedula()">
+                                <small id="mensajeCedula"> </small>
                             </div>
 
                             <div class="col-4">
@@ -55,11 +61,6 @@
                                 <input type="password" class="form-control" id="confirm_password" name="confirm_password" style="background: white;" value="" placeholder="Confirme La Contraseña" autocomplete="off">
                             </div>
     
-                            <div class="col-4">
-                                <label  class="font-weight-bold text-primary">Roles</label>
-                                {!! Form::select('roles[]', $roles,[], array('class' => 'form-control mb-3')) !!}
-                            </div>
-
                         </div>
 
                     </div>
@@ -79,6 +80,45 @@
             </div>
         </div>    
 </div>
+
+<script>
+    function mostrarCampoCedula() {
+        var rol = document.getElementById("roles").value;
+        var cedulaField = document.getElementById("cedulaField");
+        
+        if (rol === "Comisionado") {
+            cedulaField.style.display = "block";
+        } else {
+            cedulaField.style.display = "none";
+        }
+    }
+
+    function verificarCedula() {
+        var cedula = document.getElementById("cedula").value;
+        var mensajeCedula = document.getElementById("mensajeCedula");
+        var nombreCampo = document.getElementById("name");
+
+        fetch(`/verificar-cedula?cedula=${cedula}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.existe) {
+                    document.getElementById("cedula").style.borderColor = "green";
+                    mensajeCedula.textContent = "Comisionado Encontrado Exitosamente";
+                    mensajeCedula.style.color = "green";
+                    // Insertar el nombre y apellido en el campo de nombre 
+                    nombreCampo.value = `${data.nombres} ${data.apellidos}`;
+                } else {
+                    document.getElementById("cedula").style.borderColor = "red";
+                    mensajeCedula.textContent = "Comisionado No Encontrado";
+                    mensajeCedula.style.color = "red";
+
+                    // Limpiar el campo de nombre 
+                    nombreCampo.value = "";
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
 
 {{-- @if ($errors->any())
     <script>
