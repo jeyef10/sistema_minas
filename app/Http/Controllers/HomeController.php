@@ -10,8 +10,9 @@ use App\Models\PersonaJuridica;
 use App\Models\Recaudos;
 use App\Models\Comisionados;
 use App\Models\Minerales;
-use App\Models\Regalia;
+// use App\Models\Regalia;
 use App\Models\Plazos;
+use App\Models\TipoPago;
 use App\Models\Recepcion;
 use App\Models\Inspecciones;
 use App\Models\Licencias;
@@ -46,12 +47,16 @@ class homeController extends Controller
         $count_mineral= DB::table('minerales')
         ->count();
 
-        $regalias = Regalia::all();
-        $count_regalia= DB::table('regalias')
-        ->count();
+        // $regalias = Regalia::all();
+        // $count_regalia= DB::table('regalias')
+        // ->count();
         
         $plazos = Plazos::all();
         $count_plazo= DB::table('plazos')
+        ->count();
+
+        $tipo_pagos = TipoPago::all();
+        $count_tipo_pagos= DB::table('tipo_pagos')
         ->count();
 
         $mapa_recepcion = Recepcion::all();
@@ -88,10 +93,10 @@ class homeController extends Controller
                 'longitud' => $licencia->inspeccion->longitud
             ];
         });
-        return view('home.inicio' , compact('count_solicitante', 'count_natural', 'count_juridico', 'count_recaudo','count_comisionado', 'count_mineral','count_regalia', 'count_plazo',
-        'count_recepcion','count_inspecciones', 'count_licencia', 'mapa_recepciones', 'mapa_inspecciones', 'mapa_licencias' ) , [
-        'count' => $count_solicitante, $count_natural, $count_juridico, $count_recaudo,  $count_comisionado,  $count_mineral,   
-        $count_regalia, $count_plazo ,$count_recepcion, $count_inspecciones, $count_licencia
+        return view('home.inicio' , compact('count_solicitante', 'count_natural', 'count_juridico', 'count_recaudo','count_comisionado', 'count_mineral', 'count_plazo', 
+        'count_tipo_pagos', 'count_recepcion','count_inspecciones', 'count_licencia', 'mapa_recepciones', 'mapa_inspecciones', 'mapa_licencias' ) , [
+        'count' => $count_solicitante, $count_natural, $count_juridico, $count_recaudo,  $count_comisionado,  $count_mineral, $count_plazo ,
+        $count_tipo_pagos, $count_recepcion, $count_inspecciones, $count_licencia
 
     ]); ;
 

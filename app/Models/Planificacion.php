@@ -13,7 +13,9 @@ class Planificacion extends Model
     protected $table = 'planificacion'; 
     protected $primaryKey = 'id';
     public $timestamps = true;
-    protected $fillable = ['id_recepcion', 'id_comisionado', 'id_municipio', 'fecha_incial','fecha_final', 'estatus'];
+    protected $fillable = ['id_recepcion', 'id_comisionado', 'id_municipio', 'fecha_incial','fecha_final'];
+
+    // protected $fillable = ['id_recepcion', 'id_comisionado', 'id_municipio', 'fecha_incial','fecha_final', 'estatus'];
 
     public function recepcion()
     {

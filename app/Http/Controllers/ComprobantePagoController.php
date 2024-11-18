@@ -129,7 +129,7 @@ class ComprobantePagoController extends Controller
 
         $comprabantepagos->observaciones_com = $request->input('observaciones_com');
         $comprabantepagos->timbre_fiscal = $request->input('timbre_fiscal');
-        $comprabantepagos->observaciones_timbres = $request->input('observaciones_timbres');
+        $comprabantepagos->observaciones_fiscal = $request->input('observaciones_fiscal');
         $comprabantepagos->fecha_pago = $request->input('fecha_pago');
         $comprabantepagos->estatus_pago = $request->input('estatus_pago');
 
@@ -175,10 +175,12 @@ class ComprobantePagoController extends Controller
         $n_referencia = $comprobante_pago->n_referencia;
         $comprobante_pdf = $comprobante_pago->comprobante_pdf;
         $observaciones_com = $comprobante_pago->observaciones_com;
+        $timbre_fiscal = $comprobante_pago->timbre_fiscal;
+        $observaciones_fiscal = $comprobante_pago->observaciones_fiscal;
         $fecha_pago = date('d/m/Y', strtotime($comprobante_pago->fecha_pago));
         $estatus_pago = $comprobante_pago->estatus_pago;
         return view('comprobantepago.edit' , compact('comprobante_pago', 'inspeccion', 'tipo_pagos', 'banco', 'n_referencia',
-         'comprobante_pdf', 'observaciones_com', 'fecha_pago', 'estatus_pago'));
+         'comprobante_pdf', 'observaciones_com', 'timbre_fiscal', 'observaciones_fiscal', 'fecha_pago', 'estatus_pago'));
     }
 
     /**
@@ -222,6 +224,8 @@ class ComprobantePagoController extends Controller
 
         // $comprabante_pago->observaciones_com = $request->input('observaciones_com');
         $comprobante_pago->observaciones_com = $comprobante_pago->observaciones_com ?? $request->input('observaciones_com');
+        $comprobante_pago->timbre_fiscal = $request->input('timbre_fiscal');
+        $comprobante_pago->observaciones_fiscal = $request->input('observaciones_fiscal');
         $comprobante_pago->fecha_pago = $request->input('fecha_pago');
         $comprobante_pago->estatus_pago = $request->input('estatus_pago');
 

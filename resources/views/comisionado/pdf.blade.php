@@ -56,15 +56,25 @@ img {
   border-radius: 8% 
 } 
 
+.footer-image { 
+    width: 76%; 
+    height: auto; 
+    position: absolute;
+    bottom: 33px; 
+    left: 19%; 
+    transform: translateX(-29%);
+
+}
+
 </style>
 {{-- Estilo al PDF --}}
 
 {{-- Index del PDF --}}
     <body>
 
-        <div class="row">
-            <img class="centro" src="../public/img/centro.png" alt="" >
-        </div>
+            <div class="row">
+                <img class="centro" src="../public/img/centro1.png" alt="" >
+            </div>
         <!-- {{-- <img class="left" src="../public/img/yaracuy.png" alt=""> --}}
         <img src="../public/img/ce.png" alt=""> -->
         <h1>Listado de Comisionado</h1><br>
@@ -89,8 +99,8 @@ img {
                 <td>{{ $comisionado->apellidos }}</td>
 
                 <td>
-                @if ($comisionado->municipio)
-                    {{$comisionado->municipio->nom_municipio }} @else
+                @if ($comisionado->municipios->count())
+                    {{ implode(', ', $comisionado->municipios->pluck('nom_municipio')->toArray()) }}
                 @endif
                 </td>
                   
@@ -99,6 +109,11 @@ img {
         @endforeach
             </tbody>
         </table>
+
+        <div class="row">
+            <img class="footer-image"  src="../public/img/piepagina.png" alt="Pie de Página">
+        </div>
+        
     </body>
 {{-- Index del PDF --}}
 

@@ -194,14 +194,49 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Estatus</label>
-                                        <select class="select2single form-control" name="estatus" id="estatus">
-                                            <option value="0" selected="true" disabled>Seleccione un Estatus</option>
-                                            <option value="Aprobado" {{ (old('estatus', $inspeccion->estatus ?? '') === 'Aprobado') ? 'selected' : '' }}>Aprobado</option>
-                                            <option value="Pendiente" {{ (old('estatus', $inspeccion->estatus ?? '') === 'Pendiente') ? 'selected' : '' }}>Pendiente</option>
-                                        </select>
-                                    </div>
+                                    @if(auth()->user()->hasRole('Comisionado'))
+                                        @if ($inspeccion->estatus_resp == "" || $inspeccion->estatus_resp == "Pendiente")
+                                        <div class="col-4">
+                                            <label  class="font-weight-bold text-primary">Estatus Inspección</label>
+                                            <select class="select2single form-control" name="estatus" id="estatus">
+                                                <option value="0" selected="true" disabled>Seleccione un Estatus</option>
+                                                <option value="Aprobado" {{ (old('estatus', $inspeccion->estatus ?? '') === 'Aprobado') ? 'selected' : '' }}>Aprobado</option>
+                                                <option value="Negado" {{ (old('estatus', $inspeccion->estatus ?? '') === 'Negado') ? 'selected' : '' }}>Negado</option>
+                                            </select>
+                                        </div>
+                                        @endif
+                                    @elseif(auth()->user()->hasRole('Administrador'))
+                                        <div class="col-4">
+                                            <label  class="font-weight-bold text-primary">Estatus Inspección</label>
+                                            <select class="select2single form-control" name="estatus" id="estatus">
+                                                <option value="0" selected="true" disabled>Seleccione un Estatus</option>
+                                                <option value="Aprobado" {{ (old('estatus', $inspeccion->estatus ?? '') === 'Aprobado') ? 'selected' : '' }}>Aprobado</option>
+                                                <option value="Negado" {{ (old('estatus', $inspeccion->estatus ?? '') === 'Negado') ? 'selected' : '' }}>Negado</option>
+                                            </select>
+                                        </div>
+                                    @endif
+                                    
+                                    @if(auth()->user()->hasRole('Administrador'))
+                                        <div class="card-body" id="estatus_respuesta" style="display: none;">
+                                            <label class="font-weight-bold text-primary">Estatus Respuesta</label>
+                                            <div class="row">
+                                                <div class="custom-control custom-radio col-1 mr-2"> 
+                                                    <input class="custom-control-input" type="radio" name="estatus_resp" id="estatus_resp_pen" value="Pendiente" {{ ($inspeccion->estatus_resp=="Pendiente")? "checked" : ""}}>
+                                                    <label class="custom-control-label" for="estatus_resp_pen">Pendiente</label>
+                                                </div>
+                                                <div class="custom-control custom-radio col-1 mr-2">
+                                                    <input class="custom-control-input" type="radio" name="estatus_resp" id="estatus_resp_apro" value="Aprobado" {{ ($inspeccion->estatus_resp=="Aprobado")? "checked" : ""}}>
+                                                    <label class="custom-control-label" for="estatus_resp_apro">Aprobado</label>
+                                                </div>
+                                                <div class="custom-control custom-radio col-1 mr-2">
+                                                    <input class="custom-control-input" type="radio" name="estatus_resp" id="estatus_resp_neg" value="Negado" {{ ($inspeccion->estatus_resp=="Negado")? "checked" : ""}}>
+                                                    <label class="custom-control-label" for="estatus_resp_neg">Negado</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <input type="hidden" name="estatus_resp" id="estatus_resp" value="Pendiente">
+                                    @endif
 
                                 </div>
                                 
@@ -576,6 +611,100 @@
             mostrarDivCategoria(categoria);
 
     </script>
+
+    {{-- * FUNCION PARA MOSTRAR/OCULTAR EL ESTATUS DE RESPUESTA Y ENVIAR EL VALUE OCULTO --}}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const estatusSelect = document.getElementById('estatus');
+            const estatusRespuestaDiv = document.getElementById('estatus_respuesta');
+    
+            function toggleEstatusRespuesta() {
+                const selectedValue = estatusSelect.value;
+                if (selectedValue === 'Aprobado') {
+                    estatusRespuestaDiv.style.display = 'block';
+                } else {
+                    estatusRespuestaDiv.style.display = 'none';
+                }
+            }
+    
+            // Ejecutar al cargar la página
+            toggleEstatusRespuesta();
+    
+            // Ejecutar al cambiar la selección
+            estatusSelect.addEventListener('change', toggleEstatusRespuesta);
+        });
+    </script>
+
+
+    {{-- <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const estatusSelect = document.getElementById('estatus');
+            const estatusRespuestaDiv = document.getElementById('estatus_respuesta');
+            const hiddenInput = document.getElementById('estatus_respuesta');
+            const userRole = "{{ auth()->user()->hasRole('Administrador') }}"; // Obtener el rol del usuario
+
+            console.log("Usuario es" + " " + userRole);
+    
+            function toggleEstatusRespuesta() {
+                const selectedValue = estatusSelect.value;
+                if (selectedValue == 'Aprobado') {
+                    estatusRespuestaDiv.style.display = 'block';
+                    if (userRole !== '1') {
+                        hiddenInput.value = "Pendiente";
+                    }
+                } else {
+                    estatusRespuestaDiv.style.display = 'none';
+                    if (userRole !== '1') {
+                        hiddenInput.value = "";
+                    }
+                }
+            }
+    
+            // Ejecutar al cargar la página
+            toggleEstatusRespuesta();
+    
+            // Ejecutar al cambiar la selección
+            estatusSelect.addEventListener('change', toggleEstatusRespuesta);
+        });
+    </script> --}}
+
+    {{-- <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const estatusSelect = document.getElementById('estatus');
+            const estatusRespuestaDiv = document.getElementById('estatus_respuesta');
+            const hiddenInput = document.getElementById('estatus_resp');
+            const userRole = "{{ auth()->user()->hasRole('Administrador') }}"; // Obtener el rol del usuario
+    
+            function toggleEstatusRespuesta() {
+                if (!estatusSelect || !estatusRespuestaDiv) return; // Verificar la existencia de los elementos
+    
+                const selectedValue = estatusSelect.value;
+                if (selectedValue === 'Aprobado') {
+                    estatusRespuestaDiv.style.display = 'block';
+                    if (userRole !== '1' && hiddenInput) {
+                        hiddenInput.value = "Pendiente";
+                    }
+                } else {
+                    estatusRespuestaDiv.style.display = 'none';
+                    if (userRole !== '1' && hiddenInput) {
+                        hiddenInput.value = "Pendiente";
+                    }
+                }
+            }
+    
+            // Ejecutar al cargar la página
+            toggleEstatusRespuesta();
+    
+            // Ejecutar al cambiar la selección
+            if (estatusSelect) {
+                estatusSelect.addEventListener('change', toggleEstatusRespuesta);
+            }
+        });
+    </script> --}}
+    
+    
+    
 
     {{-- ? FUNCION PARA MANTENER LA FECHA ACTUALIZADA EN EL CALENDARIO --}}
 

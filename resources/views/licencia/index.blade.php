@@ -287,6 +287,7 @@
                         <p><b>N° Referencia:</b> ${data.n_referencia}</p>
                         <p><b>Observaciones:</b> ${data.observaciones_com}</p>
                         <p><b>Timbres Fiscales:</b> ${data.timbre_fiscal}</p>
+                        <p><b>Observaciones Fiscales:</b> ${data.observaciones_fiscal}</p>
                         ${pdfHtml}
                     `);
 

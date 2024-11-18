@@ -14,6 +14,25 @@ class NotificationController extends Controller
         $unreadNotifications = auth()->user()->unreadNotifications;
         $unreadCount = $unreadNotifications->count();
 
+        return response()->json([
+            'unreadCount' => $unreadCount,
+            'notifications' => $unreadNotifications->map(function ($notification) {
+                return [
+                    'id' => $notification->id,
+                    'data' => $notification->data,
+                    // 'created_at' => $notification->created_at->format('d de F de Y, h:i:s A'),
+                    'created_at' => $notification->created_at->format('Y-m-d H:i:s'),
+                    // 'url' => url('/inspecciones/' . $notification->data['id_planificacion']) // Ajusta la URL según tu lógica
+                ];
+            })
+        ]);
+    }
+
+    /* public function fetch()
+    {
+        $unreadNotifications = auth()->user()->unreadNotifications;
+        $unreadCount = $unreadNotifications->count();
+
         // Obtén notificaciones para usuarios con roles de "administrador" o "comisionado"
         // $adminNotifications = User::role(['Administrador', 'Comisionado'])
         // ->get()
@@ -28,7 +47,7 @@ class NotificationController extends Controller
             'unreadCount' => $unreadCount,
             'notifications' => $unreadNotifications
         ]);
-    }
+    } */
 
     /* public function sendInspectionNotifications()
     {

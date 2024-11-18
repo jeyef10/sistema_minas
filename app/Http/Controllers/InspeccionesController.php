@@ -7,12 +7,14 @@ use App\Models\PlanificacionComisionados;
 use App\Models\Recepcion;
 use App\Models\Comisionados;
 use App\Models\Municipio;
+use App\Models\User;
 use App\Models\MunicipioComisionado;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\BitacoraController;
 
@@ -35,6 +37,7 @@ class InspeccionesController extends Controller
     {
         // $planificaciones = Planificacion::with('comisionados', 'planificacioncomisionados', 'municipio_comisionados')->get();
         $planificaciones = Planificacion::all();
+        $unreadNotifications = Auth::user()->unreadNotifications;
 
             // Iterar sobre cada planificación para verificar si fue inspeccionada
             $planificaciones->each(function ($planificacion) {
@@ -43,7 +46,7 @@ class InspeccionesController extends Controller
             });
 
 
-        return view ('inspeccion.index', compact('planificaciones'));
+        return view ('inspeccion.index', compact('planificaciones', 'unreadNotifications'));
 
     }
 
@@ -52,13 +55,12 @@ class InspeccionesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create($id, $notification_id)
     {
         $planificacion = Planificacion::findOrFail($id);
         $municipios = Municipio::all();
         $comisionados = Comisionados::all();
-
-        return view('inspeccion.create', compact('planificacion', 'municipios', 'comisionados'));
+        return view('inspeccion.create', compact('planificacion', 'municipios', 'comisionados','notification_id'));
     }
 
     public function fetchComisionados(Request $request, $municipioId)
@@ -125,6 +127,51 @@ class InspeccionesController extends Controller
         }
            
         $inspecciones->fecha_inspeccion = $request->input('fecha_inspeccion');
+        $inspecciones->estatus = $request->input('estatus');
+            if ($inspecciones->estatus == "Aprobado") {
+
+                /* //Notification how read
+                $notification = Auth::user()->unreadNotifications
+                                        ->where('id', $request->notification_id)
+                                        ->first();
+                if($notification){
+                    $notification->markAsRead();
+                } */
+
+        // Marcar la notificación como leída para el usuario autenticado
+        $notification = Auth::user()->unreadNotifications
+                                    ->where('id', $request->notification_id)
+                                    ->first();
+
+        // Si se encuentra la notificación, marcarla como leída
+        if ($notification) {
+            $notification->markAsRead();
+            
+            // Obtener el id_planificacion de la notificación
+            $id_planificacion = $notification->data['id_planificacion'];
+            
+            // Obtener todos los usuarios con el rol de "Administrador"
+            $administradores = User::role('Administrador')->get();
+
+            // Marcar las notificaciones relacionadas como leídas para cada administrador
+            foreach ($administradores as $admin) {
+                // Filtrar las notificaciones no leídas que tienen el mismo id_planificacion
+                $adminNotifications = $admin->unreadNotifications
+                                            ->filter(function ($adminNotification) use ($id_planificacion) {
+                                                return $adminNotification->data['id_planificacion'] == $id_planificacion;
+                                            });
+
+                // Marcar cada notificación como leída
+                foreach ($adminNotifications as $adminNotification) {
+                    $adminNotification->markAsRead();
+                }
+            }
+        }
+
+                $inspecciones->estatus_resp = $request->input('estatus_resp');
+            } else {
+                $inspecciones->estatus_resp = '';
+            }
         $inspecciones->longitud_terreno = $request->input('longitud_terreno');
         $inspecciones->ancho = $request->input('ancho');
         $inspecciones->profundidad = $request->input('profundidad');
@@ -134,8 +181,6 @@ class InspeccionesController extends Controller
         $inspecciones->lindero_este = $request->input('lindero_este');
         $inspecciones->lindero_oeste = $request->input('lindero_oeste');
         $inspecciones->superficie = $request->input('superficie');
-
-        $inspecciones->estatus = $request->input('estatus');
 
         $inspecciones->save();
 
@@ -186,6 +231,8 @@ class InspeccionesController extends Controller
         $utm_este = $inspeccion->utm_este;
         $res_fotos = $inspeccion->res_fotos;
         $fecha_inspeccion = date('d/m/Y', strtotime($inspeccion->fecha_inspeccion));
+        $estatus = $inspeccion->estatus;
+        $estatus_resp = $inspeccion->estatus_resp;
         $longitud_terreno = $inspeccion->longitud_terreno;
         $ancho = $inspeccion->ancho;
         $profundidad = $inspeccion->profundidad;
@@ -195,11 +242,10 @@ class InspeccionesController extends Controller
         $lindero_este = $inspeccion->lindero_este;
         $lindero_oeste = $inspeccion->lindero_oeste;
         $superficie = $inspeccion->superficie;
-        $estatus = $inspeccion->estatus;
 
         return view('inspeccion.edit' , compact('inspeccion', 'planificacion', 'municipios', 'comisionados', 'funcionario_acomp', 'lugar_direccion', 
-        'observaciones','conclusiones', 'latitud', 'longitud', 'utm_norte', 'utm_este', 'res_fotos', 'fecha_inspeccion', 'longitud_terreno', 'ancho', 
-        'profundidad', 'volumen', 'lindero_norte', 'lindero_sur', 'lindero_este', 'lindero_oeste', 'superficie', 'estatus'));
+        'observaciones','conclusiones', 'latitud', 'longitud', 'utm_norte', 'utm_este', 'res_fotos', 'fecha_inspeccion', 'estatus', 'estatus_resp',
+        'longitud_terreno', 'ancho', 'profundidad', 'volumen', 'lindero_norte', 'lindero_sur', 'lindero_este', 'lindero_oeste', 'superficie'));
     }
 
     /**
@@ -243,6 +289,8 @@ class InspeccionesController extends Controller
         }
 
         $inspeccion->fecha_inspeccion = $request->input('fecha_inspeccion');
+        $inspeccion->estatus = $request->input('estatus');
+        $inspeccion->estatus_resp = $request->input('estatus_resp');
         $inspeccion->longitud_terreno = $request->input('longitud_terreno');
         $inspeccion->ancho = $request->input('ancho');
         $inspeccion->profundidad = $request->input('profundidad');
@@ -252,7 +300,6 @@ class InspeccionesController extends Controller
         $inspeccion->lindero_este = $request->input('lindero_este');
         $inspeccion->lindero_oeste = $request->input('lindero_oeste');
         $inspeccion->superficie = $request->input('superficie');
-        $inspeccion->estatus = $request->input('estatus');
 
         $inspeccion->save();
 

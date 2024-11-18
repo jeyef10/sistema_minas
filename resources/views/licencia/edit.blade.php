@@ -95,7 +95,7 @@
 
                                         <div class="col-4">
                                             <label  class="font-weight-bold text-primary">Catastro Minero</label>
-                                            <input type="text" class="form-control" id="catastro_la" name="catastro_la" value="{{ isset($licencia->catastro_la)?$licencia->catastro_la:'' }}" oninput="capitalizarInput('')"></input>                                   
+                                            <input type="text" class="form-control" id="catastro_la" name="catastro_la" value="{{ isset($licencia->catastro_la)?$licencia->catastro_la:'' }}" oninput="capitalizarInput('')" readonly></input>                                   
                                         </div>
 
                                         <div class="col-4">
@@ -128,7 +128,7 @@
 
                                         <div class="col-4">
                                             <label  class="font-weight-bold text-primary">Catastro Minero</label>
-                                            <input type="text" class="form-control" id="catastro_lp" name="catastro_lp" value="{{ isset($licencia->catastro_lp)?$licencia->catastro_lp:'' }}" oninput="capitalizarInput('')"></input>
+                                            <input type="text" class="form-control" id="catastro_lp" name="catastro_lp" value="{{ isset($licencia->catastro_lp)?$licencia->catastro_lp:'' }}" oninput="capitalizarInput('')" readonly></input>
                                         </div>
 
                                         <div class="col-4">

@@ -24,13 +24,30 @@ class TipoPagoController extends Controller
     }
 
 
-    public function pdf()
+    public function pdf(Request $request)
     {
-          $tipo_pagos=TipoPago::all();
-          $pdf=Pdf::loadView('tipopago.pdf', compact('tipo_pagos'));
-          return $pdf->stream();
+        $search = $request->input('search');
 
+        // Filtrar los métodos de pago según la consulta de búsqueda
+        $tipo_pagos = TipoPago::where('forma_pago', 'LIKE', '%' . $search . '%')->get();
+
+        // Verificar si se encontraron métodos de pago
+        if ($tipo_pagos->isEmpty()) {
+            return redirect()->back()->with('error', 'No se encontraron métodos de pago.');
+        }
+
+        $pdf = Pdf::loadView('tipopago.pdf', compact('tipo_pagos'));
+        return $pdf->stream();
     }
+
+
+    // public function pdf()
+    // {
+    //        $tipo_pagos=TipoPago::all();
+    //       $pdf=Pdf::loadView('tipopago.pdf', compact('tipo_pagos'));
+    //       return $pdf->stream();
+
+    // }
 
     /**
      * Show the form for creating a new resource.

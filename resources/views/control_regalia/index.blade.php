@@ -302,7 +302,7 @@
                             pago_regaliasHtml += `
                                 <h5 class="font-weight-bold text-primary" style="text-align: center">Detalles del Pago de Regalías</h5>
                                 <p><b>Mineral:</b> ${data.nombre_mineral}</p>
-                                <p><b>Tasa Mineral:</b> ${data.id_mineral} $/m³</p>
+                                <p><b>Tipo de Tasa:</b> ${data.tasa_mineral} ${data.id_mineral} $/m³</p>
                                 <p><b>Método de Pago:</b> ${data.metodo_apro}</p>
                                 <p><b>Cantidad de Metro Cubico:</b> ${data.monto_apro}</p>
                                 <p><b>Resultado:</b> ${data.resultado_apro}</p>
@@ -314,7 +314,7 @@
                             pago_regaliasHtml += `
                                 <h5 class="font-weight-bold text-primary" style="text-align: center">Detalles del Pago de Regalías</h5>
                                 <p><b>Mineral:</b> ${data.nombre_mineral}</p>
-                                <p><b>Tasa Mineral:</b> ${data.id_mineral} $/m³</p>
+                                <p><b>Tipo de Tasa:</b> ${data.tasa_mineral} ${data.id_mineral} $/m³</p>
                                 <p><b>Método de Pago:</b> ${data.metodo_pro}</p>
                                 <p><b>Cantidad de Metro Cubico:</b> ${data.monto_pro}</p>
                                 <p><b>Resultado:</b> ${data.resultado_pro}</p>

@@ -99,7 +99,7 @@ class PlanificacionController extends Controller
      */
     public function store(Request $request)
     {
-
+        
         $this->validate($request, [
             'fecha_inicial' => 'required|date_format:d/m/Y|after_or_equal:today',
             'fecha_final' => [
@@ -118,9 +118,9 @@ class PlanificacionController extends Controller
                         }
                     }
         
-                    // Verificar si 'fecha_final' es exactamente 7 días hábiles después de 'fecha_inicial'
-                    if ($fechaFinal->ne($date->subDay()) && !$fechaFinal->eq($fechaInicial) && !$fechaFinal->eq($fechaInicial->copy()->addDay())) {
-                        $fail('La fecha final debe ser exactamente 7 días hábiles después de la fecha inicial, o igual a la fecha inicial o el día siguiente.');
+                    // Verificar si 'fecha_final' está dentro del rango de 7 días hábiles
+                    if ($fechaFinal->lt($fechaInicial) || $fechaFinal->gt($date->subDay())) {
+                        $fail('La fecha final debe estar dentro de los 7 días hábiles después de la fecha inicial.');
                     }
                 },
             ],
@@ -134,7 +134,7 @@ class PlanificacionController extends Controller
         $planificacion->id_comisionado = $request->input('comisionado');
         $planificacion->fecha_inicial = $request->input('fecha_inicial');
         $planificacion->fecha_final = $request->input('fecha_final');
-        $planificacion->estatus = $request->input('estatus');
+        // $planificacion->estatus = $request->input('estatus');
         
         $planificacion->save();
 
@@ -144,18 +144,32 @@ class PlanificacionController extends Controller
         $planificacionComisionado->id_comisionado = $request->input('comisionado');
         $planificacionComisionado->save();
 
-        // Crear y enviar la notificación
-        
-        $usuariosNotificar = User::role(['Administrador', 'Comisionado'])->get();
+        // Obtener al comisionado por ID de comisionado y luego el usuario correspondiente
+        $comisionado = Comisionados::findOrFail($request->input('comisionado'));
+        $usuarioComisionado = User::findOrFail($comisionado->id_usuario);
+
         $datosNotificacion = [
-            /* 'mensaje' => 'Se ha creado una nueva planificación.', */
-            /* 'link' => route('create', ['id' => $planificacion->id]), */
+            'mensaje' => 'Se le ha asignado una nueva inspección.',
             'id_planificacion' => $planificacion->id,
         ];
 
+        $usuarioComisionado->notify(new NombreNotificacion($datosNotificacion, $planificacion));
+
+        $administradores = User::role('Administrador')->get();
+        Notification::send($administradores, new NombreNotificacion($datosNotificacion, $planificacion));
+
+        // Crear y enviar la notificación
+        
+        // $usuariosNotificar = User::role(['Administrador', 'Comisionado'])->get();
+        // $datosNotificacion = [
+        //     /* 'mensaje' => 'Se ha creado una nueva planificación.', */
+        //     /* 'link' => route('create', ['id' => $planificacion->id]), */
+        //     'id_planificacion' => $planificacion->id,
+        // ];
+
         // dd( $datosNotificacion);
 
-        Notification::send($usuariosNotificar, new NombreNotificacion($datosNotificacion, $planificacion));
+        /*Notification::send($usuariosNotificar, new NombreNotificacion($datosNotificacion, $planificacion)); */
 
         $bitacora = new BitacoraController;
         $bitacora->update();

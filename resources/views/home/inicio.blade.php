@@ -122,24 +122,6 @@
             </div>
           </div>
 
-                                                                    <!-- dasboard Tasa de ragalias -->
-          <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card h-100">
-              <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                  <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-uppercase mb-1">Tasa de Regalías</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ ($count_regalia) }}</div>
-                 
-                  </div>
-                  <div class="col-auto">
-                    <i class="far fa-money-bill-alt fa-2x text-success"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
                                                                <!-- dasboard Plazos de Vigencia-->
           <div class="col-xl-3 col-md-6 mb-4">
             <div class="card h-100">
@@ -152,6 +134,24 @@
                   </div>
                   <div class="col-auto">
                     <i class="far fa-calendar-alt fa-2x text-dark"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+                                                                    <!-- dasboard Tipo de Pagos -->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-uppercase mb-1">Tipo de Pago</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ ($count_tipo_pagos) }}</div>
+                 
+                  </div>
+                  <div class="col-auto">
+                    <i class="far fa-money-bill-alt fa-2x text-success"></i>
                   </div>
                 </div>
               </div>

@@ -185,7 +185,7 @@
                     <div class="topbar-divider d-none d-sm-block"> 
                     </div>
 
-                    <li class="nav-item dropdown no-arrow mx-1">
+                    {{-- <li class="nav-item dropdown no-arrow mx-1">
                       <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false">
                           <i class="fas fa-bell fa-fw"></i>
@@ -202,7 +202,27 @@
                               <!-- Las notificaciones individuales se agregarán aquí con AJAX -->
                           </div>
                       </div>
-                    </li>
+                    </li> --}}
+
+                    <li class="nav-item dropdown no-arrow mx-1">
+                      <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-bell fa-fw"></i>
+                          <!-- El contador de notificaciones se actualizará dinámicamente -->
+                          <span id="notificationCounter" class="badge badge-danger badge-counter"></span>
+                      </a>
+                      <!-- La lista de notificaciones se actualizará dinámicamente -->
+                      <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                          aria-labelledby="alertsDropdown">
+                          <h6 class="dropdown-header">
+                              Centro de notificaciones
+                          </h6>
+                          <div id="notificationList">
+                              <!-- Las notificaciones individuales se agregarán aquí con AJAX -->
+                          </div>
+                      </div>
+                  </li>
+                  
 
                     {{--<li class="nav-item dropdown no-arrow mx-1">
                       <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
@@ -425,7 +445,7 @@
         setInterval(fetchNotifications, 1000); // Actualiza cada 1 segundo */
     </script> --}}
 
-    <script>
+    {{-- <script>
       function fetchNotifications() {
           $.ajax({
               url: '/notifications/fetch', // Asegúrate de que esta URL coincida con tu ruta definida
@@ -464,6 +484,55 @@
           });
       }
   
+      // Llama a fetchNotifications cuando la página esté lista
+      $(document).ready(function() {
+          fetchNotifications();
+      });
+  </script> --}}
+
+  <script>
+    function fetchNotifications() {
+          $.ajax({
+              url: '/notifications/fetch',
+              method: 'GET',
+              success: function(data) {
+                console.log(data);
+                  $('#notificationCounter').text(data.unreadCount); // Actualiza el contador
+                  var notificationsHtml = ''; // Inicializa el HTML para las notificaciones
+
+                  // Construye el HTML para cada notificación
+                  $.each(data.notifications, function(i, notification) {
+                      notificationsHtml += `
+                          <a class="dropdown-item d-flex align-items-center" href="/inspeccion/create/${notification.data.id_planificacion}/${notification.id}" data-notification-id="">
+                              <div class="mr-3">
+                                  <div class="icon-circle bg-primary">
+                                      <i class="fa fa-user-secret text-white" aria-hidden="true"></i>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="small text-gray-500">${new Date(notification.created_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
+                                  <span class="font-weight-bold">Se ha creado una nueva planificación de inspección</span>
+                              </div>
+                          </a>`;
+                  });
+
+                  // Actualiza la lista desplegable con el nuevo HTML
+                  $('#notificationList').html(notificationsHtml);
+
+                  // // Agrega un evento de clic a los enlaces de notificación
+                  // $('.dropdown-item').on('click', function(e) {
+                  //   /* e.preventDefault(); */ // Evita la redirección predeterminada del enlace
+                  //     const id = $(this).data('notification-id');
+                  //     // Redirige a la URL del formulario con el ID de la planificación
+                  //     window.location.href = `/inspeccion/create/${id}`; // Cambia la ruta según tu definición
+                  // });
+              },
+              error: function(error) {
+                  console.error('Error fetching notifications:', error);
+              }
+          });
+      }
+
       // Llama a fetchNotifications cuando la página esté lista
       $(document).ready(function() {
           fetchNotifications();

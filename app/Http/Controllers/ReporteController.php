@@ -22,8 +22,8 @@ class ReporteController extends Controller
     
     {
 
-        $desde = $request->input('desde'); 
-        $hasta = $request->input('hasta');
+        // $desde = $request->input('desde'); 
+        // $hasta = $request->input('hasta');
 
 
         $licencia = licencias::join('comprobante_pagos', 'comprobante_pagos.id', '=', 'licencias.id_comprobante_pago')
@@ -59,6 +59,14 @@ class ReporteController extends Controller
             
         return view('reporte.index', ['resultados' => $licencia]);
     }
+
+    // public function pdf()
+    // {
+    //       $reportes=Minerales::all();
+    //       $pdf=Pdf::loadView('mineral.pdf', compact('minerales'));
+    //       return $pdf->stream();
+
+    // }
 
     public function mensual (Request $request) {
          ///
