@@ -213,7 +213,7 @@
                                         </select>
                                     </div>
 
-                                    {{-- @if(auth()->user()->hasRole('Administrador'))
+                                    @if(auth()->user()->hasRole('Administrador'))
                                     <div class="card-body">
                                         <label class="font-weight-bold text-primary">Estatus Respuesta</label>
                                         <div class="row">
@@ -231,7 +231,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @endif --}}
+                                    @endif
 
                                     <input type="hidden" name="estatus_resp" value="Pendiente">
                                     <input type="hidden" name="notification_id" value="{{$notification_id}}" />
