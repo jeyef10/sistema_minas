@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('monto_apro')->nullable();
             $table->string('monto_pro')->nullable();
             $table->string('tasa_convenio')->nullable();
+            $table->string('monto_decl')->nullable();
             $table->string('resultado_apro')->nullable();
             $table->string('resultado_pro')->nullable();
             $table->json('comprobante');
