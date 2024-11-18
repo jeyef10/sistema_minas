@@ -191,6 +191,7 @@ Route::get('/control_regalia/detalles/{id}', [ControlRegaliaController::class, '
 /*Reportes*/
 Route::get('reporte', [ReporteController::class, 'index'])->name('reporte')->middleware('auth');
 Route::get('reporte/mensual', [ReporteController::class, 'mensual'])->name('mensual')->middleware('auth');
+Route::get('/reporte/pdf',  [ReporteController::class,'generarPDF'])->name('reporte')->middleware('auth');
 
 /*Estadistica*/
 Route::get('/estadistica', [EstadisticaController::class, 'index'])->name('estadistica')->middleware('auth');

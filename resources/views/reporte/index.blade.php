@@ -15,13 +15,13 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card mb-4">
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 
-                        <!-- <a href="{{ url('reporte') }}" class="btn btn-sm btn-danger" target="_blank">
+                        <a href="{{ url('reporte/pdf') }}" class="btn btn-sm btn-danger " target="_blank">
                             {{ ('PDF') }}
-                         </a> -->
+                         </a>
                             
-                      <h2 class="font-weight-bold text-primary">Reporte General</h2>
+                      <h2 class="font-weight-bold text-primary">Resumen Habilitado</h2>
 
                   </div>
 
@@ -33,7 +33,8 @@
                                 <tr>
                                     <th class="font-weight-bold text-Secondary">Tipo de Licencia</th>
                                     <th class="font-weight-bold text-Secondary">Catastro Minero</th>
-                                    <th class="font-weight-bold text-Secondary">Solicitante</th>
+                                    <th class="font-weight-bold text-Secondary">Mineral</th>
+                                    <th class="font-weight-bold text-Secondary">Solicitante Habilitado</th>
                                     <th class="font-weight-bold text-Secondary">Dirección</th>
                                     <th class="font-weight-bold text-Secondary">Vigencia de Licencia</th>
                                   </tr>
@@ -59,6 +60,8 @@
                                         @endif
                                     </td>
 
+                                    <td class="font-weight-bold text-secondary">{{ $resultado->nombre_mineral }}</td>
+
                                     <td class="font-weight-bold text-secondary">
 
                                         @if($resultado->solicitante_tipo)
@@ -75,6 +78,7 @@
                                     </td>
 
                                     <td class="font-weight-bold text-secondary">{{ $resultado->direccion }}</td>
+                                   
                                     <td class="font-weight-bold text-Secondary">{{ $resultado->plazo->medida_tiempo}} {{ $resultado->plazo->cantidad}}</td>
                                 </tr>
                             @endforeach
