@@ -177,25 +177,16 @@
             
             </script>
 
-            {{-- @if ($errors->any())
+            @if (session('success'))
                 <script>
-                    var errorMessage = @json($errors->first());
                     Swal.fire({
-                            title: 'Comisionado',
-                            text: "No se puede eliminar el comisionado debido a que tiene otros registros.",
-                            icon: 'warning',
-                            showconfirmButton: true,
-                            confirmButtonColor: '#3085d6',
-                            confirmButtonText: '¡OK!',
-                            
-                            }).then((result) => {
-                        if (result.isConfirmed) {
-
-                            this.submit();
-                        }
-                        })
+                        title: '¡Registro Exitoso!',
+                        text: 'Recuerda que debes crear el usuario de este comisionado registrado',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
                 </script>
-            @endif   --}} 
+            @endif
 
             @if ($errors->any())
         <script>

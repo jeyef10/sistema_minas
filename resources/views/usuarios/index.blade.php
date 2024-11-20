@@ -145,6 +145,17 @@
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+        @if (session('error'))
+            <script>
+                Swal.fire({
+                    title: 'Usuario Administrador',
+                    text: "{{ session('error') }}",
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
+            </script>
+        @endif
+
         @if (session('eliminar') == 'ok')
 
             <script>

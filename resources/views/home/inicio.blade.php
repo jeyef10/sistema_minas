@@ -6,6 +6,37 @@
 <link rel="stylesheet" href="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css') }}">
 <script src="{{ asset('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js')}}" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
+<style>
+    @keyframes rotateAnimation {
+      0% {
+        transform: rotateY(0deg);
+      }
+      25% {
+        transform: rotateY(360deg);
+      }
+      100% {
+        transform: rotateY(360deg);
+      }
+    }
+
+    @keyframes hoverRotateAnimation {
+      from {
+        transform: rotateY(0deg);
+      }
+      to {
+        transform: rotateY(360deg);
+      }
+    }
+
+    .rotate {
+      animation: rotateAnimation 10s infinite linear;
+    }
+
+    .hover-rotate:hover {
+      animation: hoverRotateAnimation 2s linear;
+    }
+</style>
+
 
 @section('contenido')
 
@@ -16,7 +47,7 @@
         <div class="row">
 
                                                               <!-- dasboard persona natural-->
-          <div class="col-xl-3 col-md-6 mb-4">
+          {{-- <div class="col-xl-3 col-md-6 mb-4">
             <div class="card h-100">
               <div class="card-body">
                 <div class="row align-items-center">
@@ -31,11 +62,27 @@
                 </div>
               </div>
             </div>
+          </div> --}}
+
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card h-100 rotate hover-rotate">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1">Persona Natural</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $count_natural }}</div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-users fa-2x text-info"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
                                                               <!-- dasboard persona jurídico-->
           <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card h-100">
+            <div class="card h-100 rotate hover-rotate">
               <div class="card-body">
                 <div class="row align-items-center">
                   <div class="col mr-2">
@@ -52,7 +99,7 @@
           </div>
 
           <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card h-100">
+            <div class="card h-100 rotate hover-rotate">
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
@@ -70,7 +117,7 @@
 
                                                                 <!-- dasboard minerales -->
           <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card h-100">
+            <div class="card h-100 rotate hover-rotate">
               <div class="card-body">
                 <div class="row align-items-center">
                   <div class="col mr-2">
@@ -88,7 +135,7 @@
 
                                                                 <!-- dasboard solicitante-->
           <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card h-100">
+            <div class="card h-100 rotate hover-rotate">
               <div class="card-body">
                 <div class="row align-items-center">
                   <div class="col mr-2">
@@ -106,7 +153,7 @@
 
                                                                 <!--dasboard recaudo-->
           <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card h-100">
+            <div class="card h-100 rotate hover-rotate">
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
@@ -124,7 +171,7 @@
 
                                                                <!-- dasboard Plazos de Vigencia-->
           <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card h-100">
+            <div class="card h-100 rotate hover-rotate">
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
@@ -142,7 +189,7 @@
 
                                                                     <!-- dasboard Tipo de Pagos -->
           <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card h-100">
+            <div class="card h-100 rotate hover-rotate">
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">

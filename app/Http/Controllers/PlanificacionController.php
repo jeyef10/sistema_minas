@@ -99,7 +99,6 @@ class PlanificacionController extends Controller
      */
     public function store(Request $request)
     {
-        
         $this->validate($request, [
             'fecha_inicial' => 'required|date_format:d/m/Y|after_or_equal:today',
             'fecha_final' => [
@@ -125,8 +124,15 @@ class PlanificacionController extends Controller
                 },
             ],
         ]);
-        
 
+        // Obtener al comisionado por ID de comisionado
+        $comisionado = Comisionados::findOrFail($request->input('comisionado'));
+
+        // Verificar si el comisionado tiene un id_usuario asociado
+        if (is_null($comisionado->id_usuario)) {
+            return redirect()->back()->withErrors('No posees ningún Usuario con este Comisionado.');
+        }
+        
         // Crear una nueva Planificación
         $planificacion = new Planificacion ();
         $planificacion->id_recepcion = $request->input('id_recepcion');
@@ -145,7 +151,9 @@ class PlanificacionController extends Controller
         $planificacionComisionado->save();
 
         // Obtener al comisionado por ID de comisionado y luego el usuario correspondiente
-        $comisionado = Comisionados::findOrFail($request->input('comisionado'));
+        // $comisionado = Comisionados::findOrFail($request->input('comisionado'));
+        
+        // Obtener al usuario comisionado correspondiente
         $usuarioComisionado = User::findOrFail($comisionado->id_usuario);
 
         $datosNotificacion = [
@@ -158,19 +166,6 @@ class PlanificacionController extends Controller
         $administradores = User::role('Administrador')->get();
         Notification::send($administradores, new NombreNotificacion($datosNotificacion, $planificacion));
 
-        // Crear y enviar la notificación
-        
-        // $usuariosNotificar = User::role(['Administrador', 'Comisionado'])->get();
-        // $datosNotificacion = [
-        //     /* 'mensaje' => 'Se ha creado una nueva planificación.', */
-        //     /* 'link' => route('create', ['id' => $planificacion->id]), */
-        //     'id_planificacion' => $planificacion->id,
-        // ];
-
-        // dd( $datosNotificacion);
-
-        /*Notification::send($usuariosNotificar, new NombreNotificacion($datosNotificacion, $planificacion)); */
-
         $bitacora = new BitacoraController;
         $bitacora->update();
 
@@ -182,7 +177,6 @@ class PlanificacionController extends Controller
                 $errorMessage = 'Error: .';
                 return redirect()->back()->withErrors($errorMessage);
             }
-
     }
 
     /**

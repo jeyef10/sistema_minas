@@ -62,7 +62,7 @@ class ComisionadosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    /* public function store(Request $request)
     {
         $request->validate(
             [
@@ -89,7 +89,35 @@ class ComisionadosController extends Controller
                 $errorMessage = 'Error: Está cedula ya existe en la base de datos.';
                 return redirect()->back()->withErrors($errorMessage);
             }
+    } */
+
+    public function store(Request $request)
+    {
+        $request->validate(
+            [
+            'cedula' => 'unique:comisionados,cedula'
+            ],
+            [
+            'cedula.unique' => 'Está cedula ya existe en la base de datos.'
+            ]
+        );
+
+        $comisionado = Comisionados::create($request->all());
+
+        // Asociar los municipios al comisionado
+        $comisionado->municipios()->sync($request->municipios);
+
+        $bitacora = new BitacoraController;
+        $bitacora->update();
+
+        try {
+            return redirect()->route('comisionado.index')->with('success', 'Comisionado Registrado Exitosamente.');
+        } catch (QueryException $exception) {
+            $errorMessage = 'Error: Está cedula ya existe en la base de datos.';
+            return redirect()->back()->withErrors($errorMessage);
+        }
     }
+
 
     /**
      * Display the specified resource.

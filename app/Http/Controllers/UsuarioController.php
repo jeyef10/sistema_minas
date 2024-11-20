@@ -210,11 +210,40 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    /* public function destroy($id)
     {
         User::find($id)->delete();
         $bitacora = new BitacoraController;
         $bitacora->update();
         return redirect()->route('usuarios.index')->with('eliminar', 'ok');
+    } */
+
+    public function destroy($id)
+{
+    // Obtener el usuario que se va a eliminar
+    $user = User::find($id);
+
+    // Verificar si el usuario tiene el rol de "Administrador"
+    if ($user->hasRole('Administrador')) {
+        // Contar el número de administradores restantes
+        $adminCount = User::role('Administrador')->count();
+
+        // Si solo hay un administrador, no permitir la eliminación
+        if ($adminCount <= 1) {
+            return redirect()->route('usuarios.index')->with('error', 'No puedes eliminar este usuario porque es el último con el Rol Administrador.');
+        }
     }
+
+    // Eliminar la referencia en la tabla comisionados 
+    Comisionados::where('id_usuario', $user->id)->update(['id_usuario' => null]);
+
+    // Eliminar el usuario
+    $user->delete();
+
+    $bitacora = new BitacoraController;
+    $bitacora->update();
+
+    return redirect()->route('usuarios.index')->with('eliminar', 'ok');
+}
+
 }
