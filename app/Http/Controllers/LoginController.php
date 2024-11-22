@@ -24,7 +24,7 @@ class LoginController extends Controller
         if(!Auth::validate($credentials)):
             
            return redirect()->to('/login')
-                ->withErrors(trans('El Usuario/Emial y/o Constraseña son Incorrectos.'));
+                ->withErrors(trans('El Usuario/Email y/o Constraseña son Incorrectos.'));
         endif;
         $user = Auth::getProvider()->retrieveByCredentials($credentials);
         

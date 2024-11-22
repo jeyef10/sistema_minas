@@ -166,6 +166,8 @@ Route::get('/comprobantepago/create', [ComprobantePagoController::class, 'create
 Route::get('/comprobantepago/create/{id}', [ComprobantePagoController::class, 'create'])->name('comprobantepago.create')->middleware('auth');
 Route::resource('comprobantepago', ComprobantePagoController::class)->middleware('auth');
 Route::get('/comprobantepago/detalles/{id}', [ComprobantePagoController::class, 'getInspeccionDetalles']);
+Route::get('/comprobantepago/asignacion/{id}', [ComprobantePagoController::class, 'asignacion']);
+
 
 /* Ruta Licencia */
 Route::get('/licencia', [LicenciaController::class,'index'])->name('licencia')->middleware('auth');

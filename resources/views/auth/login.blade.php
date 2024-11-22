@@ -70,11 +70,11 @@
                 <div class="toggle-panel toggle-left">
                     <h1>¡Vaya! Parece que tienes problemas de acceso</h1>
                     <p>Ingrese su correo electrónico para recuperar contraseña</p>
-                    <button class="hidden" id="login">Inicar Cuenta</button>
+                    <button class="hidden" id="login">Iniciar Cuenta</button>
                 </div>
                 <div class="toggle-panel toggle-right">
                     <h1>¡Hola Amigo(a)!</h1>
-                    <p>Regístrese con sus datos personales para utilizar todas las funciones del sitio</p>
+                    <p>Bienvenido al Sistema para la Gestión de Solicitudes y Licencias de Minerales no Metálicos (SIGESOLI)</p>
                     <a href="#" id="register" class="hidden"> Restablecer Contraseña </a>
                     {{-- <button class="hidden" id="register">Crear una cuenta</button> --}}
                 </div>

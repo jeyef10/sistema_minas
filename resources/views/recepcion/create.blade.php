@@ -39,7 +39,7 @@
                                     <label for="persona" class="font-weight-bold text-primary">Solicitante</label>
                                     <div style="display: flex;">
                                         <select class="select2-single form-control" id="solicitante" name="solicitante_especifico_id" >
-                                            <option value="">Seleccione una Persona</option>
+                                            <option value="">Seleccione un Solicitante</option>
                                         </select>
                                     </div>
                                 </div>
@@ -88,9 +88,9 @@
                             <div class="row">
 
                                 <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">Categoria</label>
+                                    <label  class="font-weight-bold text-primary">Categoría</label>
                                     <select class="select2-single form-control" name="categoria" id="categoria">
-                                        <option value="" selected="true" disabled>Seleccione una Categoria</option>
+                                        <option value="" selected="true" disabled>Seleccione una Categoría</option>
                                         <option value="Aprovechamiento">Aprovechamiento</option>
                                         <option value="Procesamiento">Procesamiento</option>
                                     </select>
@@ -169,7 +169,7 @@
              method: 'GET',
              success: function(data) {
                  // Assuming data is an array of solicitante objects
-                 var options = '<option value="">Seleccione una Persona</option>';
+                 var options = '<option value="">Seleccione un Solicitante</option>';
  
                  data.forEach(function(solicitante) {
                  if (solicitante.solicitante_especifico || solicitante) {
@@ -324,7 +324,12 @@
         fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitud}&lon=${longitud}&format=json&addressdetails=1&language=es`)
             .then(response => response.json())
             .then(data => {
-              const direccion = data.address.road + ", " + data.address.postcode + ", " + data.address.county + ", " + data.address.country;
+                let estado = data.address.state;
+                if (estado.includes('State')) {
+                    estado = estado.replace(' State', '');
+                } 
+                 
+              const direccion = data.address.road + ", " + data.address.postcode + ", " + data.address.county + ", " + estado + ", " + data.address.country;
       
               // Elimina cualquier marcador existente
               if (marcador) {

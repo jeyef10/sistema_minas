@@ -31,7 +31,7 @@
                                 </div>
 
                                 <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">Categoria</label>
+                                    <label  class="font-weight-bold text-primary">Categoría</label>
                                     <select class="select2-single form-control" name="categoria_recaudos[]" multiple="multiple" id="select2Multiple">
                                         <option value="0" disabled>Seleccione una Categoria</option>
                                         <option value="Aprovechamiento" {{ in_array('Aprovechamiento', json_decode($recaudo->categoria_recaudos, true)) ? 'selected' : '' }}>Aprovechamiento</option>

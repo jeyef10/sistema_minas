@@ -21,7 +21,7 @@
                             {{ ('PDF') }}
                          </a>
                             
-                      <h2 class="font-weight-bold text-primary">Resumen Habilitado</h2>
+                      <h2 class="font-weight-bold text-primary" style="margin-left: 6%;">Resumen Habilitado</h2>
 
                   </div>
 

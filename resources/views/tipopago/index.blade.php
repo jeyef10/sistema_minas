@@ -21,7 +21,7 @@
                         {{ ('PDF') }}
                         </a>
 
-                        <h2 class="font-weight-bold text-primary" style="margin-left: 6%;">Gestión de Pago</h2>
+                        <h2 class="font-weight-bold text-primary" style="margin-left: 6%;">Gestión de Tipo de Pago</h2>
                             <!-- @can('crear-recaudo') -->
                                 <form action="{{ route('tipopago.create') }}" method="get" style="display:inline;">
                                     <button type="submit" class="btn btn-primary btn-mb"> <span class="">

@@ -231,7 +231,7 @@ class PlanificacionController extends Controller
         $planificacion->id_comisionado = $request->input('comisionado');
         $planificacion->fecha_inicial = $request->input('fecha_inicial');
         $planificacion->fecha_final = $request->input('fecha_final');
-        $planificacion->estatus = $request->input('estatus');
+        // $planificacion->estatus = $request->input('estatus');
 
         $planificacion->save();
 

@@ -26,7 +26,7 @@
                         <table class="table align-items-center table-flush" id="dataTable">
                             <thead class="thead-light">
                                 <tr>
-                                    <th class="font-weight-bold text-Secondary">N Resolución</th>
+                                    <th class="font-weight-bold text-Secondary">N° Resolución</th>
                                     <th class="font-weight-bold text-Secondary">Catastro Minero</th>
                                     <th class="font-weight-bold text-Secondary">Vigencia de Licencia</th>
                                     <th class="font-weight-bold text-Secondary">Fecha Inicial</th>

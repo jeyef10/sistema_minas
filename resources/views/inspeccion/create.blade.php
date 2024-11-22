@@ -65,7 +65,7 @@
                                                     <p style="margin-left: 0.5%"><strong>Tipo de Solicitud</strong>@if ($planificacion->id_recepcion) {{$planificacion->recepcion->categoria }} @endif</p>
                                                     <p style="margin-left: 0.5%"><strong>Latitud: </strong>@if ($planificacion->id_recepcion) {{ $planificacion->recepcion->latitud }} @endif</p>
                                                     <p style="margin-left: 0.5%"><strong>Longitud: </strong>@if ($planificacion->id_recepcion) {{ $planificacion->recepcion->longitud }} @endif</p>
-                                                    <p style="margin-left: 0.5%"><strong>Direccion: </strong>@if ($planificacion->id_recepcion) {{ $planificacion->recepcion->direccion }} @endif</p>
+                                                    <p style="margin-left: 0.5%"><strong>Dirección: </strong>@if ($planificacion->id_recepcion) {{ $planificacion->recepcion->direccion }} @endif</p>
                                                     <p style="margin-left: 0.5%"><strong>Mineral: </strong>@if ($planificacion->id_recepcion) {{ $planificacion->recepcion->mineral->nombre }} @endif</p>
     
                                                 </div>
@@ -109,7 +109,7 @@
                                     <div class="col-4">
                                         <label for="comisionado" class="font-weight-bold text-primary">Fecha Inicial y Fecha Final</label>
                                         <select class="select2-single form-control"disabled>
-                                            <option value="0">Seleccione un comisionado</option>
+                                            <option value="0">Seleccione una Fecha</option>
                                             @foreach($planificacion as $planificaciones)
                                             <option value="{{ $comisionado->id }}" @selected($planificacion->id == $planificacion->id)> {{ $planificacion->fecha_inicial }} - {{ $planificacion->fecha_final }} </option>
                                             @endforeach
@@ -168,10 +168,10 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">UTM Norte</label>
-                                        <input type="text" class="form-control" id="utm_norte" name="utm_norte" style="background: white;" value="{{ old('utm_norte') }}" placeholder="Ingrese la utm_norte" autocomplete="off" onkeypress="return solonum(event);">                                  
+                                        <input type="text" class="form-control" id="utm_norte" name="utm_norte" style="background: white;" value="{{ old('utm_norte') }}" placeholder="Ingrese la UTM Norte" autocomplete="off" onkeypress="return solonum(event);">                                  
                                     
                                         <label  class="font-weight-bold text-primary">UTM Este</label>
-                                        <input type="text" class="form-control" id="utm_este" name="utm_este" style="background: white;" value="{{ old('utm_este') }}" placeholder="Ingrese la utm_este" autocomplete="off" onkeypress="return solonum(event);">                           
+                                        <input type="text" class="form-control" id="utm_este" name="utm_este" style="background: white;" value="{{ old('utm_este') }}" placeholder="Ingrese la UTM Este" autocomplete="off" onkeypress="return solonum(event);">                           
                                     </div>
 
                                 </div>

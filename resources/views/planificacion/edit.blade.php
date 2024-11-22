@@ -65,7 +65,7 @@
                                             <p style="margin-left: 0.5%"><strong>Municipio: </strong>@if ($planificacion->recepcion && $planificacion->recepcion->municipio) {{ $planificacion->recepcion->municipio->nom_municipio }} @endif</p>
                                             <p style="margin-left: 0.5%"><strong>Latitud: </strong>@if ($planificacion->recepcion) {{ $planificacion->recepcion->latitud }} @endif</p>
                                             <p style="margin-left: 0.5%"><strong>Longitud: </strong>@if ($planificacion->recepcion) {{ $planificacion->recepcion->longitud }} @endif</p>
-                                            <p style="margin-left: 0.5%"><strong>Direccion: </strong>@if ($planificacion->recepcion) {{ $planificacion->recepcion->direccion }} @endif</p>
+                                            <p style="margin-left: 0.5%"><strong>Dirección: </strong>@if ($planificacion->recepcion) {{ $planificacion->recepcion->direccion }} @endif</p>
                                             <p style="margin-left: 0.5%"><strong>Mineral: </strong>@if ($planificacion->recepcion && $planificacion->recepcion->mineral) {{ $planificacion->recepcion->mineral->nombre }} @endif</p>
 
                                         </div> 
@@ -138,14 +138,14 @@
                                     </div>
                                 </div>
 
-                                <div class="col-4">
+                                {{-- <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Estatus de la Planificación</label>
                                     <select class="select2single form-control" name="estatus" id="estatus">
                                         <option value="0" selected="true" disabled>Seleccione un Estatus</option>
                                         <option value="Asignado" {{ (old('estatus', $planificacion->estatus ?? '') === 'Asignado') ? 'selected' : '' }}>Asignado</option>
                                         <option value="Pendiente" {{ (old('estatus', $planificacion->estatus ?? '') === 'Pendiente') ? 'selected' : '' }}>Pendiente</option>
                                     </select>
-                                </div>
+                                </div> --}}
 
                             </div>
                         </div>

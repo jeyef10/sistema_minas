@@ -65,6 +65,50 @@ class ComprobantePagoController extends Controller
 
     }
 
+    // public function asignacion($id) { 
+    //     // Encuentra la inspección por ID 
+    //     $inspeccion_asignacion = Inspecciones::with('planificacion.recepcion')->find($id);
+
+        
+    //     // Verifica si la inspección existe 
+    //     if (!$inspeccion_asignacion) { 
+    //         return response()->json(['error' => 'Inspección no encontrada.'], 404); 
+    //     } 
+        
+        
+    //     // Devuelve los datos de la inspección en formato JSON 
+    //     return response()->json($inspeccion_asignacion);
+
+    // }
+
+    // public function asignacion($id) {
+    //     // Encuentra la inspección por ID, cargando las relaciones necesarias
+    //     $inspeccion_asignacion = Inspecciones::with('planificacion.recepcion')->find($id);
+    
+    //     // Verifica si la inspección existe
+    //     if (!$inspeccion_asignacion) { 
+    //         return response()->json(['error' => 'Inspección no encontrada.'], 404);
+    //     }
+    
+    //     // Obtén la categoría de la primera planificación y recepción asociadas
+    //     $categoria = $inspeccion_asignacion->planificacion->first()?->recepcion->first()?->categoria;
+    
+    //     // Agrega la categoría a los datos de la inspección
+    //     $inspeccion_asignacion->categoria = $categoria;
+    
+    //     // Devuelve los datos de la inspección en formato JSON, incluyendo la categoría
+    //     return response()->json($inspeccion_asignacion);
+    // }
+
+    public function asignacion($id)
+{
+    $inspeccion = Inspecciones::find($id);
+    $categoria = $inspeccion->planificacion->recepcion->categoria;
+
+    
+
+    return response()->json(['categoria' => $categoria]);
+}
 
     /**
      * Show the form for creating a new resource.

@@ -40,7 +40,6 @@
                                     <th class="font-weight-bold text-Secondary">Comisionado Asignado</th>
                                     <th class="font-weight-bold text-Secondary">Fecha Inicial</th>
                                     <th class="font-weight-bold text-Secondary">Fecha Final</th>
-                                    <th class="font-weight-bold text-Secondary">Estatus</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center></th>
                                   </tr>
                             </thead>
@@ -57,7 +56,7 @@
                                         <td class="font-weight-bold text-Secondary">{{ $planificacion->comisionados->cedula }} - {{ $planificacion->comisionados->nombres}} {{ $planificacion->comisionados->apellidos}}</td>
                                         <td class="font-weight-bold text-Secondary">{{ date('d/m/Y', strtotime($planificacion->fecha_inicial)) }}</td>
                                         <td class="font-weight-bold text-Secondary">{{ date('d/m/Y', strtotime($planificacion->fecha_final))}}</td>
-                                        <td class="font-weight-bold text-Secondary">{{ $planificacion->estatus}}</td>
+                                        
 
                                         <td>
 

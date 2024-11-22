@@ -38,9 +38,9 @@
                                     <input type="text" class="form-control" id="nombre" name="nombre" style="background: white;" value="" placeholder="Ingrese el nombre" autocomplete="off" oninput="capitalizarInput('nombre')" onkeypress="return soloLetras(event);">
                                 </div>
                                 <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">Categoria</label>
+                                    <label  class="font-weight-bold text-primary">Categoría</label>
                                     <select class="select2-single form-control" name="categoria" id="categoria">
-                                        <option value="" selected="true" disabled>Seleccione una Mineral</option>
+                                        <option value="" selected="true" disabled>Seleccione una Categoría</option>
                                         <option value="Aprovechamiento">Aprovechamiento</option>
                                         <option value="Procesamiento">Procesamiento</option>
                                     </select>

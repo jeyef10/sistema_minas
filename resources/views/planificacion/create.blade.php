@@ -64,7 +64,7 @@
                                                 <p style="margin-left: 0.5%"><strong>Municipio: </strong>@if ($recepcion && $recepcion->municipio) {{ $recepcion->municipio->nom_municipio }} @endif</p>
                                                 <p style="margin-left: 0.5%"><strong>Latitud: </strong>@if ($recepcion) {{ $recepcion->latitud }} @endif</p>
                                                 <p style="margin-left: 0.5%"><strong>Longitud: </strong>@if ($recepcion) {{ $recepcion->longitud }} @endif</p>
-                                                <p style="margin-left: 0.5%"><strong>Direccion: </strong>@if ($recepcion) {{ $recepcion->direccion }} @endif</p>
+                                                <p style="margin-left: 0.5%"><strong>Dirección: </strong>@if ($recepcion) {{ $recepcion->direccion }} @endif</p>
                                                 <p style="margin-left: 0.5%"><strong>Mineral: </strong>@if ($recepcion && $recepcion->mineral) {{ $recepcion->mineral->nombre }} @endif</p>
 
                                             </div>

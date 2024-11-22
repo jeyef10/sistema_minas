@@ -13,7 +13,7 @@
 
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
     
-                    <h2 class="font-weight-bold text-primary" style="margin-left: 44%;">Actualizar Pago</h2>
+                    <h2 class="font-weight-bold text-primary" style="margin-left: 44%;">Actualizar Tipo de Pago</h2>
     
                     </div>
                 
@@ -28,7 +28,7 @@
                                 
                                 <div class="col-4">
                                     <label for="recaudo" class="font-weight-bold text-primary">Método de Pago</label>
-                                    <input type="text" class="form-control" id="forma_pago" name="forma_pago" style="background: white;" value="{{ isset($tipo_pago->forma_pago)?$tipo_pago->forma_pago:'' }}" placeholder="Ingrese un Recaudo" autocomplete="off" onkeypress="return soloLetras(event);" oninput="capitalizarInput('forma_pago')">
+                                    <input type="text" class="form-control" id="forma_pago" name="forma_pago" style="background: white;" value="{{ isset($tipo_pago->forma_pago)?$tipo_pago->forma_pago:'' }}" placeholder="Ingrese un Tipo de Pago" autocomplete="off" onkeypress="return soloLetras(event);" oninput="capitalizarInput('forma_pago')">
                                 </div>
 
                             </div>

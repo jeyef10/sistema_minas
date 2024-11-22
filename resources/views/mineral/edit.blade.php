@@ -43,7 +43,7 @@
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Categoria</label>
                                     <select class="select2-single form-control" name="categoria" id="categoria">
-                                        <option value="0" selected="true" disabled>Seleccione una Mineral</option>
+                                        <option value="0" selected="true" disabled>Seleccione una Categoría</option>
                                         <option value="Aprovechamiento" {{ (old('categoria', $mineral->categoria ?? '') === 'Aprovechamiento') ? 'selected' : '' }}>Aprovechamiento</option>
                                         <option value="Procesamiento" {{ (old('categoria', $mineral->categoria ?? '') === 'Procesamiento') ? 'selected' : '' }}>Procesamiento</option>
                                     </select>

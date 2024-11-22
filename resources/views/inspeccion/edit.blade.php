@@ -65,7 +65,7 @@
                                                 <p style="margin-left: 0.5%"><strong>Tipo de Solicitud</strong>@if ($inspeccion->planificacion->id_recepcion) {{$inspeccion->planificacion->recepcion->categoria }} @endif</p>
                                                 <p style="margin-left: 0.5%"><strong>Latitud: </strong>@if ($inspeccion->planificacion->id_recepcion) {{ $inspeccion->planificacion->recepcion->latitud }} @endif</p>
                                                 <p style="margin-left: 0.5%"><strong>Longitud: </strong>@if ($inspeccion->planificacion->id_recepcion) {{ $inspeccion->planificacion->recepcion->longitud }} @endif</p>
-                                                <p style="margin-left: 0.5%"><strong>Direccion: </strong>@if ($inspeccion->planificacion->id_recepcion) {{ $inspeccion->planificacion->recepcion->direccion }} @endif</p>
+                                                <p style="margin-left: 0.5%"><strong>Dirección: </strong>@if ($inspeccion->planificacion->id_recepcion) {{ $inspeccion->planificacion->recepcion->direccion }} @endif</p>
                                                 <p style="margin-left: 0.5%"><strong>Mineral: </strong>@if ($inspeccion->planificacion->id_recepcion) {{ $inspeccion->planificacion->recepcion->mineral->nombre }} @endif</p>
 
                                             </div>
@@ -97,7 +97,7 @@
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Comisionado Asignado</label>
                                         <select class="select2-single form-control" id="comisionado" name="comisionado" disabled>
-                                            <option value="0">Seleccione un municipio</option>
+                                            <option value="0">Seleccione un comisionado</option>
                                             @foreach($comisionados as $comisionado)
                                             <option value="{{ $comisionado->id }}"@selected($inspeccion->planificacion->id_comisionado == $comisionado->id)>{{ $comisionado->cedula }}
                                                 {{ $comisionado->nombres }} {{ $comisionado->apellidos }}
@@ -158,10 +158,10 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">UTM Norte</label>
-                                        <input type="text" class="form-control" id="utm_norte" name="utm_norte" style="background: white;" value="{{ isset($inspeccion->utm_norte)?$inspeccion->utm_norte:'' }}" placeholder="Ingrese la Longitud" autocomplete="off" onkeypress="return solonum(event);">                                  
+                                        <input type="text" class="form-control" id="utm_norte" name="utm_norte" style="background: white;" value="{{ isset($inspeccion->utm_norte)?$inspeccion->utm_norte:'' }}" placeholder="Ingrese la UTM Norte" autocomplete="off" onkeypress="return solonum(event);">                                  
                                     
                                         <label  class="font-weight-bold text-primary">UTM Este</label>
-                                        <input type="text" class="form-control" id="utm_este" name="utm_este" style="background: white;" value="{{ isset($inspeccion->utm_este)?$inspeccion->utm_este:'' }}" placeholder="Ingrese la Longitud" autocomplete="off" onkeypress="return solonum(event);">                           
+                                        <input type="text" class="form-control" id="utm_este" name="utm_este" style="background: white;" value="{{ isset($inspeccion->utm_este)?$inspeccion->utm_este:'' }}" placeholder="Ingrese la UTM Este" autocomplete="off" onkeypress="return solonum(event);">                           
                                     </div>
                                 
                                 </div>

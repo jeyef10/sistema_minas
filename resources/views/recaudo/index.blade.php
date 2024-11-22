@@ -41,7 +41,7 @@
                                 <tr>
                                     {{-- <th class="font-weight-bold text-Secondary">Nº</th> --}}
                                     <th class="font-weight-bold text-Secondary">Nombre</th>
-                                    <th class="font-weight-bold text-Secondary">Categoria</th>
+                                    <th class="font-weight-bold text-Secondary">Categoría</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center> </th>
                                 </tr>
                             </thead>

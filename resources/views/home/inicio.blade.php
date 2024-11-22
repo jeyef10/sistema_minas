@@ -29,12 +29,9 @@
     }
 
     .rotate {
-      animation: rotateAnimation 10s infinite linear;
+      animation: rotateAnimation 5s linear 1;
     }
 
-    .hover-rotate:hover {
-      animation: hoverRotateAnimation 2s linear;
-    }
 </style>
 
 
@@ -86,7 +83,7 @@
               <div class="card-body">
                 <div class="row align-items-center">
                   <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-uppercase mb-1">Persona Juridica</div>
+                    <div class="text-xs font-weight-bold text-uppercase mb-1">Persona JurÍdica</div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">{{ ($count_juridico) }}</div>
                     
                   </div>
@@ -210,7 +207,7 @@
           <!-- Area Chart -->
           <div class="col-xl-8 col-lg-7">
             <div class="card mb-4">
-              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
                 <h6 class="m-0 font-weight-bold text-primary">Mapa de Recepciones e Inspecciones</h6>
                 <div class="dropdown no-arrow">
                   <!-- <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
@@ -236,16 +233,17 @@
             </div>
           </div>
           <!-- Pie Chart -->
-          <div class="col-xl-4 col-lg-5">
-            <div class="card mb-4">
-              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <div style="width:32.5%; display:block;">
+            <div class="card mb-4" style="padding-top: 89.5px; padding-bottom: 89.5px;">
+            {{--<div class="card-header py-3 d-flex flex-row align-items-center justify-content-center"> --}}
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
                 <h6 class="m-0 font-weight-bold text-primary">Estadística de Ubicaciones</h6>
-                 <div class="h5 mb-0 font-weight-bold text-gray-800"></div> 
+                 <div class="h5 mb-0 font-weight-bol d text-gray-800"></div> 
               </div>
 
               <div class="card-body">
                 <div class="mb-3">
-                    <div class="small text-gray-500">Recepción
+                    <div class="small text-gray-500">Recepciones
                         <div class="small float-right"><b>{{ $count_recepcion }}</b></div>
                     </div>
                     <div class="progress" style="height: 12px;">
