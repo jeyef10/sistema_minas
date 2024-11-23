@@ -30,7 +30,7 @@
                                     <th class="font-weight-bold text-Secondary">Solicitante</th>
                                     <th class="font-weight-bold text-Secondary">Tipo de Pago</th>
                                     <th class="font-weight-bold text-Secondary">Fecha Pago</th>
-                                    <th class="font-weight-bold text-Secondary">Estatus Pago</th>
+                                    {{-- <th class="font-weight-bold text-Secondary">Estatus Pago</th> --}}
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center></th>
                                   </tr>
                             </thead>
@@ -56,7 +56,7 @@
                                         <td class="font-weight-bold text-Secondary"> {{$comprobante_pago->tipo_pago->forma_pago }}</td>
 
                                         <td class="font-weight-bold text-Secondary"> {{ date('d/m/Y', strtotime($comprobante_pago->fecha_pago)) }}</td>
-                                        <td class="font-weight-bold text-Secondary"> {{$comprobante_pago->estatus_pago }}</td>
+                                        {{-- <td class="font-weight-bold text-Secondary"> {{$comprobante_pago->estatus_pago }}</td> --}}
 
                                         <td>
 

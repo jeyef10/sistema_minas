@@ -113,6 +113,10 @@ class ComprobantePagoController extends Controller
 
         $comprabantepagos = new ComprobantePago ();
         $comprabantepagos->id_inspeccion = $request->input('id_inspeccion');
+        $comprabantepagos->nro_oficio = $request->input('nro_oficio');
+        $comprabantepagos->fecha_oficio = $request->input('fecha_oficio');
+        $comprabantepagos->estatus_oficio = $request->input('estatus_oficio');
+        $comprabantepagos->nombre_firma = $request->input('nombre_firma');
         $comprabantepagos->id_tipo_pago = $request->input('id_tipo_pago');
         $comprabantepagos->banco = $request->input('banco');
         $comprabantepagos->n_referencia = $request->input('n_referencia');
@@ -138,7 +142,7 @@ class ComprobantePagoController extends Controller
         $comprabantepagos->timbre_fiscal = $request->input('timbre_fiscal');
         $comprabantepagos->observaciones_fiscal = $request->input('observaciones_fiscal');
         $comprabantepagos->fecha_pago = $request->input('fecha_pago');
-        $comprabantepagos->estatus_pago = $request->input('estatus_pago');
+        // $comprabantepagos->estatus_pago = $request->input('estatus_pago');
 
         $comprabantepagos->save();
 
@@ -177,6 +181,10 @@ class ComprobantePagoController extends Controller
     {
         $comprobante_pago = ComprobantePago::findOrFail($id);
         $inspeccion = Inspecciones::find($id);
+        $nro_oficio = $comprobante_pago->nro_oficio;
+        $fecha_oficio = $comprobante_pago->fecha_oficio;
+        $estatus_oficio = $comprobante_pago->estatus_oficio;
+        $nombre_firma = $comprobante_pago->nombre_firma;
         $tipo_pagos = TipoPago::all();
         $banco = $comprobante_pago->banco;
         $n_referencia = $comprobante_pago->n_referencia;
@@ -185,9 +193,9 @@ class ComprobantePagoController extends Controller
         $timbre_fiscal = $comprobante_pago->timbre_fiscal;
         $observaciones_fiscal = $comprobante_pago->observaciones_fiscal;
         $fecha_pago = date('d/m/Y', strtotime($comprobante_pago->fecha_pago));
-        $estatus_pago = $comprobante_pago->estatus_pago;
-        return view('comprobantepago.edit' , compact('comprobante_pago', 'inspeccion', 'tipo_pagos', 'banco', 'n_referencia',
-         'comprobante_pdf', 'observaciones_com', 'timbre_fiscal', 'observaciones_fiscal', 'fecha_pago', 'estatus_pago'));
+        // $estatus_pago = $comprobante_pago->estatus_pago;
+        return view('comprobantepago.edit' , compact('comprobante_pago', 'inspeccion', 'nro_oficio', 'fecha_oficio', 'estatus_oficio', 'nombre_firma', 'tipo_pagos', 'banco', 'n_referencia',
+         'comprobante_pdf', 'observaciones_com', 'timbre_fiscal', 'observaciones_fiscal', 'fecha_pago'));
     }
 
     /**
@@ -207,6 +215,10 @@ class ComprobantePagoController extends Controller
         // Buscar El comprobante existente        
         $comprobante_pago = ComprobantePago::findOrFail($id);
         $comprobante_pago->id_inspeccion = $request->input('id_inspeccion');
+        $comprobante_pago->nro_oficio = $request->input('nro_oficio');
+        $comprobante_pago->fecha_oficio = $request->input('fecha_oficio');
+        $comprobante_pago->estatus_oficio = $request->input('estatus_oficio');
+        $comprobante_pago->nombre_firma = $request->input('nombre_firma');
         $comprobante_pago->id_tipo_pago = $request->input('id_tipo_pago');
         $comprobante_pago->banco = $request->input('banco');
         $comprobante_pago->n_referencia = $request->input('n_referencia');
@@ -234,7 +246,7 @@ class ComprobantePagoController extends Controller
         $comprobante_pago->timbre_fiscal = $request->input('timbre_fiscal');
         $comprobante_pago->observaciones_fiscal = $request->input('observaciones_fiscal');
         $comprobante_pago->fecha_pago = $request->input('fecha_pago');
-        $comprobante_pago->estatus_pago = $request->input('estatus_pago');
+        // $comprobante_pago->estatus_pago = $request->input('estatus_pago');
 
         $comprobante_pago->save();
 

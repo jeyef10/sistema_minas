@@ -114,6 +114,12 @@
                                         <option value="Negado">Negado</option>
                                     </select>
                                 </div>
+
+                                <div class="col-4">
+                                    <label  class="font-weight-bold text-primary">Nombre de Titular de Firma</label>
+                                    <input type="text" class="form-control" id="nombre_firma" name="nombre_firma" oninput="capitalizarInput('')"></input>                                 
+                                </div>
+
                             </div>
                         </div>
 

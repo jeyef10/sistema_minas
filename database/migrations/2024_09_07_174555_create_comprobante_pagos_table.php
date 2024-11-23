@@ -17,6 +17,10 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('id_inspeccion');
+            $table->string('nro_oficio');
+            $table->date('fecha_oficio');
+            $table->string('estatus_oficio');
+            $table->string('nombre_firma');
             $table->unsignedBigInteger('id_tipo_pago');
             $table->string('banco')->nullable();
             $table->string('n_referencia')->nullable();
@@ -25,7 +29,7 @@ return new class extends Migration
             $table->string('timbre_fiscal');
             $table->string('observaciones_fiscal')->nullable(); // Cambiado a 'text' para permitir más caracteres
             $table->date('fecha_pago');
-            $table->string('estatus_pago');
+            // $table->string('estatus_pago');
 
             $table->timestamps();
 

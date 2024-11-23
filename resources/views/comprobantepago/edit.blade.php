@@ -98,7 +98,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                             </div>
-                                            <input type="text" id="fecha_oficio" name="fecha_oficio" class="form-control" value="{{ $fecha_oficio }}" id="simpleDataInput">
+                                            <input type="text" id="fecha_oficio" name="fecha_oficio" class="form-control" value="{{ date('d/m/Y', strtotime($comprobante_pago->fecha_oficio) )}}" id="simpleDataInput">
                                         </div>
                                     </div>
                                 </div>
@@ -110,6 +110,11 @@
                                         <option value="Aprobado" {{ (old('estatus', $comprobante_pago->estatus_oficio ?? '') === 'Aprobado') ? 'selected' : '' }}>Aprobado</option>
                                         <option value="Negado" {{ (old('estatus', $comprobante_pago->estatus_oficio ?? '') === 'Negado') ? 'selected' : '' }}>Negado</option>
                                     </select>
+                                </div>
+
+                                <div class="col-4">
+                                    <label  class="font-weight-bold text-primary">Nombre de Titular de Firma</label>
+                                    <input type="text" class="form-control" id="nombre_firma" name="nombre_firma" value="{{ $nombre_firma }}" oninput="capitalizarInput('')"></input>                                 
                                 </div>
 
                                 <hr class="sidebar-divider">
