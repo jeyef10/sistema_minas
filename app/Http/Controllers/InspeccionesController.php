@@ -128,6 +128,8 @@ class InspeccionesController extends Controller
            
         $inspecciones->fecha_inspeccion = $request->input('fecha_inspeccion');
         $inspecciones->estatus = $request->input('estatus');
+        // $inspecciones->estatus_resp = $request->input('estatus_resp');
+
             if ($inspecciones->estatus == "Aprobado") {
 
                 /* //Notification how read
@@ -168,10 +170,30 @@ class InspeccionesController extends Controller
             }
         }
 
-                $inspecciones->estatus_resp = $request->input('estatus_resp');
+                // $inspecciones->estatus_resp = $request->input('estatus_resp');
+
+                if ($inspecciones->estatus_resp = '') {
+                    $inspecciones->estatus_resp = 'Pendiente';
+                }else{
+                    $inspecciones->estatus_resp = $request->input('estatus_resp');
+                }
             } else {
-                $inspecciones->estatus_resp = '';
+                $inspecciones->estatus_resp = 'Negado';
             }
+
+        //     $inspeccion->estatus_resp = $request->input('estatus_resp');
+
+        // if ($inspeccion->estatus == "Aprobado") {
+
+        //     if ($inspeccion->estatus_resp = '') {
+        //         $inspeccion->estatus_resp = 'Pendiente';
+        //     }else{
+        //         $inspeccion->estatus_resp = $request->input('estatus_resp');
+        //     }
+           
+        // } else {
+        //     $inspeccion->estatus_resp = 'Negado';
+        // }
         $inspecciones->longitud_terreno = $request->input('longitud_terreno');
         $inspecciones->ancho = $request->input('ancho');
         $inspecciones->profundidad = $request->input('profundidad');
@@ -306,6 +328,20 @@ class InspeccionesController extends Controller
         $inspeccion->fecha_inspeccion = $request->input('fecha_inspeccion');
         $inspeccion->estatus = $request->input('estatus');
         $inspeccion->estatus_resp = $request->input('estatus_resp');
+
+        if ($inspeccion->estatus == "Aprobado") {
+
+            if ($inspeccion->estatus_resp = '') {
+                $inspeccion->estatus_resp = 'Pendiente';
+            }else{
+                $inspeccion->estatus_resp = $request->input('estatus_resp');
+            }
+           
+        } else {
+            $inspeccion->estatus_resp = 'Negado';
+        }
+
+
         $inspeccion->longitud_terreno = $request->input('longitud_terreno');
         $inspeccion->ancho = $request->input('ancho');
         $inspeccion->profundidad = $request->input('profundidad');

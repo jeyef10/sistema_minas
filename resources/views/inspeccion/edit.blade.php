@@ -235,7 +235,7 @@
                                             </div>
                                         </div>
                                     @else
-                                        <input type="hidden" name="estatus_resp" id="estatus_resp" value="Pendiente">
+                                        {{-- <input type="hidden" name="estatus_resp" id="estatus_resp" value="Pendiente"> --}}
                                     @endif
 
                                 </div>

@@ -93,7 +93,7 @@
                     <a class="collapse-item" href="{{ url('inspeccion') }}">Inspección</a>
                     @endcan
 
-                    <a class="collapse-item" href="{{ url('comprobantepago') }}">Comprobante de Pago</a>
+                    <a class="collapse-item" href="{{ url('comprobantepago') }}">Pago de Licencia</a>
                     
                     @can('ver-licencia')
                     <a class="collapse-item" href="{{ url('licencia') }}">Licencia</a>
