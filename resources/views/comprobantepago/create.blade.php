@@ -90,6 +90,38 @@
                                 <input type="hidden" class="form-control" id="id_inspeccion" name="id_inspeccion" style="background: white;" value="{{ isset($inspeccion->id)?$inspeccion->id:'' }}" placeholder="" autocomplete="off">                                  
 
                                 <div class="col-4">
+                                    <label  class="font-weight-bold text-primary">N° de Oficio</label>
+                                    <input type="text" class="form-control" id="nro_oficio" name="nro_oficio" oninput="capitalizarInput('')"></input>                                 
+                                </div>
+
+                                <div class="col-4">                                     
+                                    <div class="form-group" id="simple-date1">
+                                        <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha Oficio</label>
+                                        <div class="input-group date">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                            </div>
+                                            <input type="text" id="fecha_oficio" name="fecha_oficio" class="form-control" value="<?php echo date('d/m/Y'); ?>" id="simpleDataInput">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-4">
+                                    <label  class="font-weight-bold text-primary">Estatus Oficio</label>
+                                    <select class="select2single form-control" name="estatus_oficio" id="estatus_oficio">
+                                        <option value="" selected="true" disabled>Seleccione un Estatus</option>
+                                        <option value="Aprobado">Aprobado</option>
+                                        <option value="Negado">Negado</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                                <hr class="sidebar-divider">
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-4">
                                     <label for="persona" class="font-weight-bold text-primary">Tipo de Pago</label>
                                     <select class="select2-single form-control" id="tipo_pago" name="id_tipo_pago">
                                         <option value="0">Seleccione un Tipo de Pago</option>
@@ -109,9 +141,8 @@
                                     <label class="font-weight-bold text-primary">N° Referencia</label>
                                     <input type="text" class="form-control" id="n_referencia" name="n_referencia" style="background: white;" value="" placeholder="Ingrese la Referencia" autocomplete="off" onkeypress="return solonum(event);" >
                                 </div>
-
                             </div>
-
+                                
                         </div>
 
                         <div class="card-body">
@@ -164,14 +195,14 @@
                                     </div>
                                 </div>
 
-                                <div class="col-3">
+                                {{-- <div class="col-3">
                                     <label  class="font-weight-bold text-primary">Estatus Aprobación de Licencia</label>
                                     <select class="select2single form-control" name="estatus_pago" id="estatus_pago">
                                         <option value="" selected="true" disabled>Seleccione un Estatus</option>
                                         <option value="Aprobado">Aprobado</option>
                                         <option value="Pendiente">Pendiente</option>
                                     </select>
-                                </div>
+                                </div> --}}
 
                             </div>
 

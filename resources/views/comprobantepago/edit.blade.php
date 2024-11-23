@@ -86,7 +86,34 @@
                             <div class="row">
 
                                 <input type="hidden" class="form-control" id="id_inspeccion" name="id_inspeccion" style="background: white;" value="{{ isset($comprobante_pago->inspeccion->id)?$comprobante_pago->inspeccion->id:'' }}" placeholder="" autocomplete="off">                                  
+                                <div class="col-4">
+                                    <label  class="font-weight-bold text-primary">N° de Oficio</label>
+                                    <input type="text" class="form-control" id="nro_oficio" name="nro_oficio" value="{{ isset($comprobante_pago->nro_oficio)?$comprobante_pago->nro_oficio:'' }}" oninput="capitalizarInput('')"></input>                                 
+                                </div>
 
+                                <div class="col-4">                                     
+                                    <div class="form-group" id="simple-date1">
+                                        <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha Oficio</label>
+                                        <div class="input-group date">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                            </div>
+                                            <input type="text" id="fecha_oficio" name="fecha_oficio" class="form-control" value="{{ $fecha_oficio }}" id="simpleDataInput">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-4">
+                                    <label  class="font-weight-bold text-primary">Estatus Oficio</label>
+                                    <select class="select2single form-control" name="estatus_oficio" id="estatus_oficio">
+                                        <option value="" selected="true" disabled>Seleccione un Estatus</option>
+                                        <option value="Aprobado" {{ (old('estatus', $comprobante_pago->estatus_oficio ?? '') === 'Aprobado') ? 'selected' : '' }}>Aprobado</option>
+                                        <option value="Negado" {{ (old('estatus', $comprobante_pago->estatus_oficio ?? '') === 'Negado') ? 'selected' : '' }}>Negado</option>
+                                    </select>
+                                </div>
+
+                                <hr class="sidebar-divider">
+                                
                                 <div class="col-4">
                                     <label for="persona" class="font-weight-bold text-primary">Tipo de Pago</label>
                                     <select class="select2-single form-control" id="tipo_pago" name="id_tipo_pago">
@@ -164,14 +191,14 @@
                                     </div>
                                 </div>
 
-                                <div class="col-4">
+                                {{-- <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Estatus Aprobación de Licencia</label>
                                     <select class="select2single form-control" name="estatus_pago" id="estatus_pago">
                                         <option value="0" selected="true" disabled>Seleccione un Estatus</option>
                                         <option value="Aprobado" {{ (old('estatus_pago', $comprobante_pago->estatus_pago ?? '') === 'Aprobado') ? 'selected' : '' }}>Aprobado</option>
                                         <option value="Pendiente" {{ (old('estatus_pago', $comprobante_pago->estatus_pago ?? '') === 'Pendiente') ? 'selected' : '' }}>Pendiente</option>
                                     </select>
-                                </div>
+                                </div> --}}
 
                             </div>
 

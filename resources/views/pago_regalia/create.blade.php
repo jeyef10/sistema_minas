@@ -458,39 +458,6 @@
             calcularMonto();
         });
 
-        // function calcularMonto() {
-        //     const mineralSelect = document.getElementById('id_mineral');
-        //     const selectedOption = mineralSelect.options[mineralSelect.selectedIndex];
-        //     const textoSeleccionado = selectedOption.text.split('-');
-        //     const tasa = parseFloat(textoSeleccionado[2].trim()) || 0;  // Usar el valor de la tasa
-        //     const metrosCubicos = parseFloat(document.getElementById('monto_apro').value) || 0;
-        //     const metodoPago = document.getElementById('metodo_apro').value;
-            
-        //     let total = metrosCubicos * tasa;
-        //     let resultado_apro;
-
-        //     switch(metodoPago) {
-        //         case 'Pago unico':
-        //             resultado_apro = total;
-        //             break;
-        //         case 'Pago 2 parte':
-        //             resultado_apro = total / 2;
-        //             break;
-        //         case 'Pago 3 parte':
-        //             resultado_apro = total / 3;
-        //             break;
-        //         default:
-        //             resultado_apro = 0;
-        //     }
-
-        //     document.getElementById('resultado_apro').value = `$${resultado_apro.toFixed(2)}`;
-        // }
-
-        // // Inicializar la visualización correcta basado en el valor inicial del select
-        // document.addEventListener("DOMContentLoaded", function() {
-        //     calcularMonto();
-        // });
-
     </script>
         
 
