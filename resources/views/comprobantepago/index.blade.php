@@ -39,13 +39,13 @@
                             <tbody>
     
                                 @foreach ($inspecciones as $inspeccion)
-                                    <tr>
+                                    <tr data-inspeccion-id="{{ $inspeccion->id }}">
                                         <td class="font-weight-bold text-Secondary">{{ $inspeccion->planificacion->recepcion->categoria }}</td>
                                         <td class="font-weight-bold text-Secondary">{{ $inspeccion->planificacion->recepcion->mineral->nombre }}</td>
                                         <td class="font-weight-bold text-Secondary">{{ $inspeccion->lugar_direccion}}</td>  
                                         <td class="font-weight-bold text-Secondary">{{ date('d/m/Y', strtotime($inspeccion->fecha_inspeccion)) }}</td>
                                         <td class="font-weight-bold text-Secondary">{{ $inspeccion->estatus}}</td>
-                                        <td class="font-weight-bold text-Secondary">
+                                        <td class="font-weight-bold text-Secondary" id="estatus-{{ $inspeccion->id }}">
 
                                             @if ($inspeccion->estatus == "Aprobado")
                                                 {{ $inspeccion->estatus_resp}}
@@ -59,21 +59,24 @@
 
                                             <div style="display: flex; justify-content: center;">
                                                 @if (!$inspeccion->yaComprobado)
-                                                {{-- <a class="btn btn-success btn-sm" title="Registar Comprobante" href="{{ route('comprobantepago.create', ['id' => $inspeccion->id]) }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 16 16">
+                                                <a class="btn btn-success btn-sm registrar-comprobante" style="display: none;" title="Registar Comprobante" href="{{ route('comprobantepago.create', ['id' => $inspeccion->id]) }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 16 16">
                                                 <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73z"/>
-                                                </svg></a>  --}}
-                                                @endif
-                                                {{-- <a class="btn btn-danger btn-sm" style="margin: 0 3px;" title="Negar Comprobante"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16" style="color: #ffff; cursor: pointer; position: center;">
+                                                </svg></a>
+
+                                                <a class="btn btn-success btn-sm aprobar-solicitud" style="margin: 0 3px;" title="Aprobar Solicitud" data-inspeccion-id='{{ $inspeccion->id }}'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16" style="color: #ffff; cursor: pointer; position: center;">
+                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                                    <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/>
+                                                    </svg>
+                                                </a>                                            
+                                                
+                                                <meta name="csrf-token" content="{{ csrf_token() }}">
+
+                                                <a class="btn btn-danger btn-sm negar-solicitud" style="margin: 0 1px;" title="Negar Solicitud" data-inspeccion-id='{{ $inspeccion->id }}'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16" style="color: #ffff; cursor: pointer; position: center;">
                                                     <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
                                                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
-                                                  </svg></a> --}}
-
-                                                <a class="btn btn-dark btn-sm" data-toggle="modal" data-target="#exampleModalLong" id="#modalLong" data-asignacion-id='{{ $inspeccion->id }}'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"  viewBox="0 0 16 16" style="color: #ffff; cursor: pointer;" class="bi bi-file-check">
-                                                    <path d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
-                                                    <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1"/>
-                                                    </svg>
-                                                </a>
-                                                
+                                                  </svg></a>
+                                                @endif                                                
+            
                                                 <a class="btn btn-warning btn-sm" style="margin: 0 3px;" title="Desea Editar la Inspección" href="{{ route('inspeccion.edit', $inspeccion->id) }}"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                                     <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
                                                 </svg></a>
@@ -97,12 +100,12 @@
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    {{-- <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
         <div class="modal-dialog" role="document" style="max-width: 70%">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header"> --}}
                     {{-- <h5 class="modal-title" id="exampleModalLongTitle">Modal Long</h5> --}}
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -114,12 +117,12 @@
                         
                         <div class="modal-body">
                             <div class="row">
-
+    
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">N° de Oficio</label>
                                     <input type="text" class="form-control" id="num_oficio" name="num_oficio" oninput="capitalizarInput('')"></input>                                 
                                 </div>
-
+    
                                 <div class="col-4">                                     
                                     <div class="form-group" id="simple-date1">
                                         <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha Oficio</label>
@@ -131,7 +134,7 @@
                                         </div>
                                     </div>
                                 </div>
-
+    
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Estatus Oficio</label>
                                     <select class="select2single form-control" name="estatus_oficio" id="estatus_oficio">
@@ -142,9 +145,67 @@
                                 </div>
 
                             </div>
-
-                            <div class="card-body" id="inputs_aprovechamiento">
-
+     --}}
+                            <!-- Campo de categoría (aunque no será visible, sigue estando para referencia) -->
+                            {{-- <div class="form-group" style="display: none;">
+                                <label for="categoria" class="font-weight-bold text-primary">Categoría</label>
+                                <input type="text" id="categoria" name="categoria" class="form-control">
+                            </div> --}}
+    
+                            <!-- Campos adicionales para Aprovechamiento -->
+                            {{-- <div class="extra-fields-aprovechamiento" style="display: none;">
+                                <div class="card-body" id="inputs_aprovechamiento">
+                                    <h5 class="font-weight-bold text-primary" style="text-align: center">Asignación de Licencia Aprovechamiento</h5>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <label class="font-weight-bold text-primary">N° Resolución</label>
+                                            <input type="text" class="form-control" id="resolucion_apro" name="resolucion_apro" oninput="capitalizarInput('')" readonly>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="font-weight-bold text-primary">Catastro Minero</label>
+                                            <input type="text" class="form-control" id="catastro_la" name="catastro_la" oninput="capitalizarInput('')" readonly>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="font-weight-bold text-primary">Método de Pago</label>
+                                            <select class="select2single form-control" name="metodo_licencia_apro" id="metodo_licencia">
+                                                <option value="" selected="true" disabled>Seleccione un Método de Pago</option>
+                                                <option value="Pago único">Pago único</option>
+                                                <option value="Pago 2 partes">Pago 2 partes</option>
+                                                <option value="Pago 3 partes">Pago 3 partes</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
+    
+                            <!-- Campos adicionales para Procesamiento -->
+                            {{-- <div class="extra-fields-procesamiento" style="display: none;">
+                                <div class="card-body" id="inputs_procesamiento">
+                                    <h5 class="font-weight-bold text-primary" style="text-align: center">Asignación de Licencia Procesamiento</h5>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <label class="font-weight-bold text-primary">N° Resolución</label>
+                                            <input type="text" class="form-control" id="resolucion_hpc" name="resolucion_hpc" oninput="capitalizarInput('')" readonly>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="font-weight-bold text-primary">Catastro Minero</label>
+                                            <input type="text" class="form-control" id="catastro_lp" name="catastro_lp" oninput="capitalizarInput('')" readonly>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="font-weight-bold text-primary">Método de Pago</label>
+                                            <select class="select2single form-control" name="metodo_licencia_pro" id="metodo_licencia">
+                                                <option value="" selected="true" disabled>Seleccione un Método de Pago</option>
+                                                <option value="Pago cuotas">Pago cuotas</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
+    
+                            {{-- <div class="card-body" id="inputs_aprovechamiento" style="display: none;">
+    
                                 <h5 class="font-weight-bold text-primary" style="text-align: center">Asignación de Licencia Aprovechamiento</h5>
                                 <br>
                                 <div class="row">
@@ -153,12 +214,12 @@
                                         <label  class="font-weight-bold text-primary">N° Resolución</label>
                                         <input type="text" class="form-control" id="resolucion_apro" name="resolucion_apro"  oninput="capitalizarInput('')" readonly></input>                                   
                                     </div>
-
+    
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Catastro Minero</label>
                                         <input type="text" class="form-control" id="catastro_la" name="catastro_la" oninput="capitalizarInput('')" readonly></input>                                   
                                     </div>
-
+    
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Metodo de Pago</label>
                                         <select class="select2single form-control" name="metodo_licencia_apro" id="metodo_licencia">
@@ -168,35 +229,35 @@
                                             <option value="Pago 3 parte">Pago 3 parte</option>
                                         </select>
                                     </div>
-
+    
                                 </div>
                             </div>
-
-                            <div class="card-body" id="inputs_procesamiento">
-
+    
+                            <div class="card-body" id="inputs_procesamiento" style="display: none;">
+    
                                 <h5 class="font-weight-bold text-primary" style="text-align: center">Asignación de Licencia Procesamiento</h5>
                                 <br>
                                 <div class="row">
-
+    
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">N° Resolución</label>
                                         <input type="text" class="form-control" id="resolucion_hpc" name="resolucion_hpc" oninput="capitalizarInput('')" readonly></input>
                                     </div>
-
+    
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Catastro Minero</label>
                                         <input type="text" class="form-control" id="catastro_lp" name="catastro_lp" oninput="capitalizarInput('')" readonly></input>
                                     </div>
-
+    
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Metodo de Pago</label>
                                         <select class="select2single form-control" name="metodo_licencia_pro" id="metodo_licencia">
                                             <option value="" selected="true" disabled>Seleccione un Metodo de Pago</option>
                                             <option value="Pago cuotas">Pago cuotas</option>
                                         </select>
-                                    </div>
-
-                                    @if ($inspeccion->planificacion->recepcion->mineral->nombre == "Roca caliza")
+                                    </div> --}}
+    
+                                    {{-- @if ($inspeccion->planificacion->recepcion->mineral->nombre == "Roca caliza")
                                     <div class="card-body">
                                         <label class="font-weight-bold text-primary">Modo de control</label>
                                         <div class="row">
@@ -210,30 +271,30 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @endif
-
-                                </div>
+                                    @endif --}}
+    
+                              {{-- </div>
                             </div>
-
+    
                         </div>
-
+    
                         <br>
-
+    
                         <center>
                             <button type="submit" class="btn btn-success btn-lg"><span class="icon text-white-60"><i class="fas fa-check"></i></span>
                             <span class="text">Guardar</span>
-                            </button>
-                            <a  class="btn btn-info btn-lg" href="#"><span class="icon text-white-50">
+                            </button> --}}
+                            {{-- <a  class="btn btn-info btn-lg" href="#"><span class="icon text-white-50">
                                 <i class="fas fa-info-circle"></i>
                             </span>
-                            <span class="text">Regresar</span></a>
-                        </center>
+                            <span class="text">Regresar</span></a> --}}
+                        {{-- </center>
                         
                     </form>
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- MODAL PARA VER DETALLES -->
     <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
@@ -257,30 +318,6 @@
         </div>
     </div>
 
-
-    <script src="{{ asset('vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-    <script src="{{ asset('js/ruang-admin.min.js')}}"></script>
-
-
-                        {{-- ? FUNCIÓN PARA FILTRAR DATOS EN LA TABLA DE SOLICITUDES --}}
-
-    <script>
-        $(document).ready(function() {
-            var table = $('#example').DataTable();
-
-            $('input[name="filter"]').change(function() {
-                var filterValue = $(this).val();
-
-                if (filterValue === 'todos') {
-                    table.search('').draw();
-                } else {
-                    table.search(filterValue).draw();
-                }
-            });
-        });
-    </script>
 @endsection 
 
 @section('datatable')
@@ -401,7 +438,89 @@
             
             </script>
 
+            {{-- Scripts de botones Aprobar, Negar y Registrar Pago de Licencias --}}
 
+            <script>
+                document.addEventListener("DOMContentLoaded", function () { // Espera a que el DOM esté completamente cargado
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // Obtiene el token CSRF para las solicitudes
+
+                // Función para actualizar el estatus y botones en la interfaz de usuario
+                function ajustarBotones(estatus, inspeccionId) {
+                    const estatusActualTd = document.querySelector(`#estatus-${inspeccionId}`); // Selecciona el td correspondiente al estatus actual
+                    const btnRegistrarComprobante = document.querySelector(`.registrar-comprobante[href*='${inspeccionId}']`); // Selecciona el botón de "Registrar Comprobante"
+                    const btnAprobarSolicitud = document.querySelector(`.aprobar-solicitud[data-inspeccion-id='${inspeccionId}']`); // Selecciona el botón de "Aprobar Solicitud"
+                    const btnNegarSolicitud = document.querySelector(`.negar-solicitud[data-inspeccion-id='${inspeccionId}']`); // Selecciona el botón de "Negar Solicitud"
+
+                    // Actualiza el contenido del td con el estatus actual
+                    estatusActualTd.textContent = estatus;
+
+                    if (estatus === "Aprobado") { // Si el estatus es "Aprobado"
+                        btnRegistrarComprobante.style.display = "inline-block"; // Muestra el botón de "Registrar Comprobante"
+                        btnAprobarSolicitud.style.display = "none"; // Oculta el botón de "Aprobar Solicitud"
+                        btnNegarSolicitud.style.display = "none"; // Oculta el botón de "Negar Solicitud"
+
+                    } else if (estatus === "Negado") { // Si el estatus es "Negado"
+                        btnRegistrarComprobante.style.display = "none"; // Oculta el botón de "Registrar Comprobante"
+                        btnAprobarSolicitud.style.display = "none"; // Oculta el botón de "Aprobar Solicitud"
+                        btnNegarSolicitud.style.display = "none"; // Oculta el botón de "Negar Solicitud"
+
+                    } else { // Si el estatus es "Pendiente" o cualquier otro valor inicial
+                        btnRegistrarComprobante.style.display = "none"; // Oculta el botón de "Registrar Comprobante"
+                        btnAprobarSolicitud.style.display = "inline-block"; // Muestra el botón de "Aprobar Solicitud"
+                        btnNegarSolicitud.style.display = "inline-block"; // Muestra el botón de "Negar Solicitud"
+                    }
+                }
+
+                // Función para actualizar el estatus en el servidor y la interfaz
+                function actualizarEstatus(estatus, inspeccionId) {
+                    fetch(`/actualizar-estatus-inspeccion/${inspeccionId}`, { // Hace una solicitud fetch a la URL para actualizar el estatus
+                        method: 'POST', // Método HTTP POST
+                        headers: {
+                            'Content-Type': 'application/json', // Tipo de contenido JSON
+                            'X-CSRF-TOKEN': csrfToken // Añade el token CSRF a la cabecera
+                        },
+                        body: JSON.stringify({ estatus_resp: estatus }) // Convierte el estatus a una cadena JSON y la envía en el cuerpo de la solicitud
+                    })
+                    .then(response => response.json()) // Convierte la respuesta a JSON
+                    .then(data => { // Maneja la respuesta del servidor
+                        if (data.success) { // Si la actualización fue exitosa
+                            ajustarBotones(estatus, inspeccionId); // Ajusta los botones en la interfaz
+                        } else {
+                            console.error('Error al actualizar el estatus:', data.message); // Muestra un error en la consola si la actualización falla
+                        }
+                    })
+                    .catch(error => console.error('Error:', error)); // Muestra un error en la consola si la solicitud falla
+                }
+
+                // Añade escuchadores de eventos a cada botón de "Aprobar Solicitud"
+                document.querySelectorAll(".aprobar-solicitud").forEach(btn => {
+                    btn.addEventListener("click", function (event) {
+                        event.preventDefault(); // Previene la acción por defecto del clic
+                        const inspeccionId = this.getAttribute('data-inspeccion-id'); // Obtiene el ID de la inspección del atributo data-inspeccion-id
+                        actualizarEstatus("Aprobado", inspeccionId); // Llama a la función para actualizar el estatus a "Aprobado"
+                    });
+                });
+
+                // Añade escuchadores de eventos a cada botón de "Negar Solicitud"
+                document.querySelectorAll(".negar-solicitud").forEach(btn => {
+                    btn.addEventListener("click", function (event) {
+                        event.preventDefault(); // Previene la acción por defecto del clic
+                        const inspeccionId = this.getAttribute('data-inspeccion-id'); // Obtiene el ID de la inspección del atributo data-inspeccion-id
+                        actualizarEstatus("Negado", inspeccionId); // Llama a la función para actualizar el estatus a "Negado"
+                    });
+                });
+
+                // Ajusta los botones según el estatus actual cuando la página se carga
+                document.querySelectorAll("tr[data-inspeccion-id]").forEach(row => {
+                    const inspeccionId = row.getAttribute('data-inspeccion-id'); // Obtiene el ID de la inspección de la fila
+                    const estatus = document.querySelector(`#estatus-${inspeccionId}`).textContent.trim(); // Obtiene el estatus actual del td correspondiente
+                    ajustarBotones(estatus, inspeccionId); // Llama a la función para ajustar los botones según el estatus actual
+                });
+            });
+
+
+        </script>
+                                            
     {{-- * FUNCIÓN PARA MOSTRAR DATOS DE LA INSPECCIÓN EN EL MODAL --}}
 
     <script>
@@ -521,28 +640,40 @@
         document.querySelectorAll('a[data-asignacion-id]').forEach(function(element) {
         element.addEventListener('click', function() {
             const inspeccionId = this.getAttribute('data-asignacion-id');
-            
-            // Obtener la información de la inspección con inspeccionId
-            fetch(`/comprobantepago/asignacion/` + inspeccionId)
-                .then(response => response.json())
-                .then(data => {
-                    console.log("El id es: " + data.id);
-                    const categoria = data.planificacion.recepcion;
-                    const inputsAprovechamiento = document.getElementById('inputs_aprovechamiento');
-                    const inputsProcesamiento = document.getElementById('inputs_procesamiento');
+            // Obtener una referencia al elemento select y a los campos a mostrar/ocultar
+            const estatusOficio = document.getElementById('estatus_oficio');
+            const inputsAprovechamiento = document.getElementById('inputs_aprovechamiento');
+            const inputsProcesamiento = document.getElementById('inputs_procesamiento');
+            let categoria = null; // Almacenar la categoría para evitar múltiples peticiones
 
-                    inputsAprovechamiento.style.display = 'none';
-                    inputsProcesamiento.style.display = 'none';
+            estatusOficio.addEventListener('change', function() {
+            const estatus = this.value;
 
-                    const estatus = document.getElementById('estatus_oficio').value;
-                    if (estatus === 'Aprobado') {
-                        if (categoria === 'Aprovechamiento') {
-                            inputsAprovechamiento.style.display = 'block';
-                        } else if (categoria === 'Procesamiento') {
-                            inputsProcesamiento.style.display = 'block';
-                        }
-                    }
-                });
+            if (estatus === 'Aprobado') {
+                // Si la categoría ya se ha obtenido, no es necesario hacer otra petición
+                if (categoria) {
+                mostrarOcultarCampos(categoria);
+                } else {
+                fetch(`/comprobantepago/asignacion/` + inspeccionId)
+                    .then(response => response.json())
+                    .then(data => {
+                    categoria = data.categoria;
+                    mostrarOcultarCampos(categoria);
+                    })
+                    .catch(error => {
+                    console.error('Error al obtener la categoría:', error);
+                    });
+                }
+            } else {
+                inputsAprovechamiento.style.display = 'none';
+                inputsProcesamiento.style.display = 'none';
+            }
+            });
+
+            function mostrarOcultarCampos(categoria) {
+            inputsAprovechamiento.style.display = categoria === 'Aprovechamiento' ? 'block' : 'none';
+            inputsProcesamiento.style.display = categoria === 'Procesamiento' ? 'block' : 'none';
+            }
         });
     });
 
@@ -582,7 +713,7 @@
 
     </script> --}}
 
-    <script>
+    {{-- <script>
         document.getElementById('estatus_oficio').addEventListener('change', function() {
         var estatusOficio = this.value;
         var inspeccionId = document.querySelector('[data-asignacion-id]').getAttribute('data-asignacion-id');
@@ -610,6 +741,6 @@
         }
     });
 
-    </script> 
-
+    </script>  --}}      
+        
 @endsection

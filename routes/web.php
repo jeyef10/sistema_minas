@@ -159,6 +159,7 @@ Route::get('/inspeccion/create', [InspeccionesController::class, 'create'])->nam
 Route::get('/inspeccion/create/{id}/{notification_id?}', [InspeccionesController::class, 'create'])->name('inspeccion.create')->middleware('auth');
 Route::resource('inspeccion', InspeccionesController::class)->middleware('auth');
 Route::get('/inspeccion/create/fetchComisionados/{municipioId}', [InspeccionesController::class, 'fetchComisionados']);
+Route::post('/actualizar-estatus-inspeccion/{id}', [InspeccionesController::class, 'actualizarEstatusInspeccion']);
 
 /* Ruta Comprobante de Pago */
 Route::get('/comprobantepago', [ComprobantePagoController::class,'index'])->name('comprobantepago')->middleware('auth');
@@ -167,7 +168,7 @@ Route::get('/comprobantepago/create/{id}', [ComprobantePagoController::class, 'c
 Route::resource('comprobantepago', ComprobantePagoController::class)->middleware('auth');
 Route::get('/comprobantepago/detalles/{id}', [ComprobantePagoController::class, 'getInspeccionDetalles']);
 Route::get('/comprobantepago/asignacion/{id}', [ComprobantePagoController::class, 'asignacion']);
-
+/* Route::get('/get-categoria/{id}', [ComprobantePagoController::class, 'getCategoria'])->name('get.categoria');*/
 
 /* Ruta Licencia */
 Route::get('/licencia', [LicenciaController::class,'index'])->name('licencia')->middleware('auth');

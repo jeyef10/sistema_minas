@@ -198,6 +198,21 @@ class InspeccionesController extends Controller
 
     }
 
+    public function actualizarEstatusInspeccion(Request $request, $id)
+    {
+        $inspeccion = Inspecciones::find($id);
+
+        if ($inspeccion) {
+            $inspeccion->estatus_resp = $request->input('estatus_resp');
+            $inspeccion->save();
+
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Inspección no encontrada']);
+        }
+    }
+
+
     /**
      * Display the specified resource.
      *
