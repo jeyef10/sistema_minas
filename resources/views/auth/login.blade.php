@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 	  <!-- Favicon -->
-	{{-- <link href="img/inces.jpg" rel="icon"> --}}
+	<link href="{{ asset ('img/logo.png') }}" rel="icon">
 
 	<title>Login</title>
 

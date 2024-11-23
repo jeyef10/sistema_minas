@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+
+    <link href="{{ asset ('img/logo.png') }}" rel="icon">
+
     <title>Inicio</title>
     <link href= "{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
     <link href= "{{asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
@@ -28,8 +31,8 @@
                                                                                 <!-- Sidebar Inicio Menu lateral -->
                                                                                 
             <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-              <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/home">
-                <div class="sidebar-brand-text mx-3"></div>
+              <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/home"><img src="{{ asset ('img/logo.png') }}" width="70px" height="60px">
+                <div class="sidebar-brand-text mx-3">SIGESOLI</div>
               </a>
               <hr class="sidebar-divider my-0">
               <li class="nav-item active">
