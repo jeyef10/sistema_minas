@@ -108,7 +108,7 @@
                                     <select class="select2single form-control" name="estatus_oficio" id="estatus_oficio">
                                         <option value="" selected="true" disabled>Seleccione un Estatus</option>
                                         <option value="Aprobado" {{ (old('estatus', $comprobante_pago->estatus_oficio ?? '') === 'Aprobado') ? 'selected' : '' }}>Aprobado</option>
-                                        <option value="Negado" {{ (old('estatus', $comprobante_pago->estatus_oficio ?? '') === 'Negado') ? 'selected' : '' }}>Negado</option>
+                                        {{-- <option value="Negado" {{ (old('estatus', $comprobante_pago->estatus_oficio ?? '') === 'Negado') ? 'selected' : '' }}>Negado</option> --}}
                                     </select>
                                 </div>
 

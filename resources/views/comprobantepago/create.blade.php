@@ -109,9 +109,9 @@
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Estatus Oficio</label>
                                     <select class="select2single form-control" name="estatus_oficio" id="estatus_oficio">
-                                        <option value="" selected="true" disabled>Seleccione un Estatus</option>
-                                        <option value="Aprobado">Aprobado</option>
-                                        <option value="Negado">Negado</option>
+                                        <option value="" disabled>Seleccione un Estatus</option>
+                                        <option value="Aprobado" selected="true">Aprobado</option>
+                                        {{-- <option value="Negado">Negado</option> --}}
                                     </select>
                                 </div>
 

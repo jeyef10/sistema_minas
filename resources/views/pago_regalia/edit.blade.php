@@ -126,7 +126,7 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Cantidad Metro Cúbico</label>
-                                        <input type="text" class="form-control" id="monto_apro" name="monto_apro" value="{{ isset($pago_regalia->monto_apro)?$pago_regalia->monto_apro:'' }}" oninput="calcularMonto()" ></input>
+                                        <input type="text" class="form-control" id="monto_apro" name="monto_apro" value="{{ isset($pago_regalia->monto_apro)?$pago_regalia->monto_apro:'' }}" readonly oninput="calcularMonto()" ></input>
                                     </div>
 
                                     <div class="col-4">

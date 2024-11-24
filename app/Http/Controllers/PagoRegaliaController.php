@@ -8,6 +8,7 @@ use App\Models\PagoRegalia;
 use App\Models\Licencias;
 use App\Models\Minerales;
 use App\Models\Recepcion;
+use App\Models\ControlRegalia;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,12 +37,51 @@ class PagoRegaliaController extends Controller
      */
     public function index()
     {
+        // $licencias = licencias::all();
+
+        // // Iterar sobre cada planificación para verificar si fue inspeccionada
+        // $licencias ->each(function ($licencia) {
+        //     // Buscar en la tabla comprobante_pagoes si existe una comprobante_pago para esta comprobante_pagoe
+        //     $licencia->yaPagado = PagoRegalia::where('id_licencia', $licencia->id)->exists();
+        // });
+        
+        // $licencias = licencias::all();
+
+        // // Iterar sobre cada licencia para verificar los pagos realizados
+        // $licencias->each(function ($licencia) {
+        //     // Obtener el número de cuota aprobado de la licencia
+        //     $nroCuotaApro = $licencia->nro_cuota_apro;
+            
+        //     // Buscar en la tabla control_regalias los pagos realizados para esta licencia
+        //     $pagosRealizados = ControlRegalia::where('id_licencia', $licencia->id)->count();
+            
+        //     // Comparar el número de cuota aprobado con la cantidad de pagos realizados
+        //     $licencia->cuotasPagadas = ($pagosRealizados < $nroCuotaApro);
+        // });
+
         $licencias = licencias::all();
 
-        // Iterar sobre cada planificación para verificar si fue inspeccionada
-        $licencias ->each(function ($licencia) {
-            // Buscar en la tabla comprobante_pagoes si existe una comprobante_pago para esta comprobante_pagoe
-            $licencia->yaPagado = PagoRegalia::where('id_licencia', $licencia->id)->exists();
+        // Iterar sobre cada licencia para verificar los pagos realizados si es "Aprovechamiento"
+        $licencias->each(function ($licencia) {
+            // Obtener la categoría de la licencia desde la tabla recepcion
+            $categoria = $licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria;
+
+            if ($categoria === 'Aprovechamiento') {
+                // Obtener el número de cuota aprobado de la licencia
+                $nroCuotaApro = $licencia->nro_cuota_apro;
+                
+                // Buscar en la tabla control_regalias los pagos realizados para esta licencia
+                $pagosRealizados = ControlRegalia::where('id_licencia', $licencia->id)->count();
+                
+                // Comparar el número de cuota aprobado con la cantidad de pagos realizados
+                $licencia->cuotasPagadas = ($pagosRealizados < $nroCuotaApro);
+            }else {
+                    //     // Buscar en la tabla comprobante_pagoes si existe una comprobante_pago para esta comprobante_pagoe
+                    // $licencia->yaPagado = ControlRegalia::where('id_licencia', $licencia->id)->exists();
+                    
+            }
+
+
         });
 
 
@@ -81,7 +121,13 @@ class PagoRegaliaController extends Controller
         $minerales = Minerales::all();
         $recepciones = Recepcion::all();
 
-        return view('pago_regalia.create', compact('licencia', 'minerales', 'recepciones'));
+        // Contar el número de pagos realizados para esta licencia específica 
+        $numeroPagos = ControlRegalia::where('id_licencia', $licencia->id)->count();
+
+        // Obtener el primer pago realizado para esta licencia
+        $primerPago = ControlRegalia::where('id_licencia', $licencia->id)->first();
+
+        return view('pago_regalia.create', compact('licencia', 'minerales', 'recepciones', 'numeroPagos', 'primerPago'));
     }
 
     /**
@@ -118,6 +164,7 @@ class PagoRegaliaController extends Controller
         $pago_regalias->metodo_apro= $request->input('metodo_apro');
         $pago_regalias->monto_apro = $request->input('monto_apro');
         $pago_regalias->tasa_convenio = $request->input('tasa_convenio');
+        $pago_regalias->pago_realizar = $request->input('pago_realizar');
         $pago_regalias->monto_decl = $request->input('monto_decl');
         $pago_regalias->metodo_pro = $request->input('metodo_pro');
         $pago_regalias->monto_pro = $request->input('monto_pro');
@@ -145,6 +192,11 @@ class PagoRegaliaController extends Controller
         $pago_regalias->estatus_regalia = $request->input('estatus_regalia');
         
         $pago_regalias->save();
+
+        $puente = new ControlRegalia();
+        $puente->id_pago_regalia = $pago_regalias->id; // Usamos el ID de lo pago_regalia creada
+        $puente->id_licencia = $request->input('id_licencia');
+        $puente->save();
 
         $bitacora = new BitacoraController;
         $bitacora->update();
@@ -187,6 +239,7 @@ class PagoRegaliaController extends Controller
         $metodo_apro = $pago_regalia->metodo_apro;
         $monto_apro = $pago_regalia->monto_apro;
         $tasa_convenio = $pago_regalia->tasa_convenio;
+        $pago_realizar = $pago_regalia->pago_realizar;
         $monto_decl = $pago_regalia->monto_decl;
         $metodo_pro = $pago_regalia->metodo_pro;
         $monto_pro = $pago_regalia->monto_pro;
@@ -198,8 +251,8 @@ class PagoRegaliaController extends Controller
         $estatus_regalia = $pago_regalia->estatus_regalia;
 
         return view('pago_regalia.edit' , compact('pago_regalia', 'licencia', 'mineral', 'id_licencia',
-        'id_mineral', 'metodo_apro', 'monto_apro', 'tasa_convenio', 'monto_decl', 'metodo_pro', 'monto_pro',
-        'resultado_apro', 'resultado_pro','comprobante', 'fecha_pago', 'fecha_venci', 'estatus_regalia'));
+        'id_mineral', 'metodo_apro', 'monto_apro', 'tasa_convenio', 'pago_realizar', 'monto_decl', 'metodo_pro',
+        'monto_pro', 'resultado_apro', 'resultado_pro','comprobante', 'fecha_pago', 'fecha_venci', 'estatus_regalia'));
     }
 
     /**
@@ -237,6 +290,7 @@ class PagoRegaliaController extends Controller
         $pago_regalia->metodo_pro = $request->input('metodo_pro');
         $pago_regalia->monto_pro = $request->input('monto_pro');
         $pago_regalia->tasa_convenio = $request->input('tasa_convenio');
+        $pago_regalia->pago_realizar = $request->input('pago_realizar');
         $pago_regalia->monto_decl = $request->input('monto_decl');
         $pago_regalia->resultado_apro = $request->input('resultado_apro');
         $pago_regalia->resultado_pro = $request->input('resultado_pro');

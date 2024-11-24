@@ -12,7 +12,7 @@ class PagoRegalia extends Model
     protected $primaryKey = 'id';
     public $timestamps = true;
     protected $fillable = ['id_licencia', 'id_mineral', 'metodo_apro', 'metodo_pro', 'monto_apro', 'monto_pro', 'tasa_convenio',
-    'monto_decl', 'resultado_apro', 'resultado_pro', 'comprobante', 'fecha_pago' , 'fecha_venci', 'estatus_regalia'];
+    'pago_realizar', 'monto_decl', 'resultado_apro', 'resultado_pro', 'comprobante', 'fecha_pago' , 'fecha_venci', 'estatus_regalia'];
 
     public function licencia()
     {
@@ -22,5 +22,10 @@ class PagoRegalia extends Model
     public function mineral()
     {
         return $this->belongsTo(Minerales::class, 'id_mineral');
+    }
+
+    public function control_regalia()
+    {
+        return $this->belongsToMany(ControlRegalia::class, 'id_licencia', 'id', 'id_pago_regalia');
     }
 }

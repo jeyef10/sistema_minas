@@ -189,6 +189,23 @@ class LicenciaController extends Controller
         $licencias->num_territorio = $request->input('num_territorio');
         $licencias->metodo_licencia_apro = $request->input('metodo_licencia_apro');
         $licencias->metodo_licencia_pro = $request->input('metodo_licencia_pro');
+
+        if ( $licencias->metodo_licencia_apro == 'Pago unico') {
+            $licencias->nro_cuota_apro = 1;
+        }elseif ($licencias->metodo_licencia_apro == 'Pago 2 parte') {
+            $licencias->nro_cuota_apro = 2;
+        }else {
+            $licencias->nro_cuota_apro = 3;
+        } 
+            
+            // if ( $licencias->metodo_licencia_pro == 'Pago cuosta') {
+            //     $nro_cuota_apro = '1';
+            // }elseif ($licencias->metodo_licencia_apro == 'Pago 2 parte') {
+            //     $nro_cuota_apro = '2';
+            // }else {
+            //     $nro_cuota_apro = '3';
+            // } 
+            
         $licencias->fecha_oficio = $request->input('fecha_oficio');
         $licencias->id_plazo = $request->input('id_plazo');
         $licencias->fecha_inicial_ope = $request->input('fecha_inicial_ope');
@@ -277,6 +294,15 @@ class LicenciaController extends Controller
         $licencia->num_territorio = $request->input('num_territorio');
         $licencia->metodo_licencia_apro = $request->input('metodo_licencia_apro');
         $licencia->metodo_licencia_pro = $request->input('metodo_licencia_pro');
+
+        if ( $licencia->metodo_licencia_apro == 'Pago unico') {
+            $licencia->nro_cuota_apro = 1;
+        }elseif ($licencia->metodo_licencia_apro == 'Pago 2 parte') {
+            $licencia->nro_cuota_apro = 2;
+        }else {
+            $licencia->nro_cuota_apro = 3;
+        } 
+
         $licencia->fecha_oficio = $request->input('fecha_oficio');
         $licencia->fecha_inicial_ope = $request->input('fecha_inicial_ope');
         $licencia->fecha_final_ope = $request->input('fecha_final_ope');
