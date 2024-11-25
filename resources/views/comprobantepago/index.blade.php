@@ -433,37 +433,42 @@
             {{-- Scripts de botones Aprobar, Negar y Registrar Pago de Licencias --}}
 
             <script>
+                        
                 document.addEventListener("DOMContentLoaded", function () { // Espera a que el DOM esté completamente cargado
                 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // Obtiene el token CSRF para las solicitudes
 
-                // Función para actualizar el estatus y botones en la interfaz de usuario
+                // Función para ajustar el estatus y botones en la interfaz de usuario
                 function ajustarBotones(estatus, inspeccionId) {
                     const estatusActualTd = document.querySelector(`#estatus-${inspeccionId}`); // Selecciona el td correspondiente al estatus actual
                     const btnRegistrarComprobante = document.querySelector(`.registrar-comprobante[href*='${inspeccionId}']`); // Selecciona el botón de "Registrar Comprobante"
                     const btnAprobarSolicitud = document.querySelector(`.aprobar-solicitud[data-inspeccion-id='${inspeccionId}']`); // Selecciona el botón de "Aprobar Solicitud"
                     const btnNegarSolicitud = document.querySelector(`.negar-solicitud[data-inspeccion-id='${inspeccionId}']`); // Selecciona el botón de "Negar Solicitud"
 
-                    // Actualiza el contenido del td con el estatus actual
-                    estatusActualTd.textContent = estatus;
+                    // Verifica si los elementos existen antes de intentar acceder a sus propiedades
+                    if (estatusActualTd) {
+                        estatusActualTd.textContent = estatus; // Actualiza el contenido del td con el estatus actual
+                    }
 
-                    if (estatus === "Aprobado") { // Si el estatus es "Aprobado"
-                        btnRegistrarComprobante.style.display = "inline-block"; // Muestra el botón de "Registrar Comprobante"
-                        btnAprobarSolicitud.style.display = "none"; // Oculta el botón de "Aprobar Solicitud"
-                        btnNegarSolicitud.style.display = "none"; // Oculta el botón de "Negar Solicitud"
-
-                    } else if (estatus === "Negado") { // Si el estatus es "Negado"
-                        btnRegistrarComprobante.style.display = "none"; // Oculta el botón de "Registrar Comprobante"
-                        btnAprobarSolicitud.style.display = "none"; // Oculta el botón de "Aprobar Solicitud"
-                        btnNegarSolicitud.style.display = "none"; // Oculta el botón de "Negar Solicitud"
-
-                    } else { // Si el estatus es "Pendiente" o cualquier otro valor inicial
-                        btnRegistrarComprobante.style.display = "none"; // Oculta el botón de "Registrar Comprobante"
-                        btnAprobarSolicitud.style.display = "inline-block"; // Muestra el botón de "Aprobar Solicitud"
-                        btnNegarSolicitud.style.display = "inline-block"; // Muestra el botón de "Negar Solicitud"
+                    if (btnRegistrarComprobante && btnAprobarSolicitud && btnNegarSolicitud) {
+                        if (estatus === "Aprobado") { // Si el estatus es "Aprobado"
+                            btnRegistrarComprobante.style.display = "inline-block"; // Muestra el botón de "Registrar Comprobante"
+                            btnAprobarSolicitud.style.display = "none"; // Oculta el botón de "Aprobar Solicitud"
+                            btnNegarSolicitud.style.display = "none"; // Oculta el botón de "Negar Solicitud"
+                        } else if (estatus === "Negado") { // Si el estatus es "Negado"
+                            btnRegistrarComprobante.style.display = "none"; // Oculta el botón de "Registrar Comprobante"
+                            btnAprobarSolicitud.style.display = "none"; // Oculta el botón de "Aprobar Solicitud"
+                            btnNegarSolicitud.style.display = "none"; // Oculta el botón de "Negar Solicitud"
+                        } else { // Si el estatus es "Pendiente" o cualquier otro valor inicial
+                            btnRegistrarComprobante.style.display = "none"; // Oculta el botón de "Registrar Comprobante"
+                            btnAprobarSolicitud.style.display = "inline-block"; // Muestra el botón de "Aprobar Solicitud"
+                            btnNegarSolicitud.style.display = "inline-block"; // Muestra el botón de "Negar Solicitud"
+                        }
+                    } else {
+                        console.error('No se encontraron los botones para la inspección ID:', inspeccionId);
                     }
                 }
 
-                // Función para actualizar el estatus en el servidor y la interfaz
+                // Función para actualizar el estatus en el servidor y ajustar los botones
                 function actualizarEstatus(estatus, inspeccionId) {
                     fetch(`/actualizar-estatus-inspeccion/${inspeccionId}`, { // Hace una solicitud fetch a la URL para actualizar el estatus
                         method: 'POST', // Método HTTP POST
@@ -476,7 +481,7 @@
                     .then(response => response.json()) // Convierte la respuesta a JSON
                     .then(data => { // Maneja la respuesta del servidor
                         if (data.success) { // Si la actualización fue exitosa
-                            ajustarBotones(estatus, inspeccionId); // Ajusta los botones en la interfaz
+                            ajustarBotones(estatus, inspeccionId); // Ajusta los botones en la interfaz de usuario
                         } else {
                             console.error('Error al actualizar el estatus:', data.message); // Muestra un error en la consola si la actualización falla
                         }
@@ -484,7 +489,7 @@
                     .catch(error => console.error('Error:', error)); // Muestra un error en la consola si la solicitud falla
                 }
 
-                // Añade escuchadores de eventos a cada botón de "Aprobar Solicitud"
+                // Añadir los escuchadores de eventos a cada botón de "Aprobar Solicitud"
                 document.querySelectorAll(".aprobar-solicitud").forEach(btn => {
                     btn.addEventListener("click", function (event) {
                         event.preventDefault(); // Previene la acción por defecto del clic
@@ -493,7 +498,7 @@
                     });
                 });
 
-                // Añade escuchadores de eventos a cada botón de "Negar Solicitud"
+                // Añadir los escuchadores de eventos a cada botón de "Negar Solicitud"
                 document.querySelectorAll(".negar-solicitud").forEach(btn => {
                     btn.addEventListener("click", function (event) {
                         event.preventDefault(); // Previene la acción por defecto del clic
@@ -502,15 +507,14 @@
                     });
                 });
 
-                // Ajusta los botones según el estatus actual cuando la página se carga
+                // Ajustar los botones según el estatus actual cuando la página se carga
                 document.querySelectorAll("tr[data-inspeccion-id]").forEach(row => {
                     const inspeccionId = row.getAttribute('data-inspeccion-id'); // Obtiene el ID de la inspección de la fila
                     const estatus = document.querySelector(`#estatus-${inspeccionId}`).textContent.trim(); // Obtiene el estatus actual del td correspondiente
                     ajustarBotones(estatus, inspeccionId); // Llama a la función para ajustar los botones según el estatus actual
                 });
             });
-
-
+            
         </script>
                                             
     {{-- * FUNCIÓN PARA MOSTRAR DATOS DE LA INSPECCIÓN EN EL MODAL --}}
