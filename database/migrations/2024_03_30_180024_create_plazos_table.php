@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('plazos', function (Blueprint $table) {
             $table->id();
-            $table->string('cantidad')->nullable();
+            $table->integer('cantidad')->nullable();
             $table->string('medida_tiempo')->nullable();
             $table->timestamps();
         });

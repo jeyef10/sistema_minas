@@ -32,6 +32,7 @@
                                     <th class="font-weight-bold text-Secondary">Tipo Licencia</th>
                                     <th class="font-weight-bold text-Secondary">Tipo Solicitante</th>
                                     <th class="font-weight-bold text-Secondary">Solicitante</th>
+                                    <th class="font-weight-bold text-Secondary">Pago Realizado</th>
                                     <th class="font-weight-bold text-Secondary">Fecha de Pago</th>
                                     <th class="font-weight-bold text-Secondary">Fecha de Vecimiento</th>
                                     <th class="font-weight-bold text-Secondary">Estatus</th>
@@ -95,6 +96,7 @@
                                         @endif
 
                                         </td>
+                                        <td class="font-weight-bold text-Secondary">{{ $pago_regalia->pago_realizar}}</td>
                                         <td class="font-weight-bold text-Secondary">{{ date('d/m/Y', strtotime($pago_regalia->fecha_pago)) }}</td>
                                         <td class="font-weight-bold text-Secondary">{{ date('d/m/Y', strtotime($pago_regalia->fecha_venci)) }}</td>
                                         <td class="font-weight-bold text-Secondary">{{ $pago_regalia->estatus_regalia}}</td>
@@ -302,7 +304,7 @@
                             pago_regaliasHtml += `
                                 <h5 class="font-weight-bold text-primary" style="text-align: center">Detalles del Pago de Regalías</h5>
                                 <p><b>Mineral:</b> ${data.nombre_mineral}</p>
-                                <p><b>Tipo de Tasa:</b> ${data.tasa_mineral} ${data.id_mineral} $/m³</p>
+                                <p><b>Tipo de Tasa:</b> ${data.tasa_mineral} $/m³</p>
                                 <p><b>Método de Pago:</b> ${data.metodo_apro}</p>
                                 <p><b>Cantidad de Metro Cubico:</b> ${data.monto_apro}</p>
                                 <p><b>Resultado:</b> ${data.resultado_apro}</p>
@@ -314,7 +316,7 @@
                             pago_regaliasHtml += `
                                 <h5 class="font-weight-bold text-primary" style="text-align: center">Detalles del Pago de Regalías</h5>
                                 <p><b>Mineral:</b> ${data.nombre_mineral}</p>
-                                <p><b>Tipo de Tasa:</b> ${data.tasa_mineral} ${data.id_mineral} $/m³</p>
+                                <p><b>Tipo de Tasa:</b> ${data.tasa_mineral} $/m³</p>
                                 <p><b>Método de Pago:</b> ${data.metodo_pro}</p>
                                 <p><b>Cantidad de Metro Cubico:</b> ${data.monto_pro}</p>
                                 <p><b>Resultado:</b> ${data.resultado_pro}</p>

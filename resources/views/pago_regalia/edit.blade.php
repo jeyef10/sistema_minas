@@ -87,6 +87,7 @@
                                 <div class="row">
 
                                     <input type="hidden" class="form-control" id="id_licencia" name="id_licencia" style="background: white;" value="{{ isset($pago_regalia->licencia->id)?$pago_regalia->licencia->id:'' }}" placeholder="" autocomplete="off">                                  
+                                    <input type="hidden" name="categoria_licencia" value="{{ $categoria }}">
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Metodo de Pago</label>
@@ -97,6 +98,15 @@
                                                     {{ $pago_regalia->licencia->metodo_licencia_apro }}
                                                 </option> 
                                             @endif
+                                        </select>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Pago a Realizar</label>
+                                        <select class="select2single form-control" name="pago_realizar" id="pago_realizar">
+                                            <option value="{{ $pago_regalia->pago_realizar }}" selected> 
+                                                {{ $pago_regalia->pago_realizar}}
+                                            </option> 
                                         </select>
                                     </div>
 
@@ -153,6 +163,15 @@
                                                         {{ $pago_regalia->licencia->metodo_licencia_pro }}
                                                     </option> 
                                                 @endif
+                                            </select>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <label  class="font-weight-bold text-primary">Pago a Realizar</label>
+                                            <select class="select2single form-control" name="pago_realizar" id="pago_realizar">
+                                                <option value="{{ $pago_regalia->pago_realizar }}" selected> 
+                                                    {{ $pago_regalia->pago_realizar}}
+                                                </option> 
                                             </select>
                                         </div>
     

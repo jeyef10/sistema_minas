@@ -190,27 +190,52 @@ class LicenciaController extends Controller
         $licencias->metodo_licencia_apro = $request->input('metodo_licencia_apro');
         $licencias->metodo_licencia_pro = $request->input('metodo_licencia_pro');
 
-        if ( $licencias->metodo_licencia_apro == 'Pago unico') {
-            $licencias->nro_cuota_apro = 1;
+        $nro_cuotas_apro = 0;
+
+        if ($licencias->metodo_licencia_apro == 'Pago unico') {
+            // $licencias->nro_cuotas = 1;
+            $nro_cuotas_apro = 1;
         }elseif ($licencias->metodo_licencia_apro == 'Pago 2 parte') {
-            $licencias->nro_cuota_apro = 2;
-        }else {
-            $licencias->nro_cuota_apro = 3;
+            // $licencias->nro_cuotas = 2;
+            $nro_cuotas_apro = 2;
+        }elseif ($licencias->metodo_licencia_apro == 'Pago 3 parte') {
+            // $licencias->nro_cuotas = 3;
+            $nro_cuotas_apro = 3;
         } 
-            
-            // if ( $licencias->metodo_licencia_pro == 'Pago cuosta') {
-            //     $nro_cuota_apro = '1';
-            // }elseif ($licencias->metodo_licencia_apro == 'Pago 2 parte') {
-            //     $nro_cuota_apro = '2';
-            // }else {
-            //     $nro_cuota_apro = '3';
-            // } 
+
+        // 
             
         $licencias->fecha_oficio = $request->input('fecha_oficio');
         $licencias->id_plazo = $request->input('id_plazo');
         $licencias->fecha_inicial_ope = $request->input('fecha_inicial_ope');
         $licencias->fecha_final_ope = $request->input('fecha_final_ope');
         $licencias->talonario = $request->input('talonario');
+
+          // Inicializar la variable nro_cuotas
+        $nro_cuotas_pro = 0;
+
+        // Verificar si el método de licencia es "Pago cuotas"
+        if ($licencias->metodo_licencia_pro === 'Pago cuotas') {
+            // Buscar el plazo por id
+            $plazo = Plazos::findOrFail($licencias->id_plazo);
+
+            // Verificar la medida_tiempo y calcular nro_cuotas
+            if ($plazo->medida_tiempo === "mes(es)") {
+                $nro_cuotas_pro = $plazo->cantidad;
+
+                
+            } elseif ($plazo->medida_tiempo === "año(s)") {
+                $nro_cuotas_pro = $plazo->cantidad * 12;
+            }
+        }
+
+        if ($nro_cuotas_apro == 0) {
+           // Guardar la variable nro_cuotas en la licencia
+            $licencias->nro_cuotas = $nro_cuotas_pro;
+        } else {
+            $licencias->nro_cuotas = $nro_cuotas_apro;
+        }
+        
 
         $licencias->save();
 
@@ -295,12 +320,12 @@ class LicenciaController extends Controller
         $licencia->metodo_licencia_apro = $request->input('metodo_licencia_apro');
         $licencia->metodo_licencia_pro = $request->input('metodo_licencia_pro');
 
-        if ( $licencia->metodo_licencia_apro == 'Pago unico') {
-            $licencia->nro_cuota_apro = 1;
+        if ($licencia->metodo_licencia_apro == 'Pago unico') {
+            $licencia->nro_cuotas = 1;
         }elseif ($licencia->metodo_licencia_apro == 'Pago 2 parte') {
-            $licencia->nro_cuota_apro = 2;
+            $licencia->nro_cuotas = 2;
         }else {
-            $licencia->nro_cuota_apro = 3;
+            $licencia->nro_cuotas = 3;
         } 
 
         $licencia->fecha_oficio = $request->input('fecha_oficio');
@@ -308,6 +333,31 @@ class LicenciaController extends Controller
         $licencia->fecha_final_ope = $request->input('fecha_final_ope');
         $licencia->id_plazo = $request->input('id_plazo');
         $licencia->talonario = $request->input('talonario');
+
+        // Inicializar la variable nro_cuotas
+        $nro_cuotas_pro = 0;
+
+        // Verificar si el método de licencia es "Pago cuotas"
+        if ($licencias->metodo_licencia_pro === 'Pago cuotas') {
+            // Buscar el plazo por id
+            $plazo = Plazos::findOrFail($licencias->id_plazo);
+
+            // Verificar la medida_tiempo y calcular nro_cuotas
+            if ($plazo->medida_tiempo === "mes(es)") {
+                $nro_cuotas_pro = $plazo->cantidad;
+
+                
+            } elseif ($plazo->medida_tiempo === "año(s)") {
+                $nro_cuotas_pro = $plazo->cantidad * 12;
+            }
+        }
+
+        if ($nro_cuotas_apro == 0) {
+            // Guardar la variable nro_cuotas en la licencia
+            $licencias->nro_cuotas = $nro_cuotas_pro;
+        } else {
+            $licencias->nro_cuotas = $nro_cuotas_apro;
+        }
 
         $licencia->save();
 

@@ -83,6 +83,8 @@
 
                     </div>
 
+                  
+
                                             {{-- * INPUTS CORRESPONDIENTE A PAGOS EN APROVECHAMIENTO --}}
 
                             <div class="card-body" id="inputs_aprovechamiento">
@@ -90,7 +92,8 @@
                                 <div class="row">
 
                                     <input type="hidden" class="form-control" id="id_licencia" name="id_licencia" style="background: white;" value="{{ isset($licencia->id)?$licencia->id:'' }}" placeholder="" autocomplete="off">                                  
-
+                                    <input type="hidden" name="categoria_licencia" value="{{ $categoria }}">
+                                    
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Metodo de Pago</label>
                                         <select class="select2single form-control" name="metodo_apro" id="metodo_apro" onchange="calcularMonto()">
@@ -102,7 +105,50 @@
                                         @endif
                                         </select>
                                     </div>
+                                    
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Pago a Realizar</label>
+                                        <select class="select2single form-control" name="pago_realizar_apro" id="pago_realizar_apro">
+                                            {{-- <option value="" disabled>Seleccione el Pago a Realizar</option> --}}
+                                            @if ($numeroPagos == 0)
+                                                <option value="1era parte">1era parte</option>
+                                            @elseif ($numeroPagos == 1)
+                                                <option value="2da parte">2da parte</option>
+                                            @elseif ($numeroPagos == 2)
+                                                <option value="3era parte">3era parte</option>
+                                            @endif
+                                        </select>
+                                    </div>
 
+                                    <div class="col-4">
+                                        <label for="persona" class="font-weight-bold text-primary">Tasa de Regalias</label>
+                                        <select class="select2-single form-control" id="id_mineral" name="id_mineral" onchange="calcularMonto()">
+                                            <option value="">Seleccione una tasa</option>
+                                            @if ($numeroPagos == 0)
+                                                @if ($licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) 
+                                                    <option value="{{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->id }}"> 
+                                                        {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre }} - 
+                                                        {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->tasa }} 
+                                                        {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->moneda_longitud }} 
+                                                    </option>
+                                                @endif
+                                                <option value="convenio">Convenio</option>
+                                            @elseif ($numeroPagos > 0)
+                                                @if ($primerPago && is_null($tasaConvenio))
+                                                    <option value="{{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->id }}"> 
+                                                        {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre }} - 
+                                                        {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->tasa }} 
+                                                        {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->moneda_longitud }} 
+                                                    </option>
+                                                @else
+                                                    <option value="convenio">Convenio</option>
+                                                @endif
+                                            @endif
+                                        </select>
+                                        <input type="hidden" name="mineral_oculto" value="{{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->id }}">
+                                    </div>
+                                    
+{{-- 
                                     <div class="col-4">
                                         <label for="persona" class="font-weight-bold text-primary">Tasa de Regalias</label>
                                         <select class="select2-single form-control" id="id_mineral" name="id_mineral" onchange="calcularMonto()">
@@ -117,59 +163,22 @@
                                         <option value="convenio">Convenio</option>
                                         </select>
                                         <input type="hidden" name="mineral_oculto" value="{{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->id }}">
-                                    </div>
+                                    </div> --}}
 
                                     <div class="col-4" style="display: none;" id="convenio_container">
                                         <label  class="font-weight-bold text-primary">Tasa Convenio ($)</label>
-                                        <input type="text" class="form-control" id="tasa_convenio" name="tasa_convenio" oninput="calcularMonto()" ></input>
+                                        <input type="text" class="form-control" id="tasa_convenio" name="tasa_convenio" value="{{isset($tasaConvenio)?$tasaConvenio:'' }}" oninput="calcularMonto()" ></input>
                                     </div>
                                     
                                     <div class="col-4">
                                         <label class="font-weight-bold text-primary">Cantidad Metro Cúbico</label>
-                                        <input type="text" class="form-control" id="monto_apro" name="monto_apro" oninput="calcularMonto()">
+                                        <input type="text" class="form-control" id="monto_apro" name="monto_apro" value="{{isset($licencia->id)?$licencia->comprobante_pago->inspeccion->volumen:'' }}" readonly oninput="calcularMonto()">
                                     </div>
                                     
                                     <div class="col-4">
                                         <label class="font-weight-bold text-primary">Total a Cancelar</label>
                                         <input type="text" class="form-control" id="resultado_apro" name="resultado_apro" readonly>
                                     </div>
-
-                                    <!-- <div class="col-4">
-                                        <label class="font-weight-bold text-primary">Metodo de Pago</label>
-                                        <select class="select2single form-control" name="metodo_apro" id="metodo_apro" onchange="calcularMonto()">
-                                            <option value="" selected="true" disabled>Seleccione un Metodo de Pago</option>
-                                            @if ($licencia) 
-                                                <option value="{{ $licencia->metodo_licencia_apro }}" selected> 
-                                                    {{ $licencia->metodo_licencia_apro }}
-                                                </option> 
-                                            @endif
-                                        </select>
-                                    </div>
-                                    
-                                    <div class="col-4">
-                                        <label for="persona" class="font-weight-bold text-primary">Tasa de Regalías</label>
-                                        <select class="select2-single form-control" id="id_mineral" name="id_mineral" onchange="calcularMonto()">
-                                            <option value="">Seleccione una tasa</option>
-                                            @if ($licencia->comprobante_pago->inspeccion->planificacion->id_recepcion)
-                                                <option value="{{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->id }}">
-                                                    {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre }} -
-                                                    {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->tasa }} -
-                                                    {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->valor_tasa }} 
-                                                    {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->moneda_longitud }}
-                                                </option>
-                                            @endif
-                                        </select>
-                                    </div>
-                                    
-                                    <div class="col-4">
-                                        <label class="font-weight-bold text-primary">Cantidad Metro Cúbico</label>
-                                        <input type="text" class="form-control" id="monto_apro" name="monto_apro" oninput="calcularMonto()">
-                                    </div>
-                                    
-                                    <div class="col-4">
-                                        <label class="font-weight-bold text-primary">Total a Cancelar</label>
-                                        <input type="text" class="form-control" id="resultado_apro" name="resultado_apro" readonly>
-                                    </div> -->
                                     
                                 </div>
 
@@ -191,6 +200,18 @@
                                                 {{ $licencia->metodo_licencia_pro }}
                                             </option> 
                                         @endif
+                                        </select>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Pago a Realizar</label>
+                                        <select class="select2single form-control" name="pago_realizar_pro" id="pago_realizar_pro">
+                                            {{-- <option value=""  disabled>Seleccione el Pago a Realizar</option> --}}
+                                            @for ($i = 1; $i <= $nroCuotas; $i++) 
+                                                @if ($i == $numeroPagos + 1) 
+                                                    <option value="Cuota {{ $i }}">Cuota {{ $i }}</option> 
+                                                @endif
+                                            @endfor
                                         </select>
                                     </div>
 
