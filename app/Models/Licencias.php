@@ -12,8 +12,8 @@ class Licencias extends Model
     protected $primaryKey = 'id';
     public $timestamps = true;
     protected $fillable = ['id_comprobante_pago','resolucion_apro', 'resolucion_hpc', 'catastro_la', 'catastro_lp','providencia',
-    'num_territorio', 'metodo_licencia_apro', 'metodo_licencia_pro' , 'nro_cuotas',  'fecha_oficio', 'fecha_incial_ope', 
-    'fecha_final_ope', 'id_plazo', 'talonario'];
+    'num_territorio', 'metodo_licencia_apro', 'metodo_licencia_pro' , 'nro_cuotas',  'metodo_control_pro', 'fecha_oficio', 
+    'fecha_incial_ope', 'fecha_final_ope', 'id_plazo', 'talonario'];
 
     public function comprobante_pago()
     {

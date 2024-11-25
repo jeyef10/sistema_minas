@@ -29,7 +29,7 @@ return new class extends Migration
             $table->json('comprobante');
             $table->date('fecha_pago');
             $table->date('fecha_venci');
-            $table->string('estatus_regalia');
+            // $table->string('estatus_regalia');
 
             // Establecer relación con la tabla de la licencias
             $table->foreign('id_licencia')->references('id')->on('licencias');

@@ -87,6 +87,8 @@
                                     <div class="row">
 
                                         <input type="hidden" class="form-control" id="id_comprobante_pago" name="id_comprobante_pago" style="background: white;" value="{{ isset($licencia->comprobante_pago->id)?$licencia->comprobante_pago->id:'' }}" placeholder="" autocomplete="off">                                  
+                                        <input type="hidden" name="categoria" value="{{ $categoria }}">
+                                        <input type="hidden" name="nombre_mineral" value="{{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre }}">
 
                                         <div class="col-4">
                                             <label  class="font-weight-bold text-primary">N Resolución</label>
@@ -112,7 +114,7 @@
                                                 <option value="Pago 3 parte" {{ (old('metodo_licencia_apro', $licencia->metodo_licencia_apro ?? '') === 'Pago 3 parte') ? 'selected' : '' }}>Pago 3 parte</option>
                                             </select>
                                         </div>
-
+                                        
                                     </div>
 
                                 </div>
@@ -136,13 +138,24 @@
                                             <input type="text" class="form-control" id="num_territorio" name="num_territorio"  value="{{ isset($licencia->num_territorio)?$licencia->num_territorio:'' }}" oninput="capitalizarInput('')"></input>                                 
                                         </div>
 
-                                        <div class="col-3">
+                                        <div class="col-4">
                                             <label  class="font-weight-bold text-primary">Metodo de Pago</label>
                                             <select class="select2single form-control" name="metodo_licencia_pro" id="metodo_licencia">
                                                 <option value="" selected="true" disabled>Seleccione un Metodo de Pago</option>
                                                 <option value="Pago cuotas" {{ (old('metodo_licencia_apro', $licencia->metodo_licencia_pro ?? '') === 'Pago cuotas') ? 'selected' : '' }}>Pago cuotas</option>
                                             </select>
                                         </div>
+
+                                        @if ($licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre == "Roca caliza")
+                                            <div class="col-4">
+                                                <label  class="font-weight-bold text-primary">Metodo de Control</label>
+                                                <select class="select2single form-control" name="metodo_control_pro" id="metodo_control_pro">
+                                                    <option value="" selected="true" disabled>Seleccione un Metodo de Control</option>
+                                                    <option value="control_volumen" {{ (old('metodo_control_pro', $licencia->metodo_control_pro ?? '') === 'control_volumen') ? 'selected' : '' }}>Control volumen</option>
+                                                    <option value="control_declaracion" {{ (old('metodo_control_pro', $licencia->metodo_control_pro ?? '') === 'control_declaracion') ? 'selected' : '' }}>Control declaración</option>
+                                                </select>
+                                            </div>
+                                        @endif
                                         
                                     </div>
 
@@ -300,6 +313,57 @@
 
     </script>
 
+    {{-- ! FUNCION PARA DESHABILITAR EL SELECT DE PLAZOS SI LA LICENCIA YA TIENE UN PAGO REGISTRADO --}}
+    
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const numeroPagos = {{ $numeroPagos }};
+            const selectPlazo = document.getElementById('plazo');
+    
+            if (numeroPagos > 0) {
+                selectPlazo.readonly = true;
+            }
+        });
+    </script> --}}
+
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const numeroPagos = {{ $numeroPagos }};
+    const selectPlazo = document.getElementById('plazo');
+
+    if (numeroPagos > 0) {
+        selectPlazo.addEventListener('mousedown', function(event) {
+            event.preventDefault();
+            alert("No puedes cambiar la cantidad de plazos una vez que se ha realizado un pago.");
+        });
+    }
+});
+
+    </script> --}}
+
+   
+        <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const numeroPagos = {{ $numeroPagos }};
+    const selectPlazo = document.getElementById('plazo');
+
+    if (numeroPagos > 0) {
+        selectPlazo.addEventListener('mousedown', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                icon: 'warning',
+                title: 'Plazos',
+                text: 'No puedes cambiar la cantidad de plazos una vez que se ha cancelado una regalía.',
+                confirmButtonText: 'Ok',
+                confirmButtonColor: '#3085d6'
+            });
+        });
+    }
+});
+</script>
+
+    
+    
     {{-- ? FUNCION PARA MANTENER LA FECHA ACTUALIZADA EN EL CALENDARIO --}}
 
     <script>

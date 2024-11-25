@@ -114,17 +114,27 @@
                                         <label for="persona" class="font-weight-bold text-primary">Tasa de Regalias</label>
                                         <select class="select2-single form-control" id="id_mineral" name="id_mineral" onchange="calcularMonto()">
                                             <option value="">Seleccione una tasa</option>
-                                                @if ($pago_regalia->tasa_convenio == '')
-                                                    <option value="{{ $mineral->id }}" selected>
-                                                        {{ $mineral->nombre }} - {{ $mineral->tasa }} {{ $mineral->moneda_longitud }}
-                                                    </option>
-                                                    {{-- <option value="convenio">Convenio</option>  --}}
-                                                @else
-                                                    {{-- <option value="{{ $mineral->id }}">
-                                                        {{ $mineral->nombre }} - {{ $mineral->tasa }} {{ $mineral->moneda_longitud }}
-                                                    </option> --}}
-                                                    <option value="convenio" selected>Convenio</option> 
-                                                @endif
+                                               @if ($numeroPagos == 1)
+                                                    @if ($pago_regalia->tasa_convenio == '')
+                                                        <option value="{{ $mineral->id }}" selected>
+                                                            {{ $mineral->nombre }} - {{ $mineral->tasa }} {{ $mineral->moneda_longitud }}
+                                                        </option>
+                                                        <option value="convenio">Convenio</option>
+                                                    @else
+                                                        <option value="{{ $mineral->id }}">
+                                                            {{ $mineral->nombre }} - {{ $mineral->tasa }} {{ $mineral->moneda_longitud }}
+                                                        </option>
+                                                        <option value="convenio" selected>Convenio</option> 
+                                                    @endif
+                                               @elseif ($numeroPagos > 1)
+                                                    @if ($pago_regalia->tasa_convenio == '')
+                                                        <option value="{{ $mineral->id }}" selected>
+                                                            {{ $mineral->nombre }} - {{ $mineral->tasa }} {{ $mineral->moneda_longitud }}
+                                                        </option>
+                                                    @else
+                                                        <option value="convenio" selected>Convenio</option> 
+                                                    @endif
+                                               @endif
                                         </select>
                                         <input type="hidden" name="mineral_oculto" value="{{ $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->id }}">
                                     </div>
@@ -246,14 +256,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-4">
+                                    {{-- <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Estatus Pago de Regalía</label>
                                         <select class="select2single form-control" name="estatus_regalia" id="estatus_regalia">
                                             <option value="0" selected="true" disabled>Seleccione un Método de pago</option>
                                             <option value="Aprobado" {{ (old('estatus_regalia', $pago_regalia->estatus_regalia ?? '') === 'Aprobado') ? 'selected' : '' }}>Aprobado</option>
                                             <option value="Pendiente" {{ (old('estatus_regalia', $pago_regalia->estatus_regalia ?? '') === 'Pendiente') ? 'selected' : '' }}>Pendiente</option>
                                         </select>
-                                    </div>
+                                    </div> --}}
 
                                 </div> 
                                 
@@ -447,6 +457,7 @@
             const tasaConvenio = parseFloat(document.getElementById('tasa_convenio').value) || 0;
             const metrosCubicos = parseFloat(document.getElementById('monto_apro').value) || 0;
             const metodoPago = document.getElementById('metodo_apro').value;
+            const tasaConvenioInput = document.getElementById('tasa_convenio');
             
             let total = metrosCubicos * tasa;
             let totalConvenio = metrosCubicos * tasaConvenio;
@@ -474,6 +485,7 @@
                 convenioContainer.style.display = 'block';
             } else {
                 convenioContainer.style.display = 'none';
+                tasaConvenioInput.value = '';
             }
         }
 

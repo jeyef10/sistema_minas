@@ -31,7 +31,7 @@
                                     <th class="font-weight-bold text-Secondary">Vigencia de Licencia</th>
                                     <th class="font-weight-bold text-Secondary">Fecha Inicial</th>
                                     <th class="font-weight-bold text-Secondary">Fecha Final</th>
-                                    {{-- <th class="font-weight-bold text-Secondary">Talonario</th> --}}
+                                    <th class="font-weight-bold text-Secondary">Cantidad de Pagos</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center></th>
                                   </tr>
                             </thead>
@@ -67,7 +67,23 @@
 
                                         <td class="font-weight-bold text-Secondary">{{ $licencia->fecha_inicial_ope}}</td>
                                         <td class="font-weight-bold text-Secondary">{{ $licencia->fecha_final_ope}}</td>
-                                        {{-- <td class="font-weight-bold text-Secondary">{{ $licencia->talonario}}</td> --}}
+                                        <td class="font-weight-bold text-Secondary">
+                                            
+                                            @if ($licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria == "Aprovechamiento")
+                                                
+                                                @if ($licencia->metodo_licencia_apro == "Pago unico")
+                                                    Pago único
+                                                @elseif ($licencia->metodo_licencia_apro == "Pago 2 parte")
+                                                    2 pagos
+                                                @elseif ($licencia->metodo_licencia_apro == "Pago 3 parte")
+                                                    3 pagos
+                                                @endif
+                                            @elseif ($licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria == "Procesamiento")
+                                                {{ $licencia->metodo_licencia_pro}} - ({{$licencia->nro_cuotas}})
+                                            @endif
+                                            
+                                            
+                                        </td>
 
                                         <td>
 

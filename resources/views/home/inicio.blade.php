@@ -210,18 +210,6 @@
               <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
                 <h6 class="m-0 font-weight-bold text-primary">Mapa de Recepciones e Inspecciones</h6>
                 <div class="dropdown no-arrow">
-                  <!-- <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                  </a> -->
-                  <!-- <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                    aria-labelledby="dropdownMenuLink">
-                     <div class="dropdown-header">Ver:</div>
-                    <a class="dropdown-item" href="#">Recepciones de recaudos</a>
-                    <a class="dropdown-item" href="#">Inspecciones</a>
-                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                  </div> -->
                 </div>
               </div>
               <div class="card-body">
@@ -232,6 +220,7 @@
               </div>
             </div>
           </div>
+          
           <!-- Pie Chart -->
           <div style="width:32.5%; display:block;">
             <div class="card mb-4" style="padding-top: 89.5px; padding-bottom: 89.5px;">
@@ -240,7 +229,6 @@
                 <h6 class="m-0 font-weight-bold text-primary">Estadística de Ubicaciones</h6>
                  <div class="h5 mb-0 font-weight-bol d text-gray-800"></div> 
               </div>
-
               <div class="card-body">
                 <div class="mb-3">
                     <div class="small text-gray-500">Recepciones
@@ -269,6 +257,67 @@
               </div>
             </div>
               
+            </div>
+          </div>
+
+          <div class="col-xl-8 col-lg-7 mb-4">
+            <div class="card">
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Invoice</h6>
+                {{-- <a class="m-0 float-right btn btn-danger btn-sm" href="#">View More <i
+                    class="fas fa-chevron-right"></i></a> --}}
+              </div>
+              <div class="table-responsive">
+                <table class="table align-items-center table-flush">
+                  <thead class="thead-light">
+                    <tr>
+                      <th>N° Licencia</th>
+                      <th>Tipo Licencia</th>
+                      <th>Solicitante Habilitado</th>
+                      <th></th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><a href="#">RA0449</a></td>
+                      <td>Udin Wayang</td>
+                      <td>Nasi Padang</td>
+                      <td><span class="badge badge-success">Delivered</span></td>
+                      <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
+                    </tr>
+                    <tr>
+                      <td><a href="#">RA5324</a></td>
+                      <td>Jaenab Bajigur</td>
+                      <td>Gundam 90' Edition</td>
+                      <td><span class="badge badge-warning">Shipping</span></td>
+                      <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
+                    </tr>
+                    <tr>
+                      <td><a href="#">RA8568</a></td>
+                      <td>Rivat Mahesa</td>
+                      <td>Oblong T-Shirt</td>
+                      <td><span class="badge badge-danger">Pending</span></td>
+                      <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
+                    </tr>
+                    <tr>
+                      <td><a href="#">RA1453</a></td>
+                      <td>Indri Junanda</td>
+                      <td>Hat Rounded</td>
+                      <td><span class="badge badge-info">Processing</span></td>
+                      <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
+                    </tr>
+                    <tr>
+                      <td><a href="#">RA1998</a></td>
+                      <td>Udin Cilok</td>
+                      <td>Baby Powder</td>
+                      <td><span class="badge badge-success">Delivered</span></td>
+                      <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer"></div>
             </div>
           </div>
         

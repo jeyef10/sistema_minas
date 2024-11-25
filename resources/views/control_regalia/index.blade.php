@@ -35,7 +35,7 @@
                                     <th class="font-weight-bold text-Secondary">Pago Realizado</th>
                                     <th class="font-weight-bold text-Secondary">Fecha de Pago</th>
                                     <th class="font-weight-bold text-Secondary">Fecha de Vecimiento</th>
-                                    <th class="font-weight-bold text-Secondary">Estatus</th>
+                                    {{-- <th class="font-weight-bold text-Secondary">Estatus</th> --}}
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center></th>
                                   </tr>
                             </thead>
@@ -99,7 +99,7 @@
                                         <td class="font-weight-bold text-Secondary">{{ $pago_regalia->pago_realizar}}</td>
                                         <td class="font-weight-bold text-Secondary">{{ date('d/m/Y', strtotime($pago_regalia->fecha_pago)) }}</td>
                                         <td class="font-weight-bold text-Secondary">{{ date('d/m/Y', strtotime($pago_regalia->fecha_venci)) }}</td>
-                                        <td class="font-weight-bold text-Secondary">{{ $pago_regalia->estatus_regalia}}</td>
+                                        {{-- <td class="font-weight-bold text-Secondary">{{ $pago_regalia->estatus_regalia}}</td> --}}
 
                                         <td> 
 

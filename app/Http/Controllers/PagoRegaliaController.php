@@ -37,28 +37,7 @@ class PagoRegaliaController extends Controller
      */
     public function index()
     {
-        // $licencias = licencias::all();
-
-        // // Iterar sobre cada planificación para verificar si fue inspeccionada
-        // $licencias ->each(function ($licencia) {
-        //     // Buscar en la tabla comprobante_pagoes si existe una comprobante_pago para esta comprobante_pagoe
-        //     $licencia->yaPagado = PagoRegalia::where('id_licencia', $licencia->id)->exists();
-        // });
         
-        // $licencias = licencias::all();
-
-        // // Iterar sobre cada licencia para verificar los pagos realizados
-        // $licencias->each(function ($licencia) {
-        //     // Obtener el número de cuota aprobado de la licencia
-        //     $nroCuotaApro = $licencia->nro_cuota_apro;
-            
-        //     // Buscar en la tabla control_regalias los pagos realizados para esta licencia
-        //     $pagosRealizados = ControlRegalia::where('id_licencia', $licencia->id)->count();
-            
-        //     // Comparar el número de cuota aprobado con la cantidad de pagos realizados
-        //     $licencia->cuotasPagadas = ($pagosRealizados < $nroCuotaApro);
-        // });
-
         $licencias = licencias::all();
 
         // Iterar sobre cada licencia para verificar los pagos realizados si es "Aprovechamiento"
@@ -66,22 +45,14 @@ class PagoRegaliaController extends Controller
             // Obtener la categoría de la licencia desde la tabla recepcion
             // $categoria = $licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria;
 
-            // if ($categoria === 'Aprovechamiento') {
-                // Obtener el número de cuota aprobado de la licencia
-                $nroCuotas = $licencia->nro_cuotas;
+            $nroCuotas = $licencia->nro_cuotas;
                 
-                // Buscar en la tabla control_regalias los pagos realizados para esta licencia
-                $pagosRealizados = ControlRegalia::where('id_licencia', $licencia->id)->count();
+            // Buscar en la tabla control_regalias los pagos realizados para esta licencia
+            $pagosRealizados = ControlRegalia::where('id_licencia', $licencia->id)->count();
                 
-                // Comparar el número de cuota aprobado con la cantidad de pagos realizados
-                $licencia->cuotasPagadas = ($pagosRealizados < $nroCuotas);
-            // }else {
-                    //     // Buscar en la tabla comprobante_pagoes si existe una comprobante_pago para esta comprobante_pagoe
-                    // $licencia->yaPagado = ControlRegalia::where('id_licencia', $licencia->id)->exists();
-                    
-            // }
-
-
+            // Comparar el número de cuota aprobado con la cantidad de pagos realizados
+            $licencia->cuotasPagadas = ($pagosRealizados < $nroCuotas);
+        
         });
 
 
@@ -137,6 +108,7 @@ class PagoRegaliaController extends Controller
         }
         // Obtener el nro_cuotas registrado en la tabla licencias 
         $nroCuotas = $licencia->nro_cuotas;
+
 
         return view('pago_regalia.create', compact('licencia', 'minerales', 'recepciones', 'numeroPagos', 'primerPago', 'tasaConvenio', 'nroCuotas', 'categoria'));
     }
@@ -214,7 +186,7 @@ class PagoRegaliaController extends Controller
         
         $pago_regalias->fecha_pago = $request->input('fecha_pago');
         $pago_regalias->fecha_venci = $request->input('fecha_venci');
-        $pago_regalias->estatus_regalia = $request->input('estatus_regalia');
+        // $pago_regalias->estatus_regalia = $request->input('estatus_regalia');
         
         $pago_regalias->save();
 
@@ -256,7 +228,7 @@ class PagoRegaliaController extends Controller
     public function edit($id)
     {
         $pago_regalia = PagoRegalia::findOrFail($id);
-        $licencia = licencias::find($id);
+        $licencia = licencias::find($pago_regalia->id_licencia);
         $mineral = Minerales::find($pago_regalia->id_mineral);
         // $minerales = Minerales::all();
         $id_licencia = $pago_regalia->id_licencia;
@@ -274,11 +246,14 @@ class PagoRegaliaController extends Controller
         $comprobante = $pago_regalia->comprobante;
         $fecha_pago = $pago_regalia->fecha_pago;
         $fecha_venci = $pago_regalia->fecha_venci;
-        $estatus_regalia = $pago_regalia->estatus_regalia;
+        // $estatus_regalia = $pago_regalia->estatus_regalia;
+
+         // Contar el número de pagos realizados para esta licencia específica 
+         $numeroPagos = ControlRegalia::where('id_licencia', $licencia->id)->count();
 
         return view('pago_regalia.edit' , compact('pago_regalia', 'licencia', 'mineral', 'id_licencia',
         'categoria', 'id_mineral', 'metodo_apro', 'monto_apro', 'tasa_convenio', 'pago_realizar', 'monto_decl', 
-        'metodo_pro','monto_pro', 'resultado_apro', 'resultado_pro','comprobante', 'fecha_pago', 'fecha_venci', 'estatus_regalia'));
+        'metodo_pro','monto_pro', 'resultado_apro', 'resultado_pro','comprobante', 'fecha_pago', 'fecha_venci', 'numeroPagos'));
     }
 
     /**
@@ -353,7 +328,9 @@ class PagoRegaliaController extends Controller
         
         $pago_regalia->fecha_pago = $request->input('fecha_pago');
         $pago_regalia->fecha_venci = $request->input('fecha_venci');
-        $pago_regalia->estatus_regalia = $request->input('estatus_regalia');
+        // $pago_regalia->estatus_regalia = $request->input('estatus_regalia');
+
+        // dd( $pago_regalia->monto_apro, $pago_regalia->tasa_convenio);
         
         $pago_regalia->save();
 

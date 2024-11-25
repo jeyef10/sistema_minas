@@ -88,6 +88,9 @@
                                 <div class="row">
 
                                     <input type="hidden" class="form-control" id="id_comprobante_pago" name="id_comprobante_pago" style="background: white;" value="{{ isset($comprobante_pago->id)?$comprobante_pago->id:'' }}" placeholder="" autocomplete="off">                                  
+                                    <input type="hidden" name="categoria" value="{{ $categoria }}">
+                                    <input type="hidden" name="nombre_mineral" value="{{ $comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre }}">
+
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">N° Resolución</label>
@@ -137,14 +140,25 @@
                                         <input type="text" class="form-control" id="num_territorio" name="num_territorio" oninput="capitalizarInput('')"></input>                                 
                                     </div>
 
-                                    <div class="col-3">
+                                    <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Metodo de Pago</label>
                                         <select class="select2single form-control" name="metodo_licencia_pro" id="metodo_licencia">
                                             <option value="" selected="true" disabled>Seleccione un Metodo de Pago</option>
                                             <option value="Pago cuotas">Pago cuotas</option>
                                         </select>
                                     </div>
-                                    
+
+                                    @if ($comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre == "Roca caliza")
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Metodo de Control</label>
+                                        <select class="select2single form-control" name="metodo_control_pro" id="metodo_control_pro">
+                                            <option value="" selected="true" disabled>Seleccione un Metodo de Control</option>
+                                            <option value="control_volumen">Control volumen</option>
+                                            <option value="control_declaracion">Control declaración</option>
+                                        </select>
+                                    </div>
+                                    @endif
+                                
                                 </div>
 
                             </div>
