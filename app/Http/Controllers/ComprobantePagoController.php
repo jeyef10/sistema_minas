@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\ComprobantePago;
 use App\Models\Inspecciones;
 use App\Models\TipoPago;
+use App\Models\Banco;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -65,13 +66,13 @@ class ComprobantePagoController extends Controller
 
     }
 
-    public function asignacion($id)
-    {
-        $inspeccion = Inspecciones::find($id);
-        $categoria = $inspeccion->planificacion->recepcion->categoria;
+    // public function asignacion($id)
+    // {
+    //     $inspeccion = Inspecciones::find($id);
+    //     $categoria = $inspeccion->planificacion->recepcion->categoria;
 
-        return response()->json(['categoria' => $categoria]);
-    }
+    //     return response()->json(['categoria' => $categoria]);
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -82,8 +83,9 @@ class ComprobantePagoController extends Controller
     {
         $inspeccion = Inspecciones::findOrFail($id);
         $tipo_pagos = TipoPago::all();
+        $bancos = Banco::all();
 
-        return view('comprobantepago.create' , compact('inspeccion', 'tipo_pagos'));
+        return view('comprobantepago.create' , compact('inspeccion', 'tipo_pagos', 'bancos'));
 
     }
 
@@ -118,7 +120,7 @@ class ComprobantePagoController extends Controller
         $comprabantepagos->estatus_oficio = $request->input('estatus_oficio');
         $comprabantepagos->nombre_firma = $request->input('nombre_firma');
         $comprabantepagos->id_tipo_pago = $request->input('id_tipo_pago');
-        $comprabantepagos->banco = $request->input('banco');
+        $comprabantepagos->id_banco = $request->input('id_banco');
         $comprabantepagos->n_referencia = $request->input('n_referencia');
         
         
@@ -186,7 +188,7 @@ class ComprobantePagoController extends Controller
         $estatus_oficio = $comprobante_pago->estatus_oficio;
         $nombre_firma = $comprobante_pago->nombre_firma;
         $tipo_pagos = TipoPago::all();
-        $banco = $comprobante_pago->banco;
+        $bancos = Banco::all();
         $n_referencia = $comprobante_pago->n_referencia;
         $comprobante_pdf = $comprobante_pago->comprobante_pdf;
         $observaciones_com = $comprobante_pago->observaciones_com;
@@ -194,8 +196,10 @@ class ComprobantePagoController extends Controller
         $observaciones_fiscal = $comprobante_pago->observaciones_fiscal;
         $fecha_pago = date('d/m/Y', strtotime($comprobante_pago->fecha_pago));
         // $estatus_pago = $comprobante_pago->estatus_pago;
-        return view('comprobantepago.edit' , compact('comprobante_pago', 'inspeccion', 'nro_oficio', 'fecha_oficio', 'estatus_oficio', 'nombre_firma', 'tipo_pagos', 'banco', 'n_referencia',
-         'comprobante_pdf', 'observaciones_com', 'timbre_fiscal', 'observaciones_fiscal', 'fecha_pago'));
+
+        return view('comprobantepago.edit' , compact('comprobante_pago', 'inspeccion', 'nro_oficio', 'fecha_oficio', 
+        'estatus_oficio', 'nombre_firma', 'tipo_pagos', 'bancos', 'n_referencia','comprobante_pdf', 'observaciones_com',
+        'timbre_fiscal', 'observaciones_fiscal', 'fecha_pago'));
     }
 
     /**
@@ -220,7 +224,8 @@ class ComprobantePagoController extends Controller
         $comprobante_pago->estatus_oficio = $request->input('estatus_oficio');
         $comprobante_pago->nombre_firma = $request->input('nombre_firma');
         $comprobante_pago->id_tipo_pago = $request->input('id_tipo_pago');
-        $comprobante_pago->banco = $request->input('banco');
+        $comprobante_pago->id_banco = $request->input('id_banco');
+        // dd($comprobante_pago->id_banco);
         $comprobante_pago->n_referencia = $request->input('n_referencia');
 
         // Verificar si se han cargado nuevos archivos
