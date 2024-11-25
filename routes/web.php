@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BancoController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
@@ -133,6 +134,9 @@ Route::get('/tipopago',  [TipoPagoController::class,'index'])->name('tipopago')-
 Route::get('/tipopago/create', [TipoPagoController::class, 'create'])->name('create')->middleware('auth');
 Route::get('/tipopago/pdf',  [TipoPagoController::class,'pdf'])->name('tipopago')->middleware('auth');
 Route::resource('tipopago', TipoPagoController::class)->middleware('auth');
+
+/* Ruta Banco*/
+Route::resource('banco', BancoController::class)->middleware('auth');
 
 /* Ruta Recepcion de Recaudos */
 Route::get('/recepcion/create', [RecepcionController::class, 'create'])->name('create')->middleware('auth');

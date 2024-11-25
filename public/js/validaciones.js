@@ -1842,7 +1842,49 @@ function Plazo(obj) {
         obj.medida_tiempo.focus();
         return false;
     }
-}    
+}
+
+//Validar Banco
+function Banco(obj) {
+    var codigo_banco = obj.codigo_banco.value;
+    if (!codigo_banco) {
+        Swal.fire({
+            title: 'Bancos',
+            text: "Debe ingresar el Código del Banco.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+       
+        obj.codigo_banco.focus();
+        return false;
+    }
+    
+    var nombre_banco = obj.nombre_banco.value;
+    if (!nombre_banco) {
+        Swal.fire({
+            title: 'Bancos',
+            text: "Debe  ingresar el Nombre de un Banco.",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+       
+        obj.nombre_banco.focus();
+        return false;
+    }
+     
+} 
 
 // Validar RECEPCIÓN DE RECAUDOS
 function Recepcion (obj) {

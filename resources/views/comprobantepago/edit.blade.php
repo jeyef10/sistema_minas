@@ -132,9 +132,25 @@
                                 </div>
 
                                 <div class="col-4">
+                                    <label for="persona" class="font-weight-bold text-primary">Tipo de Pago</label>
+                                    <select class="select2-single form-control" id="banco" name="id_banco">
+                                        <option value="0">Seleccione un Tipo de Pago</option>
+                                        @foreach($bancos as $banco)
+                                            <option value="{{ $banco->id }}" @if (old('id_banco', $comprobante_pago->id_banco) == $banco->id) selected @endif>
+                                            {{ $banco->codigo_banco }} - {{ $banco->nombre_banco }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+
+                                    @php
+                                        echo $banco;
+                                    @endphp
+                                </div>
+
+                                {{-- <div class="col-4">
                                     <label class="font-weight-bold text-primary">Tipo de Banco</label>
                                     <input type="text" class="form-control" id="banco" name="banco" style="background: white;" value="{{ isset($comprobante_pago->banco)?$comprobante_pago->banco:'' }}" placeholder="Ingrese el tipo de Banco" autocomplete="off" onkeypress="return soloLetras(event);" oninput="capitalizarInput('banco')">
-                                </div>
+                                </div> --}}
 
 
                                 <div class="col-4">

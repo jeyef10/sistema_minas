@@ -71,6 +71,8 @@
                     @endcan
 
                     <a class="collapse-item" href="{{ url('tipopago') }}">Tipo de Pago</a>
+
+                    <a class="collapse-item" href="{{ url('banco') }}">Entidad Bancaria</a>
                     
                   </div>
                 </div>

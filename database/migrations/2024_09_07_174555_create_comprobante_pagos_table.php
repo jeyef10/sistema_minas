@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('estatus_oficio');
             $table->string('nombre_firma');
             $table->unsignedBigInteger('id_tipo_pago');
-            $table->string('banco')->nullable();
+            $table->unsignedBigInteger('id_banco');
             $table->string('n_referencia')->nullable();
             $table->json('comprobante_pdf')->nullable();
             $table->text('observaciones_com')->nullable();
@@ -38,6 +38,9 @@ return new class extends Migration
 
             // Establecer relación con la tabla de tipo_pagos
             $table->foreign('id_tipo_pago')->references('id')->on('tipo_pagos');
+
+            // Establecer relación con la tabla de bancos
+            $table->foreign('id_banco')->references('id')->on('bancos');
 
             
         });

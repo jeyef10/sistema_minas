@@ -138,10 +138,19 @@
                                 </div>
 
                                 <div class="col-4">
-                                    <label class="font-weight-bold text-primary">Tipo de Banco</label>
-                                    <input type="text" class="form-control" id="banco" name="banco" style="background: white;" value="" placeholder="Ingrese el tipo de Banco" autocomplete="off" onkeypress="return soloLetras(event);" oninput="capitalizarInput('banco')">
+                                    <label for="persona" class="font-weight-bold text-primary">Tipo de Banco</label>
+                                    <select class="select2-single form-control" id="banco" name="id_banco">
+                                        <option value="0">Seleccione un Tipo de Pago</option>
+                                        @foreach($bancos as $banco)
+                                        <option value="{{ $banco->id }}"> {{ $banco->codigo_banco }} - {{ $banco->nombre_banco }} </option>
+                                    @endforeach
+                                    </select>
                                 </div>
 
+                                {{-- <div class="col-4">
+                                    <label class="font-weight-bold text-primary">Tipo de Banco</label>
+                                    <input type="text" class="form-control" id="banco" name="banco" style="background: white;" value="" placeholder="Ingrese el tipo de Banco" autocomplete="off" onkeypress="return soloLetras(event);" oninput="capitalizarInput('banco')">
+                                </div> --}}
 
                                 <div class="col-4">
                                     <label class="font-weight-bold text-primary">N° Referencia</label>
