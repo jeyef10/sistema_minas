@@ -214,18 +214,6 @@
               <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
                 <h6 class="m-0 font-weight-bold text-primary">Mapa de Recepciones e Inspecciones</h6>
                 <div class="dropdown no-arrow">
-                  <!-- <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                  </a> -->
-                  <!-- <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                    aria-labelledby="dropdownMenuLink">
-                     <div class="dropdown-header">Ver:</div>
-                    <a class="dropdown-item" href="#">Recepciones de recaudos</a>
-                    <a class="dropdown-item" href="#">Inspecciones</a>
-                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                  </div> -->
                 </div>
               </div>
               <div class="card-body">
@@ -236,6 +224,7 @@
               </div>
             </div>
           </div>
+          
           <!-- Pie Chart -->
           <div style="width:32.5%; display:block;">
             <div class="card mb-4" style="padding-top: 89.5px; padding-bottom: 89.5px;">
@@ -244,7 +233,6 @@
                 <h6 class="m-0 font-weight-bold text-primary">Estadística de Ubicaciones</h6>
                  <div class="h5 mb-0 font-weight-bol d text-gray-800"></div> 
               </div>
-
               <div class="card-body">
                 <div class="mb-3">
                     <div class="small text-gray-500">Recepciones

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('metodo_licencia_apro')->nullable();
             $table->string('metodo_licencia_pro')->nullable();
             $table->integer('nro_cuotas')->nullable();
+            $table->string('metodo_control_pro')->nullable();
             // $table->integer('nro_cuota_pro')->nullable();
             $table->string('fecha_oficio');
             $table->string('fecha_inicial_ope');

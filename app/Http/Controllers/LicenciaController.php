@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Licencias;
 use App\Models\ComprobantePago;
 use App\Models\Plazos;
+use App\Models\ControlRegalia;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -74,6 +75,8 @@ class LicenciaController extends Controller
     {
         $comprobante_pago = ComprobantePago::findOrFail($id);
         $plazos = Plazos::all();
+
+        $categoria = $comprobante_pago->inspeccion->planificacion->recepcion->categoria;
 
         $year = date('Y');
         $contador = 1;
@@ -156,7 +159,7 @@ class LicenciaController extends Controller
             $codigo_lp = "YA-RMT/LP-$contadorFormatted";
         }
 
-        return view('licencia.create', compact('comprobante_pago', 'plazos', 'codigo_apro', 'codigo_hpc', 'codigo_la', 'codigo_lp'));
+        return view('licencia.create', compact('comprobante_pago', 'plazos', 'codigo_apro', 'codigo_hpc', 'codigo_la', 'codigo_lp', 'categoria'));
 
     }
 
@@ -181,6 +184,8 @@ class LicenciaController extends Controller
         //Crear una nueva Licencia 
         $licencias = new Licencias();
         $licencias->id_comprobante_pago = $request->input('id_comprobante_pago');
+        $categoria_recepcion = $request->input('categoria');
+        $nombre_mineral = $request->input('nombre_mineral');
         $licencias->resolucion_apro = $request->input('resolucion_apro');
         $licencias->resolucion_hpc = $request->input('resolucion_hpc');
         $licencias->catastro_la = $request->input('catastro_la');
@@ -189,6 +194,7 @@ class LicenciaController extends Controller
         $licencias->num_territorio = $request->input('num_territorio');
         $licencias->metodo_licencia_apro = $request->input('metodo_licencia_apro');
         $licencias->metodo_licencia_pro = $request->input('metodo_licencia_pro');
+
 
         $nro_cuotas_apro = 0;
 
@@ -203,8 +209,8 @@ class LicenciaController extends Controller
             $nro_cuotas_apro = 3;
         } 
 
-        // 
-            
+        
+
         $licencias->fecha_oficio = $request->input('fecha_oficio');
         $licencias->id_plazo = $request->input('id_plazo');
         $licencias->fecha_inicial_ope = $request->input('fecha_inicial_ope');
@@ -234,6 +240,18 @@ class LicenciaController extends Controller
             $licencias->nro_cuotas = $nro_cuotas_pro;
         } else {
             $licencias->nro_cuotas = $nro_cuotas_apro;
+        }
+
+        if ($categoria_recepcion == "Aprovechamiento") {
+            $licencias->metodo_control_pro = null;
+        } else {
+            
+            if ($nombre_mineral == "Roca caliza") {
+                $licencias->metodo_control_pro = $request->input('metodo_control_pro');
+            } else {
+                $licencias->metodo_control_pro = null;
+            }
+            
         }
         
 
@@ -277,6 +295,11 @@ class LicenciaController extends Controller
         $licencia = Licencias::findOrFail($id);
         $comprobante_pago = ComprobantePago::find($id);
         $plazos = Plazos::all();
+        $categoria = $licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria;
+        
+        // Contar el número de pagos realizados para esta licencia específica 
+        $numeroPagos = ControlRegalia::where('id_licencia', $licencia->id)->count();
+
         $resolucion_apro = $licencia->resolucion_apro;
         $catastro_la = $licencia->catastro_la;
         $resolucion_hpc = $licencia->resolucion_hpc;
@@ -291,7 +314,7 @@ class LicenciaController extends Controller
         $id_plazo = $licencia->plazo;
         $talonario = $licencia->talonario;
 
-        return view('licencia.edit' , compact('licencia', 'comprobante_pago', 'plazos', 'resolucion_apro',
+        return view('licencia.edit' , compact('licencia', 'comprobante_pago', 'plazos', 'categoria', 'numeroPagos','resolucion_apro',
         'catastro_la', 'num_territorio', 'metodo_licencia_apro', 'metodo_licencia_pro', 'resolucion_hpc', 
         'catastro_lp', 'providencia', 'fecha_oficio', 'fecha_inicial_ope', 'fecha_final_ope', 'id_plazo',
         'talonario'));
@@ -311,6 +334,8 @@ class LicenciaController extends Controller
         // Buscar la Licencia existente        
         $licencia = licencias::findOrFail($id);
         $licencia->id_comprobante_pago = $request->input('id_comprobante_pago');
+        $categoria = $request->input('categoria');
+        $nombre_mineral = $request->input('nombre_mineral');
         $licencia->resolucion_apro = $request->input('resolucion_apro');
         $licencia->resolucion_hpc = $request->input('resolucion_hpc');
         $licencia->catastro_la = $request->input('catastro_la');
@@ -320,12 +345,14 @@ class LicenciaController extends Controller
         $licencia->metodo_licencia_apro = $request->input('metodo_licencia_apro');
         $licencia->metodo_licencia_pro = $request->input('metodo_licencia_pro');
 
+        $nro_cuotas_apro = 0;
+
         if ($licencia->metodo_licencia_apro == 'Pago unico') {
-            $licencia->nro_cuotas = 1;
+            $nro_cuotas_apro = 1;
         }elseif ($licencia->metodo_licencia_apro == 'Pago 2 parte') {
-            $licencia->nro_cuotas = 2;
-        }else {
-            $licencia->nro_cuotas = 3;
+            $nro_cuotas_apro = 2;
+        }elseif ($licencia->metodo_licencia_apro == 'Pago 3 parte') {
+            $nro_cuotas_apro = 3;
         } 
 
         $licencia->fecha_oficio = $request->input('fecha_oficio');
@@ -338,9 +365,9 @@ class LicenciaController extends Controller
         $nro_cuotas_pro = 0;
 
         // Verificar si el método de licencia es "Pago cuotas"
-        if ($licencias->metodo_licencia_pro === 'Pago cuotas') {
+        if ($licencia->metodo_licencia_pro === 'Pago cuotas') {
             // Buscar el plazo por id
-            $plazo = Plazos::findOrFail($licencias->id_plazo);
+            $plazo = Plazos::findOrFail($licencia->id_plazo);
 
             // Verificar la medida_tiempo y calcular nro_cuotas
             if ($plazo->medida_tiempo === "mes(es)") {
@@ -354,9 +381,9 @@ class LicenciaController extends Controller
 
         if ($nro_cuotas_apro == 0) {
             // Guardar la variable nro_cuotas en la licencia
-            $licencias->nro_cuotas = $nro_cuotas_pro;
+            $licencia->nro_cuotas = $nro_cuotas_pro;
         } else {
-            $licencias->nro_cuotas = $nro_cuotas_apro;
+            $licencia->nro_cuotas = $nro_cuotas_apro;
         }
 
         $licencia->save();
