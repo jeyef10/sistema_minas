@@ -123,7 +123,7 @@ class homeController extends Controller
              $status = 'Vencido';
              $statusClass = 'badge badge-danger';
          } elseif ($now->diffInDays($dueDate) <= 7) {
-             $status = 'Pendiente';
+             $status = 'Vencimiento cercano';
              $statusClass = 'badge badge-warning';
          } 
          
