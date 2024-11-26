@@ -32,13 +32,25 @@ class PlazosController extends Controller
         return view('plazo.index',compact('plazos'));
     }
 
-    public function pdf()
+    public function pdf(Request $request)
     {
-          $plazos=Plazos::all();
-          $pdf=Pdf::loadView('plazo.pdf', compact('plazos'));
-          return $pdf->stream();
-
+        $search = $request->input('search');
+    
+        if ($search) {
+            // Filtrar los bancos según la consulta de búsqueda
+            $plazos =Plazos::where('cantidad', 'LIKE', '%' . $search . '%')
+                           ->orWhere('medida_tiempo', 'LIKE', '%' . $search . '%')
+                           ->get();
+        } else {
+            // Obtener todos los bancos si no hay término de búsqueda
+            $plazos =Plazos::all();
+        }
+    
+        // Generar el PDF, incluso si no se encuentran bancos
+        $pdf = Pdf::loadView('plazo.pdf', compact('plazos'));
+        return $pdf->stream('plazo.pdf');
     }
+    
     /**
      * Show the form for creating a new resource.
      *

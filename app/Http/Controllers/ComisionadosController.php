@@ -36,13 +36,30 @@ class ComisionadosController extends Controller
         return view('comisionado.index',compact('comisionados'));
     }
 
-    public function pdf()
+    public function pdf(Request $request)
     {
-        $comisionados = Comisionados::all();
-        $pdf=Pdf::loadView('comisionado.pdf', compact('comisionados'));
-        return $pdf->stream();
-    }
+        $search = $request->input('search');
 
+        if ($search) {
+            // Filtrar los comisionados según la consulta de búsqueda
+            $comisionados = Comisionados::where('cedula', 'LIKE', '%' . $search . '%')
+                        ->orWhere('nombres', 'LIKE', '%' . $search . '%')
+                        ->orWhere('apellidos', 'LIKE', '%' . $search . '%')
+                        ->orWhereHas('municipios', function ($query) use ($search) {
+                            $query->where('nom_municipio', 'LIKE', '%' . $search . '%');
+                        })
+                        ->with('municipios')
+                        ->get();
+        } else {
+            // Obtener todos los comisionados si no hay término de búsqueda
+            $comisionados = Comisionados::with('municipios')->get();
+        }
+
+        // Generar el PDF
+        $pdf = Pdf::loadView('comisionado.pdf', compact('comisionados'));
+        return $pdf->stream('comisionado.pdf');
+    }
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -62,34 +79,6 @@ class ComisionadosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    /* public function store(Request $request)
-    {
-        $request->validate(
-            [
-            'cedula' => 'unique:comisionados,cedula'
-            ],
-            [
-            'cedula.unique' => 'Está cedula ya existe en la base de datos.'
-            ]
-        );
-
-        $comisionado = Comisionados::create($request->all());
-
-        // Asociar los municipios al comisionado
-        $comisionado->municipios()->sync($request->municipios);
-
-        $bitacora = new BitacoraController;
-        $bitacora->update();
-
-        try {
-        
-            return redirect()->route('comisionado.index');
-    
-            } catch (QueryException $exception) {
-                $errorMessage = 'Error: Está cedula ya existe en la base de datos.';
-                return redirect()->back()->withErrors($errorMessage);
-            }
-    } */
 
     public function store(Request $request)
     {

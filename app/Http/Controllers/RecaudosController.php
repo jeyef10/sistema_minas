@@ -33,12 +33,26 @@ class RecaudosController extends Controller
         return view('recaudo.index',compact('recaudos'));
     }
 
-    public function pdf()
+    public function pdf(Request $request)
     {
-        $recaudos = Recaudos::all();
-        $pdf=Pdf::loadView('recaudo.pdf', compact('recaudos'));
+        $search = $request->input('search');
+    
+        if ($search) {
+            // Filtrar los recaudos según la consulta de búsqueda
+            $recaudos = Recaudos::where('nombre', 'LIKE', '%' . $search . '%')
+                           ->orWhere('categoria_recaudos', 'LIKE', '%' . $search . '%')
+                           ->get();
+                           
+        } else {
+            // Obtener todos los recaudos si no hay término de búsqueda
+            $recaudos = Recaudos::all();
+        }
+    
+        // Generar el PDF, incluso si no se encuentran métodos de pago
+        $pdf = Pdf::loadView('recaudo.pdf', compact('recaudos'));
         return $pdf->stream();
     }
+    
 
     /**
      * Show the form for creating a new resource.

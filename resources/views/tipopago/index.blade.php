@@ -17,7 +17,10 @@
                 <div class="card mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 
-                        <a href="{{ url('tipopago/pdf') }}" class="btn btn-sm btn-danger" target="_blank">
+                        <!-- <a href="{{ url('tipopago/pdf') }}" class="btn btn-sm btn-danger" target="_blank">
+                        {{ ('PDF') }}
+                        </a> -->
+                        <a href="{{ url('tipopago/pdf') }}" class="btn btn-sm btn-danger" target="_blank" id="pdfButton"> 
                         {{ ('PDF') }}
                         </a>
 
@@ -81,73 +84,67 @@
 
 @section('datatable')
 
-        <script src="{{asset('vendor/jquery/jquery.min.js') }}"></script>
-        <script src="{{asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
-        <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
-         <script src="{{asset('vendor/jquery.com/jquery-3.5.1.js') }}"></script> <!-- //scrip de pdf -->
-        <script src="{{asset('vendor/datatables.net/1.10.21/js/jquery.dataTables.min.js ') }}"></script> <!-- //scrip de pdf -->
-        
+                <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+                <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
+                <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
-    <script>
-        $(document).ready(function () {
-            $('#dataTable').DataTable({
-                
-                responsive: true,
-                autoWidth: false,
-
-                "language": {       
-                    "lengthMenu": "Mostrar " + 
-                                    `<select class = 'form-select'>
-                                        <option value = '5'>5</option>
-                                        <option value = '10'>10</option>
-                                        <option value = '15'>15</option>
-                                        <option value = '25'>25</option>
-                                        <option value = '50'>50</option>
-                                        <option value = '100'>100</option>
-                                        <option value = '-1'>Todos</option>
-                                    </select>` +
-                                    " Registros Por Página",
-                    "infoEmpty": 'No Hay Registros Disponibles.',
-                    "zeroRecords": 'Nada Encontrado Disculpa.',
-                    "info": 'Mostrando La Página _PAGE_ de _PAGES_',
-                    "infoFiltered": '(Filtrado de _MAX_ Registros Totales)',
-                    "search": "Buscar: ",
-                    "paginate": {
-                        'next': 'Siguiente',
-                        'previous': 'Anterior',
-                    },
-                    decimal: ',',
-                    thousands: '.',
-                },
-            });
-        });
-    </script>
-
-
-         <!-- para que el pdf solo filtre el id 
-               <script>
-                    $(document).ready(function() {
-                        var table = $('#dataTable').DataTable();
-
-                        $('#generatePDF').click(function() {
-                            var searchData = table.search();
-                            $.ajax({
-                                url: "{{ url('tipopago/pdf') }}",
-                                method: 'GET',
-                                data: {
-                                    search: searchData
+                        <script>
+                           $(document).ready(function () {
+                            var table = $('#dataTable').DataTable({
+                                responsive: true,
+                                autoWidth: false,
+                                "language": {
+                                    "lengthMenu": "Mostrar " +
+                                        `<select class='form-select'>
+                                            <option value='5'>5</option>
+                                            <option value='10'>10</option>
+                                            <option value='15'>15</option>
+                                            <option value='25'>25</option>
+                                            <option value='50'>50</option>
+                                            <option value='100'>100</option>
+                                            <option value='-1'>Todos</option>
+                                        </select>` +
+                                        " Registros Por Página",
+                                    "infoEmpty": 'No Hay Registros Disponibles.',
+                                    "zeroRecords": 'Nada Encontrado Disculpa.',
+                                    "info": 'Mostrando La Página _PAGE_ de _PAGES_',
+                                    "infoFiltered": '(Filtrado de _MAX_ Registros Totales)',
+                                    "search": "Buscar: ",
+                                    "paginate": {
+                                        'next': 'Siguiente',
+                                        'previous': 'Anterior',
+                                    },
+                                    decimal: ',',
+                                    thousands: '.',
                                 },
-                                success: function(response) {
-                                    var blob = new Blob([response], { type: 'listadotipopago/pdf' });
-                                    var link = document.createElement('a');
-                                    link.href = window.URL.createObjectURL(blob);
-                                    link.download = "listado_tipopago.pdf";
-                                    link.click();
-                                }
                             });
-                        });
-                    });
-                </script> -->
+
+                            function updatePdfLink() {
+                                var searchTerm = table.search();
+                                var pdfUrl = `{{ url('tipopago/pdf') }}?search=${encodeURIComponent(searchTerm)}`;
+                                $('#pdfButton').attr('href', pdfUrl);
+                            }
+
+                            table.on('search.dt', function () {
+                                var searchTerm = table.search();
+                                $.ajax({
+                                    url: '{{ url('tipopago/pdf') }}',
+                                    method: 'GET',
+                                    data: { search: searchTerm },
+                                    success: function(response) {
+                                        // Aquí puedes manejar la respuesta, si necesitas hacer algo con ella
+                                        console.log('PDF generado con éxito');
+                                    },
+                                    error: function(xhr) {
+                                        console.error('Error al generar el PDF:', xhr);
+                                    }
+                                });
+                                updatePdfLink();
+                            });
+
+                            updatePdfLink();
+                          });
+                 </script>
 
 
 @endsection
@@ -218,19 +215,3 @@
     
 @endsection
 
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Gestión de Pago</title>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-</head>
-<body>
-    <h1>Gestión de Pago</h1>
-
-    <!-- Botón para generar el PDF -->
-    

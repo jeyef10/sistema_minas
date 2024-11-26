@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>PDF Solicitante</title>
-</head>
+    <title>PDF Entidad Bancaria</title>
 
 {{-- Estilo al PDF --}}
 
@@ -14,7 +13,7 @@
 body{
     margin: 0;
 	padding: 0;
-    background: url(../img/centro.png);
+    background: url(../img/centro1.png);
 	background-size: cover;
 	font-family: sans-serif;
     font-size: 0.8rem;
@@ -33,13 +32,13 @@ h1{
 }
 
 .table{
-    font-size: 18px;
+    font-size: 20px;
     text-align: center;
 
 }
 
 tbody. tr. td{
-    border: 2px solid black;
+    border: 2px solid ;
 }
 
 img {
@@ -57,15 +56,13 @@ img {
   border-radius: 8% 
 } 
 
-
 .footer-image { 
-    
     width: 76%; 
     height: auto; 
     position: absolute;
     bottom: 33px; 
     left: 19%; 
-    transform: translateX(-29%);
+    transform: translateX(-29%); 
 }
 
 </style>
@@ -78,48 +75,34 @@ img {
             </div>
     
         
-        <h1>Listado de Solicitantes</h1><br>
+        <h1>Listado de Entidad Bancaria</h1><br>
             <table class="table" cellpadding="1" cellspacing="1" width="100%" style="padding-bottom:0.4rem;font-size:0.6rem !important">
             <thead class="header">
                 <tr>
-                    
-                    <th>Tipo de Solicitante</th>
-                    <th>Cédula/Rif</th>
-                    <th>Solicitante</th>
-                  
-                    
+                    <th>Lista</th>
+                    <th>Codigo Bancario</th>
+                    <th>Nombre de Banco</th>
                     
                 </tr>
             </thead>
             <tbody>
-            @foreach ($solicitantes as $solicitante)
-        
-                
+            @foreach ($bancos as $banco)
                 <tr>
+                    <td>{{ $loop->iteration }}</td>
+                     <td>{{ $banco->codigo_banco }}</td>
+                     <td>{{ $banco->nombre_banco}}</td>
 
-                <td >{{ $solicitante->tipo }}</td>
-
-                @if ($solicitante->solicitanteEspecifico instanceof \App\Models\PersonaNatural)
-                <td >{{ $solicitante->solicitanteEspecifico->cedula }}</td>
-                <td >{{ $solicitante->solicitanteEspecifico->nombre }} {{ $solicitante->solicitanteEspecifico->apellido }}</td>
-
-                @elseif ($solicitante->solicitanteEspecifico instanceof \App\Models\PersonaJuridica)
-                  
-                    <td >{{ $solicitante->solicitanteEspecifico->rif }}</td>
-                    <td >{{ $solicitante->solicitanteEspecifico->nombre }}</td>
                    
-                    
-                @endif
                 </tr>
-        @endforeach
+           @endforeach
             </tbody>
         </table>
 
         <div class="row">
             <img class="footer-image"  src="../public/img/piepagina.png" alt="Pie de Página">
         </div>
-        
+
     </body>
 {{-- Index del PDF --}}
-
 </html>
+

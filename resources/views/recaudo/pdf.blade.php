@@ -76,7 +76,7 @@ img {
             </div>
     
         
-        <h1>Listado de Minerales</h1><br>
+        <h1>Listado de Recaudos</h1><br>
             <table class="table" cellpadding="1" cellspacing="1" width="100%" style="padding-bottom:0.4rem;font-size:0.6rem !important">
             <thead class="header">
                 <tr>

@@ -32,13 +32,28 @@ class MineralController extends Controller
         return view('mineral.index',compact('minerales'));
     }
 
-    public function pdf()
+    public function pdf(Request $request)
     {
-          $minerales=Minerales::all();
-          $pdf=Pdf::loadView('mineral.pdf', compact('minerales'));
-          return $pdf->stream();
-
+        $search = $request->input('search');
+    
+        if ($search) {
+            // Filtrar los bancos según la consulta de búsqueda
+            $minerales = Minerales::where('tipo', 'LIKE', '%' . $search . '%')
+                           ->orWhere('nombre', 'LIKE', '%' . $search . '%')
+                           ->orWhere('categoria', 'LIKE', '%' . $search . '%')
+                           ->orWhere('tasa', 'LIKE', '%' . $search . '%')
+                           ->orWhere('moneda_longitud', 'LIKE', '%' . $search . '%')
+                           ->get();
+        } else {
+            // Obtener todos los bancos si no hay término de búsqueda
+            $minerales = Minerales::all();
+        }
+    
+        // Generar el PDF, incluso si no se encuentran bancos
+        $pdf = Pdf::loadView('mineral.pdf', compact('minerales'));
+        return $pdf->stream('mineral.pdf');
     }
+    
 
     /**
      * Show the form for creating a new resource.

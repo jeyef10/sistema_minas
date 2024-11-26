@@ -60,6 +60,9 @@ class ReporteController extends Controller
 
     public function generarPDF(Request $request)
     {
+
+        $search = $request->input('search');
+
         $licencia = licencias::join('comprobante_pagos', 'comprobante_pagos.id', '=', 'licencias.id_comprobante_pago')
             ->join('inspecciones', 'inspecciones.id', '=', 'comprobante_pagos.id_inspeccion')
             ->join('planificacion', 'planificacion.id', '=', 'inspecciones.id_planificacion')
@@ -91,6 +94,29 @@ class ReporteController extends Controller
                 'licencias.id_plazo'
             ])
             ->get();
+
+        if ($search) {
+            // Filtrar los solicitantes según la consulta de búsqueda
+            $licencia = $licencia->where(function($query) use ($search) {
+                $query->where('personas_naturales.cedula as solicitante_cedula', 'LIKE', '%' . $search . '%')
+                        ->orWhere('personas_naturales.nombre as solicitante_nombre_natural', 'LIKE', '%' . $search . '%')
+                        ->orWhere('personas_naturales.apellido as solicitante_apellido', 'LIKE', '%' . $search . '%')
+                        ->orWhere('personas_juridicas.nombre as solicitante_nombre_juridico', 'LIKE', '%' . $search . '%')
+                        ->orWhere('personas_juridicas.rif as solicitante_rif', 'LIKE', '%' . $search . '%')
+                        ->orWhere('recepcion.direccion', 'LIKE', '%' . $search . '%')
+                        ->orWhere('minerales.nombre as nombre_mineral', 'LIKE', '%' . $search . '%')
+                        ->orWhere('recepcion.categoria', 'LIKE', '%' . $search . '%')
+                        ->orWhere('solicitantes.tipo as solicitante_tipo', 'LIKE', '%' . $search . '%')
+                        ->orWhere('licencias.resolucion_hpc', 'LIKE', '%' . $search . '%')
+                        ->orWhere('licencias.resolucion_apro', 'LIKE', '%' . $search . '%')
+                        ->orWhere('licencias.catastro_la', 'LIKE', '%' . $search . '%')
+                        ->orWhere('licencias.catastro_lp', 'LIKE', '%' . $search . '%')
+                        ->orWhere('licencias.id_plazo', 'LIKE', '%' . $search . '%');
+                        
+            });
+        }
+
+        $licencia = $licencia->get();
 
         $pdf = PDF::loadView('reporte.pdf', ['resultados' => $licencia]);
 

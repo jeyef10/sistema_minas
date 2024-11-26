@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('estatus_oficio');
             $table->string('nombre_firma');
             $table->unsignedBigInteger('id_tipo_pago');
-            $table->unsignedBigInteger('id_banco');
+            $table->unsignedBigInteger('id_banco')->nullable();
             $table->string('n_referencia')->nullable();
             $table->json('comprobante_pdf')->nullable();
             $table->text('observaciones_com')->nullable();

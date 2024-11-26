@@ -6,6 +6,7 @@ use App\Models\Banco;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class BancoController extends Controller
 {
@@ -20,7 +21,26 @@ class BancoController extends Controller
 
         return view('banco.index', compact('bancos')); 
     }
-
+ 
+    public function pdf(Request $request)
+    {
+        $search = $request->input('search');
+    
+        if ($search) {
+            // Filtrar los bancos según la consulta de búsqueda
+            $bancos = Banco::where('codigo_banco', 'LIKE', '%' . $search . '%')
+                           ->orWhere('nombre_banco', 'LIKE', '%' . $search . '%')
+                           ->get();
+        } else {
+            // Obtener todos los bancos si no hay término de búsqueda
+            $bancos = Banco::all();
+        }
+    
+        // Generar el PDF, incluso si no se encuentran bancos
+        $pdf = Pdf::loadView('banco.pdf', compact('bancos'));
+        return $pdf->stream('banco.pdf');
+    }
+    
     /**
      * Show the form for creating a new resource.
      *

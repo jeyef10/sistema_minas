@@ -136,7 +136,9 @@ Route::get('/tipopago/pdf',  [TipoPagoController::class,'pdf'])->name('tipopago'
 Route::resource('tipopago', TipoPagoController::class)->middleware('auth');
 
 /* Ruta Banco*/
+Route::get('/banco/pdf',  [BancoController::class,'pdf'])->name('banco')->middleware('auth');
 Route::resource('banco', BancoController::class)->middleware('auth');
+
 
 /* Ruta Recepcion de Recaudos */
 Route::get('/recepcion/create', [RecepcionController::class, 'create'])->name('create')->middleware('auth');
