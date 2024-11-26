@@ -10,7 +10,7 @@ use App\Models\PersonaJuridica;
 use App\Models\Recaudos;
 use App\Models\Comisionados;
 use App\Models\Minerales;
-// use App\Models\Regalia;
+use App\Models\PagoRegalia;
 use App\Models\Plazos;
 use App\Models\TipoPago;
 use App\Models\Recepcion;
@@ -93,13 +93,50 @@ class homeController extends Controller
                 'longitud' => $licencia->inspeccion->longitud
             ];
         });
+
+        $pagos = PagoRegalia::with('licencia')->get();
+
+        foreach ($pagos as $pago) {
+            $statusInfo = $this->determineStatus($pago);
+            $pago->status = $statusInfo['status'];
+            $pago->statusClass = $statusInfo['class'];
+        }
+
         return view('home.inicio' , compact('count_solicitante', 'count_natural', 'count_juridico', 'count_recaudo','count_comisionado', 'count_mineral', 'count_plazo', 
-        'count_tipo_pagos', 'count_recepcion','count_inspecciones', 'count_licencia', 'mapa_recepciones', 'mapa_inspecciones', 'mapa_licencias' ) , [
+        'count_tipo_pagos', 'count_recepcion','count_inspecciones', 'count_licencia', 'mapa_recepciones', 'mapa_inspecciones', 'mapa_licencias', 'pagos' ) , [
         'count' => $count_solicitante, $count_natural, $count_juridico, $count_recaudo,  $count_comisionado,  $count_mineral, $count_plazo ,
         $count_tipo_pagos, $count_recepcion, $count_inspecciones, $count_licencia
 
-    ]); ;
+    ]); 
 
-    }
+
+     }
+
+     protected function determineStatus($pago)
+     {
+         $dueDate = $pago->fecha_venci;
+         $now = now();
+         $status = '';
+         $statusClass = '';
+     
+         if ($now->greaterThan($dueDate)) {
+             $status = 'Vencido';
+             $statusClass = 'badge badge-danger';
+         } elseif ($now->diffInDays($dueDate) <= 7) {
+             $status = 'Pendiente';
+             $statusClass = 'badge badge-warning';
+         } 
+         
+         else {
+             $status = 'Normal';
+             $statusClass = 'badge badge-success';
+         }
+     
+         return ['status' => $status, 'class' => $statusClass];
+     }
+
+
+
+
 
 }

@@ -1,6 +1,10 @@
 @extends('layouts.index')
 
 <title>@yield('title')Inicio</title>
+@section('css-datatable')
+        <link href="{{ asset ('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+        <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
+@endsection
 <link  href="{{ asset('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css')}}" rel="stylesheet" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 <link rel="stylesheet" href="{{ asset('https://unpkg.com/leaflet/dist/leaflet.css') }}" />
 <link rel="stylesheet" href="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css') }}">
@@ -271,9 +275,119 @@
               
             </div>
           </div>
-        
+
+          <!-- Invoice Example -->
+          <div class="col-xl-12 col-lg-7">
+            <div class="card mb-4">
+              <div class="card-header py-3 align-items-center justify-content-center">
+                <h6 class="m-0 font-weight-bold text-primary" style="text-align: center;">Pagos Vencidos y Pendientes</h6>
+                  <div class="table-responsive p-3"> 
+                    <table class="table align-items-center table-flush" id="dataTable">
+                        <thead class="thead-light">
+                            <tr>                                    
+                                <th class="font-weight-bold text-Secondary">N° Licencia</th>
+                                <th class="font-weight-bold text-Secondary">Tipo Licencia</th>
+                                <th class="font-weight-bold text-Secondary">Solicitante Habilitado</th>
+                                <th class="font-weight-bold text-Secondary">Fecha Vencimiento</th>
+                                <th class="font-weight-bold text-Secondary">Estatus</th>                                                           
+                                <th class="font-weight-bold text-Secondary"><center>Acciones</center> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($pagos as $pago)
+                                <tr>
+
+                                  @if ($pago->status != "Normal")
+
+                                    <td class="font-weight-bold text-Secondary">
+                                
+                                      @if ($pago->licencia->resolucion_apro == null)
+                                        {{ $pago->licencia->resolucion_hpc }}
+                                      @elseif ($pago->licencia->resolucion_hpc == null)
+                                        {{ $pago->licencia->resolucion_apro }}
+                                      @endif
+                                      
+                                    </td>
+                                    <td class="font-weight-bold text-Secondary">{{ $pago->licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria }}</td>
+                                    <td class="font-weight-bold text-Secondary">
+                                      {{ $pago->licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->nombre }} 
+                                      {{ $pago->licencia->comprobante_pago->inspeccion->planificacion->recepcion->solicitante->solicitanteEspecifico->apellido }}
+                                    </td>
+                                    <td class="font-weight-bold text-Secondary"> {{ date('d/m/Y', strtotime($pago->fecha_venci)) }} </td>
+                                    <td class="font-weight-bold text-Secondary">
+                                      
+                                      <span class="{{ $pago->statusClass }}">{{ $pago->status }}</span>
+                
+                                    </td>
+
+                                    <td class="font-weight-bold text-Secondary" style="text-align: center;">
+                                      <a href="#" class="btn btn-sm btn-primary">Detail</a>
+                                    </td>
+                                        
+                                    @else
+                                  
+                                    <td class="font-weight-bold text-Secondary"></td>
+                                    <td class="font-weight-bold text-Secondary"></td>
+                                    <td class="font-weight- text-Secondary" style="text-align: right;">Nada Encontrado Disculpa.</td>
+                                    <td class="font-weight-bold text-Secondary"></td>
+                                    <td class="font-weight-bold text-Secondary"></td>
+                                    <td class="font-weight-bold text-Secondary"></td>
+              
+                                  @endif
+                                    
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+      
+      @section('datatable')
+
+        <script src="{{asset('vendor/jquery/jquery.min.js') }}"></script>
+        <script src="{{asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
+        <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+
+        <script>
+            $(document).ready(function () {
+                $('#dataTable').DataTable({
+                    
+                    responsive: true,
+                    autoWidth: false,
+
+                    "language": {       
+                        "lengthMenu": "Mostrar " + 
+                                        `<select class = 'form-select'>
+                                            <option value = '5'>5</option>
+                                            <option value = '10'>10</option>
+                                            <option value = '15'>15</option>
+                                            <option value = '25'>25</option>
+                                            <option value = '50'>50</option>
+                                            <option value = '100'>100</option>
+                                            <option value = '-1'>Todos</option>
+                                        </select>` +
+                                        " Registros Por Página",
+                        "infoEmpty": 'No Hay Registros Disponibles.',
+                        "zeroRecords": 'Nada Encontrado Disculpa.',
+                        "info": 'Mostrando La Página _PAGE_ de _PAGES_',
+                        "infoFiltered": '(Filtrado de _MAX_ Registros Totales)',
+                        "search": "Buscar: ",
+                        "paginate": {
+                            'next': 'Siguiente',
+                            'previous': 'Anterior',
+                        },
+                        decimal: ',',
+                        thousands: '.',
+                    },
+                });
+            });
+        </script>
+
+    @endsection
 
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
@@ -281,90 +395,90 @@
     <script src="{{ asset('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js') }}" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="{{ asset('https://unpkg.com/leaflet/dist/leaflet.js') }}"></script>
     
-
-
           {{-- * FUNCION PARA EL MAPA Y PARA CAPTURAR LOS DATOS DE LA LATITUD Y LONGITUD --}}
 
-<script>
-    const map = L.map('mapa').setView([10.2825, -68.7222], 9.6); // Latitud y longitud iniciales de Yaracuy
+    <script>
+        const map = L.map('mapa').setView([10.2825, -68.7222], 9.6); // Latitud y longitud iniciales de Yaracuy
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
 
-    var recepciones = @json($mapa_recepciones);
-    var inspecciones = @json($mapa_inspecciones);
-    var licencias = @json($mapa_licencias);
+        var recepciones = @json($mapa_recepciones);
+        var inspecciones = @json($mapa_inspecciones);
+        var licencias = @json($mapa_licencias);
 
-    // Definir iconos personalizados
-    var recepcionIcon = L.icon({
-        iconUrl: '/icons/mapa1.png', // Ruta al icono de recepcion
-        iconSize: [25, 41], // Tamaño del icono
-        iconAnchor: [12, 41], // Punto del icono que se corresponde con la posición del marcador
-        popupAnchor: [1, -34] // Punto desde el cual se abrirá el popup relativo al icono
-    });
+        // Definir iconos personalizados
+        var recepcionIcon = L.icon({
+            iconUrl: '/icons/mapa1.png', // Ruta al icono de recepcion
+            iconSize: [25, 41], // Tamaño del icono
+            iconAnchor: [12, 41], // Punto del icono que se corresponde con la posición del marcador
+            popupAnchor: [1, -34] // Punto desde el cual se abrirá el popup relativo al icono
+        });
 
-    var inspeccionIcon = L.icon({
-        iconUrl: '/icons/mapa2.png', // Ruta al icono de inspeccion
-        iconSize: [35, 51],
-        iconAnchor: [17, 51],
-        popupAnchor: [1, -34]
-    });
-
-
-    var licenciaIcon = L.icon({
-        iconUrl: '/icons/mapa_licencia.png', // Ruta al icono de recepcion
-        iconSize: [25, 41], // Tamaño del icono
-        iconAnchor: [12, 41], // Punto del icono que se corresponde con la posición del marcador
-        popupAnchor: [1, -34] // Punto desde el cual se abrirá el popup relativo al icono
-    });
-
-
-    recepciones.forEach(function(recepcion) {
-        if (recepcion.latitud && recepcion.longitud) {
-            L.marker([recepcion.latitud, recepcion.longitud], { icon: recepcionIcon }).addTo(map)
-                .bindPopup('Recepcion');
-        }
-    });
-
-    inspecciones.forEach(function(inspeccion) {
-            if (inspeccion.latitud && inspeccion.longitud) {
-                L.marker([inspeccion.latitud, inspeccion.longitud], { icon: inspeccionIcon }).addTo(map)
-                    .bindPopup('Inspeccion');
-            }
+        var inspeccionIcon = L.icon({
+            iconUrl: '/icons/mapa2.png', // Ruta al icono de inspeccion
+            iconSize: [35, 51],
+            iconAnchor: [17, 51],
+            popupAnchor: [1, -34]
         });
 
 
-        // licencias.forEach(function(licencia) {
-        //     if (licencia.latitud licencia.longitud) {
-        //         L.marker([licencia.latitud, licencia.longitud], { icon: licenciaIcon }).addTo(map)
-        //             .bindPopup('Licencia');
-        //     }
-        // });
+        var licenciaIcon = L.icon({
+            iconUrl: '/icons/mapa_licencia.png', // Ruta al icono de recepcion
+            iconSize: [25, 41], // Tamaño del icono
+            iconAnchor: [12, 41], // Punto del icono que se corresponde con la posición del marcador
+            popupAnchor: [1, -34] // Punto desde el cual se abrirá el popup relativo al icono
+        });
 
 
-         // Datos de licencias del backend
-        licencias.forEach(function(licencia) {
-            if (licencia.latitud && licencia.longitud) {
-                L.marker([licencia.latitud, licencia.longitud] , { icon: licenciaIcon }).addTo(map).bindPopup('Licencia');
+        recepciones.forEach(function(recepcion) {
+            if (recepcion.latitud && recepcion.longitud) {
+                L.marker([recepcion.latitud, recepcion.longitud], { icon: recepcionIcon }).addTo(map)
+                    .bindPopup('Recepcion');
             }
         });
 
-</script>
+        inspecciones.forEach(function(inspeccion) {
+                if (inspeccion.latitud && inspeccion.longitud) {
+                    L.marker([inspeccion.latitud, inspeccion.longitud], { icon: inspeccionIcon }).addTo(map)
+                        .bindPopup('Inspeccion');
+                }
+            });
 
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-      var progressBars = document.querySelectorAll('.progress-bar');
-      progressBars.forEach(function(bar) {
-          var value = bar.getAttribute('data-value');
-          bar.style.width = '0%';
-          setTimeout(function() {
-              bar.style.width = value + '%';
-          }, 100); // Añadir un pequeño retraso para empezar la animación
+
+            // licencias.forEach(function(licencia) {
+            //     if (licencia.latitud licencia.longitud) {
+            //         L.marker([licencia.latitud, licencia.longitud], { icon: licenciaIcon }).addTo(map)
+            //             .bindPopup('Licencia');
+            //     }
+            // });
+
+
+            // Datos de licencias del backend
+            licencias.forEach(function(licencia) {
+                if (licencia.latitud && licencia.longitud) {
+                    L.marker([licencia.latitud, licencia.longitud] , { icon: licenciaIcon }).addTo(map).bindPopup('Licencia');
+                }
+            });
+
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          var progressBars = document.querySelectorAll('.progress-bar');
+          progressBars.forEach(function(bar) {
+              var value = bar.getAttribute('data-value');
+              bar.style.width = '0%';
+              setTimeout(function() {
+                  bar.style.width = value + '%';
+              }, 100); // Añadir un pequeño retraso para empezar la animación
+          });
       });
-  });
-</script>
-
+    </script>
 
 @endsection
+
+
+
 
