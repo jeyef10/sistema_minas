@@ -17,11 +17,11 @@
                 <div class="card mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 
-                        <a href="{{ url('reporte/pdf') }}" class="btn btn-sm btn-danger " target="_blank">
+                        <a href="{{ url('reporte/pdf') }}" class="btn btn-sm btn-danger " target="_blank" id="pdfButton">
                             {{ ('PDF') }}
                          </a>
                             
-                      <h2 class="font-weight-bold text-primary" style="margin-left: 6%;">Resumen Habilitado</h2>
+                      <h2 class="font-weight-bold text-primary" style="margin-right: 35%;">Resumen Habilitado</h2>
 
                   </div>
 
@@ -99,25 +99,23 @@
         <script src="{{asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
         <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
-    <script>
-        $(document).ready(function () {
-            $('#dataTable').DataTable({
-                
+        <script>
+            $(document).ready(function () {
+            var table = $('#dataTable').DataTable({
                 responsive: true,
                 autoWidth: false,
-
-                "language": {       
-                    "lengthMenu": "Mostrar " + 
-                                    `<select class = 'form-select'>
-                                        <option value = '5'>5</option>
-                                        <option value = '10'>10</option>
-                                        <option value = '15'>15</option>
-                                        <option value = '25'>25</option>
-                                        <option value = '50'>50</option>
-                                        <option value = '100'>100</option>
-                                        <option value = '-1'>Todos</option>
-                                    </select>` +
-                                    " Registros Por Página",
+                "language": {
+                    "lengthMenu": "Mostrar " +
+                        `<select class='form-select'>
+                            <option value='5'>5</option>
+                            <option value='10'>10</option>
+                            <option value='15'>15</option>
+                            <option value='25'>25</option>
+                            <option value='50'>50</option>
+                            <option value='100'>100</option>
+                            <option value='-1'>Todos</option>
+                        </select>` +
+                        " Registros Por Página",
                     "infoEmpty": 'No Hay Registros Disponibles.',
                     "zeroRecords": 'Nada Encontrado Disculpa.',
                     "info": 'Mostrando La Página _PAGE_ de _PAGES_',
@@ -131,44 +129,34 @@
                     thousands: '.',
                 },
             });
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $('#dataTable2').DataTable({
-                
-                responsive: true,
-                autoWidth: false,
 
-                "language": {       
-                    "lengthMenu": "Mostrar " + 
-                                    `<select class = 'form-select'>
-                                        <option value = '5'>5</option>
-                                        <option value = '10'>10</option>
-                                        <option value = '15'>15</option>
-                                        <option value = '25'>25</option>
-                                        <option value = '50'>50</option>
-                                        <option value = '100'>100</option>
-                                        <option value = '-1'>Todos</option>
-                                    </select>` +
-                                    " Registros Por Página",
-                    "infoEmpty": 'No Hay Registros Disponibles.',
-                    "zeroRecords": 'Nada Encontrado Disculpa.',
-                    "info": 'Mostrando La Página _PAGE_ de _PAGES_',
-                    "infoFiltered": '(Filtrado de _MAX_ Registros Totales)',
-                    "search": "Buscar: ",
-                    "paginate": {
-                        'next': 'Siguiente',
-                        'previous': 'Anterior',
+            function updatePdfLink() {
+                var searchTerm = table.search();
+                var pdfUrl = `{{ url('reporte/pdf') }}?search=${encodeURIComponent(searchTerm)}`;
+                $('#pdfButton').attr('href', pdfUrl);
+            }
+
+            table.on('search.dt', function () {
+                var searchTerm = table.search();
+                $.ajax({
+                    url: '{{ url('recaudo/pdf') }}',
+                    method: 'GET',
+                    data: { search: searchTerm },
+                    success: function(response) {
+                        // Aquí puedes manejar la respuesta, si necesitas hacer algo con ella
+                        console.log('PDF generado con éxito');
                     },
-                    decimal: ',',
-                    thousands: '.',
-                },
+                    error: function(xhr) {
+                        console.error('Error al generar el PDF:', xhr);
+                    }
+                });
+                updatePdfLink();
             });
-        });
 
-      
-
+            updatePdfLink();
+            });
     </script>
+
+
 @endsection
 

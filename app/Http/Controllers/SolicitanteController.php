@@ -36,12 +36,117 @@ class SolicitanteController extends Controller
         return view('solicitante.index', compact('solicitantes'));
     }
 
-    public function pdf()
+   
+    
+    public function pdf(Request $request)
     {
-        $solicitantes = Solicitante::all();
-        $pdf=Pdf::loadView('solicitante.pdf', compact('solicitantes'));
-        return $pdf->stream();
+        $search = $request->input('search');
+    
+        $solicitantes = Solicitante::leftJoin('personas_naturales', function ($join) {
+                    $join->on('solicitantes.solicitante_especifico_id', '=', 'personas_naturales.id')
+                        ->where('solicitantes.solicitante_especifico_type', '=', 'App\\Models\\PersonaNatural');
+                })
+                ->leftJoin('personas_juridicas', function ($join) {
+                    $join->on('solicitantes.solicitante_especifico_id', '=', 'personas_juridicas.id')
+                        ->where('solicitantes.solicitante_especifico_type', '=', 'App\\Models\\PersonaJuridica');
+                })
+                ->select('solicitantes.*', 'personas_naturales.cedula', 'personas_naturales.nombre as nombre_natural', 'personas_naturales.apellido', 'personas_juridicas.rif', 'personas_juridicas.nombre as nombre_juridico', 'personas_juridicas.correo');
+    
+        if ($search) {
+            // Filtrar los solicitantes según la consulta de búsqueda
+            $solicitantes = $solicitantes->where(function($query) use ($search) {
+                $query->where('personas_naturales.nombre', 'LIKE', '%' . $search . '%')
+                      ->orWhere('personas_naturales.apellido', 'LIKE', '%' . $search . '%')
+                      ->orWhere('personas_naturales.cedula', 'LIKE', '%' . $search . '%')
+                      ->orWhere('personas_juridicas.nombre', 'LIKE', '%' . $search . '%')
+                      ->orWhere('personas_juridicas.rif', 'LIKE', '%' . $search . '%');
+                      
+            });
+        }
+    
+        $solicitantes = $solicitantes->get();
+    
+        // Generar el PDF, incluso si no se encuentran solicitantes
+        $pdf = Pdf::loadView('solicitante.pdf', compact('solicitantes'));
+        return $pdf->stream('solicitante.pdf');
     }
+    
+
+
+
+
+
+
+
+
+
+
+
+
+// public function pdf(Request $request)
+// {
+//     $search = $request->input('search');
+
+//     if ($search) {
+//         // Filtrar los solicitantes según la consulta de búsqueda
+//         $solicitantes = Solicitante::whereHas('solicitanteEspecifico', function($query) use ($search) {
+//             $query->where('nombre', 'LIKE', '%' . $search . '%')
+//                   ->orWhere('apellido', 'LIKE', '%' . $search . '%')
+//                   ->orWhere('cedula', 'LIKE', '%' . $search . '%')
+//                   ->orWhere('rif', 'LIKE', '%' . $search . '%')
+//                   ->orWhere('correo', 'LIKE', '%' . $search . '%');
+//         })->get();
+//     } else {
+//         // Obtener todos los solicitantes si no hay término de búsqueda
+//         $solicitantes = Solicitante::with('solicitanteEspecifico')->get();
+//     }
+
+//     // Generar el PDF, incluso si no se encuentran solicitantes
+//     $pdf = Pdf::loadView('solicitante.pdf', compact('solicitantes'));
+//     return $pdf->stream('solicitante.pdf');
+// }
+
+
+
+
+    // public function pdf(Request $request)
+    // {
+    //     $search = $request->input('search');
+    
+    //     if ($search) {
+    //         // Filtrar los solicitantes según la consulta de búsqueda
+    //         $solicitantes = Solicitante::whereHas('solicitanteEspecifico', function($query) use ($search) {
+    //             $query->where('nombre', 'LIKE', '%' . $search . '%')
+    //                   ->orWhere('apellido', 'LIKE', '%' . $search . '%')
+    //                   ->orWhere('cedula', 'LIKE', '%' . $search . '%')
+    //                   ->orWhere('rif', 'LIKE', '%' . $search . '%');
+    //         })->get();
+    //     } else {
+    //         // Obtener todos los solicitantes si no hay término de búsqueda
+    //         $solicitantes = Solicitante::with('solicitanteEspecifico')->get();
+    //     }
+    
+    //     // Generar el PDF, incluso si no se encuentran solicitantes
+    //     $pdf = Pdf::loadView('solicitante.pdf', compact('solicitantes'));
+    //     return $pdf->stream('solicitante.pdf');
+    // }
+    
+
+    // public function pdf(Request $request)
+    // {
+
+    //     $search = $request->input('search');
+
+    //     if ($search) {
+    //         // Filtrar los métodos de pago según la consulta de búsqueda
+    //         $solicitantes = Solicitante::where('solicitante_especifico_id', 'LIKE', '%' . $search . '%')->get();
+    //     } else {
+    //         // Obtener todos los métodos de pago si no hay término de búsqueda
+    //         $solicitantes = Solicitante::with('solicitanteEspecifico')->get();
+    //     } 
+    //     $pdf=Pdf::loadView('solicitante.pdf', compact('solicitantes'));
+    //     return $pdf->stream();
+    // }
 
 
     /**

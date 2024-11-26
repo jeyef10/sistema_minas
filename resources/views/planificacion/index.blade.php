@@ -16,7 +16,11 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h2 class="font-weight-bold text-primary" style="margin-left: 33%;">Planificación de Inspecciones</h2>
+
+                    <a href="{{ url('planificacion/pdf') }}" class="btn btn-sm btn-danger" target="_blank" id="pdfButton"> 
+                        {{ ('PDF') }}
+                        </a>
+                        <h2 class="font-weight-bold text-primary" style="margin-right: 33%;">Planificación de Inspecciones</h2>
                     </div>
                     <div class="card-body">
 
@@ -37,7 +41,7 @@
                                     <th class="font-weight-bold text-Secondary">Municipio</th>
                                     <th class="font-weight-bold text-Secondary">Fecha</th>
                                     <th class="font-weight-bold text-Secondary"><center>Acciones</center></th>
-                                  </tr>
+                                </tr>
                             </thead>
                             <tbody>
                                 @foreach ($recepciones as $recepcion)
@@ -187,7 +191,19 @@
                     thousands: '.',
                 },
             });
-        });
+
+                function updatePdfLink() {
+                    var searchTerm = table.search();
+                    var pdfUrl = `{{ url('tipopago/pdf') }}`;
+                    if (searchTerm) {
+                        pdfUrl += `?search=${encodeURIComponent(searchTerm)}`;
+                    }
+                    $('#pdfButton').attr('href', pdfUrl);
+                }
+
+                table.on('search.dt', updatePdfLink);
+                updatePdfLink();
+         });
     </script>
     <script>
         $(document).ready(function () {

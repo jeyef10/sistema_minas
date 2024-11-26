@@ -62,7 +62,21 @@ class PlanificacionController extends Controller
 
         return ['recepcion' => $recepcion, 'recaudos' => $recaudos];
     }
+
+     public function pdf()
+    {
+        $recepciones=Recepcion::all();
+          $pdf=Pdf::loadView('planificacion.pdf', compact('recepciones'));
+          return $pdf->stream();
+
+    }
+
+    
     /**
+     * 
+     * 
+     * 
+     * 
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

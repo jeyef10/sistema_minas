@@ -22,24 +22,27 @@ class TipoPagoController extends Controller
         $tipo_pagos = TipoPago::all();
         return view('tipopago.index',compact('tipo_pagos'));
     }
+    
 
-
+    
     public function pdf(Request $request)
     {
         $search = $request->input('search');
-
-        // Filtrar los métodos de pago según la consulta de búsqueda
-        $tipo_pagos = TipoPago::where('forma_pago', 'LIKE', '%' . $search . '%')->get();
-
-        // Verificar si se encontraron métodos de pago
-        if ($tipo_pagos->isEmpty()) {
-            return redirect()->back()->with('error', 'No se encontraron métodos de pago.');
+    
+        if ($search) {
+            // Filtrar los métodos de pago según la consulta de búsqueda
+            $tipo_pagos = TipoPago::where('forma_pago', 'LIKE', '%' . $search . '%')->get();
+        } else {
+            // Obtener todos los métodos de pago si no hay término de búsqueda
+            $tipo_pagos = TipoPago::all();
         }
-
+    
+        // Generar el PDF, incluso si no se encuentran métodos de pago
         $pdf = Pdf::loadView('tipopago.pdf', compact('tipo_pagos'));
         return $pdf->stream();
     }
-
+    
+   
 
     // public function pdf()
     // {
