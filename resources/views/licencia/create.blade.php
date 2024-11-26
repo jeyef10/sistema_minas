@@ -244,6 +244,7 @@
     <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
     <script src="{{ asset('path/to/bootstrap-datepicker.es.min.js')}}"></script>
     
+    
     {{-- <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.6.2/proj4.js')}}"></script> --}}
     
     {{-- ? FUNCIÓN PARA CONVERTIR UNA LETRA EN MAYÚSCULAS Y LOS DEMAS EN MINÚSCULAS --}}
@@ -330,6 +331,112 @@
             mostrarDivCategoria(categoria);
 
     </script>
+
+   {{-- ? FUNCIÓN PARA CALCULAR LA FECHA FINAL DEPEDIENDO EL PLAZO SELECCIONADO --}}
+
+    <script>
+        // Obtener los elementos del select y el input de fecha
+        const plazoSelect = document.getElementById('plazo');
+        const fechaFinalInput = document.getElementById('fecha_final_ope');
+
+        // Función para calcular y actualizar la fecha final
+        function calcularFechaFinal() {
+            // Obtener el valor seleccionado del plazo (en meses)
+            const meses = plazoSelect.value;
+
+            // Obtener la fecha actual como un objeto de fecha
+            const hoy = new Date();
+
+            // Sumar los meses a la fecha actual
+            hoy.setMonth(hoy.getMonth() + parseInt(meses));
+
+            // Formatear la fecha en el formato deseado (d/m/Y)
+            const fechaFinalFormateada = hoy.toLocaleDateString('es-ES'); // 'es-ES' para formato español
+
+            // Asignar la fecha final formateada al input
+            fechaFinalInput.value = fechaFinalFormateada;
+        }
+
+        // Escuchar el evento de cambio en el select del plazo
+        plazoSelect.addEventListener('change', calcularFechaFinal);
+    </script>
+
+    {{-- <script>
+
+        // document.getElementById('plazo').addEventListener('change', function() {
+        //     var plazo = this.value;
+        //     var cantidad = this.options[this.selectedIndex].text.split(' ')[0];
+        //     var medida = this.options[this.selectedIndex].text.split(' ')[2];
+        //     var fechaInicial = new Date();  // Suponemos que la fecha inicial es hoy
+        //     var fechaFinal = new Date(fechaInicial);
+
+        //     switch(medida) {
+        //         case 'mes':
+        //         case 'meses':
+        //             fechaFinal.setMonth(fechaFinal.getMonth() + parseInt(cantidad));
+        //             break;
+        //         case 'año':
+        //         case 'años':
+        //             fechaFinal.setFullYear(fechaFinal.getFullYear() + parseInt(cantidad));
+        //             break;
+        //         // Puedes agregar más casos aquí si tienes otros tipos de medidas de tiempo
+        //     }
+
+        //     var dia = fechaFinal.getDate();
+        //     var mes = fechaFinal.getMonth() + 1; // Los meses comienzan en 0
+        //     var año = fechaFinal.getFullYear();
+
+        //     document.getElementById('fecha_final_ope').value = dia + '/' + mes + '/' + año;
+        // });
+
+        // $(document).ready(function() {
+        //     $('#plazo').on('change', function() {
+        //         // Obtener el texto del plazo seleccionado
+        //         var plazoSeleccionado = $(this).find(':selected').text();
+        //         if (!plazoSeleccionado || plazoSeleccionado === 'Seleccione una Cantidad') return;
+
+        //         // Dividir el texto para obtener la cantidad y la medida de tiempo
+        //         var [cantidad, medida] = plazoSeleccionado.split(' - ');
+
+        //         // Convertir cantidad a entero
+        //         cantidad = parseInt(cantidad.trim(), 10);
+
+        //         // Verificar si la cantidad es un número válido
+        //         if (isNaN(cantidad)) return;
+
+        //         // Obtener la fecha inicial (hoy)
+        //         var fechaInicial = new Date();
+        //         var fechaFinal = new Date(fechaInicial);
+
+        //         // Ajustar la fecha final según la medida de tiempo
+        //         switch(medida.trim()) {
+        //             case 'mes':
+        //             case 'meses':
+        //                 fechaFinal.setMonth(fechaFinal.getMonth() + cantidad);
+        //                 break;
+        //             case 'año':
+        //             case 'años':
+        //                 fechaFinal.setFullYear(fechaFinal.getFullYear() + cantidad);
+        //                 break;
+        //             default:
+        //                 return; // Si la medida no es reconocida, salir
+        //         }
+
+        //         // Formatear la fecha final como dd/mm/yyyy
+        //         var dia = ('0' + fechaFinal.getDate()).slice(-2);
+        //         var mes = ('0' + (fechaFinal.getMonth() + 1)).slice(-2); // Los meses comienzan en 0
+        //         var año = fechaFinal.getFullYear();
+
+        //         // Actualizar el campo de fecha final de operación
+        //         $('#fecha_final_ope').val(dia + '/' + mes + '/' + año);
+        //     });
+
+        //     // Disparar el evento de cambio en el momento en que se carga la página
+        //     $('#plazo').trigger('change');
+        // });
+
+
+    </script> --}}
 
     @if ($errors->any())
         <script>

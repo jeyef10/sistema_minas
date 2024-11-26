@@ -342,27 +342,25 @@
     </script> --}}
 
    
-        <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const numeroPagos = {{ $numeroPagos }};
-    const selectPlazo = document.getElementById('plazo');
+    <script>
+            document.addEventListener('DOMContentLoaded', function() {
+            const numeroPagos = {{ $numeroPagos }};
+            const selectPlazo = document.getElementById('plazo');
 
-    if (numeroPagos > 0) {
-        selectPlazo.addEventListener('mousedown', function(event) {
-            event.preventDefault();
-            Swal.fire({
-                icon: 'warning',
-                title: 'Plazos',
-                text: 'No puedes cambiar la cantidad de plazos una vez que se ha cancelado una regalía.',
-                confirmButtonText: 'Ok',
-                confirmButtonColor: '#3085d6'
-            });
+            if (numeroPagos > 0) {
+                selectPlazo.addEventListener('mousedown', function(event) {
+                    event.preventDefault();
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Plazos',
+                        text: 'No puedes cambiar la cantidad de plazos una vez que se ha cancelado una regalía.',
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: '#3085d6'
+                    });
+                });
+            }
         });
-    }
-});
-</script>
-
-    
+    </script>
     
     {{-- ? FUNCION PARA MANTENER LA FECHA ACTUALIZADA EN EL CALENDARIO --}}
 
@@ -378,6 +376,35 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     </script>
+
+     {{-- ? FUNCIÓN PARA CALCULAR LA FECHA FINAL DEPEDIENDO EL PLAZO SELECCIONADO --}}
+
+     {{-- <script>
+        // Obtener los elementos del select y el input de fecha
+        const plazoSelect = document.getElementById('plazo');
+        const fechaFinalInput = document.getElementById('fecha_final_ope');
+
+        // Función para calcular y actualizar la fecha final
+        function calcularFechaFinal() {
+            // Obtener el valor seleccionado del plazo (en meses)
+            const meses = plazoSelect.value;
+
+            // Obtener la fecha actual como un objeto de fecha
+            const hoy = new Date();
+
+            // Sumar los meses a la fecha actual
+            hoy.setMonth(hoy.getMonth() + parseInt(meses));
+
+            // Formatear la fecha en el formato deseado (d/m/Y)
+            const fechaFinalFormateada = hoy.toLocaleDateString('es-ES'); // 'es-ES' para formato español
+
+            // Asignar la fecha final formateada al input
+            fechaFinalInput.value = fechaFinalFormateada;
+        }
+
+        // Escuchar el evento de cambio en el select del plazo
+        plazoSelect.addEventListener('change', calcularFechaFinal);
+    </script> --}}
 
 @if ($errors->any())
         <script>
