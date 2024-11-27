@@ -196,16 +196,36 @@
                                                 @endif
                                             </select>
                                         </div>
-    
-                                        @if ($pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre != "Roca caliza")
+
+                                        @if ($pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre == "Roca caliza")
+                                        
+                                        <div class="col-4">
+                                            <label  class="font-weight-bold text-primary">Metodo de Control</label>
+                                            <select class="select2single form-control" name="metodo_control_pro" id="metodo_control_pro">
+                                                {{-- <option value="" selected="true" disabled>Seleccione un Metodo de Control</option> --}}
+                                                @if ($pago_regalia->licencia->metodo_control_pro == "control_volumen")
+                                                    <option value="control_volumen" selected="true">Control volumen</option>
+                                                @elseif ($pago_regalia->licencia->metodo_control_pro == "control_declaracion")
+                                                    <option value="control_declaracion" selected="true">Control declaración</option>
+                                                @endif
+                                            </select>
+                                        </div>
+
+                                            @if ($pago_regalia->licencia->metodo_control_pro == "control_volumen")
+                                                <div class="col-4">
+                                                    <label  class="font-weight-bold text-primary">Cantidad Metro Cúbico</label>
+                                                    <input type="text" class="form-control" id="monto_pro" name="monto_pro" value="{{ isset($pago_regalia->monto_pro)?$pago_regalia->monto_pro:'' }}" oninput="calcularMontoPro()"></input>
+                                                </div>
+                                            @elseif ($pago_regalia->licencia->metodo_control_pro == "control_declaracion")
+                                                <div class="col-4">
+                                                    <label  class="font-weight-bold text-primary">Monto Declaración</label>
+                                                    <input type="text" class="form-control" id="monto_decl" name="monto_decl" value="{{ isset($pago_regalia->monto_decl)?$pago_regalia->monto_decl:'' }}" oninput="calcularMontoPro()"></input>
+                                                </div>
+                                            @endif
+                                        @else
                                             <div class="col-4">
                                                 <label  class="font-weight-bold text-primary">Cantidad Metro Cúbico</label>
                                                 <input type="text" class="form-control" id="monto_pro" name="monto_pro" value="{{ isset($pago_regalia->monto_pro)?$pago_regalia->monto_pro:'' }}" oninput="calcularMontoPro()"></input>
-                                            </div>
-                                        @else
-                                            <div class="col-4">
-                                                <label  class="font-weight-bold text-primary">Monto Declaración</label>
-                                                <input type="text" class="form-control" id="monto_decl" name="monto_decl" value="{{ isset($pago_regalia->monto_decl)?$pago_regalia->monto_decl:'' }}" oninput="calcularMontoPro()"></input>
                                             </div>
                                         @endif
     
@@ -256,15 +276,7 @@
                                         </div>
                                     </div>
 
-                                    {{-- <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Estatus Pago de Regalía</label>
-                                        <select class="select2single form-control" name="estatus_regalia" id="estatus_regalia">
-                                            <option value="0" selected="true" disabled>Seleccione un Método de pago</option>
-                                            <option value="Aprobado" {{ (old('estatus_regalia', $pago_regalia->estatus_regalia ?? '') === 'Aprobado') ? 'selected' : '' }}>Aprobado</option>
-                                            <option value="Pendiente" {{ (old('estatus_regalia', $pago_regalia->estatus_regalia ?? '') === 'Pendiente') ? 'selected' : '' }}>Pendiente</option>
-                                        </select>
-                                    </div> --}}
-
+                                    
                                 </div> 
                                 
                             </div>
@@ -498,6 +510,7 @@
 
     {{-- ! FUNCIÓN PARA CALCULAR EL 3% SEGUN EL VOLUMEN/DECLARACION EN PROCESAMIENTO --}}
 
+
     <script>
         function calcularMontoPro() {
             const mineral = '{{ $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre }}'; // Obtener el nombre del mineral desde Laravel
@@ -505,16 +518,30 @@
             const resultadoProInput = document.getElementById('resultado_pro');
             const mineralProSelect = document.getElementById('id_mineral_pro');
             const montoProInput = document.getElementById('monto_pro');
+            const tasa_pro = '{{ $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->tasa }}';
+            const metodo_control_pro ='{{ $pago_regalia->licencia->metodo_control_pro }}';
             
             let totalACancelar = 0;
     
             if (mineral === 'Roca caliza') {
-                const montoDecl = parseFloat(montoDeclInput.value) || 0;
-                totalACancelar = montoDecl * 0.03;
-                resultadoProInput.value = `$${totalACancelar.toFixed(2)}`;
+                if (metodo_control_pro == 'control_volumen') {
+                    const tasa = parseFloat(tasa_pro) || 0;
+                    const monto = parseFloat(montoProInput.value) || 0;
+
+                    console.log(tasa, monto);
+                    totalACancelar = (monto * tasa) * 0.03;
+                    resultadoProInput.value = `$${totalACancelar.toFixed(2)}`;
+                } else  {
+                    const montoDecl = parseFloat(montoDeclInput.value) || 0;
+                    totalACancelar = montoDecl * 0.03;
+                    resultadoProInput.value = `$${totalACancelar.toFixed(2)}`;
+                } 
+                       
             } else {
-                const tasa = parseFloat(mineralProSelect.value) || 0;
+                const tasa = parseFloat(tasa_pro) || 0;
                 const monto = parseFloat(montoProInput.value) || 0;
+
+                console.log(tasa, monto);
                 totalACancelar = (monto * tasa) * 0.03;
                 resultadoProInput.value = `$${totalACancelar.toFixed(2)}`;
             }
@@ -599,11 +626,4 @@
     
 @endsection
 
-{{--         
-<div class="col-4">
-    <label for="persona" class="font-weight-bold text-primary">Tasa de Regalías</label>
-    <select class="select2-single form-control" id="id_mineral" name="id_mineral" onchange="calcularMonto()">
-        
-    </select>
-    <input type="hidden" name="mineral_oculto" value="{{ $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->id }}">
-</div> --}}
+

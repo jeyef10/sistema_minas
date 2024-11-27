@@ -109,7 +109,6 @@
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Pago a Realizar</label>
                                         <select class="select2single form-control" name="pago_realizar_apro" id="pago_realizar_apro">
-                                            {{-- <option value="" disabled>Seleccione el Pago a Realizar</option> --}}
                                             @if ($numeroPagos == 0)
                                                 <option value="1era parte">1era parte</option>
                                             @elseif ($numeroPagos == 1)
@@ -147,23 +146,6 @@
                                         </select>
                                         <input type="hidden" name="mineral_oculto" value="{{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->id }}">
                                     </div>
-                                    
-{{-- 
-                                    <div class="col-4">
-                                        <label for="persona" class="font-weight-bold text-primary">Tasa de Regalias</label>
-                                        <select class="select2-single form-control" id="id_mineral" name="id_mineral" onchange="calcularMonto()">
-                                            <option value="">Seleccione una tasa</option>
-                                        @if ($licencia->comprobante_pago->inspeccion->planificacion->id_recepcion) 
-                                            <option value="{{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->id }}"> 
-                                                {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre }} - 
-                                                {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->tasa }} 
-                                                {{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->moneda_longitud }} 
-                                            </option>
-                                        @endif
-                                        <option value="convenio">Convenio</option>
-                                        </select>
-                                        <input type="hidden" name="mineral_oculto" value="{{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->id }}">
-                                    </div> --}}
 
                                     <div class="col-4" style="display: none;" id="convenio_container">
                                         <label  class="font-weight-bold text-primary">Tasa Convenio ($)</label>
@@ -229,15 +211,36 @@
                                         </select>
                                     </div>
 
-                                    @if ($licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre != "Roca caliza")
+
+                                    @if ($licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->nombre == "Roca caliza")
+                                        
+                                    <div class="col-4">
+                                        <label  class="font-weight-bold text-primary">Metodo de Control</label>
+                                        <select class="select2single form-control" name="metodo_control_pro" id="metodo_control_pro">
+                                       
+                                            @if ($licencia->metodo_control_pro == "control_volumen")
+                                                 <option value="control_volumen" selected="true">Control volumen</option>
+                                            @elseif ($licencia->metodo_control_pro == "control_declaracion")
+                                                <option value="control_declaracion" selected="true">Control declaración</option>
+                                            @endif
+                                        </select>
+                                    </div>
+
+                                        @if ($licencia->metodo_control_pro == "control_volumen")
+                                            <div class="col-4">
+                                                <label  class="font-weight-bold text-primary">Cantidad Metro Cúbico</label>
+                                                <input type="text" class="form-control" id="monto_pro" name="monto_pro" oninput="calcularMontoPro()"></input>
+                                            </div>
+                                        @elseif ($licencia->metodo_control_pro == "control_declaracion")
+                                            <div class="col-4">
+                                                <label  class="font-weight-bold text-primary">Monto Declaración</label>
+                                                <input type="text" class="form-control" id="monto_decl" name="monto_decl" oninput="calcularMontoPro()"></input>
+                                            </div>
+                                        @endif
+                                    @else
                                         <div class="col-4">
                                             <label  class="font-weight-bold text-primary">Cantidad Metro Cúbico</label>
                                             <input type="text" class="form-control" id="monto_pro" name="monto_pro" oninput="calcularMontoPro()"></input>
-                                        </div>
-                                    @else
-                                        <div class="col-4">
-                                            <label  class="font-weight-bold text-primary">Monto Declaración</label>
-                                            <input type="text" class="form-control" id="monto_decl" name="monto_decl" oninput="calcularMontoPro()"></input>
                                         </div>
                                     @endif
 
@@ -288,15 +291,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-3">
-                                        <label  class="font-weight-bold text-primary">Estatus Pago de Regalía</label>
-                                        <select class="select2single form-control" name="estatus_regalia" id="estatus_regalia">
-                                            <option value="" selected="true" disabled>Seleccione un Estatus</option>
-                                            <option value="Aprobado">Aprobado</option>
-                                            <option value="Pendiente">Pendiente</option>
-                                        </select>
-                                    </div>
-
                                 </div> 
                                 
                             </div>
@@ -322,7 +316,6 @@
     <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
     <script src="{{ asset('path/to/bootstrap-datepicker.es.min.js')}}"></script>
     
-    {{-- <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.6.2/proj4.js')}}"></script> --}}
     
     {{-- ? FUNCIÓN PARA CONVERTIR UNA LETRA EN MAYÚSCULAS Y LOS DEMAS EN MINÚSCULAS --}}
 
@@ -482,33 +475,9 @@
     </script>
         
 
-            {{-- * FUNCION PARA MOSTRAR LA TASA CONVENIO EN APROVECHAMIENTO --}}
-    
-    {{-- <script> 
-        document.addEventListener('DOMContentLoaded', function() {
-            const select = document.getElementById('id_mineral');
-            const convenioContainer = document.getElementById('convenio_container');
-            const tasa_convenio = document.getElementById('tasa_convenio');
-
-                // Función para mostrar/ocultar el contenedor
-            function mostrarOcultarConvenio() {
-                    convenioContainer.style.display = select.value == 'convenio' ? 'block' : 'none';
-
-                // Limpiar el campo tasa_convenio si el contenedor se oculta
-                if (select.value != 'convenio') {
-                    tasa_convenio.value = '';
-                }
-            }
-
-            // Ejecutar la función por primera vez
-            mostrarOcultarConvenio();
-
-            // Agregar un event listener para que se ejecute cada vez que cambie el valor del select
-            select.addEventListener('change', mostrarOcultarConvenio);
-        });
-    </script> --}}
-
     {{-- ! FUNCIÓN PARA CALCULAR EL 3% SEGUN EL VOLUMEN/DECLARACION EN PROCESAMIENTO --}}
+
+    
 
     <script>
         function calcularMontoPro() {
@@ -518,13 +487,24 @@
             const mineralProSelect = document.getElementById('id_mineral_pro');
             const montoProInput = document.getElementById('monto_pro');
             const tasa_pro = '{{ $licencia->comprobante_pago->inspeccion->planificacion->recepcion->mineral->tasa }}';
+            const metodo_control_pro ='{{ $licencia->metodo_control_pro }}';
             
             let totalACancelar = 0;
     
             if (mineral === 'Roca caliza') {
-                const montoDecl = parseFloat(montoDeclInput.value) || 0;
-                totalACancelar = montoDecl * 0.03;
-                resultadoProInput.value = `$${totalACancelar.toFixed(2)}`;
+                if (metodo_control_pro == 'control_volumen') {
+                    const tasa = parseFloat(tasa_pro) || 0;
+                    const monto = parseFloat(montoProInput.value) || 0;
+
+                    console.log(tasa, monto);
+                    totalACancelar = (monto * tasa) * 0.03;
+                    resultadoProInput.value = `$${totalACancelar.toFixed(2)}`;
+                } else  {
+                    const montoDecl = parseFloat(montoDeclInput.value) || 0;
+                    totalACancelar = montoDecl * 0.03;
+                    resultadoProInput.value = `$${totalACancelar.toFixed(2)}`;
+                } 
+                       
             } else {
                 const tasa = parseFloat(tasa_pro) || 0;
                 const monto = parseFloat(montoProInput.value) || 0;
@@ -590,6 +570,26 @@
 
             document.getElementById('fecha_venci').value = `${dia}/${mes}/${año}`;
             console.log('Fecha de vencimiento calculada:', document.getElementById('fecha_venci').value);
+        });
+    </script>
+
+    @if ($errors->any())
+            <script>
+                var errors = @json($errors->all());
+                errors.forEach(function(error) {
+                    Swal.fire({
+                        title: 'Pago de regalia',
+                        text: error,
+                        icon: 'warning',
+                        showConfirmButton: true,
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: '¡OK!',
+                    });
+                });
+            </script>
+        @endif
+
+@endsection console.log('Fecha de vencimiento calculada:', document.getElementById('fecha_venci').value);
         });
     </script>
 
