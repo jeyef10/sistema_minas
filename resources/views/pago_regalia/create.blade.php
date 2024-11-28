@@ -95,9 +95,9 @@
                                     <input type="hidden" name="categoria_licencia" value="{{ $categoria }}">
                                     
                                     <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Metodo de Pago</label>
+                                        <label  class="font-weight-bold text-primary">Cuotas de Pago</label>
                                         <select class="select2single form-control" name="metodo_apro" id="metodo_apro" onchange="calcularMonto()">
-                                            <option value="" selected="true" disabled>Seleccione un Metodo de Pago</option>
+                                            <option value="" selected="true" disabled>Seleccione una Cuota de Pago</option>
                                             @if ($licencia) 
                                             <option value="{{ $licencia->metodo_licencia_apro }}" selected> 
                                                 {{ $licencia->metodo_licencia_apro }}
@@ -174,9 +174,9 @@
                                 <div class="row">
 
                                     <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Metodo de Pago</label>
+                                        <label  class="font-weight-bold text-primary">Cuotas de Pago</label>
                                         <select class="select2single form-control" name="metodo_pro" id="metodo_pro">
-                                            <option value="" selected="true" disabled>Seleccione un Metodo de Pago</option>
+                                            <option value="" selected="true" disabled>Seleccione una Cuota de Pago</option>
                                             @if ($licencia) 
                                             <option value="{{ $licencia->metodo_licencia_pro }}" selected> 
                                                 {{ $licencia->metodo_licencia_pro }}
@@ -279,14 +279,26 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-4">                                     
+                                    <div class="col-4" id="input_aprovechamiento" style="display: none">                                     
                                         <div class="form-group" id="simple-date1">
                                             <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha de Vencimiento</label>
                                             <div class="input-group date">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" id="fecha_venci" name="fecha_venci" value="<?php echo date('d/m/Y'); ?>" class="form-control"  id="simpleDataInput">
+                                                <input type="text" id="fecha_aprovechamiento" name="fecha_venci" value="<?php echo date('d/m/Y'); ?>" class="form-control"  id="simpleDataInput">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4" id="input_procesamiento" style="display: none">                                     
+                                        <div class="form-group" id="simple-date1">
+                                            <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha de Vencimiento</label>
+                                            <div class="input-group date">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                                </div>
+                                                <input type="text" id="fecha_procesamiento" name="fecha_venci" value="<?php echo date('d/m/Y'); ?>" class="form-control"  id="simpleDataInput">
                                             </div>
                                         </div>
                                     </div>
@@ -525,73 +537,66 @@
     </script>
     
 
-
-    {{-- * FUNCION PARA CALCULAR LA FECHA DE VENCIMIENTO DE PAGO DE REGALIA AUTOMATICAMENTE EN 45 DIAS  --}}
+    {{-- * FUNCION PARA CALCULAR LA FECHA DE VENCIMIENTO DE PAGO DE REGALIA, PARA APROVECHAMIENTO LOS PROXIMOS 45 DIAS, Y PROCESAMIENTO LOS PRIMEROS 5 DIAS DE CADA MES --}}
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            let fechaActual = new Date();
-            let dia = fechaActual.getDate().toString().padStart(2, '0');
-            let mes = (fechaActual.getMonth() + 1).toString().padStart(2, '0');
-            let año = fechaActual.getFullYear();
+            const categoria = '{{$licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria}}';
+            mostrarCampos(categoria);
 
-            let fechaPagoStr = `${dia}/${mes}/${año}`;
-            document.getElementById('fecha_pago').value = fechaPagoStr;
-            console.log('Fecha de pago actualizada:', fechaPagoStr);
+            if (categoria === 'Aprovechamiento') {
+                let fechaActual = new Date();
+                let dia = fechaActual.getDate().toString().padStart(2, '0');
+                let mes = (fechaActual.getMonth() + 1).toString().padStart(2, '0');
+                let año = fechaActual.getFullYear();
 
-            let fechaVencimiento = new Date(fechaActual);
-            fechaVencimiento.setDate(fechaActual.getDate() + 45);
+                let fechaPagoStr = `${dia}/${mes}/${año}`;
+                document.getElementById('fecha_aprovechamiento').value = fechaPagoStr;
 
-            let diaVenci = fechaVencimiento.getDate().toString().padStart(2, '0');
-            let mesVenci = (fechaVencimiento.getMonth() + 1).toString().padStart(2, '0');
-            let añoVenci = fechaVencimiento.getFullYear();
+                let fechaVencimiento = new Date(fechaActual);
+                fechaVencimiento.setDate(fechaActual.getDate() + 45);
 
-            let fechaVenciStr = `${diaVenci}/${mesVenci}/${añoVenci}`;
-            document.getElementById('fecha_venci').value = fechaVenciStr;
-            console.log('Fecha de vencimiento calculada:', fechaVenciStr);
-        });
+                let diaVenci = fechaVencimiento.getDate().toString().padStart(2, '0');
+                let mesVenci = (fechaVencimiento.getMonth() + 1).toString().padStart(2, '0');
+                let añoVenci = fechaVencimiento.getFullYear();
 
-        document.getElementById('fecha_pago').addEventListener('change', function() {
-            console.log('Fecha de pago ingresada:', this.value);
-            let fechaPago = new Date(this.value.split('/').reverse().join('-'));
-            console.log('Fecha de pago convertida:', fechaPago);
+                let fechaVenciStr = `${diaVenci}/${mesVenci}/${añoVenci}`;
+                document.getElementById('fecha_aprovechamiento').value = fechaVenciStr;
+    
+            } else if (categoria === 'Procesamiento') {
+                let fechaActual = new Date();
+                let mesSiguiente = fechaActual.getMonth() + 1;
+                let año = fechaActual.getFullYear();
 
-            if (isNaN(fechaPago)) {
-                console.error('Fecha de pago no válida');
-                return;
+                if (mesSiguiente > 11) {
+                    mesSiguiente = 0;
+                    año += 1;
+                }
+
+                let diaProcesamiento = '05';
+                let mesProcesamiento = (mesSiguiente + 1).toString().padStart(2, '0');
+                let fechaProcesamientoStr = `${diaProcesamiento}/${mesProcesamiento}/${año}`;
+                document.getElementById('fecha_procesamiento').value = fechaProcesamientoStr;
+            
             }
-
-            let fechaVencimiento = new Date(fechaPago);
-            fechaVencimiento.setDate(fechaPago.getDate() + 45);
-
-            let dia = fechaVencimiento.getDate().toString().padStart(2, '0');
-            let mes = (fechaVencimiento.getMonth() + 1).toString().padStart(2, '0');
-            let año = fechaVencimiento.getFullYear();
-
-            document.getElementById('fecha_venci').value = `${dia}/${mes}/${año}`;
-            console.log('Fecha de vencimiento calculada:', document.getElementById('fecha_venci').value);
         });
+
+        function mostrarCampos(condicion) {
+            var aprovechamiento = document.getElementById('input_aprovechamiento');
+            var procesamiento = document.getElementById('input_procesamiento');
+
+            if (condicion === 'Aprovechamiento') {
+                aprovechamiento.style.display = 'block';
+                procesamiento.style.display = 'none';
+            } else if (condicion === 'Procesamiento') {
+                aprovechamiento.style.display = 'none';
+                procesamiento.style.display = 'block';
+            }
+        }
     </script>
 
-    @if ($errors->any())
-            <script>
-                var errors = @json($errors->all());
-                errors.forEach(function(error) {
-                    Swal.fire({
-                        title: 'Pago de regalia',
-                        text: error,
-                        icon: 'warning',
-                        showConfirmButton: true,
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: '¡OK!',
-                    });
-                });
-            </script>
-        @endif
 
-@endsection console.log('Fecha de vencimiento calculada:', document.getElementById('fecha_venci').value);
-        });
-    </script>
+    {{-- ? FUNCION PARA MOSTRAR EL ALERTA  --}}
 
     @if ($errors->any())
             <script>
@@ -610,3 +615,7 @@
         @endif
 
 @endsection
+
+
+
+   

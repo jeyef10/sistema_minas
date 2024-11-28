@@ -13,6 +13,7 @@ use App\Models\Minerales;
 use App\Models\PagoRegalia;
 use App\Models\Plazos;
 use App\Models\TipoPago;
+use App\Models\Banco;
 use App\Models\Recepcion;
 use App\Models\Inspecciones;
 use App\Models\Licencias;
@@ -59,6 +60,10 @@ class homeController extends Controller
         $count_tipo_pagos= DB::table('tipo_pagos')
         ->count();
 
+        $bancos = Banco::all();
+        $count_bancos = DB::table('bancos')
+        ->count();
+
         $mapa_recepcion = Recepcion::all();
         $count_recepcion = DB::table('recepcion')
         ->count();
@@ -103,9 +108,9 @@ class homeController extends Controller
         }
 
         return view('home.inicio' , compact('count_solicitante', 'count_natural', 'count_juridico', 'count_recaudo','count_comisionado', 'count_mineral', 'count_plazo', 
-        'count_tipo_pagos', 'count_recepcion','count_inspecciones', 'count_licencia', 'mapa_recepciones', 'mapa_inspecciones', 'mapa_licencias', 'pagos' ) , [
+        'count_tipo_pagos', 'count_bancos', 'count_recepcion','count_inspecciones', 'count_licencia', 'mapa_recepciones', 'mapa_inspecciones', 'mapa_licencias', 'pagos' ) , [
         'count' => $count_solicitante, $count_natural, $count_juridico, $count_recaudo,  $count_comisionado,  $count_mineral, $count_plazo ,
-        $count_tipo_pagos, $count_recepcion, $count_inspecciones, $count_licencia
+        $count_tipo_pagos,  $count_bancos, $count_recepcion, $count_inspecciones, $count_licencia
 
     ]); 
 

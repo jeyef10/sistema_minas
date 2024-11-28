@@ -87,13 +87,13 @@
 
                                 <input type="hidden" class="form-control" id="id_inspeccion" name="id_inspeccion" style="background: white;" value="{{ isset($comprobante_pago->inspeccion->id)?$comprobante_pago->inspeccion->id:'' }}" placeholder="" autocomplete="off">                                  
                                 <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">N° de Oficio</label>
+                                    <label  class="font-weight-bold text-primary">N° de Oficio de Aprobación</label>
                                     <input type="text" class="form-control" id="nro_oficio" name="nro_oficio" value="{{ isset($comprobante_pago->nro_oficio)?$comprobante_pago->nro_oficio:'' }}" oninput="capitalizarInput('')"></input>                                 
                                 </div>
 
                                 <div class="col-4">                                     
                                     <div class="form-group" id="simple-date1">
-                                        <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha Oficio</label>
+                                        <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha Oficio de Aprobación</label>
                                         <div class="input-group date">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-calendar"></i></span>
@@ -104,7 +104,7 @@
                                 </div>
 
                                 <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">Estatus Oficio</label>
+                                    <label  class="font-weight-bold text-primary">Estatus Oficio de Aprobación</label>
                                     <select class="select2single form-control" name="estatus_oficio" id="estatus_oficio">
                                         <option value="" selected="true" disabled>Seleccione un Estatus</option>
                                         <option value="Aprobado" {{ (old('estatus', $comprobante_pago->estatus_oficio ?? '') === 'Aprobado') ? 'selected' : '' }}>Aprobado</option>
@@ -117,7 +117,20 @@
                                     <input type="text" class="form-control" id="nombre_firma" name="nombre_firma" value="{{ $nombre_firma }}" oninput="capitalizarInput('')"></input>                                 
                                 </div>
 
+                                </div>
+
+                            </div>
+
                                 <hr class="sidebar-divider">
+
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
+            
+                                    <h5 class="font-weight-bold text-primary">Datos de Pago</h5>
+            
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="row">
                                 
                                 <div class="col-4">
                                     <label for="persona" class="font-weight-bold text-primary">Tipo de Pago</label>
@@ -142,16 +155,7 @@
                                         @endforeach
                                     </select>
 
-                                    @php
-                                        echo $banco;
-                                    @endphp
                                 </div>
-
-                                {{-- <div class="col-4">
-                                    <label class="font-weight-bold text-primary">Tipo de Banco</label>
-                                    <input type="text" class="form-control" id="banco" name="banco" style="background: white;" value="{{ isset($comprobante_pago->banco)?$comprobante_pago->banco:'' }}" placeholder="Ingrese el tipo de Banco" autocomplete="off" onkeypress="return soloLetras(event);" oninput="capitalizarInput('banco')">
-                                </div> --}}
-
 
                                 <div class="col-4">
                                     <label class="font-weight-bold text-primary">N° Referencia</label>
@@ -181,7 +185,19 @@
                                     <textarea class="form-control" id="observaciones_com" name="observaciones_com" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('observaciones')">{{ $observaciones_com }}</textarea>                                   
                                 </div>
 
-                                <div class="card-body">
+                                <div class="col-4">                                     
+                                    <div class="form-group" id="simple-date1">
+                                        <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha de Pago</label>
+                                        <div class="input-group date">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                            </div>
+                                            <input type="text" id="fecha_pago" name="fecha_pago" class="form-control" value="{{ $fecha_pago }}" id="simpleDataInput">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-4">
                                     <label class="font-weight-bold text-primary">Timbres Fiscales</label>
                                     <div class="form-group">
                                         <div class="form-check form-check-inline">
@@ -199,27 +215,6 @@
                                     <label class="font-weight-bold text-primary">Observaciones Fiscales</label>
                                     <textarea class="form-control" id="observaciones_fiscal" name="observaciones_fiscal" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('observaciones_fiscal')">{{ $observaciones_fiscal }}</textarea>
                                 </div>
-
-                                <div class="col-4">                                     
-                                    <div class="form-group" id="simple-date1">
-                                        <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha de Pago</label>
-                                        <div class="input-group date">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                            </div>
-                                            <input type="text" id="fecha_pago" name="fecha_pago" class="form-control" value="{{ $fecha_pago }}" id="simpleDataInput">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {{-- <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">Estatus Aprobación de Licencia</label>
-                                    <select class="select2single form-control" name="estatus_pago" id="estatus_pago">
-                                        <option value="0" selected="true" disabled>Seleccione un Estatus</option>
-                                        <option value="Aprobado" {{ (old('estatus_pago', $comprobante_pago->estatus_pago ?? '') === 'Aprobado') ? 'selected' : '' }}>Aprobado</option>
-                                        <option value="Pendiente" {{ (old('estatus_pago', $comprobante_pago->estatus_pago ?? '') === 'Pendiente') ? 'selected' : '' }}>Pendiente</option>
-                                    </select>
-                                </div> --}}
 
                             </div>
 

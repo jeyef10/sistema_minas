@@ -90,13 +90,13 @@
                                 <input type="hidden" class="form-control" id="id_inspeccion" name="id_inspeccion" style="background: white;" value="{{ isset($inspeccion->id)?$inspeccion->id:'' }}" placeholder="" autocomplete="off">                                  
 
                                 <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">N° de Oficio</label>
+                                    <label  class="font-weight-bold text-primary">N° de Oficio de Aprobación</label>
                                     <input type="text" class="form-control" id="nro_oficio" name="nro_oficio" oninput="capitalizarInput('')"></input>                                 
                                 </div>
 
                                 <div class="col-4">                                     
                                     <div class="form-group" id="simple-date1">
-                                        <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha Oficio</label>
+                                        <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha Oficio de Aprobación</label>
                                         <div class="input-group date">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-calendar"></i></span>
@@ -107,7 +107,7 @@
                                 </div>
 
                                 <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">Estatus Oficio</label>
+                                    <label  class="font-weight-bold text-primary">Estatus Oficio de Aprobación</label>
                                     <select class="select2single form-control" name="estatus_oficio" id="estatus_oficio">
                                         <option value="" disabled>Seleccione un Estatus</option>
                                         <option value="Aprobado" selected="true">Aprobado</option>
@@ -123,7 +123,14 @@
                             </div>
                         </div>
 
-                                <hr class="sidebar-divider">
+                        <hr class="sidebar-divider">
+
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
+    
+                            <h5 class="font-weight-bold text-primary">Datos de Pago</h5>
+    
+                        </div>
+
 
                         <div class="card-body">
                             <div class="row">
@@ -146,11 +153,6 @@
                                     @endforeach
                                     </select>
                                 </div>
-
-                                {{-- <div class="col-4">
-                                    <label class="font-weight-bold text-primary">Tipo de Banco</label>
-                                    <input type="text" class="form-control" id="banco" name="banco" style="background: white;" value="" placeholder="Ingrese el tipo de Banco" autocomplete="off" onkeypress="return soloLetras(event);" oninput="capitalizarInput('banco')">
-                                </div> --}}
 
                                 <div class="col-4">
                                     <label class="font-weight-bold text-primary">N° Referencia</label>
@@ -179,25 +181,6 @@
                                     <textarea class="form-control" id="observaciones_com" name="observaciones_com" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('observaciones')"> {{ old('observaciones') }} </textarea>                                   
                                 </div>
 
-                                <div class="card-body">
-                                    <label class="font-weight-bold text-primary">Timbres Fiscales</label>
-                                    <div class="form-group">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="timbre_fiscal" id="natural" value="Si" onchange="toggleObservaciones(this.value)">
-                                            <label class="form-check-label" for="natural">Si</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="timbre_fiscal" id="juridico" value="No" onchange="toggleObservaciones(this.value)">
-                                            <label class="form-check-label" for="juridico">No</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-4" id="observaciones_div" style="display: none;">
-                                    <label class="font-weight-bold text-primary">Observaciones Fiscales</label>
-                                    <textarea class="form-control" id="observaciones_fiscal" name="observaciones_fiscal" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('observaciones_fiscal')"></textarea>
-                                </div>
-
                                 <div class="col-4">                                     
                                     <div class="form-group" id="simple-date1">
                                         <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha de Pago</label>
@@ -210,15 +193,25 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-3">
-                                    <label  class="font-weight-bold text-primary">Estatus Aprobación de Licencia</label>
-                                    <select class="select2single form-control" name="estatus_pago" id="estatus_pago">
-                                        <option value="" selected="true" disabled>Seleccione un Estatus</option>
-                                        <option value="Aprobado">Aprobado</option>
-                                        <option value="Pendiente">Pendiente</option>
-                                    </select>
-                                </div> --}}
+                                <div class="col-4">
+                                    <label class="font-weight-bold text-primary">Timbres Fiscales</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="timbre_fiscal" id="natural" value="Si" onchange="toggleObservaciones(this.value)">
+                                            <label class="form-check-label" for="natural">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="timbre_fiscal" id="juridico" value="No" onchange="toggleObservaciones(this.value)">
+                                            <label class="form-check-label" for="juridico">No</label>
+                                        </div>
+                                    </div>
+                                </div>
 
+                                <div class="col-4" id="observaciones_div" style="display: none;">
+                                    <label class="font-weight-bold text-primary">Observaciones Fiscales</label>
+                                    <textarea class="form-control" id="observaciones_fiscal" name="observaciones_fiscal" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('observaciones_fiscal')"></textarea>
+                                </div>
+                                
                             </div>
 
                         </div>

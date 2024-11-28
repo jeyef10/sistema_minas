@@ -244,7 +244,7 @@ class PagoRegaliaController extends Controller
         $resultado_apro = $pago_regalia->resultado_apro;
         $resultado_pro = $pago_regalia->resultado_pro;
         $comprobante = $pago_regalia->comprobante;
-        $fecha_pago = $pago_regalia->fecha_pago;
+        $fecha_pago = date('d/m/Y', strtotime($pago_regalia->fecha_pago));
         $fecha_venci = $pago_regalia->fecha_venci;
         // $estatus_regalia = $pago_regalia->estatus_regalia;
 

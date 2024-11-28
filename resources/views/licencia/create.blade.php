@@ -108,9 +108,9 @@
                                     </div>
 
                                     <div class="col-3">
-                                        <label  class="font-weight-bold text-primary">Metodo de Pago</label>
+                                        <label  class="font-weight-bold text-primary">Cuotas de Pago</label>
                                         <select class="select2single form-control" name="metodo_licencia_apro" id="metodo_licencia">
-                                            <option value="" selected="true" disabled>Seleccione un Metodo de Pago</option>
+                                            <option value="" selected="true" disabled>Seleccione una Cuota de Pago</option>
                                             <option value="Pago unico">Pago unico</option>
                                             <option value="Pago 2 parte">Pago 2 parte</option>
                                             <option value="Pago 3 parte">Pago 3 parte</option>
@@ -141,9 +141,9 @@
                                     </div>
 
                                     <div class="col-4">
-                                        <label  class="font-weight-bold text-primary">Metodo de Pago</label>
+                                        <label  class="font-weight-bold text-primary">Cuotas de Pago</label>
                                         <select class="select2single form-control" name="metodo_licencia_pro" id="metodo_licencia">
-                                            <option value="" selected="true" disabled>Seleccione un Metodo de Pago</option>
+                                            <option value="" selected="true" disabled>Seleccione una Cuota de Pago</option>
                                             <option value="Pago cuotas">Pago cuotas</option>
                                         </select>
                                     </div>
@@ -169,7 +169,7 @@
 
                                     <div class="col-4">                                     
                                         <div class="form-group" id="simple-date1">
-                                            <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha Oficio</label>
+                                            <label class="font-weight-bold text-primary" for="simpleDataInput">Fecha Oficio Providencia/Ocupación</label>
                                             <div class="input-group date">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>

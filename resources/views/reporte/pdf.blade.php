@@ -84,7 +84,9 @@ img {
         <th">Mineral</th>
         <th">Solicitante Habilitado</th>
         <th">Dirección</th>
-        <th">Vigencia de Licencia</th>
+        <th>Forma Pago</th>
+        <th>Pago Realizado</th>
+        <th>Resultado</th>
                                   
     </tr>
 </thead>
@@ -126,8 +128,26 @@ img {
                 </td>
 
                 <td">{{ $resultado->direccion }}</td>
+
+                <td>
+                    @if ($resultado->metodo_apro)
+                        {{ $resultado->metodo_apro }}
+                    @else
+                        {{ $resultado->metodo_pro }}
+                    @endif
+                </td>
+
+                <td>{{ $resultado->pago_realizar}}</td>
+
+                <td>
+                    @if ($resultado->resultado_apro)
+                        {{ $resultado->resultado_apro }}
+                    @else
+                        {{ $resultado->resultado_pro }}
+                    @endif
+                </td>
                 
-                <td">{{ $resultado->plazo->medida_tiempo}} {{ $resultado->plazo->cantidad}}</td>
+                {{-- <td">{{ $resultado->plazo->medida_tiempo}} {{ $resultado->plazo->cantidad}}</td> --}}
             </tr>
         @endforeach
 </tbody>

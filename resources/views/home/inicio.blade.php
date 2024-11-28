@@ -47,24 +47,6 @@
 
         <div class="row">
 
-                                                              <!-- dasboard persona natural-->
-          {{-- <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card h-100">
-              <div class="card-body">
-                <div class="row align-items-center">
-                  <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-uppercase mb-1">Persona Natural</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ ($count_natural) }}</div>
-                    
-                  </div>
-                  <div class="col-auto">
-                  <i class="fas fa-users fa-2x text-info"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> --}}
-
           <div class="col-xl-3 col-md-6 mb-4">
             <div class="card h-100 rotate hover-rotate">
               <div class="card-body">
@@ -206,8 +188,32 @@
             </div>
           </div>
 
+                                                                        <!-- dasboard Bancos -->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card h-100 rotate hover-rotate">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-uppercase mb-1">Entidad Bancaria</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ ($count_bancos) }}</div>
+                 
+                  </div>
+                  <div class="col-auto">
+                    <i class="fa fa-bank fa-2x text-info"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
                                                                 <!-- dasboard Mapa de las Inspecciones-->
-                                                          
+      
+      <div class="container-fluid" id="container-wrapper">
+        <div class="d-sm-flex align-items-center"></div>
+
+        <div class="row">
           <!-- Area Chart -->
           <div class="col-xl-8 col-lg-7">
             <div class="card mb-4">
@@ -218,7 +224,6 @@
               </div>
               <div class="card-body">
                 <div class="chart-area">
-                  {{-- <canvas id="myAreaChart"></canvas> --}}
                   <div id="mapa" style="height: 310px; width:100%; display:block;"></div>
                 </div>
               </div>
@@ -260,10 +265,10 @@
                 </div>
               </div>
             </div>
-              
-            </div>
-          </div>
-
+     
+        </div>
+      </div>
+{{-- 
           <!-- Invoice Example -->
           <div class="col-xl-12 col-lg-7">
             <div class="card mb-4">
@@ -381,7 +386,7 @@
     <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
     <script src="{{ asset('path/to/bootstrap-datepicker.es.min.js')}}"></script>
     <script src="{{ asset('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js') }}" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="{{ asset('https://unpkg.com/leaflet/dist/leaflet.js') }}"></script>
+    <script src="{{ asset('https://unpkg.com/leaflet/dist/leaflet.js') }}"></script> --}}
     
           {{-- ! FUNCION PARA EL MAPA Y PARA CAPTURAR LOS DATOS DE LA LATITUD Y LONGITUD --}}
 

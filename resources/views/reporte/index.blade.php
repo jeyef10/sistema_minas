@@ -17,9 +17,14 @@
                 <div class="card mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 
-                        <a href="{{ url('reporte/pdf') }}" class="btn btn-sm btn-danger " target="_blank" id="pdfButton">
+                        {{-- <a href="{{ url('reporte/pdf') }}" class="btn btn-sm btn-danger " target="_blank" id="pdfButton">
                             {{ ('PDF') }}
-                         </a>
+                        </a> --}}
+
+                        <a href="{{ url('reporte/pdf') }}" class="btn btn-sm btn-danger" target="_blank" id="pdfButton">
+                            {{ ('PDF') }}
+                        </a>
+                        
                             
                       <h2 class="font-weight-bold text-primary" style="margin-right: 35%;">Resumen Habilitado</h2>
 
@@ -36,7 +41,9 @@
                                     <th class="font-weight-bold text-Secondary">Mineral</th>
                                     <th class="font-weight-bold text-Secondary">Solicitante Habilitado</th>
                                     <th class="font-weight-bold text-Secondary">Dirección</th>
-                                    <th class="font-weight-bold text-Secondary">Vigencia de Licencia</th>
+                                    <th class="font-weight-bold text-Secondary">Forma Pago</th>
+                                    <th class="font-weight-bold text-Secondary">Pago Realizado</th>
+                                    <th class="font-weight-bold text-Secondary">Resultado</th>
                                   </tr>
                             </thead>
                             <tbody>
@@ -78,8 +85,26 @@
                                     </td>
 
                                     <td class="font-weight-bold text-secondary">{{ $resultado->direccion }}</td>
+
+                                    <td class="font-weight-bold text-secondary">
+                                        @if ($resultado->metodo_apro)
+                                            {{ $resultado->metodo_apro }}
+                                        @else
+                                            {{ $resultado->metodo_pro }}
+                                        @endif
+                                    </td>
+
+                                    <td class="font-weight-bold text-Secondary">{{ $resultado->pago_realizar}}</td>
+
+                                    <td class="font-weight-bold text-secondary">
+                                        @if ($resultado->resultado_apro)
+                                            {{ $resultado->resultado_apro }}
+                                        @else
+                                            {{ $resultado->resultado_pro }}
+                                        @endif
+                                    </td>
                                    
-                                    <td class="font-weight-bold text-Secondary">{{ $resultado->plazo->medida_tiempo}} {{ $resultado->plazo->cantidad}}</td>
+                                    {{-- <td class="font-weight-bold text-Secondary">{{ $resultado->plazo->medida_tiempo}} {{ $resultado->plazo->cantidad}}</td> --}}
                                 </tr>
                             @endforeach
 
@@ -95,12 +120,65 @@
 
 @section('datatable')
 
-        <script src="{{asset('vendor/jquery/jquery.min.js') }}"></script>
-        <script src="{{asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
-        <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
 
-        <script>
-            $(document).ready(function () {
+    <script>
+
+        $(document).ready(function() {
+            var table = $('#dataTable').DataTable({
+                responsive: true,
+                autoWidth: false,
+                "language": {
+                    "lengthMenu": "Mostrar " +
+                        `<select class='form-select'>
+                            <option value='5'>5</option>
+                            <option value='10'>10</option>
+                            <option value='15'>15</option>
+                            <option value='25'>25</option>
+                            <option value='50'>50</option>
+                            <option value='100'>100</option>
+                            <option value='-1'>Todos</option>
+                        </select>` +
+                        " Registros Por Página",
+                    "infoEmpty": 'No Hay Registros Disponibles.',
+                    "zeroRecords": 'Nada Encontrado Disculpa.',
+                    "info": 'Mostrando La Página _PAGE_ de _PAGES_',
+                    "infoFiltered": '(Filtrado de _MAX_ Registros Totales)',
+                    "search": "Buscar: ",
+                    "paginate": {
+                        'next': 'Siguiente',
+                        'previous': 'Anterior',
+                    },
+                    decimal: ',',
+                    thousands: '.',
+                },
+            });
+
+            function updatePdfLink() {
+                var searchTerm = table.search();
+                var pdfUrl = `{{ url('reporte/pdf') }}?search=${encodeURIComponent(searchTerm)}`;
+                $('#pdfButton').attr('href', pdfUrl);
+                console.log('PDF URL actualizada:', pdfUrl);
+            }
+
+            table.on('search.dt', function() {
+                updatePdfLink();
+            });
+
+            updatePdfLink();
+        });
+
+    </script>
+
+    {{-- <script src="{{asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+
+    <script>
+
+        $(document).ready(function() {
             var table = $('#dataTable').DataTable({
                 responsive: true,
                 autoWidth: false,
@@ -136,27 +214,19 @@
                 $('#pdfButton').attr('href', pdfUrl);
             }
 
-            table.on('search.dt', function () {
-                var searchTerm = table.search();
-                $.ajax({
-                    url: '{{ url('recaudo/pdf') }}',
-                    method: 'GET',
-                    data: { search: searchTerm },
-                    success: function(response) {
-                        // Aquí puedes manejar la respuesta, si necesitas hacer algo con ella
-                        console.log('PDF generado con éxito');
-                    },
-                    error: function(xhr) {
-                        console.error('Error al generar el PDF:', xhr);
-                    }
-                });
+            table.on('search.dt', function() {
                 updatePdfLink();
             });
 
             updatePdfLink();
-            });
-    </script>
+        });
+
+    </script> --}}
 
 
 @endsection
+
+
+
+
 

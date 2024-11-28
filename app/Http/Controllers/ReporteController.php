@@ -10,6 +10,7 @@ use App\Models\Recepcion;
 use App\Models\Solicitante;
 use App\Models\PersonaJuridica;
 use App\Models\PersonaNatural;
+use App\Models\PagoRegalia;
 use App\Models\Bitacora;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -19,10 +20,10 @@ class ReporteController extends Controller
 {
     
     public function index(Request $request)
-    
     {
 
-        $licencia = licencias::join('comprobante_pagos', 'comprobante_pagos.id', '=', 'licencias.id_comprobante_pago')
+        $pago_regalia = PagoRegalia::join('licencias', 'licencias.id', '=', 'pago_regalias.id_licencia')
+            ->join('comprobante_pagos', 'comprobante_pagos.id', '=', 'licencias.id_comprobante_pago')
             ->join('inspecciones', 'inspecciones.id', '=', 'comprobante_pagos.id_inspeccion')
             ->join('planificacion', 'planificacion.id', '=', 'inspecciones.id_planificacion')
             ->join('recepcion', 'recepcion.id', '=', 'planificacion.id_recepcion')
@@ -51,19 +52,28 @@ class ReporteController extends Controller
                 'licencias.resolucion_apro',
                 'licencias.catastro_la',
                 'licencias.catastro_lp',
-                'licencias.id_plazo'
+                // 'licencias.id_plazo'
+                'pago_regalias.metodo_apro',
+                'pago_regalias.metodo_pro',
+                'pago_regalias.pago_realizar',
+                'pago_regalias.resultado_apro',
+                'pago_regalias.resultado_pro'
             ])
             ->get();
             
-        return view('reporte.index', ['resultados' => $licencia]);
+        return view('reporte.index', ['resultados' => $pago_regalia]);
+
     }
+    
 
     public function generarPDF(Request $request)
     {
 
         $search = $request->input('search');
 
-        $licencia = licencias::join('comprobante_pagos', 'comprobante_pagos.id', '=', 'licencias.id_comprobante_pago')
+        // Iniciar la consulta base
+        $pago_regaliaQuery = PagoRegalia::join('licencias', 'licencias.id', '=', 'pago_regalias.id_licencia')
+            ->join('comprobante_pagos', 'comprobante_pagos.id', '=', 'licencias.id_comprobante_pago')
             ->join('inspecciones', 'inspecciones.id', '=', 'comprobante_pagos.id_inspeccion')
             ->join('planificacion', 'planificacion.id', '=', 'inspecciones.id_planificacion')
             ->join('recepcion', 'recepcion.id', '=', 'planificacion.id_recepcion')
@@ -91,36 +101,48 @@ class ReporteController extends Controller
                 'licencias.resolucion_apro',
                 'licencias.catastro_la',
                 'licencias.catastro_lp',
-                'licencias.id_plazo'
-            ])
-            ->get();
+                // 'licencias.id_plazo'
+                'pago_regalias.metodo_apro',
+                'pago_regalias.metodo_pro',
+                'pago_regalias.pago_realizar',
+                'pago_regalias.resultado_apro',
+                'pago_regalias.resultado_pro'
+            ]);
 
+        // Aplicar el filtro de búsqueda si existe
         if ($search) {
-            // Filtrar los solicitantes según la consulta de búsqueda
-            $licencia = $licencia->where(function($query) use ($search) {
-                $query->where('personas_naturales.cedula as solicitante_cedula', 'LIKE', '%' . $search . '%')
-                        ->orWhere('personas_naturales.nombre as solicitante_nombre_natural', 'LIKE', '%' . $search . '%')
-                        ->orWhere('personas_naturales.apellido as solicitante_apellido', 'LIKE', '%' . $search . '%')
-                        ->orWhere('personas_juridicas.nombre as solicitante_nombre_juridico', 'LIKE', '%' . $search . '%')
-                        ->orWhere('personas_juridicas.rif as solicitante_rif', 'LIKE', '%' . $search . '%')
-                        ->orWhere('recepcion.direccion', 'LIKE', '%' . $search . '%')
-                        ->orWhere('minerales.nombre as nombre_mineral', 'LIKE', '%' . $search . '%')
-                        ->orWhere('recepcion.categoria', 'LIKE', '%' . $search . '%')
-                        ->orWhere('solicitantes.tipo as solicitante_tipo', 'LIKE', '%' . $search . '%')
-                        ->orWhere('licencias.resolucion_hpc', 'LIKE', '%' . $search . '%')
-                        ->orWhere('licencias.resolucion_apro', 'LIKE', '%' . $search . '%')
-                        ->orWhere('licencias.catastro_la', 'LIKE', '%' . $search . '%')
-                        ->orWhere('licencias.catastro_lp', 'LIKE', '%' . $search . '%')
-                        ->orWhere('licencias.id_plazo', 'LIKE', '%' . $search . '%');
-                        
+            $pago_regaliaQuery->where(function($query) use ($search) {
+                $query->where('personas_naturales.cedula', 'LIKE', '%' . $search . '%')
+                    ->orWhere('personas_naturales.nombre', 'LIKE', '%' . $search . '%')
+                    ->orWhere('personas_naturales.apellido', 'LIKE', '%' . $search . '%')
+                    ->orWhere('personas_juridicas.nombre', 'LIKE', '%' . $search . '%')
+                    ->orWhere('personas_juridicas.rif', 'LIKE', '%' . $search . '%')
+                    ->orWhere('recepcion.direccion', 'LIKE', '%' . $search . '%')
+                    ->orWhere('minerales.nombre', 'LIKE', '%' . $search . '%')
+                    ->orWhere('recepcion.categoria', 'LIKE', '%' . $search . '%')
+                    ->orWhere('solicitantes.tipo', 'LIKE', '%' . $search . '%')
+                    ->orWhere('licencias.resolucion_hpc', 'LIKE', '%' . $search . '%')
+                    ->orWhere('licencias.resolucion_apro', 'LIKE', '%' . $search . '%')
+                    ->orWhere('licencias.catastro_la', 'LIKE', '%' . $search . '%')
+                    ->orWhere('licencias.catastro_lp', 'LIKE', '%' . $search . '%')
+                    ->orWhere('pago_regalias.metodo_apro', 'LIKE', '%' . $search . '%') // Nueva condición para método de aprobación
+                    ->orWhere('licencias.id_plazo', 'LIKE', '%' . $search . '%')
+                    ->orWhere('pago_regalias.metodo_apro', 'LIKE', '%' . $search . '%')
+                    ->orWhere('pago_regalias.metodo_pro', 'LIKE', '%' . $search . '%')
+                    ->orWhere('pago_regalias.pago_realizar', 'LIKE', '%' . $search . '%')
+                    ->orWhere('pago_regalias.resultado_apro', 'LIKE', '%' . $search . '%')
+                    ->orWhere('pago_regalias.resultado_pro', 'LIKE', '%' . $search . '%');
+                    
             });
         }
 
-        $licencia = $licencia->get();
+        // Ejecutar la consulta
+        $pago_regalia = $pago_regaliaQuery->get();
 
-        $pdf = PDF::loadView('reporte.pdf', ['resultados' => $licencia]);
+        // Generar el PDF incluso si no se encuentran registros
+        $pdf = PDF::loadView('reporte.pdf', ['resultados' => $pago_regalia]);
+        return $pdf->stream('reporte.pdf');
 
-        return $pdf->download('reporte.pdf');
     }
 
     public function mensual (Request $request) {
