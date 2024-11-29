@@ -120,7 +120,7 @@
                 
               </div>
 
-             <li class="nav-item">
+             {{-- <li class="nav-item">
                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportes"
                 aria-expanded="true" aria-controls="collapseReportes">
                <i class="fas fa-fw fa-columns"></i>
@@ -128,14 +128,31 @@
                     </a>
                       <div id="collapseReportes" class="collapse" aria-labelledby="headingReportes" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                           <a class="nav-link collapsed" href="{{ url('reporte') }}" >Reporte General</a>
+                          
                            <a class="nav-link collapsed" href="{{ url('reporte/mensual') }}" >Reporte Mensual</a>
                           
                         </div>
                     
                     </div>
              
-             </li>
+             </li> --}}
+
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePage" aria-expanded="true"
+                aria-controls="collapsePage">
+                <i class="fas fa-fw fa-columns"></i>
+                <span>Reporte</span>
+              </a>
+              <div id="collapsePage" class="collapse" aria-labelledby="headingPage" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                  {{-- <h6 class="collapse-header">Example Pages</h6> --}}
+                  <a class="collapse-item" href="{{ url('reporte') }}" >Resumen Habilitado</a>
+                  {{-- <a class="collapse-item" href="register.html">Register</a>
+                  <a class="collapse-item" href="404.html">404 Page</a>
+                  <a class="collapse-item" href="blank.html">Blank Page</a> --}}
+                </div>
+              </div>
+            </li>
 
               <li class="nav-item">
                 <a class="nav-link" href="{{ url('estadistica') }}">
