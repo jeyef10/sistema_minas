@@ -26,10 +26,9 @@ return new class extends Migration
             $table->string('monto_decl')->nullable();
             $table->string('resultado_apro')->nullable();
             $table->string('resultado_pro')->nullable();
-            $table->json('comprobante');
+            $table->json('comprobante')->nullable();
             $table->date('fecha_pago');
-            $table->date('fecha_venci');
-            // $table->string('estatus_regalia');
+            $table->date('fecha_venci')->nullable();
 
             // Establecer relación con la tabla de la licencias
             $table->foreign('id_licencia')->references('id')->on('licencias');

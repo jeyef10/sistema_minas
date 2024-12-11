@@ -166,12 +166,12 @@
                   <span>Bitacora</span>
                 </a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a class="nav-link" href="{{ url('manual') }}">
                   <i class="fas fa-fw fa-table"></i>
                   <span>Manuales</span>
                 </a>
-              </li>
+              </li> --}}
             </ul>
 
                                                                         <!-- Sidebar Final del Menu Lateral-->
