@@ -12,6 +12,13 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class TipoPagoController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:ver-tipopago|crear-tipopago|editar-tipopago|borrar-tipopago', ['only' => ['index']]);
+         $this->middleware('permission:crear-tipopago', ['only' => ['create','store']]);
+         $this->middleware('permission:editar-tipopago', ['only' => ['edit','update']]);
+         $this->middleware('permission:borrar-tipopago', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *

@@ -214,8 +214,8 @@
                                     </div>
 
                                     @if(auth()->user()->hasRole('Administrador'))
-                                    <div class="card-body">
-                                        <label class="font-weight-bold text-primary">Estatus Respuesta</label>
+                                    <div class="card-body" id="estatus_aprob">
+                                        <label class="font-weight-bold text-primary">Estatus Aprobación</label>
                                         <div class="row">
                                             <div class="custom-control custom-radio col-1 mr-2"> 
                                                 <input class="custom-control-input" type="radio" name="estatus_resp" id="estatus_resp_pen" value="Pendiente" checked>
@@ -552,49 +552,31 @@
 
     </script>
 
-    {{--! FUNCIÓN PARA MOSTRAR LA ALERTA DE LA FOTO --}}
+    {{-- * FUNCION  PARA MOSTRAR EL ESTATUS APROBACION SEGUN EL ESTATUS DE INSPECCION --}}
 
-    {{-- @if ($errors->any())
     <script>
-        var errorMessage = @json($errors->first());
-        Swal.fire({
-                title: 'Inspección',
-                text: "Debe seleccionar al menos una o mas Fotos.",
-                icon: 'warning',
-                showconfirmButton: true,
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: '¡OK!',
-                
-                }).then((result) => {
-            if (result.isConfirmed) {
+        document.addEventListener('DOMContentLoaded', function() {
+        const estatusInspeccion = document.getElementById('estatus');
+        const estatusAprobacion = document.getElementById('estatus_aprob');
 
-                this.submit();
+        function toggleEstatusAprobacion() {
+            if (estatusInspeccion.value === 'Negado') {
+                estatusAprobacion.style.display = 'none';
+            } else if (estatusInspeccion.value === 'Aprobado') {
+                estatusAprobacion.style.display = 'block';
+            } else {
+                estatusAprobacion.style.display = 'block';
             }
-            })
+        }
+
+        estatusInspeccion.addEventListener('change', toggleEstatusAprobacion);
+
+        // Ejecutar al cargar la página para establecer el estado inicial
+        toggleEstatusAprobacion();
+    });
+
     </script>
-    @endif --}}
 
-    {{--! FUNCIÓN PARA MOSTRAR LA ALERTA DE LA FECHA --}}
-
-    {{-- @if ($errors->any())
-    <script>
-        var errorMessage = @json($errors->first());
-        Swal.fire({
-                title: 'Inspección',
-                text: "La fecha registrada no es válida. Por favor, asegúrese de ingresar la fecha actual.",
-                icon: 'warning',
-                showconfirmButton: true,
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: '¡OK!',
-                
-                }).then((result) => {
-            if (result.isConfirmed) {
-
-                this.submit();
-            }
-            })
-    </script>
-    @endif --}}
 
     @if ($errors->any())
         <script>

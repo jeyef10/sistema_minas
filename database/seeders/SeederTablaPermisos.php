@@ -32,7 +32,7 @@ class SeederTablaPermisos extends Seeder
             'borrar-rol',
 
             //Operaciones sobre tabla Solicitantes
-             'ver-solicitante',
+            'ver-solicitante',
             'crear-solicitante',
             'editar-solicitante',
             'borrar-solicitante',
@@ -50,28 +50,28 @@ class SeederTablaPermisos extends Seeder
             'borrar-comisionado',
 
             //Operaciones sobre tabla Minerales
-             'ver-mineral',
+            'ver-mineral',
             'crear-mineral',
             'editar-mineral',
             'borrar-mineral',
- 
-            //Operaciones sobre tabla Regalias
-             'ver-regalia',
-            'crear-regalia',
-            'editar-regalia',
-            'borrar-regalia', 
 
             //Operaciones sobre tabla Plazos
-             'ver-plazo',
+            'ver-plazo',
             'crear-plazo',
             'editar-plazo',
             'borrar-plazo',
 
-            // //Operaciones sobre tabla MineralCategoria
-            // 'ver-categoria',
-            // 'crear-categoria',
-            // 'editar-categoria',
-            // 'borrar-categoria',
+            //Operaciones sobre tabla Tipo_pagos
+            'ver-tipopago',
+            'crear-tipopago',
+            'editar-tipopago',
+            'borrar-tipopago',
+
+            //Operaciones sobre tabla Bancos
+            'ver-banco',
+            'crear-banco',
+            'editar-banco',
+            'borrar-banco',
 
             //Operaciones sobre tabla Recepción
             'ver-recepcion',

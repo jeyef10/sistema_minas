@@ -99,7 +99,33 @@ class homeController extends Controller
             ];
         });
 
-        $pagos = PagoRegalia::with('licencia')->get();
+        $pagos = PagoRegalia::with('licencia')
+            ->select('pago_regalias.*')
+            ->join(DB::raw('(SELECT MAX(id) as latest_id FROM pago_regalias GROUP BY id_licencia) as latest_pagos'), 'pago_regalias.id', '=', 'latest_pagos.latest_id')
+            ->whereNotNull('fecha_venci')
+            ->get();
+
+
+            // dd($pagos); 
+
+
+        // Filtrar pagos vencidos y de vencimiento cercano
+        $pagos = $pagos->filter(function ($pago) {
+            $statusInfo = $this->determineStatus($pago);
+            if ($statusInfo['status'] != 'Normal') {
+                // Verificar si hay otros pagos para la misma licencia que están al día
+                $licenciaPagos = PagoRegalia::where('id_licencia', $pago->id_licencia)->get();
+                $allPaid = false;
+                foreach ($licenciaPagos as $licenciaPago) {
+                    if ($this->determineStatus($licenciaPago)['status'] == 'Normal') {
+                        $allPaid = true;
+                        break;
+                    }
+                }
+                return !$allPaid;
+            }
+            return false;
+        });
 
         foreach ($pagos as $pago) {
             $statusInfo = $this->determineStatus($pago);
@@ -118,30 +144,27 @@ class homeController extends Controller
      }
 
      protected function determineStatus($pago)
-     {
-         $dueDate = $pago->fecha_venci;
-         $now = now();
-         $status = '';
-         $statusClass = '';
-     
-         if ($now->greaterThan($dueDate)) {
-             $status = 'Vencido';
-             $statusClass = 'badge badge-danger';
-         } elseif ($now->diffInDays($dueDate) <= 7) {
-             $status = 'Vencimiento cercano';
-             $statusClass = 'badge badge-warning';
-         } 
-         
-         else {
-             $status = 'Normal';
-             $statusClass = 'badge badge-success';
-         }
-     
-         return ['status' => $status, 'class' => $statusClass];
-     }
-
-
-
+    {
+        $dueDate = $pago->fecha_venci;
+        $now = now();
+        $status = '';
+        $statusClass = '';
+    
+        if ($now->greaterThan($dueDate)) {
+            $status = 'Vencido';
+            $statusClass = 'badge badge-danger';
+        } elseif ($now->diffInDays($dueDate) <= 7) {
+            $status = 'Vencimiento cercano';
+            $statusClass = 'badge badge-warning';
+        } 
+        
+        else {
+            $status = 'Normal';
+            $statusClass = 'badge badge-success';
+        }
+    
+        return ['status' => $status, 'class' => $statusClass];
+    }
 
 
 }

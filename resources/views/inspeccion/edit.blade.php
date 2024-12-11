@@ -218,7 +218,7 @@
                                     
                                     @if(auth()->user()->hasRole('Administrador'))
                                         <div class="card-body" id="estatus_respuesta" style="display: none;">
-                                            <label class="font-weight-bold text-primary">Estatus Respuesta</label>
+                                            <label class="font-weight-bold text-primary">Estatus Aprobación</label>
                                             <div class="row">
                                                 <div class="custom-control custom-radio col-1 mr-2"> 
                                                     <input class="custom-control-input" type="radio" name="estatus_resp" id="estatus_resp_pen" value="Pendiente" {{ ($inspeccion->estatus_resp=="Pendiente")? "checked" : ""}}>
@@ -635,76 +635,6 @@
             estatusSelect.addEventListener('change', toggleEstatusRespuesta);
         });
     </script>
-
-
-    {{-- <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const estatusSelect = document.getElementById('estatus');
-            const estatusRespuestaDiv = document.getElementById('estatus_respuesta');
-            const hiddenInput = document.getElementById('estatus_respuesta');
-            const userRole = "{{ auth()->user()->hasRole('Administrador') }}"; // Obtener el rol del usuario
-
-            console.log("Usuario es" + " " + userRole);
-    
-            function toggleEstatusRespuesta() {
-                const selectedValue = estatusSelect.value;
-                if (selectedValue == 'Aprobado') {
-                    estatusRespuestaDiv.style.display = 'block';
-                    if (userRole !== '1') {
-                        hiddenInput.value = "Pendiente";
-                    }
-                } else {
-                    estatusRespuestaDiv.style.display = 'none';
-                    if (userRole !== '1') {
-                        hiddenInput.value = "";
-                    }
-                }
-            }
-    
-            // Ejecutar al cargar la página
-            toggleEstatusRespuesta();
-    
-            // Ejecutar al cambiar la selección
-            estatusSelect.addEventListener('change', toggleEstatusRespuesta);
-        });
-    </script> --}}
-
-    {{-- <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const estatusSelect = document.getElementById('estatus');
-            const estatusRespuestaDiv = document.getElementById('estatus_respuesta');
-            const hiddenInput = document.getElementById('estatus_resp');
-            const userRole = "{{ auth()->user()->hasRole('Administrador') }}"; // Obtener el rol del usuario
-    
-            function toggleEstatusRespuesta() {
-                if (!estatusSelect || !estatusRespuestaDiv) return; // Verificar la existencia de los elementos
-    
-                const selectedValue = estatusSelect.value;
-                if (selectedValue === 'Aprobado') {
-                    estatusRespuestaDiv.style.display = 'block';
-                    if (userRole !== '1' && hiddenInput) {
-                        hiddenInput.value = "Pendiente";
-                    }
-                } else {
-                    estatusRespuestaDiv.style.display = 'none';
-                    if (userRole !== '1' && hiddenInput) {
-                        hiddenInput.value = "Pendiente";
-                    }
-                }
-            }
-    
-            // Ejecutar al cargar la página
-            toggleEstatusRespuesta();
-    
-            // Ejecutar al cambiar la selección
-            if (estatusSelect) {
-                estatusSelect.addEventListener('change', toggleEstatusRespuesta);
-            }
-        });
-    </script> --}}
-    
-    
-    
 
     {{-- ? FUNCION PARA MANTENER LA FECHA ACTUALIZADA EN EL CALENDARIO --}}
 

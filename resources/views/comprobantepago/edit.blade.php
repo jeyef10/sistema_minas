@@ -88,7 +88,7 @@
                                 <input type="hidden" class="form-control" id="id_inspeccion" name="id_inspeccion" style="background: white;" value="{{ isset($comprobante_pago->inspeccion->id)?$comprobante_pago->inspeccion->id:'' }}" placeholder="" autocomplete="off">                                  
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">N° de Oficio de Aprobación</label>
-                                    <input type="text" class="form-control" id="nro_oficio" name="nro_oficio" value="{{ isset($comprobante_pago->nro_oficio)?$comprobante_pago->nro_oficio:'' }}" oninput="capitalizarInput('')"></input>                                 
+                                    <input type="text" class="form-control" id="nro_oficio" name="nro_oficio" value="{{ isset($comprobante_pago->nro_oficio)?$comprobante_pago->nro_oficio:'' }}" oninput="capitalizarInput('')" onkeypress="return solonum(event);"></input>                                 
                                 </div>
 
                                 <div class="col-4">                                     
@@ -114,7 +114,7 @@
 
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Nombre de Titular de Firma</label>
-                                    <input type="text" class="form-control" id="nombre_firma" name="nombre_firma" value="{{ $nombre_firma }}" oninput="capitalizarInput('')"></input>                                 
+                                    <input type="text" class="form-control" id="nombre_firma" name="nombre_firma" value="{{ $nombre_firma }}" oninput="capitalizarInput('')" onkeypress="return soloLetras(event);"></input>                                 
                                 </div>
 
                                 </div>
@@ -144,10 +144,10 @@
                                     </select>
                                 </div>
 
-                                <div class="col-4">
-                                    <label for="persona" class="font-weight-bold text-primary">Tipo de Pago</label>
+                                <div class="col-4" id="banco_container">
+                                    <label for="persona" class="font-weight-bold text-primary">Tipo de Banco</label>
                                     <select class="select2-single form-control" id="banco" name="id_banco">
-                                        <option value="0">Seleccione un Tipo de Pago</option>
+                                        <option value="">Seleccione un Tipo de Banco</option>
                                         @foreach($bancos as $banco)
                                             <option value="{{ $banco->id }}" @if (old('id_banco', $comprobante_pago->id_banco) == $banco->id) selected @endif>
                                             {{ $banco->codigo_banco }} - {{ $banco->nombre_banco }}
@@ -157,7 +157,7 @@
 
                                 </div>
 
-                                <div class="col-4">
+                                <div class="col-4" id="referencia_container">
                                     <label class="font-weight-bold text-primary">N° Referencia</label>
                                     <input type="text" class="form-control" id="n_referencia" name="n_referencia" style="background: white;" value="{{ isset($comprobante_pago->n_referencia)?$comprobante_pago->n_referencia:'' }}" placeholder="Ingrese la Referencia" autocomplete="off" onkeypress="return solonum(event);" >
                                 </div>
@@ -366,6 +366,40 @@
                 }
             });
         });
+
+    </script>
+
+    {{-- * FUNCION PARA MOSTRAR/OCULTAR LOS CAMPOS DE BANCO Y REFERENCIA SEGUN LO QUE SE SELECCIONE EN TIPO DE PAGO --}}
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        const tipoPagoSelect = document.getElementById("tipo_pago");
+        const bancoContainer = document.getElementById("banco_container");
+        const referenciaContainer = document.getElementById("referencia_container");
+        const bancoField = document.getElementById("banco");
+        const referenciaField = document.getElementById("n_referencia");
+
+        function toggleContainers() {
+            const selectedOption = tipoPagoSelect.options[tipoPagoSelect.selectedIndex].text;
+
+            if (selectedOption === "Efectivo") {
+                bancoContainer.style.display = "none";
+                referenciaContainer.style.display = "none";
+                bancoField.value = "";
+                referenciaField.value = "";
+            } else {
+                bancoContainer.style.display = "block";
+                referenciaContainer.style.display = "block";
+            }
+        }
+
+        // Ejecutar la función al cargar la página
+        toggleContainers();
+
+        // Añadir el evento change al select de tipo de pago
+        tipoPagoSelect.addEventListener("change", toggleContainers);
+    });
+
 
     </script>
 

@@ -1,15 +1,24 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Banco;
 use App\Http\Controllers\Controller;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\BitacoraController;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class BancoController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:ver-banco|crear-banco|editar-banco|borrar-banco', ['only' => ['index']]);
+         $this->middleware('permission:crear-banco', ['only' => ['create','store']]);
+         $this->middleware('permission:editar-banco', ['only' => ['edit','update']]);
+         $this->middleware('permission:borrar-banco', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *

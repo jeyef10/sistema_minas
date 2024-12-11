@@ -103,7 +103,7 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Pago a Realizar</label>
-                                        <select class="select2single form-control" name="pago_realizar" id="pago_realizar">
+                                        <select class="select2single form-control" name="pago_realizar_apro" id="pago_realizar_apro" onchange="ocultarFecha()">
                                             <option value="{{ $pago_regalia->pago_realizar }}" selected> 
                                                 {{ $pago_regalia->pago_realizar}}
                                             </option> 
@@ -178,7 +178,7 @@
 
                                         <div class="col-4">
                                             <label  class="font-weight-bold text-primary">Pago a Realizar</label>
-                                            <select class="select2single form-control" name="pago_realizar" id="pago_realizar">
+                                            <select class="select2single form-control" name="pago_realizar_pro" id="pago_realizar_pro" onchange="ocultarFecha()">
                                                 <option value="{{ $pago_regalia->pago_realizar }}" selected> 
                                                     {{ $pago_regalia->pago_realizar}}
                                                 </option> 
@@ -271,7 +271,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" id="fecha_aprovechamiento" name="fecha_venci" value="{{ $fecha_venci }}" class="form-control"  id="simpleDataInput">
+                                                <input type="text" id="fecha_aprovechamiento" name="fecha_venci_apro" value="{{ $fecha_venci }}" class="form-control"  id="simpleDataInput">
                                             </div>
                                         </div>
                                     </div>
@@ -283,7 +283,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" id="fecha_procesamiento" name="fecha_venci" value="{{ $fecha_venci }}" class="form-control"  id="simpleDataInput">
+                                                <input type="text" id="fecha_procesamiento" name="fecha_venci_pro" value="{{ $fecha_venci }}" class="form-control"  id="simpleDataInput">
                                             </div>
                                         </div>
                                     </div>
@@ -386,7 +386,7 @@
 
     {{-- ? FUNCION PARA MANTENER LA FECHA ACTUALIZADA EN EL CALENDARIO --}}
 
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             var dateInput = document.getElementById('fecha_inspeccion');
             var today = new Date().toISOString().split('T')[0]; // Formato YYYY-MM-DD
@@ -397,7 +397,7 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 
         {{-- ! FUNCION PARA MOSTRAR EL PDF --}}
 
@@ -568,65 +568,218 @@
     </script>
     
 
-
     {{-- * FUNCION PARA CALCULAR LA FECHA DE VENCIMIENTO DE PAGO DE REGALIA, PARA APROVECHAMIENTO LOS PROXIMOS 45 DIAS, Y PROCESAMIENTO LOS PRIMEROS 5 DIAS DE CADA MES --}}
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const categoria = '{{$pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria}}';
+        //     mostrarCampos(categoria);
+
+        //     if (categoria === 'Aprovechamiento') {
+        //         let fechaActual = new Date();
+        //         let dia = fechaActual.getDate().toString().padStart(2, '0');
+        //         let mes = (fechaActual.getMonth() + 1).toString().padStart(2, '0');
+        //         let año = fechaActual.getFullYear();
+
+        //         let fechaPagoStr = `${dia}/${mes}/${año}`;
+        //         document.getElementById('fecha_aprovechamiento').value = fechaPagoStr;
+
+        //         let fechaVencimiento = new Date(fechaActual);
+        //         fechaVencimiento.setDate(fechaActual.getDate() + 45);
+
+        //         let diaVenci = fechaVencimiento.getDate().toString().padStart(2, '0');
+        //         let mesVenci = (fechaVencimiento.getMonth() + 1).toString().padStart(2, '0');
+        //         let añoVenci = fechaVencimiento.getFullYear();
+
+        //         let fechaVenciStr = `${diaVenci}/${mesVenci}/${añoVenci}`;
+        //         document.getElementById('fecha_aprovechamiento').value = fechaVenciStr;
+    
+        //     } else if (categoria === 'Procesamiento') {
+        //         let fechaActual = new Date();
+        //         let mesSiguiente = fechaActual.getMonth() + 1;
+        //         let año = fechaActual.getFullYear();
+
+        //         if (mesSiguiente > 11) {
+        //             mesSiguiente = 0;
+        //             año += 1;
+        //         }
+
+        //         let diaProcesamiento = '05';
+        //         let mesProcesamiento = (mesSiguiente + 1).toString().padStart(2, '0');
+        //         let fechaProcesamientoStr = `${diaProcesamiento}/${mesProcesamiento}/${año}`;
+        //         document.getElementById('fecha_procesamiento').value = fechaProcesamientoStr;
+            
+        //     }
+        // });
+
+    //     document.addEventListener('DOMContentLoaded', function() {
+    //     const categoria = '{{$pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria}}';
+    //     mostrarCampos(categoria);
+
+    //     console.log(categoria);
+
+    //     document.getElementById('fecha_pago').addEventListener('change', function() {
+    //         if (categoria === 'Aprovechamiento') {
+
+    //             let fechaActual = new Date(this.value); // Obtener la fecha del campo fecha_pago
+    //             // let fechaActual = document.getElementById(fecha_pago).value;
+    //             let fechaVencimiento = new Date(fechaActual);
+    //             fechaVencimiento.setDate(fechaActual.getDate() + 45);
+                
+    //             let diaVenci = fechaVencimiento.getDate().toString().padStart(2, '0');
+    //             let mesVenci = (fechaVencimiento.getMonth() + 1).toString().padStart(2, '0');
+    //             let añoVenci = fechaVencimiento.getFullYear();
+    //             let fechaVenciStr = `${diaVenci}/${mesVenci}/${añoVenci}`;
+                
+    //             document.getElementById('fecha_aprovechamiento').value = fechaVenciStr;
+
+    //         } else if (categoria === 'Procesamiento') {
+
+    //             let fechaActual = new Date(this.value); // Obtener la fecha del campo fecha_pago
+    //             let mesSiguiente = fechaActual.getMonth() + 1;
+    //             let año = fechaActual.getFullYear();
+                
+    //             if (mesSiguiente > 11) {
+    //                 mesSiguiente = 0;
+    //                 año += 1;
+    //             }
+                
+    //             let diaProcesamiento = '05';
+    //             let mesProcesamiento = (mesSiguiente + 1).toString().padStart(2, '0');
+    //             let fechaProcesamientoStr = `${diaProcesamiento}/${mesProcesamiento}/${año}`;
+                
+    //             document.getElementById('fecha_procesamiento').value = fechaProcesamientoStr;
+    //         }
+    //     });
+    // });
+
+            document.addEventListener('DOMContentLoaded', function() {
             const categoria = '{{$pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria}}';
             mostrarCampos(categoria);
 
-            if (categoria === 'Aprovechamiento') {
-                let fechaActual = new Date();
-                let dia = fechaActual.getDate().toString().padStart(2, '0');
-                let mes = (fechaActual.getMonth() + 1).toString().padStart(2, '0');
-                let año = fechaActual.getFullYear();
-
-                let fechaPagoStr = `${dia}/${mes}/${año}`;
-                document.getElementById('fecha_aprovechamiento').value = fechaPagoStr;
-
-                let fechaVencimiento = new Date(fechaActual);
-                fechaVencimiento.setDate(fechaActual.getDate() + 45);
-
-                let diaVenci = fechaVencimiento.getDate().toString().padStart(2, '0');
-                let mesVenci = (fechaVencimiento.getMonth() + 1).toString().padStart(2, '0');
-                let añoVenci = fechaVencimiento.getFullYear();
-
-                let fechaVenciStr = `${diaVenci}/${mesVenci}/${añoVenci}`;
-                document.getElementById('fecha_aprovechamiento').value = fechaVenciStr;
-    
-            } else if (categoria === 'Procesamiento') {
-                let fechaActual = new Date();
-                let mesSiguiente = fechaActual.getMonth() + 1;
-                let año = fechaActual.getFullYear();
-
-                if (mesSiguiente > 11) {
-                    mesSiguiente = 0;
-                    año += 1;
+            document.getElementById('fecha_pago').addEventListener('change', function() {
+                if (categoria === 'Aprovechamiento') {
+                    let fechaActual = new Date(this.value); // Obtener la fecha del campo fecha_pago
+                    if (!isNaN(fechaActual.getTime())) { // Verificar que la fecha es válida
+                        let fechaVencimiento = new Date(fechaActual);
+                        fechaVencimiento.setDate(fechaActual.getDate() + 45);
+                        
+                        let diaVenci = fechaVencimiento.getDate().toString().padStart(2, '0');
+                        let mesVenci = (fechaVencimiento.getMonth() + 1).toString().padStart(2, '0');
+                        let añoVenci = fechaVencimiento.getFullYear();
+                        let fechaVenciStr = `${diaVenci}/${mesVenci}/${añoVenci}`;
+                        
+                        let fechaAprovechamientoInput = document.getElementById('fecha_aprovechamiento');
+                        if (fechaAprovechamientoInput) {
+                            fechaAprovechamientoInput.value = fechaVenciStr;
+                        }
+                    }
+                } else if (categoria === 'Procesamiento') {
+                    let fechaActual = new Date(this.value); // Obtener la fecha del campo fecha_pago
+                    if (!isNaN(fechaActual.getTime())) { // Verificar que la fecha es válida
+                        let mesSiguiente = fechaActual.getMonth() + 1;
+                        let año = fechaActual.getFullYear();
+                        
+                        if (mesSiguiente > 11) {
+                            mesSiguiente = 0;
+                            año += 1;
+                        }
+                        
+                        let diaProcesamiento = '05';
+                        let mesProcesamiento = (mesSiguiente + 1).toString().padStart(2, '0');
+                        let fechaProcesamientoStr = `${diaProcesamiento}/${mesProcesamiento}/${año}`;
+                        
+                        let fechaProcesamientoInput = document.getElementById('fecha_procesamiento');
+                        if (fechaProcesamientoInput) {
+                            fechaProcesamientoInput.value = fechaProcesamientoStr;
+                        }
+                    }
                 }
-
-                let diaProcesamiento = '05';
-                let mesProcesamiento = (mesSiguiente + 1).toString().padStart(2, '0');
-                let fechaProcesamientoStr = `${diaProcesamiento}/${mesProcesamiento}/${año}`;
-                document.getElementById('fecha_procesamiento').value = fechaProcesamientoStr;
-            
-            }
+            });
         });
 
-        function mostrarCampos(condicion) {
-            var aprovechamiento = document.getElementById('input_aprovechamiento');
-            var procesamiento = document.getElementById('input_procesamiento');
 
-            if (condicion === 'Aprovechamiento') {
-                aprovechamiento.style.display = 'block';
-                procesamiento.style.display = 'none';
-            } else if (condicion === 'Procesamiento') {
-                aprovechamiento.style.display = 'none';
-                procesamiento.style.display = 'block';
+
+            function mostrarCampos(condicion) {
+                var select = document.getElementById('pago_realizar_apro');
+                var aprovechamiento = document.getElementById('input_aprovechamiento');
+                var procesamiento = document.getElementById('input_procesamiento');
+
+                if (condicion === 'Aprovechamiento') {
+                    aprovechamiento.style.display = 'block';
+                    procesamiento.style.display = 'none';  
+                } else if (condicion === 'Procesamiento') {
+                    aprovechamiento.style.display = 'none';
+                    procesamiento.style.display = 'block';
+                }
             }
-        }
-    </script>
 
+
+            function ocultarFecha() {
+                var select = document.getElementById('pago_realizar_apro');
+                var selectPro = document.getElementById('pago_realizar_pro');
+                var inputFecha = document.getElementById('input_aprovechamiento');
+                var inputFechaPro = document.getElementById('input_procesamiento');
+                var metodoApro = document.getElementById('metodo_apro');
+                var metodoPro = document.getElementById('metodo_pro');
+                var pagos = '{{ $numeroPagos }}';
+                var cuotas = '{{ $nroCuotas }}';
+                
+                // Función auxiliar para registrar errores
+                function logError(elementId) {
+                    console.error(`El elemento con id '${elementId}' no se encontró en el DOM.`);
+                }
+
+                // Verificar existencia de los elementos
+                if (!select) logError('pago_realizar_apro');
+                if (!selectPro) logError('pago_realizar_pro');
+                if (!inputFecha) logError('input_aprovechamiento');
+                if (!inputFechaPro) logError('input_procesamiento');
+                if (!metodoApro) logError('metodo_apro');
+                if (!metodoPro) logError('metodo_pro');
+
+                if (!select || !selectPro || !inputFecha || !inputFechaPro || !metodoApro || !metodoPro) {
+                    console.error("Uno o más elementos necesarios no se encontraron en el DOM.");
+                    return;
+                }
+
+                var metodo_apro = metodoApro.value;
+                var metodo_pro = metodoPro.value;
+
+                console.log(pagos, cuotas);
+
+                if (select.value === 'Pago unico' || 
+                    (metodo_apro === 'Pago 2 parte' && select.value === '2da parte') || 
+                    (metodo_apro === 'Pago 3 parte' && select.value === '3era parte')) {
+                    
+                    inputFecha.style.display = 'none';
+                } else if (metodo_pro == 'Pago cuotas') {
+                    if (selectPro.value.includes("Cuota")) {
+                        inputFechaPro.style.display = 'none';
+                    } else {
+                        inputFechaPro.style.display = 'block';
+                    }
+                } else {
+                    inputFecha.style.display = 'block';
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                ocultarFecha(); // Llamar a la función cuando la página se carga
+            });
+
+
+            
+
+            // Llama a ocultarFecha() después de mostrarCampos() cuando la página se carga
+            document.addEventListener('DOMContentLoaded', function() {
+            const categoria = '{{$pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria}}';
+            mostrarCampos(categoria);
+            ocultarFecha(); // Asegúrate de llamar a ocultarFecha() aquí también
+        });
+
+    </script>
 
     {{-- ? FUNCION PARA MOSTRAR EL ALERTA  --}}
 

@@ -70,10 +70,14 @@
                     <a class="collapse-item" href="{{ url('plazo') }}">Plazos de Vigencia</a>
                     @endcan
 
+                    @can('ver-tipopago')
                     <a class="collapse-item" href="{{ url('tipopago') }}">Tipo de Pago</a>
+                    @endcan
 
+                    @can('ver-banco')
                     <a class="collapse-item" href="{{ url('banco') }}">Entidad Bancaria</a>
-                    
+                    @endcan
+
                   </div>
                 </div>
               </li>
@@ -145,11 +149,7 @@
               </a>
               <div id="collapsePage" class="collapse" aria-labelledby="headingPage" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                  {{-- <h6 class="collapse-header">Example Pages</h6> --}}
                   <a class="collapse-item" href="{{ url('reporte') }}" >Resumen Habilitado</a>
-                  {{-- <a class="collapse-item" href="register.html">Register</a>
-                  <a class="collapse-item" href="404.html">404 Page</a>
-                  <a class="collapse-item" href="blank.html">Blank Page</a> --}}
                 </div>
               </div>
             </li>

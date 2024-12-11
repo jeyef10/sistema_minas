@@ -185,6 +185,7 @@ Route::get('/licencia/detalles/{id}', [LicenciaController::class, 'getComprobant
 
 /* Ruta Poga Regalia */
 Route::get('/pago_regalia', [PagoRegaliaController::class,'index'])->name('pago_regalia')->middleware('auth');
+// Route::get('/pago_regalia/pdf/{id}',  [PagoRegaliaController::class,'pdf'])->name('pago_regalia_pdf')->middleware('auth');
 Route::get('/pago_regalia/create', [PagoRegaliaController::class, 'create'])->name('create')->middleware('auth');
 Route::get('/pago_regalia/create/{id}', [PagoRegaliaController::class, 'create'])->name('pago_regalia.create')->middleware('auth');
 Route::resource('pago_regalia', PagoRegaliaController::class)->middleware('auth');

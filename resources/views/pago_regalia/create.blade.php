@@ -108,9 +108,15 @@
                                     
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Pago a Realizar</label>
-                                        <select class="select2single form-control" name="pago_realizar_apro" id="pago_realizar_apro">
+                                        <select class="select2single form-control" name="pago_realizar_apro" id="pago_realizar_apro" onchange="ocultarFecha()">
                                             @if ($numeroPagos == 0)
-                                                <option value="1era parte">1era parte</option>
+
+                                                @if ($licencia->metodo_licencia_apro == "Pago unico")
+                                                    <option value="Pago unico">Pago único</option>
+                                                @else
+                                                    <option value="1era parte">1era parte</option> 
+                                                @endif
+                                                
                                             @elseif ($numeroPagos == 1)
                                                 <option value="2da parte">2da parte</option>
                                             @elseif ($numeroPagos == 2)
@@ -187,7 +193,7 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Pago a Realizar</label>
-                                        <select class="select2single form-control" name="pago_realizar_pro" id="pago_realizar_pro">
+                                        <select class="select2single form-control" name="pago_realizar_pro" id="pago_realizar_pro"  onchange="ocultarFecha()">
                                             {{-- <option value=""  disabled>Seleccione el Pago a Realizar</option> --}}
                                             @for ($i = 1; $i <= $nroCuotas; $i++) 
                                                 @if ($i == $numeroPagos + 1) 
@@ -286,7 +292,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" id="fecha_aprovechamiento" name="fecha_venci" value="<?php echo date('d/m/Y'); ?>" class="form-control"  id="simpleDataInput">
+                                                <input type="text" id="fecha_aprovechamiento" name="fecha_venci_apro" value="<?php echo date('d/m/Y'); ?>" class="form-control"  id="simpleDataInput">
                                             </div>
                                         </div>
                                     </div>
@@ -298,7 +304,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" id="fecha_procesamiento" name="fecha_venci" value="<?php echo date('d/m/Y'); ?>" class="form-control"  id="simpleDataInput">
+                                                <input type="text" id="fecha_procesamiento" name="fecha_venci_pro" value="<?php echo date('d/m/Y'); ?>" class="form-control"  id="simpleDataInput">
                                             </div>
                                         </div>
                                     </div>
@@ -581,18 +587,60 @@
             }
         });
 
-        function mostrarCampos(condicion) {
-            var aprovechamiento = document.getElementById('input_aprovechamiento');
-            var procesamiento = document.getElementById('input_procesamiento');
+            function mostrarCampos(condicion) {
+                var select = document.getElementById('pago_realizar_apro');
+                var aprovechamiento = document.getElementById('input_aprovechamiento');
+                var procesamiento = document.getElementById('input_procesamiento');
 
-            if (condicion === 'Aprovechamiento') {
-                aprovechamiento.style.display = 'block';
-                procesamiento.style.display = 'none';
-            } else if (condicion === 'Procesamiento') {
-                aprovechamiento.style.display = 'none';
-                procesamiento.style.display = 'block';
+                if (condicion === 'Aprovechamiento') {
+                    aprovechamiento.style.display = 'block';
+                    procesamiento.style.display = 'none';  
+                } else if (condicion === 'Procesamiento') {
+                    aprovechamiento.style.display = 'none';
+                    procesamiento.style.display = 'block';
+                }
             }
-        }
+
+
+            function ocultarFecha() {
+                var select = document.getElementById('pago_realizar_apro');
+                var selectPro = document.getElementById('pago_realizar_pro');
+                var inputFecha = document.getElementById('input_aprovechamiento');
+                var inputFechaPro = document.getElementById('input_procesamiento');
+                var pagos = '{{ $numeroPagos }}';
+                var cuotas = '{{ $nroCuotas }}';
+                var metodo_apro = document.getElementById('metodo_apro').value;
+                var metodo_pro = document.getElementById('metodo_pro').value;
+
+                console.log(pagos, cuotas);
+                
+                if (select.value === 'Pago unico' || 
+                    (metodo_apro === 'Pago 2 parte' && select.value === '2da parte' && pagos == 1) || 
+                    (metodo_apro === 'Pago 3 parte' && select.value === '3era parte' && pagos == 2)) {
+                    
+                    inputFecha.style.display = 'none';
+                } 
+                else if (metodo_pro == 'Pago cuotas') {
+                    
+                    if (selectPro.value.includes("Cuota") && (pagos == cuotas - 1)) {
+                        inputFechaPro.style.display = 'none';
+                    } else {
+                        inputFechaPro.style.display = 'block'; 
+                    }
+                      
+                } else {
+                    inputFecha.style.display = 'block';
+                }
+
+            }
+
+            // Llama a ocultarFecha() después de mostrarCampos() cuando la página se carga
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoria = '{{$licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria}}';
+            mostrarCampos(categoria);
+            ocultarFecha(); // Asegúrate de llamar a ocultarFecha() aquí también
+        });
+
     </script>
 
 
@@ -617,5 +665,9 @@
 @endsection
 
 
+    
 
-   
+
+
+
+

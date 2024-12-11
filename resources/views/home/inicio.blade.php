@@ -268,12 +268,12 @@
      
         </div>
       </div>
-{{-- 
+
           <!-- Invoice Example -->
           <div class="col-xl-12 col-lg-7">
             <div class="card mb-4">
               <div class="card-header py-3 align-items-center justify-content-center">
-                <h6 class="m-0 font-weight-bold text-primary" style="text-align: center;">Pagos Vencidos y Pendientes</h6>
+                <h6 class="m-0 font-weight-bold text-primary" style="text-align: center;">Pagos Vencidos y en Vencimiento Cercano</h6>
                   <div class="table-responsive p-3"> 
                     <table class="table align-items-center table-flush" id="dataTable">
                         <thead class="thead-light">
@@ -289,8 +289,6 @@
                         <tbody>
                             @foreach ($pagos as $pago)
                                 <tr>
-
-                                  @if ($pago->status != "Normal")
 
                                     <td class="font-weight-bold text-Secondary">
                                 
@@ -314,20 +312,14 @@
                                     </td>
 
                                     <td class="font-weight-bold text-Secondary" style="text-align: center;">
-                                      <a href="#" class="btn btn-sm btn-primary">Detail</a>
-                                    </td>
-                                        
-                                    @else
-                                  
-                                    <td class="font-weight-bold text-Secondary"></td>
-                                    <td class="font-weight-bold text-Secondary"></td>
-                                    <td class="font-weight- text-Secondary" style="text-align: right;">Nada Encontrado Disculpa.</td>
-                                    <td class="font-weight-bold text-Secondary"></td>
-                                    <td class="font-weight-bold text-Secondary"></td>
-                                    <td class="font-weight-bold text-Secondary"></td>
-              
-                                  @endif
-                                    
+
+                                      <a class="btn btn-success btn-sm" title="Registar Pago de Regalia" href="{{ route('pago_regalia.create', ['id' => $pago->licencia->id]) }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 16 16">
+                                          <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73z"/></svg>
+                                      </a> 
+                                     
+
+                                    </td>     
+                                 
                                 </tr>
                             @endforeach
                         </tbody>
@@ -386,7 +378,7 @@
     <script src="{{ asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
     <script src="{{ asset('path/to/bootstrap-datepicker.es.min.js')}}"></script>
     <script src="{{ asset('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js') }}" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="{{ asset('https://unpkg.com/leaflet/dist/leaflet.js') }}"></script> --}}
+    <script src="{{ asset('https://unpkg.com/leaflet/dist/leaflet.js') }}"></script>
     
           {{-- ! FUNCION PARA EL MAPA Y PARA CAPTURAR LOS DATOS DE LA LATITUD Y LONGITUD --}}
 

@@ -91,7 +91,7 @@
 
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">N° de Oficio de Aprobación</label>
-                                    <input type="text" class="form-control" id="nro_oficio" name="nro_oficio" oninput="capitalizarInput('')"></input>                                 
+                                    <input type="text" class="form-control" id="nro_oficio" name="nro_oficio" oninput="capitalizarInput('')" onkeypress="return solonum(event);"></input>                                 
                                 </div>
 
                                 <div class="col-4">                                     
@@ -117,7 +117,7 @@
 
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Nombre de Titular de Firma</label>
-                                    <input type="text" class="form-control" id="nombre_firma" name="nombre_firma" oninput="capitalizarInput('')"></input>                                 
+                                    <input type="text" class="form-control" id="nombre_firma" name="nombre_firma" oninput="capitalizarInput('')" onkeypress="return soloLetras(event);"></input>                                 
                                 </div>
 
                             </div>
@@ -144,19 +144,19 @@
                                     </select>
                                 </div>
 
-                                <div class="col-4">
+                                <div class="col-4" id="banco_container">
                                     <label for="persona" class="font-weight-bold text-primary">Tipo de Banco</label>
                                     <select class="select2-single form-control" id="banco" name="id_banco">
-                                        <option value="0">Seleccione un Tipo de Pago</option>
+                                        <option value="">Seleccione un Tipo de Banco</option>
                                         @foreach($bancos as $banco)
                                         <option value="{{ $banco->id }}"> {{ $banco->codigo_banco }} - {{ $banco->nombre_banco }} </option>
                                     @endforeach
                                     </select>
                                 </div>
 
-                                <div class="col-4">
+                                <div class="col-4" id="referencia_container">
                                     <label class="font-weight-bold text-primary">N° Referencia</label>
-                                    <input type="text" class="form-control" id="n_referencia" name="n_referencia" style="background: white;" value="" placeholder="Ingrese la Referencia" autocomplete="off" onkeypress="return solonum(event);" >
+                                    <input type="text" class="form-control" id="n_referencia" name="n_referencia" style="background: white;" value="" placeholder="Ingrese la Referencia" autocomplete="off" onkeypress="return solonum(event);">
                                 </div>
                             </div>
                                 
@@ -320,6 +320,31 @@
             });
         });
     </script>
+
+    {{-- * FUNCION PARA MOSTRAR/OCULTAR LOS CAMPOS DE BANCO Y REFERENCIA SEGUN LO QUE SE SELECCIONE EN TIPO DE PAGO --}}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        const tipoPagoSelect = document.getElementById("tipo_pago");
+       
+        const bancoContainer = document.getElementById("banco_container");
+        const referenciaContainer = document.getElementById("referencia_container");
+
+        tipoPagoSelect.addEventListener("change", function() {
+            const selectedOption = tipoPagoSelect.options[tipoPagoSelect.selectedIndex].text;
+
+            if (selectedOption === "Efectivo") {
+                bancoContainer.style.display = "none";
+                referenciaContainer.style.display = "none";
+            } else {
+                bancoContainer.style.display = "block";
+                referenciaContainer.style.display = "block";
+            }
+        });
+    });
+
+    </script>
+    
 
     {{-- * FUNCION PARA MOSTRAR LA OSBVARCIONES FISCAL CAUNDO SELECCIONE SI AL TIMBRE FISCAL --}}
 

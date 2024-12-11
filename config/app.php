@@ -69,8 +69,8 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
-
+    // 'timezone' => 'UTC',
+    'timezone' => env('TIMEZONE_VEN', 'UTC'),
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration

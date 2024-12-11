@@ -15,6 +15,14 @@ use App\Http\Controllers\BitacoraController;
 
 class ComprobantePagoController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:ver-comprobante_pago|crear-comprobante_pago|editar-comprobante_pago|borrar-comprobante_pago', ['only' => ['index']]);
+        $this->middleware('permission:crear-comprobante_pago', ['only' => ['create','store']]);
+        $this->middleware('permission:editar-comprobante_pago', ['only' => ['edit','update']]);
+        $this->middleware('permission:borrar-comprobante_pago', ['only' => ['destroy']]);
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -65,15 +73,6 @@ class ComprobantePagoController extends Controller
         ]);
 
     }
-
-    // public function asignacion($id)
-    // {
-    //     $inspeccion = Inspecciones::find($id);
-    //     $categoria = $inspeccion->planificacion->recepcion->categoria;
-
-    //     return response()->json(['categoria' => $categoria]);
-    // }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -98,20 +97,16 @@ class ComprobantePagoController extends Controller
     public function store(Request $request)
     {
 
-        $this->validate($request, [
-            // 'fecha_pago' => 'required|date|date_format:d/m/Y|after_or_equal:'.date('d/m/Y'),
-            // 'comprobante' => 'required|array|min:1',
-            // 'comprobante.*' => 'mimes:pdf',
-        ], [
-            // 'fecha_pago.required' => 'La fecha de pago es obligatoria.',
-            // 'fecha_pago.date' => 'La fecha de pago debe ser una fecha válida.',
-            // 'fecha_pago.date_format' => 'La fecha de pago debe tener el formato AAAA-MM-DD.',
-            // 'fecha_pago.after_or_equal' => 'La fecha de pago debe ser la fecha actual.',
-            // 'comprobante.required' => 'Debe registrar uno o más comprobantes en formato PDF.',
-            // 'comprobante.min' => 'Debe registrar al menos un comprobante.',
-            // 'comprobante.*.mimes' => 'Cada archivo debe ser un PDF.',
-            
-        ]);
+        $this->validate($request, 
+                [
+                'nro_oficio' => 'unique:comprobante_pagos,nro_oficio',
+                'n_referencia' => 'unique:comprobante_pagos,n_referencia',
+                ],
+                [
+                'nro_oficio.unique' => 'Este Número Oficio ya existe',
+                'n_referencia.unique' => 'Este Número de Referencia ya existe',
+                ]
+            );
 
         $comprabantepagos = new ComprobantePago ();
         $comprabantepagos->id_inspeccion = $request->input('id_inspeccion');
@@ -212,9 +207,16 @@ class ComprobantePagoController extends Controller
     public function update(Request $request, $id)
     {
 
-        $request->validate([
-            'observaciones_com' => 'nullable|string|max:255', // Permite nulos y cadenas de hasta 255 caracteres
-        ]);
+        $this->validate($request, 
+                [
+                'nro_oficio' => 'unique:comprobante_pagos,nro_oficio,' . $id,
+                'n_referencia' => 'unique:comprobante_pagos,n_referencia,' . $id,
+                ],
+                [
+                'nro_oficio.unique' => 'Este Número Oficio ya existe',
+                'n_referencia.unique' => 'Este Número de Referencia ya existe',
+                ]
+            );
 
         // Buscar El comprobante existente        
         $comprobante_pago = ComprobantePago::findOrFail($id);

@@ -28,8 +28,7 @@ class PagoRegaliaController extends Controller
          $this->middleware('permission:borrar-pago_regalia', ['only' => ['destroy']]);
 
     }
-
-
+    
     /**
      * Display a listing of the resource.
      *
@@ -57,6 +56,30 @@ class PagoRegaliaController extends Controller
 
 
         return view('pago_regalia.index', compact('licencias'));
+    }
+
+    public function pdf(Request $request, $id)
+    {
+
+        // $licencia = Licencias::findOrFail($id);
+       
+        // $licencias = licencias::join('comprobante_pagos', 'comprobante_pagos.id', '=', 'licencias.id_comprobante_pago')
+        //     ->join('inspecciones', 'inspecciones.id', '=', 'comprobante_pagos.id_inspeccion')
+        //     ->join('planificacion', 'planificacion.id', '=', 'inspecciones.id_planificacion')
+        //     ->join('recepcion', 'recepcion.id', '=', 'planificacion.id_recepcion')
+        //     ->join('solicitantes', 'solicitantes.id', '=', 'recepcion.id_solicitante' )
+        //     ->leftJoin('personas_naturales', function ($join) {
+        //             $join->on('solicitantes.solicitante_especifico_id', '=', 'personas_naturales.id')
+        //                 ->where('solicitantes.solicitante_especifico_type', '=', 'App\\Models\\PersonaNatural');
+        //         })
+        //         ->leftJoin('personas_juridicas', function ($join) {
+        //             $join->on('solicitantes.solicitante_especifico_id', '=', 'personas_juridicas.id')
+        //                 ->where('solicitantes.solicitante_especifico_type', '=', 'App\\Models\\PersonaJuridica');
+        //         });
+                
+        // Generar el PDF, incluso si no se encuentran solicitantes
+        // $pdf = Pdf::loadView('pago_regalia.pdf', compact('licencia'));
+        // return $pdf->stream('Licencia.pdf');
     }
 
     public function getLicenciaDetalles($id)

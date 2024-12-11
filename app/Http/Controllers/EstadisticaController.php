@@ -81,7 +81,27 @@ class EstadisticaController extends Controller
             ];
         });
 
-        return view('estadistica.index', compact('data_recepcion', 'data_inspecciones', 'data', 'data_mineral'));
+        $pagos = DB::table('pago_regalias')
+        ->join('licencias', 'pago_regalias.id_licencia', '=', 'licencias.id')
+        ->join('comprobante_pagos', 'licencias.id_comprobante_pago', '=', 'comprobante_pagos.id')
+        ->join('inspecciones', 'comprobante_pagos.id_inspeccion', '=', 'inspecciones.id')
+        ->join('planificacion', 'inspecciones.id_planificacion', '=', 'planificacion.id')
+        ->join('recepcion', 'planificacion.id_recepcion', '=', 'recepcion.id')
+        ->select(
+            DB::raw('count(pago_regalias.id) as total'), 
+            DB::raw('EXTRACT(MONTH FROM pago_regalias.created_at) as mes'),
+            'recepcion.categoria'
+        )
+        ->whereYear('pago_regalias.created_at', date('Y'))
+        ->groupBy(
+            DB::raw('EXTRACT(MONTH FROM pago_regalias.created_at)'),
+            'recepcion.categoria'
+        )
+        ->get();
+
+        $data_pagos = $this->prepareChart($pagos);
+
+        return view('estadistica.index', compact('data_recepcion', 'data_inspecciones', 'data', 'data_mineral','data_pagos'));
     }
 
     private function prepareChartData($recepciones)
@@ -112,13 +132,13 @@ class EstadisticaController extends Controller
         $labels = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
         
         $aprobadas = array_fill(0, 12, 0); // Inicializar un array con 12 ceros para aprobadas
-        $pendientes = array_fill(0, 12, 0); // Inicializar un array con 12 ceros para pendientes
+        $negados = array_fill(0, 12, 0); // Inicializar un array con 12 ceros para negados
 
         foreach ($inspecciones as $inspeccion) {
             if ($inspeccion->estatus === 'Aprobado') {
                 $aprobadas[$inspeccion->mes - 1] = $inspeccion->total;
-            } elseif ($inspeccion->estatus === 'Pendiente') {
-                $pendientes[$inspeccion->mes - 1] = $inspeccion->total;
+            } elseif ($inspeccion->estatus === 'Negado') {
+                $negados[$inspeccion->mes - 1] = $inspeccion->total;
             }
         }
 
@@ -133,8 +153,8 @@ class EstadisticaController extends Controller
                     'borderWidth' => 3
                 ],
                 [
-                    'label' => 'Pendientes',
-                    'data' => $pendientes,
+                    'label' => 'Negados',
+                    'data' => $negados,
                     'backgroundColor' => 'rgba(255, 159, 64, 0.2)',
                     'borderColor' => 'rgba(255, 159, 64, 1)',
                     'borderWidth' => 3
@@ -143,6 +163,40 @@ class EstadisticaController extends Controller
         ];
     }
 
+    private function prepareChart($pagos) {
+        $labels = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        $dataset_aprovechamiento = array_fill(0, 12, 0); // Inicializar array con 12 ceros para Aprovechamiento
+        $dataset_procesamiento = array_fill(0, 12, 0); // Inicializar array con 12 ceros para Procesamiento
+    
+        foreach ($pagos as $pago) {
+            if ($pago->categoria == 'Aprovechamiento') {
+                $dataset_aprovechamiento[$pago->mes - 1] = $pago->total;
+            } elseif ($pago->categoria == 'Procesamiento') {
+                $dataset_procesamiento[$pago->mes - 1] = $pago->total;
+            }
+        }
+    
+        return [
+            'labels' => $labels,
+            'datasets' => [
+                [
+                    'label' => 'Aprovechamiento',
+                    'data' => $dataset_aprovechamiento,
+                    'backgroundColor' => 'rgba(54, 162, 235, 0.2)',
+                    'borderColor' => 'rgba(54, 162, 235, 1)',
+                    'borderWidth' => 3
+                ],
+                [
+                    'label' => 'Procesamiento',
+                    'data' => $dataset_procesamiento,
+                    'backgroundColor' => 'rgba(255, 159, 64, 0.2)',
+                    'borderColor' => 'rgba(255, 159, 64, 1)',
+                    'borderWidth' => 3
+                ]
+            ]
+        ];
+    }
+    
     /**
      * Display a listing of the resource.
      *
