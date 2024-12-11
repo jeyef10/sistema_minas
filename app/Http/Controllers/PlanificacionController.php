@@ -152,9 +152,11 @@ class PlanificacionController extends Controller
         $planificacion->id_recepcion = $request->input('id_recepcion');
         $planificacion->id_municipio = $request->input('id_municipio');
         $planificacion->id_comisionado = $request->input('comisionado');
-        $planificacion->fecha_inicial = $request->input('fecha_inicial');
-        $planificacion->fecha_final = $request->input('fecha_final');
-        // $planificacion->estatus = $request->input('estatus');
+        // $planificacion->fecha_inicial = $request->input('fecha_inicial');
+        // $planificacion->fecha_final = $request->input('fecha_final');
+
+        $planificacion->fecha_inicial = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_inicial'))->format('Y-m-d'); 
+        $planificacion->fecha_final = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_final'))->format('Y-m-d');
         
         $planificacion->save();
 
@@ -243,9 +245,10 @@ class PlanificacionController extends Controller
         $planificacion->id_recepcion = $request->input('id_recepcion');
         $planificacion->id_municipio = $request->input('id_municipio');
         $planificacion->id_comisionado = $request->input('comisionado');
-        $planificacion->fecha_inicial = $request->input('fecha_inicial');
-        $planificacion->fecha_final = $request->input('fecha_final');
-        // $planificacion->estatus = $request->input('estatus');
+        // $planificacion->fecha_inicial = $request->input('fecha_inicial');
+        // $planificacion->fecha_final = $request->input('fecha_final');
+        $planificacion->fecha_inicial = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_inicial'))->format('Y-m-d'); 
+        $planificacion->fecha_final = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_final'))->format('Y-m-d');
 
         $planificacion->save();
 
