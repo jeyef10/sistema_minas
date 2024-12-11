@@ -395,14 +395,14 @@
 
         // Definir iconos personalizados
         var recepcionIcon = L.icon({
-            iconUrl: '/icons/mapa_recepcion.png', // Ruta al icono de recepcion
+            iconUrl: '/img/mapa_recepcion.png', // Ruta al icono de recepcion
             iconSize: [25, 41], // Tamaño del icono
             iconAnchor: [12, 41], // Punto del icono que se corresponde con la posición del marcador
             popupAnchor: [1, -34] // Punto desde el cual se abrirá el popup relativo al icono
         });
 
         var inspeccionIcon = L.icon({
-            iconUrl: '/icons/mapa_inspeccion.png', // Ruta al icono de inspeccion
+            iconUrl: '/img/mapa_inspeccion.png', // Ruta al icono de inspeccion
             iconSize: [35, 51],
             iconAnchor: [17, 51],
             popupAnchor: [1, -34]
@@ -410,7 +410,7 @@
 
 
         var licenciaIcon = L.icon({
-            iconUrl: '/icons/mapa_licencia.png', // Ruta al icono de recepcion
+            iconUrl: '/img/mapa_licencia.png', // Ruta al icono de recepcion
             iconSize: [25, 41], // Tamaño del icono
             iconAnchor: [12, 41], // Punto del icono que se corresponde con la posición del marcador
             popupAnchor: [1, -34] // Punto desde el cual se abrirá el popup relativo al icono
