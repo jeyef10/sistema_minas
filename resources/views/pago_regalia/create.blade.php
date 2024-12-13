@@ -155,12 +155,12 @@
 
                                     <div class="col-4" style="display: none;" id="convenio_container">
                                         <label  class="font-weight-bold text-primary">Tasa Convenio ($)</label>
-                                        <input type="text" class="form-control" id="tasa_convenio" name="tasa_convenio" value="{{isset($tasaConvenio)?$tasaConvenio:'' }}" oninput="calcularMonto()" ></input>
+                                        <input type="text" class="form-control" id="tasa_convenio" name="tasa_convenio" value="{{isset($tasaConvenio)?$tasaConvenio:'' }}" oninput="calcularMonto()" onkeypress="return solonum(event);"></input>
                                     </div>
                                     
                                     <div class="col-4">
                                         <label class="font-weight-bold text-primary">Cantidad Metro Cúbico</label>
-                                        <input type="text" class="form-control" id="monto_apro" name="monto_apro" value="{{isset($licencia->id)?$licencia->comprobante_pago->inspeccion->volumen:'' }}" readonly oninput="calcularMonto()">
+                                        <input type="text" class="form-control" id="monto_apro" name="monto_apro" value="{{isset($licencia->id)?$licencia->comprobante_pago->inspeccion->volumen:'' }}" readonly oninput="calcularMonto()" onkeypress="return solonum(event);">
                                     </div>
                                     
                                     <div class="col-4">
@@ -235,18 +235,18 @@
                                         @if ($licencia->metodo_control_pro == "control_volumen")
                                             <div class="col-4">
                                                 <label  class="font-weight-bold text-primary">Cantidad Metro Cúbico</label>
-                                                <input type="text" class="form-control" id="monto_pro" name="monto_pro" oninput="calcularMontoPro()"></input>
+                                                <input type="text" class="form-control" id="monto_pro" name="monto_pro" oninput="calcularMontoPro()" onkeypress="return solonum(event);"></input>
                                             </div>
                                         @elseif ($licencia->metodo_control_pro == "control_declaracion")
                                             <div class="col-4">
                                                 <label  class="font-weight-bold text-primary">Monto Declaración</label>
-                                                <input type="text" class="form-control" id="monto_decl" name="monto_decl" oninput="calcularMontoPro()"></input>
+                                                <input type="text" class="form-control" id="monto_decl" name="monto_decl" oninput="calcularMontoPro()" onkeypress="return solonum(event);"></input>
                                             </div>
                                         @endif
                                     @else
                                         <div class="col-4">
                                             <label  class="font-weight-bold text-primary">Cantidad Metro Cúbico</label>
-                                            <input type="text" class="form-control" id="monto_pro" name="monto_pro" oninput="calcularMontoPro()"></input>
+                                            <input type="text" class="form-control" id="monto_pro" name="monto_pro" oninput="calcularMontoPro()" onkeypress="return solonum(event);"></input>
                                         </div>
                                     @endif
 

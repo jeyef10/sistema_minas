@@ -10,6 +10,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\BitacoraController;
+use Illuminate\Validation\Rule;
 
 class PlazosController extends Controller
 {
@@ -72,12 +73,33 @@ class PlazosController extends Controller
       
         // $request->validate(
         //     [
-        //     'cantidad' => 'unique:plazos,cantidad'
+        //     'cantidad' => 'unique:plazos,cantidad', 
+        //     'medida_tiempo' => 'unique:plazos,medida_tiempo'
         //     ],
         //     [
         //     'cantidad.unique' => 'Este plazo ya existe.'
         //     ]
         // );
+
+        $request->validate(
+            [
+                'cantidad' => [
+                    'required',
+                    'integer',
+                ],
+                'medida_tiempo' => [
+                    'required',
+                    'string',
+                    Rule::unique('plazos')->where(function ($query) use ($request) {
+                        return $query->where('cantidad', $request->cantidad);
+                    }),
+                ],
+            ],
+            [
+                'medida_tiempo.unique' => 'Ya existe un plazo con esta cantidad y medida de tiempo.'
+            ]
+        );
+        
 
         $datosPlazos= request()->except('_token');
         plazos::create($datosPlazos);
@@ -137,6 +159,26 @@ class PlazosController extends Controller
         //     ]
         // );
 
+        $request->validate(
+            [
+                'cantidad' => [
+                    'required',
+                    'integer',
+                ],
+                'medida_tiempo' => [
+                    'required',
+                    'string',
+                    Rule::unique('plazos')->where(function ($query) use ($request, $id) {
+                        return $query->where('cantidad', $request->cantidad)
+                                     ->where('id', '!=', $id);
+                    }),
+                ],
+            ],
+            [
+                'medida_tiempo.unique' => 'Ya existe un plazo con esta cantidad y medida de tiempo.'
+            ]
+        );
+
         $datosPlazos = request()->except('_token','_method');
         Plazos::where('id','=',$id)->update($datosPlazos);
         $bitacora = new BitacoraController;
@@ -160,9 +202,19 @@ class PlazosController extends Controller
      */
     public function destroy($id)
     {
-        Plazos::destroy($id);
-        $bitacora = new BitacoraController;
-        $bitacora->update();
-        return redirect('plazo')->with('eliminar', 'ok');
+        
+        try {
+            // $recaudo = Recaudos::findOrFail($id);
+        
+            $plazo = Plazos::findOrFail($id);
+            $plazo->delete();
+            $bitacora = new BitacoraController;
+            $bitacora->update();
+            return redirect('plazo')->with('eliminar', 'ok');
+
+        } catch (QueryException $exception) {
+            $errorMessage = 'Error: No se puede eliminar este plazo debido a que está asignado a otros registros.';
+            return redirect()->back()->withErrors($errorMessage);
+        }
     }
 }

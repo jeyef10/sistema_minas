@@ -407,146 +407,21 @@
     });
     </script>
 
-    {{-- * FUNCION PARA MOSTRAR LOS INPUTS SEGÚN LA CATEGORÍA EN EL MODAL XD --}}
-
-
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const estatusOficioSelect = document.getElementById('estatus_oficio');
-            const inputsAprovechamiento = document.getElementById('inputs_aprovechamiento');
-            const inputsProcesamiento = document.getElementById('inputs_procesamiento');
-            const categoria = '{{$inspeccion->planificacion->recepcion->categoria}}';
-            console.log(categoria);
-
-            // Inicialmente ocultar ambos divs
-            inputsAprovechamiento.style.display = 'none';
-            inputsProcesamiento.style.display = 'none';
-    
-            estatusOficioSelect.addEventListener('change', function() {
-                const estatus = estatusOficioSelect.value;
-    
-                if (estatus === 'Negado') {
-                    inputsAprovechamiento.style.display = 'none';
-                    inputsProcesamiento.style.display = 'none';
-                } else if (estatus === 'Aprobado') {
-                    console.log(categoria);
-                    if (categoria === 'Aprovechamiento') {
-                        inputsAprovechamiento.style.display = 'block';
-                        inputsProcesamiento.style.display = 'none';
-                    } else if (categoria === 'Procesamiento') {
-                        inputsAprovechamiento.style.display = 'none';
-                        inputsProcesamiento.style.display = 'block';
-                    }
-                }
+    @if ($errors->any())
+        <script>
+            var errors = @json($errors->all());
+            errors.forEach(function(error) {
+                Swal.fire({
+                    title: 'Pago de Licencia',
+                    text: error,
+                    icon: 'warning',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: '¡OK!',
+                });
             });
-        });
-    </script> --}}
-
-    {{-- <script>
-        document.querySelectorAll('a[data-asignacion-id]').forEach(function(element) {
-        element.addEventListener('click', function() {
-            const inspeccionId = this.getAttribute('data-asignacion-id');
-            // Obtener una referencia al elemento select y a los campos a mostrar/ocultar
-            const estatusOficio = document.getElementById('estatus_oficio');
-            const inputsAprovechamiento = document.getElementById('inputs_aprovechamiento');
-            const inputsProcesamiento = document.getElementById('inputs_procesamiento');
-            let categoria = null; // Almacenar la categoría para evitar múltiples peticiones
-
-            estatusOficio.addEventListener('change', function() {
-            const estatus = this.value;
-
-            if (estatus === 'Aprobado') {
-                // Si la categoría ya se ha obtenido, no es necesario hacer otra petición
-                if (categoria) {
-                mostrarOcultarCampos(categoria);
-                } else {
-                fetch(`/comprobantepago/asignacion/` + inspeccionId)
-                    .then(response => response.json())
-                    .then(data => {
-                    categoria = data.categoria;
-                    mostrarOcultarCampos(categoria);
-                    })
-                    .catch(error => {
-                    console.error('Error al obtener la categoría:', error);
-                    });
-                }
-            } else {
-                inputsAprovechamiento.style.display = 'none';
-                inputsProcesamiento.style.display = 'none';
-            }
-            });
-
-            function mostrarOcultarCampos(categoria) {
-            inputsAprovechamiento.style.display = categoria === 'Aprovechamiento' ? 'block' : 'none';
-            inputsProcesamiento.style.display = categoria === 'Procesamiento' ? 'block' : 'none';
-            }
-        });
-    });
-
-    </script> --}}
-
-    {{-- <script>
-        document.querySelectorAll('a[data-asignacion-id]').forEach(function(element) {
-        element.addEventListener('click', function() {
-            const inspeccionId = this.getAttribute('data-asignacion-id');
-
-            $.ajax({
-                url: '/comprobantepago/asignacion/' + inspeccionId,
-                type: 'GET',
-                success: function(data) {
-                    console.log("El id es: " + data);
-                    const categoria = data;
-                    const inputsAprovechamiento = document.getElementById('inputs_aprovechamiento');
-                    const inputsProcesamiento = document.getElementById('inputs_procesamiento');
-
-                    inputsAprovechamiento.style.display = 'none';
-                    inputsProcesamiento.style.display = 'none';
-
-                    const estatus = document.getElementById('estatus_oficio').value;
-                    if (estatus === 'Aprobado') {
-                        if (categoria === 'Aprovechamiento') {
-                            inputsAprovechamiento.style.display = 'block';
-                        } else if (categoria === 'Procesamiento') {
-                            inputsProcesamiento.style.display = 'block';
-                        }
-                    }
-
-                },
-                
-            });
-        });
-    });
-
-    </script> --}}
-
-    {{-- <script>
-        document.getElementById('estatus_oficio').addEventListener('change', function() {
-        var estatusOficio = this.value;
-        var inspeccionId = document.querySelector('[data-asignacion-id]').getAttribute('data-asignacion-id');
+        </script>
+    @endif
         
-        if (estatusOficio === 'Negado') {
-            document.getElementById('inputs_aprovechamiento').style.display = 'none';
-            document.getElementById('inputs_procesamiento').style.display = 'none';
-        } else if (estatusOficio === 'Aprobado') {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', '/comprobantepago/asignacion/' + inspeccionId, true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    var categoria = JSON.parse(xhr.responseText).categoria;
-
-                    if (categoria === 'Aprovechamiento') {
-                        document.getElementById('inputs_aprovechamiento').style.display = 'block';
-                        document.getElementById('inputs_procesamiento').style.display = 'none';
-                    } else if (categoria === 'Procesamiento') {
-                        document.getElementById('inputs_aprovechamiento').style.display = 'none';
-                        document.getElementById('inputs_procesamiento').style.display = 'block';
-                    }
-                }
-            };
-            xhr.send();
-        }
-    });
-
-    </script>  --}}      
         
 @endsection

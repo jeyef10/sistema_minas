@@ -274,7 +274,7 @@
 
             {{-- * FUNCIÓN PARA MOSTRAR DATOS DE LO PAGO REGALÍA EN EL MODAL --}}
 
-    <script>
+    {{-- <script>
             $(document).ready(function() {
             $('#t_Aprovechamiento').on('click', '.btn-info', function(event) {
                 event.preventDefault();
@@ -338,6 +338,92 @@
                 });
             });
         });
-    </script>
+    </script> --}}
+
+    <script>
+        $(document).ready(function() {
+            $('#t_Aprovechamiento').on('click', '.btn-info', function(event) {
+                event.preventDefault();
+                var pago_regaliaId = $(this).data('pago_regalia-id');
+        
+                $.ajax({
+                    url: '/control_regalia/detalles/' + pago_regaliaId,
+                    type: 'GET',
+                    success: function(data) {
+                        console.log(data);
+                        let pago_regaliasHtml = '<main>';
+                        if (data.tipo_licencia !== "Procesamiento") {
+                            pago_regaliasHtml += `
+                                <h5 class="font-weight-bold text-primary" style="text-align: center">Detalles del Pago de Regalías</h5>
+                                <p><b>Mineral:</b> ${data.nombre_mineral}</p>
+                                <p><b>Tipo de Tasa:</b> ${data.tasa_mineral} $/m³</p>
+                                <p><b>Método de Pago:</b> ${data.metodo_apro}</p>
+                                <p><b>Cantidad de Metro Cubico:</b> ${data.monto_apro}</p>
+                                <p><b>Resultado:</b> ${data.resultado_apro}</p>
+                            `;
+                        }
+        
+                        // Condicionales para mostrar/ocultar datos según el tipo_licencia y el tipo de mineral
+                        if (data.tipo_licencia !== "Aprovechamiento") {
+                            pago_regaliasHtml += `
+                                <h5 class="font-weight-bold text-primary" style="text-align: center">Detalles del Pago de Regalías</h5>
+                                <p><b>Mineral:</b> ${data.nombre_mineral}</p>
+                                <p><b>Tipo de Tasa:</b> ${data.tasa_mineral} $/m³</p>
+                            `;
+        
+                            if (data.nombre_mineral !== "Roca caliza") {
+                                pago_regaliasHtml += `
+                                    <p><b>Método de Pago:</b> ${data.metodo_pro}</p>
+                                    <p><b>Cantidad de Metro Cubico:</b> ${data.monto_pro}</p>
+                                    <p><b>Resultado:</b> ${data.resultado_pro}</p>
+                                `;
+                            } else {
+                                if (data.metodo_control_pro === "control_volumen") {
+                                    pago_regaliasHtml += `
+                                        <p><b>Método de Pago:</b> ${data.metodo_pro}</p>
+                                        <p><b>Cantidad de Metro Cubico:</b> ${data.monto_pro}</p>
+                                        <p><b>Resultado:</b> ${data.resultado_pro}</p>
+                                    `;
+                                } else if (data.metodo_control_pro === "control_declaracion") {
+                                    pago_regaliasHtml += `
+                                        <p><b>Método de Pago:</b> ${data.metodo_pro}</p>
+                                        <p><b>Monto de Declaración:</b> ${data.monto_decl}</p>
+                                        <p><b>Resultado:</b> ${data.resultado_pro}</p>
+                                    `;
+                                }
+                            }
+                        }
+        
+                        // Resto del código para mostrar las fotos y el modal
+                        pago_regaliasHtml += `
+                            <p><b>Fotos:</b></p>
+                            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        `;
+        
+                        // Parsear el JSON de res_fotos
+                        let fotos = JSON.parse(data.comprobante);
+        
+                        // Itera sobre las fotos y agrégalas al HTML
+                        fotos.forEach(function(foto) {
+                            pago_regaliasHtml += `<img src="/pdf/${foto}" width="60%" style="width: calc(50% - 10px); margin-bottom: 10px;">`;
+                        });
+        
+                        pago_regaliasHtml += '</div></main>';
+        
+                        $('#exampleModalScrollable .modal-body').html(pago_regaliasHtml);
+        
+                        if (!$('#exampleModalScrollable').is(':visible')) {
+                            $('#exampleModalScrollable').modal('show');
+                        }
+                    },
+                    error: function(error) {
+                        console.error("Error al obtener los datos:", error);
+                        alert("Error al cargar los recaudos. Por favor, inténtalo de nuevo.");
+                    }
+                });
+            });
+        });
+        </script>
+        
 
 @endsection

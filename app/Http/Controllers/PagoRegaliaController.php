@@ -280,7 +280,7 @@ class PagoRegaliaController extends Controller
         $mineral = Minerales::find($pago_regalia->id_mineral);
         // $minerales = Minerales::all();
         $id_licencia = $pago_regalia->id_licencia;
-        $categoria = $pago_regalia->categoria_licencia;
+        $categoria = $pago_regalia->licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria;
         $id_mineral = $pago_regalia->id_mineral ;
         $metodo_apro = $pago_regalia->metodo_apro;
         $monto_apro = $pago_regalia->monto_apro;
@@ -293,7 +293,7 @@ class PagoRegaliaController extends Controller
         $resultado_pro = $pago_regalia->resultado_pro;
         $comprobante = $pago_regalia->comprobante;
         $fecha_pago = date('d/m/Y', strtotime($pago_regalia->fecha_pago));
-        $fecha_venci = $pago_regalia->fecha_venci;
+        $fecha_venci = date('d/m/Y', strtotime($pago_regalia->fecha_venci)); 
         $nroCuotas = $pago_regalia->licencia->nro_cuotas;
 
          // Contar el número de pagos realizados para esta licencia específica 
@@ -376,29 +376,50 @@ class PagoRegaliaController extends Controller
         }
         
         $pago_regalia->fecha_pago = $request->input('fecha_pago');
-        $pago_regalia->fecha_venci = $request->input('fecha_venci');
+        $fecha_venci_apro = $request->input('fecha_venci_apro'); 
+        $fecha_venci_pro = $request->input('fecha_venci_pro');
 
         $numeroPagos = ControlRegalia::where('id_licencia', $pago_regalia->licencia->id)->count();
         $nroCuotas = $pago_regalia->licencia->nro_cuotas;
-
-        // Verificar la categoría de la licencia para almacenar el dato del input correspondiente
+        
         if ($categoria == "Aprovechamiento") {
-            // Verificar si es el último pago
-            if (($pago_realizar_apro === '3era parte' && $numeroPagos == $nroCuotas - 1) || $pago_realizar_apro === 'Pago unico') {
-                $pago_regalia->fecha_venci = null; // No guardar fecha de vencimiento para el último pago
-            } elseif ($pago_realizar_apro === '2da parte' && $numeroPagos == $nroCuotas - 1) {
-                $pago_regalia->fecha_venci = null; // No guardar fecha de vencimiento para el último pago de 2da parte
-            } else {
-                $pago_regalia->fecha_venci = $fecha_venci_apro; // Guardar fecha de vencimiento para otros casos
+            if ($pago_regalia->metodo_apro == 'Pago unico' && $pago_realizar_apro === 'Pago unico' && $numeroPagos == $nroCuotas) {
+                $pago_regalia->fecha_venci = null; // No guardar fecha de vencimiento para el último pago único
+            } elseif ($pago_regalia->metodo_apro == 'Pago 2 parte') {
+                
+                if ($pago_realizar_apro === '1era parte') {
+                    $pago_regalia->fecha_venci = $fecha_venci_apro;
+                } elseif ($pago_realizar_apro === '2da parte') {
+                    $pago_regalia->fecha_venci = null;
+                }
+                
+            }elseif ($pago_regalia->metodo_apro == 'Pago 3 parte') {
+                if ($pago_realizar_apro === '1era parte') {
+                    $pago_regalia->fecha_venci = $fecha_venci_apro;
+                } elseif ($pago_realizar_apro === '2da parte') {
+                    $pago_regalia->fecha_venci = $fecha_venci_apro;
+                }elseif ($pago_realizar_apro === '3era parte') {
+                    $pago_regalia->fecha_venci = null;
+                }
             }
+            
         } elseif ($categoria == "Procesamiento") {
             // Verificar si es el último pago
-            if ($numeroPagos == $nroCuotas - 1) {
-                $pago_regalia->fecha_venci = null; // No guardar fecha de vencimiento para el último pago
-            } else {
-                $pago_regalia->fecha_venci = $fecha_venci_pro; // Guardar fecha de vencimiento para otros casos
+            if ($pago_regalia->metodo_pro == "Pago cuotas") {
+                // Iterar según la cantidad de cuotas
+            for ($i = 1; $i <= $nroCuotas; $i++) {
+                if ($pago_realizar_pro === "Cuota $i") {
+                    if ($i == $nroCuotas) {
+                        $pago_regalia->fecha_venci = null; // Guardar null para la última cuota
+                    } else {
+                        $pago_regalia->fecha_venci = $fecha_venci_pro; // Guardar fecha para otras cuotas
+                    }
+                    break; // Salir del ciclo una vez que se encuentra la cuota correspondiente
+                }
             }
-        }
+                
+            } 
+        } 
         
         $pago_regalia->save();
 

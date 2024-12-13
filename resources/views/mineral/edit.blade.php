@@ -64,7 +64,7 @@
 
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Tasa</label>
-                                    <input type="text" class="form-control" id="tasa" name="tasa" style="background: white;" value="{{ isset($mineral->tasa)?$mineral->tasa:'' }}" placeholder="Ingrese El monto" autocomplete="off">
+                                    <input type="text" class="form-control" id="tasa" name="tasa" style="background: white;" value="{{ isset($mineral->tasa)?$mineral->tasa:'' }}" placeholder="Ingrese El monto" autocomplete="off" onkeypress="return solonum(event);">
                                 </div>
         
                                 <div class="col-4">

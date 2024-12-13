@@ -28,7 +28,7 @@
 
                             <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Cantidad</label>
-                                    <input type="text" class="form-control" id="username" name="cantidad" style="background: white;" value="{{ isset($plazo->cantidad)?$plazo->cantidad:'' }}" placeholder="Ingrese La Cantidad" autocomplete="off">
+                                    <input type="text" class="form-control" id="username" name="cantidad" style="background: white;" value="{{ isset($plazo->cantidad)?$plazo->cantidad:'' }}" placeholder="Ingrese La Cantidad" autocomplete="off" onkeypress="return solonum(event);">
                                 </div>
 
                                 {{-- <div class="col-4">
@@ -74,6 +74,22 @@
                     </form>
                 </div>
             </div>    
-    </div>  
+    </div>
+    
+    @if ($errors->any())
+        <script>
+            var errors = @json($errors->all());
+            errors.forEach(function(error) {
+                Swal.fire({
+                    title: 'Plazos',
+                    text: error,
+                    icon: 'warning',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: '¡OK!',
+                });
+            });
+        </script>
+    @endif
 
 @endsection

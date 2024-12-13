@@ -17,7 +17,7 @@
 
                     </div>
  
-                <form method="post" action="{{ route('comprobantepago.update', $comprobante_pago->id) }}" enctype="multipart/form-data" onsubmit="return Licencia(this)" >
+                <form method="post" id="comprobantepago" action="{{ route('comprobantepago.update', $comprobante_pago->id) }}" enctype="multipart/form-data" onsubmit="return ComprobantePago(this)" >
                     @csrf
                     @method('PUT')
 
@@ -424,6 +424,35 @@
             }
         });
         
+    </script>
+
+    <script>
+        function validarTimbreFiscal() {
+            const timbreFiscal = document.querySelector('input[name="timbre_fiscal"]:checked');
+        
+            if (!timbreFiscal) {
+                Swal.fire({
+                    title: 'Timbres Fiscales',
+                    text: "Debe seleccionar una opción de Timbres Fiscales.",
+                    icon: 'warning',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Se puede hacer alguna acción adicional aquí si es necesario
+                    }
+                });
+        
+                return false;
+            }
+        
+            return true;
+        }
+        
+        // Asegúrate de llamar a esta función al enviar el formulario
+        document.getElementById('comprobantepago').onsubmit = function() {
+            return validarTimbreFiscal();
+        };
     </script>
 
 @if ($errors->any())

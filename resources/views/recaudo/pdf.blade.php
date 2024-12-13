@@ -92,7 +92,7 @@ img {
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $recaudo->nombre }}</td>
-                    <td>{{ $recaudo->categoria_recaudos }}</td>
+                    <td>{{ implode(', ', json_decode($recaudo->categoria_recaudos, true)) }}</td>
 
                 </tr>
          @endforeach

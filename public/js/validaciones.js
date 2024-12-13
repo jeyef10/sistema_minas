@@ -2841,6 +2841,42 @@ function Inspeccion (obj) {
 
 // Validar Comprbante de pago
 function ComprobantePago (obj) {
+    var nro_oficio = obj.nro_oficio.value;
+    if (nro_oficio==0){
+        Swal.fire({
+            title: 'Tipo de Pago',
+            text: "Debe ingresar un Número de Oficio de Aprobación",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return (false);
+    }
+
+    var nombre_firma = obj.nombre_firma.value;
+    if (nombre_firma==0){
+        Swal.fire({
+            title: 'Tipo de Pago',
+            text: "Debe ingresar un Nombre de Titular de Firma",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+        if (result.isConfirmed) {
+
+            this.submit();
+        }
+        })
+        
+        return (false);
+    }
+
     var tipo_pago = obj.tipo_pago.value;
     if (tipo_pago==0){
         Swal.fire({

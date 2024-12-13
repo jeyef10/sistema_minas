@@ -27,11 +27,11 @@
 
                                 <div class="col-3">
                                     <label  class="font-weight-bold text-primary">Código del Banco</label>
-                                    <input class="form-control" type="text" name="codigo_banco" id="codigo_banco" placeholder="Ingrese el Código del banco" value="{{ isset($banco->codigo_banco)?$banco->codigo_banco:'' }}" onkeypress="return solonum(event);">
+                                    <input class="form-control" type="text" name="codigo_banco" id="codigo_banco" placeholder="Ingrese el Código del banco" maxlength="4" value="{{ isset($banco->codigo_banco)?$banco->codigo_banco:'' }}" onkeypress="return solonum(event);">
                                 </div>
                                 
                                 <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">Nombre del Pago</label>
+                                    <label  class="font-weight-bold text-primary">Nombre del Banco</label>
                                     <input class="form-control" type="text" name="nombre_banco" id="nombre_banco" placeholder="Ingrese el Nombre del Banco" value="{{ isset($banco->nombre_banco)?$banco->nombre_banco:'' }}" onkeypress="return soloLetras(event);" oninput="capitalizarInput('nombre_banco')">
                                 </div>
                                     
@@ -80,7 +80,7 @@
 
     {{-- ? FUNCIÓN PARA CONVERTIR UNA LETRA EN MAYÚSCULAS Y LOS DEMAS EN MINÚSCULAS --}}
     
-    <script>
+    {{-- <script>
 
         function capitalizarPrimeraLetra(texto) {
             return texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
@@ -91,27 +91,38 @@
             inputElement.value = capitalizarPrimeraLetra(inputElement.value);
         }
 
-    </script>
-    
-    @if ($errors->any())
+    </script> --}}
+
     <script>
-        var errorMessage = @json($errors->first());
-        Swal.fire({
-            title: 'Bancos',
-            text: " Esta Banco Ya Existe.",
-            icon: 'warning',
-            showconfirmButton: true,
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: '¡OK!',
-            
-            }).then((result) => {
-        if (result.isConfirmed) {
-
-            this.submit();
+        function capitalizarPrimeraLetraDeCadaPalabra(texto) {
+            return texto.replace(/\b\w/g, function (char) {
+                return char.toUpperCase();
+            }).replace(/\B\w/g, function (char) {
+                return char.toLowerCase();
+            });
         }
-        })
+        
+        function capitalizarInput(idInput) {
+            const inputElement = document.getElementById(idInput);
+            inputElement.value = capitalizarPrimeraLetraDeCadaPalabra(inputElement.value);
+        }
     </script>
-
-@endif
+        
+    
+        @if ($errors->any())
+        <script>
+            var errors = @json($errors->all());
+            errors.forEach(function(error) {
+                Swal.fire({
+                    title: 'Entidad Bancaria',
+                    text: error,
+                    icon: 'warning',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: '¡OK!',
+                });
+            });
+        </script>
+    @endif
 
 @endsection

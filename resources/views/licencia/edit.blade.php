@@ -214,7 +214,7 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Talonario</label>
-                                        <input type="text" class="form-control" id="talonario" name="talonario" value="{{ isset($licencia->talonario)?$licencia->talonario:''}}" oninput="capitalizarInput('')"></input>                                 
+                                        <input type="text" class="form-control" id="talonario" name="talonario" value="{{ isset($licencia->talonario)?$licencia->talonario:''}}" onkeypress="return solonum(event);"></input>                                 
                                     </div>
 
                                 </div> 
@@ -313,34 +313,7 @@
 
     </script>
 
-    {{-- ! FUNCION PARA DESHABILITAR EL SELECT DE PLAZOS SI LA LICENCIA YA TIENE UN PAGO REGISTRADO --}}
-    
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const numeroPagos = {{ $numeroPagos }};
-            const selectPlazo = document.getElementById('plazo');
-    
-            if (numeroPagos > 0) {
-                selectPlazo.readonly = true;
-            }
-        });
-    </script> --}}
-
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-    const numeroPagos = {{ $numeroPagos }};
-    const selectPlazo = document.getElementById('plazo');
-
-    if (numeroPagos > 0) {
-        selectPlazo.addEventListener('mousedown', function(event) {
-            event.preventDefault();
-            alert("No puedes cambiar la cantidad de plazos una vez que se ha realizado un pago.");
-        });
-    }
-});
-
-    </script> --}}
-
+    {{-- ! FUNCION PARA DESHABILITAR EL SELECT DE PLAZOS SI LA LICENCIA YA TIENE UN PAGO REGISTRADO --}}  
    
     <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -377,9 +350,9 @@
         });
     </script>
 
-     {{-- ? FUNCIÓN PARA CALCULAR LA FECHA FINAL DEPEDIENDO EL PLAZO SELECCIONADO --}}
+    {{-- ? FUNCIÓN PARA CALCULAR LA FECHA FINAL DEPEDIENDO EL PLAZO SELECCIONADO --}}
 
-     {{-- <script>
+    <script>
         // Obtener los elementos del select y el input de fecha
         const plazoSelect = document.getElementById('plazo');
         const fechaFinalInput = document.getElementById('fecha_final_ope');
@@ -404,7 +377,7 @@
 
         // Escuchar el evento de cambio en el select del plazo
         plazoSelect.addEventListener('change', calcularFechaFinal);
-    </script> --}}
+    </script>
 
 @if ($errors->any())
         <script>

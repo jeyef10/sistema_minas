@@ -9,6 +9,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\BitacoraController;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Validation\Rule;
 
 class BancoController extends Controller
 {
@@ -128,16 +129,35 @@ class BancoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        /* $request->validate(
+        //  $request->validate(
+        //     [
+        //     'nombre_banco' => 'unique:bancos,nombre_banco',
+        //     'codigo_banco' => 'unique:bancos,codigo_banco'
+        //     ],
+        //     [
+        //     'nombre_banco.unique' => 'Este Banco ya existe en la base de datos.',
+        //     'codigo_banco.unique' => 'Este Codigo ya existe en la base de datos.',
+        //     ]
+        // ); 
+
+        $request->validate(
             [
-            'nombre_banco' => 'unique:bancos,nombre_banco',
-            'codigo_banco' => 'unique:bancos,codigo_banco'
+                'nombre_banco' => [
+                    'required',
+                    'string',
+                    Rule::unique('bancos')->ignore($id),
+                ],
+                'codigo_banco' => [
+                    'required',
+                    'string',
+                    Rule::unique('bancos')->ignore($id),
+                ],
             ],
             [
-            'nombre_banco.unique' => 'Este Banco ya existe en la base de datos.',
-            'codigo_banco.unique' => 'Este Codigo ya existe en la base de datos.',
+                'codigo_banco.unique' => 'Este Codigo de Banco ya existe en la base de datos.',
+                'nombre_banco.unique' => 'Este Banco ya existe en la base de datos.',
             ]
-        ); */
+        );
 
         $banco = Banco::find($id);
 
@@ -171,12 +191,12 @@ class BancoController extends Controller
             $banco = Banco::findOrFail($id);
         
             $banco->delete();
-            /* $bitacora = new BitacoraController;
-            $bitacora->update(); */
+            $bitacora = new BitacoraController;
+            $bitacora->update();
             return redirect('banco')->with('eliminar', 'ok');
 
         } catch (QueryException $exception) {
-            $errorMessage = 'Error: No se puede eliminar el banco debido a que tiene otros registros.';
+            $errorMessage = 'Error: No se puede eliminar el banco debido a que está asociado a otros registros.';
             return redirect()->back()->withErrors($errorMessage);
         }
     }

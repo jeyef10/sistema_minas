@@ -185,7 +185,7 @@ class TipoPagoController extends Controller
             return redirect('tipopago')->with('eliminar', 'ok');
 
         } catch (QueryException $exception) {
-            $errorMessage = 'Error: No se puede eliminar el tipo de pago  debido a que tiene otros registros.';
+            $errorMessage = 'Error: No se puede eliminar el tipo de pago debido a que está asociado a otros registros.';
             return redirect()->back()->withErrors($errorMessage);
         }
     }

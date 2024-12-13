@@ -215,7 +215,7 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Talonario</label>
-                                        <input type="text" class="form-control" id="talonario" name="talonario" oninput="capitalizarInput('')"></input>                                 
+                                        <input type="text" class="form-control" id="talonario" name="talonario" onkeypress="return solonum(event);"></input>                                 
                                     </div>
 
                                 </div> 
@@ -360,83 +360,6 @@
         // Escuchar el evento de cambio en el select del plazo
         plazoSelect.addEventListener('change', calcularFechaFinal);
     </script>
-
-    {{-- <script>
-
-        // document.getElementById('plazo').addEventListener('change', function() {
-        //     var plazo = this.value;
-        //     var cantidad = this.options[this.selectedIndex].text.split(' ')[0];
-        //     var medida = this.options[this.selectedIndex].text.split(' ')[2];
-        //     var fechaInicial = new Date();  // Suponemos que la fecha inicial es hoy
-        //     var fechaFinal = new Date(fechaInicial);
-
-        //     switch(medida) {
-        //         case 'mes':
-        //         case 'meses':
-        //             fechaFinal.setMonth(fechaFinal.getMonth() + parseInt(cantidad));
-        //             break;
-        //         case 'año':
-        //         case 'años':
-        //             fechaFinal.setFullYear(fechaFinal.getFullYear() + parseInt(cantidad));
-        //             break;
-        //         // Puedes agregar más casos aquí si tienes otros tipos de medidas de tiempo
-        //     }
-
-        //     var dia = fechaFinal.getDate();
-        //     var mes = fechaFinal.getMonth() + 1; // Los meses comienzan en 0
-        //     var año = fechaFinal.getFullYear();
-
-        //     document.getElementById('fecha_final_ope').value = dia + '/' + mes + '/' + año;
-        // });
-
-        // $(document).ready(function() {
-        //     $('#plazo').on('change', function() {
-        //         // Obtener el texto del plazo seleccionado
-        //         var plazoSeleccionado = $(this).find(':selected').text();
-        //         if (!plazoSeleccionado || plazoSeleccionado === 'Seleccione una Cantidad') return;
-
-        //         // Dividir el texto para obtener la cantidad y la medida de tiempo
-        //         var [cantidad, medida] = plazoSeleccionado.split(' - ');
-
-        //         // Convertir cantidad a entero
-        //         cantidad = parseInt(cantidad.trim(), 10);
-
-        //         // Verificar si la cantidad es un número válido
-        //         if (isNaN(cantidad)) return;
-
-        //         // Obtener la fecha inicial (hoy)
-        //         var fechaInicial = new Date();
-        //         var fechaFinal = new Date(fechaInicial);
-
-        //         // Ajustar la fecha final según la medida de tiempo
-        //         switch(medida.trim()) {
-        //             case 'mes':
-        //             case 'meses':
-        //                 fechaFinal.setMonth(fechaFinal.getMonth() + cantidad);
-        //                 break;
-        //             case 'año':
-        //             case 'años':
-        //                 fechaFinal.setFullYear(fechaFinal.getFullYear() + cantidad);
-        //                 break;
-        //             default:
-        //                 return; // Si la medida no es reconocida, salir
-        //         }
-
-        //         // Formatear la fecha final como dd/mm/yyyy
-        //         var dia = ('0' + fechaFinal.getDate()).slice(-2);
-        //         var mes = ('0' + (fechaFinal.getMonth() + 1)).slice(-2); // Los meses comienzan en 0
-        //         var año = fechaFinal.getFullYear();
-
-        //         // Actualizar el campo de fecha final de operación
-        //         $('#fecha_final_ope').val(dia + '/' + mes + '/' + año);
-        //     });
-
-        //     // Disparar el evento de cambio en el momento en que se carga la página
-        //     $('#plazo').trigger('change');
-        // });
-
-
-    </script> --}}
 
     @if ($errors->any())
         <script>

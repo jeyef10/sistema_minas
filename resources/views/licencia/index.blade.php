@@ -267,7 +267,7 @@
     {{-- * FUNCIÓN PARA MOSTRAR DATOS DE LA COMPROBANTE EN EL MODAL --}}
 
 
-<script>
+{{-- <script>
     $(document).ready(function() {
         $('#t_Aprovechamiento').on('click', '.btn-info', function(event) {
             event.preventDefault();
@@ -299,6 +299,7 @@
                         <p><b>Fecha Oficio Aprobación:</b> ${data.fecha_oficio}</p>
                         <p><b>Estatus Oficio Aprobación:</b> ${data.estatus_oficio}</p>
                         <p><b>Titular de Firma:</b> ${data.nombre_firma}</p>
+                        <p><b>Tipo de Pago:</b> ${data.forma_pago}</p>
                         <p><b>Tipo de Banco:</b> ${data.codigo_banco} ${data.nombre_banco}</p>
                         <p><b>N° Referencia:</b> ${data.n_referencia}</p>
                         <p><b>Observaciones:</b> ${data.observaciones_com}</p>
@@ -318,7 +319,69 @@
             });
         });
     });
-</script>
+</script> --}}
+
+<script>
+    $(document).ready(function() {
+        $('#t_Aprovechamiento').on('click', '.btn-info', function(event) {
+            event.preventDefault();
+            var comprobanteId = $(this).data('comprobante_pago-id'); // Obtén el ID de la recepción
+    
+            $.ajax({
+                url: '/licencia/detalles/' + comprobanteId,
+                type: 'GET',
+                success: function(data) {
+                    console.log(data);
+    
+                    let pdfHtml = '<div style="display: flex; flex-wrap: wrap;">';
+                        
+                    // Parsear el JSON de res_fotos
+                    let fotos = JSON.parse(data.comprobante_pdf);
+    
+                    // Itera sobre las fotos y agrégalas al HTML
+                    fotos.forEach(function(foto) {
+                        pdfHtml += `<img src="/pdf/${foto}" width="60%" style="width: calc(50% - 10px); margin-bottom: 10px;">`;
+                    });
+    
+                    pdfHtml += '</div></main>';
+    
+                    let bancoHtml = '';
+                    if (data.forma_pago !== 'Efectivo') {
+                        bancoHtml = `
+                            <p><b>Tipo de Banco:</b> ${data.codigo_banco ?? 'N/A'} ${data.nombre_banco ?? 'N/A'}</p>
+                            <p><b>N° Referencia:</b> ${data.n_referencia ?? 'N/A'}</p>
+                        `;
+                    }
+    
+                    $('#exampleModalScrollable .modal-body').html(`
+                        <h5 class="font-weight-bold text-primary" style="text-align: center">Detalles de Pago de Licencia</h5>
+                        
+                        <p><b>Tipo de Solicitud:</b> ${data.id_inspeccion}</p>
+                        <p><b>Número Oficio Aprobación:</b> ${data.nro_oficio}</p>
+                        <p><b>Fecha Oficio Aprobación:</b> ${data.fecha_oficio}</p>
+                        <p><b>Estatus Oficio Aprobación:</b> ${data.estatus_oficio}</p>
+                        <p><b>Titular de Firma:</b> ${data.nombre_firma}</p>
+                        <p><b>Tipo de Pago:</b> ${data.forma_pago}</p>
+                        ${bancoHtml}
+                        <p><b>Observaciones:</b> ${data.observaciones_com}</p>
+                        <p><b>Timbres Fiscales:</b> ${data.timbre_fiscal}</p>
+                        <p><b>Observaciones Fiscales:</b> ${data.observaciones_fiscal}</p>
+                        ${pdfHtml}
+                    `);
+    
+                    if (!$('#exampleModalScrollable').is(':visible')) {
+                        $('#exampleModalScrollable').modal('show');
+                    }
+                },
+                error: function(error) {
+                    console.error("Error al obtener los datos:", error);
+                    alert("Error al cargar los recaudos. Por favor, inténtalo de nuevo.");
+                }
+            });
+        });
+    });
+    </script>
+    
 
 
 @endsection

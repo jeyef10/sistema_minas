@@ -59,8 +59,11 @@ class ControlRegaliaController extends Controller
             'metodo_apro' => $pago_regalia->metodo_apro,
             'metodo_pro' => $pago_regalia->metodo_pro,
             'monto_apro' => $pago_regalia->monto_apro,
+            'metodo_control_pro' => $pago_regalia->licencia->metodo_control_pro ?? 'N/A',
             'monto_pro' => $pago_regalia->monto_pro,
+            'monto_decl'=> $pago_regalia->monto_decl ?? 'N/A',
             'resultado_apro' => $pago_regalia->resultado_apro,
+            'resultado_pro' => $pago_regalia->resultado_pro,
             'comprobante' => $pago_regalia->comprobante,
         ]);
 

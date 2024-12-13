@@ -141,12 +141,12 @@
 
                                     <div class="col-4" style="display: none;" id="convenio_container">
                                         <label  class="font-weight-bold text-primary">Tasa Convenio ($)</label>
-                                        <input type="text" class="form-control" id="tasa_convenio" name="tasa_convenio" value="{{ isset($pago_regalia->tasa_convenio)?$pago_regalia->tasa_convenio:'' }}" oninput="calcularMonto()" ></input>
+                                        <input type="text" class="form-control" id="tasa_convenio" name="tasa_convenio" value="{{ isset($pago_regalia->tasa_convenio)?$pago_regalia->tasa_convenio:'' }}" oninput="calcularMonto()" onkeypress="return solonum(event);"></input>
                                     </div>
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Cantidad Metro Cúbico</label>
-                                        <input type="text" class="form-control" id="monto_apro" name="monto_apro" value="{{ isset($pago_regalia->monto_apro)?$pago_regalia->monto_apro:'' }}" readonly oninput="calcularMonto()" ></input>
+                                        <input type="text" class="form-control" id="monto_apro" name="monto_apro" value="{{ isset($pago_regalia->monto_apro)?$pago_regalia->monto_apro:'' }}" readonly oninput="calcularMonto()" onkeypress="return solonum(event);"></input>
                                     </div>
 
                                     <div class="col-4">
@@ -214,18 +214,18 @@
                                             @if ($pago_regalia->licencia->metodo_control_pro == "control_volumen")
                                                 <div class="col-4">
                                                     <label  class="font-weight-bold text-primary">Cantidad Metro Cúbico</label>
-                                                    <input type="text" class="form-control" id="monto_pro" name="monto_pro" value="{{ isset($pago_regalia->monto_pro)?$pago_regalia->monto_pro:'' }}" oninput="calcularMontoPro()"></input>
+                                                    <input type="text" class="form-control" id="monto_pro" name="monto_pro" value="{{ isset($pago_regalia->monto_pro)?$pago_regalia->monto_pro:'' }}" oninput="calcularMontoPro()" onkeypress="return solonum(event);"></input>
                                                 </div>
                                             @elseif ($pago_regalia->licencia->metodo_control_pro == "control_declaracion")
                                                 <div class="col-4">
                                                     <label  class="font-weight-bold text-primary">Monto Declaración</label>
-                                                    <input type="text" class="form-control" id="monto_decl" name="monto_decl" value="{{ isset($pago_regalia->monto_decl)?$pago_regalia->monto_decl:'' }}" oninput="calcularMontoPro()"></input>
+                                                    <input type="text" class="form-control" id="monto_decl" name="monto_decl" value="{{ isset($pago_regalia->monto_decl)?$pago_regalia->monto_decl:'' }}" oninput="calcularMontoPro()" onkeypress="return solonum(event);"></input>
                                                 </div>
                                             @endif
                                         @else
                                             <div class="col-4">
                                                 <label  class="font-weight-bold text-primary">Cantidad Metro Cúbico</label>
-                                                <input type="text" class="form-control" id="monto_pro" name="monto_pro" value="{{ isset($pago_regalia->monto_pro)?$pago_regalia->monto_pro:'' }}" oninput="calcularMontoPro()"></input>
+                                                <input type="text" class="form-control" id="monto_pro" name="monto_pro" value="{{ isset($pago_regalia->monto_pro)?$pago_regalia->monto_pro:'' }}" oninput="calcularMontoPro()" onkeypress="return solonum(event);"></input>
                                             </div>
                                         @endif
     
@@ -383,21 +383,6 @@
             mostrarDivCategoria(categoria);
 
     </script>
-
-    {{-- ? FUNCION PARA MANTENER LA FECHA ACTUALIZADA EN EL CALENDARIO --}}
-
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var dateInput = document.getElementById('fecha_inspeccion');
-            var today = new Date().toISOString().split('T')[0]; // Formato YYYY-MM-DD
-    
-            dateInput.addEventListener('focus', function() {
-                if (!dateInput.value) {
-                    dateInput.value = today;
-                }
-            });
-        });
-    </script> --}}
 
         {{-- ! FUNCION PARA MOSTRAR EL PDF --}}
 
@@ -671,7 +656,7 @@
                 
                 inputFecha.style.display = 'none';
             } else if (metodo_pro == 'Pago cuotas') {
-                if (selectPro.value.includes("Cuota")) {
+                if (selectPro.value.includes("Cuota") && selectPro.value.match(/Cuota\s*(\d+)/)[1] == cuotas) {
                     inputFechaPro.style.display = 'none';
                 } else {
                     inputFechaPro.style.display = 'block';
@@ -683,10 +668,7 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             ocultarFecha(); // Llamar a la función cuando la página se carga
-        });
-
-
-        
+        });   
 
         // Llama a ocultarFecha() después de mostrarCampos() cuando la página se carga
         document.addEventListener('DOMContentLoaded', function() {

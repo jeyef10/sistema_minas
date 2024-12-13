@@ -156,13 +156,13 @@
 
               <li class="nav-item">
                 <a class="nav-link" href="{{ url('estadistica') }}">
-                  <i class="fas fa-fw fa-table"></i>
+                  <i class="fas fa-fw fa-chart-area"></i>
                   <span>Estadísticas</span>
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{ url('bitacora') }}">
-                  <i class="fas fa-fw fa-chart-area"></i>
+                  <i class="fas fa-fw fa-table"></i>
                   <span>Bitacora</span>
                 </a>
               </li>

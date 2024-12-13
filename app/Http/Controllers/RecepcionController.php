@@ -122,19 +122,6 @@ class RecepcionController extends Controller
         
         $recepcion->save();// Guardar la instancia de la tabla Recepcion
 
-        // $recaudosSeleccionados = [];
-        // $totalRecaudos = Recaudos::count();
-
-
-        // if (count($recaudosSeleccionados) !== $totalRecaudos) {
-            
-        //     $errorMessage = 'Se requieren $totalRecaudos Recaudos para registrar la recepción. Por favor, seleccione 13 Recaudos.';// Mostrar el mensaje cuando no cumples con los 13 recaudos.
-
-        // }
-        
-        // Obtener los IDs de recaudos seleccionados (debe ser un array)
-        // $recaudosSeleccionados = $request->input('recaudos');
-
         // Crear registros en la tabla puente para cada recaudo seleccionado
         foreach ($recaudosSeleccionados as $recaudo) {
             $puente = new RecepcionRecaudos();
@@ -210,6 +197,24 @@ class RecepcionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'recaudos' => 'required|array',
+        ]);
+
+        // Obtener la categoría seleccionada
+        $categoria = $request->input('categoria');
+
+        // Obtener el número total de recaudos de esa categoría
+        $totalRecaudos = Recaudos::whereJsonContains('categoria_recaudos', $categoria)->count();
+
+        // Obtener los IDs de recaudos seleccionados (debe ser un array)
+        $recaudosSeleccionados = $request->input('recaudos');
+
+        // Verificar que el número de recaudos seleccionados coincida con el número total de recaudos de la categoría
+        if (count($recaudosSeleccionados) !== $totalRecaudos) {
+            return redirect()->back()->withErrors("Se requieren $totalRecaudos Recaudos para actualizar la recepción. Por favor, seleccione $totalRecaudos Recaudos.");
+        }
+
         // Obtener la recepcion por ID
         $recepcion = Recepcion::findOrFail($id);
         $municipios = Municipio::all();

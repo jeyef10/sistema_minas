@@ -24,24 +24,6 @@
                         <div class="card-body">
                             
                             <div class="row">
-
-                                <!-- <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">Nombre del Pago</label>
-                                    <select class="select2single form-control" name="nombre_pago" id="nombre_pago">
-                                        <option value="" disabled>Seleccione un Pago</option>
-                                        <option value="Pago Licencia" selected="true">Pago Licencia</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-3">
-                                    <label  class="font-weight-bold text-primary">Metodo de Pago</label>
-                                    <select class="select2single form-control" name="forma_pago" id="forma_pago">
-                                        <option value="" selected="true" disabled>Seleccione un Metodo de Pago</option>
-                                        <option value="Efectivo">Efectivo</option>
-                                        <option value="Pago Móvil">Pago Móvil</option>
-                                        <option value="Transferecia Bancaria">Transferecia Bancaria</option>
-                                    </select>
-                                </div> -->
                                 
                                 <div class="col-4">
                                     <label for="recaudo" class="font-weight-bold text-primary">Método de Pago</label>

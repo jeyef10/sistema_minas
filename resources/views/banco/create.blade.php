@@ -27,11 +27,11 @@
 
                                 <div class="col-3">
                                     <label  class="font-weight-bold text-primary">Código del Banco</label>
-                                    <input class="form-control" type="text" name="codigo_banco" id="codigo_banco" placeholder="Ingrese el Código del banco" value="{{ old('codigo_banco') }}" onkeypress="return solonum(event);">
+                                    <input class="form-control" type="text" name="codigo_banco" id="codigo_banco" placeholder="Ingrese el Código del banco" maxlength="4" value="{{ old('codigo_banco') }}" onkeypress="return solonum(event);">
                                 </div>
 
                                 <div class="col-4">
-                                    <label  class="font-weight-bold text-primary">Nombre del Pago</label>
+                                    <label  class="font-weight-bold text-primary">Nombre del Banco</label>
                                     <input class="form-control" type="text" name="nombre_banco" id="nombre_banco" placeholder="Ingrese el Nombre del Banco" value="{{ old('nombre_banco') }}" onkeypress="return soloLetras(event);" oninput="capitalizarInput('nombre_banco')">
                                 </div>
                                 
@@ -78,7 +78,7 @@
     
     {{-- ? FUNCIÓN PARA CONVERTIR UNA LETRA EN MAYÚSCULAS Y LOS DEMAS EN MINÚSCULAS --}}
 
-    <script>
+    {{-- <script>
         function capitalizarPrimeraLetra(texto) {
             return texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
         }
@@ -87,7 +87,23 @@
             const inputElement = document.getElementById(idInput);
             inputElement.value = capitalizarPrimeraLetra(inputElement.value);
         }
-    </script>
+    </script> --}}
+
+    <script>
+        function capitalizarPrimeraLetraDeCadaPalabra(texto) {
+            return texto.replace(/\b\w/g, function (char) {
+                return char.toUpperCase();
+            }).replace(/\B\w/g, function (char) {
+                return char.toLowerCase();
+            });
+        }
+        
+        function capitalizarInput(idInput) {
+            const inputElement = document.getElementById(idInput);
+            inputElement.value = capitalizarPrimeraLetraDeCadaPalabra(inputElement.value);
+        }
+        </script>
+        
     
     
     @if ($errors->any())

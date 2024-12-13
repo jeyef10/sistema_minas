@@ -86,8 +86,8 @@ img {
                     <th>Tipo</th>
                     <th>Nombre</th>
                     <th>Categoria</th>
-                    <th>Tipo de Tasa</th>
-                    <th>Valor de la Tasa</th>
+                    <th>Valor de Tasa</th>
+                    {{-- <th>Valor de la Tasa</th> --}}
                     <th>Moneda/Longitud</th>
                     
                 </tr>
@@ -112,7 +112,7 @@ img {
 
                     </td>
 
-                    <td>{{ $mineral->valor_tasa}}</td>
+                    {{-- <td>{{ $mineral->valor_tasa}}</td> --}}
                     
                     <td class="font-weight-bold text-Secondary">
                     

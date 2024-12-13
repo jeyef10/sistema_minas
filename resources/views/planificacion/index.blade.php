@@ -15,12 +15,9 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card mb-4">
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
 
-                    <a href="{{ url('planificacion/pdf') }}" class="btn btn-sm btn-danger" target="_blank" id="pdfButton"> 
-                        {{ ('PDF') }}
-                        </a>
-                        <h2 class="font-weight-bold text-primary" style="margin-right: 33%;">Planificación de Inspecciones</h2>
+                        <h2 class="font-weight-bold text-primary" >Planificación de Inspecciones</h2>
                     </div>
                     <div class="card-body">
 
