@@ -172,7 +172,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" id="fecha_oficio" name="fecha_oficio" value="{{ $fecha_oficio }}" class="form-control" value="<?php echo date('d/m/Y'); ?>" id="simpleDataInput">
+                                                <input type="text" id="fecha_oficio" name="fecha_oficio" value="{{ date('d/m/Y', strtotime($fecha_oficio)) }}" class="form-control" value="<?php echo date('d/m/Y'); ?>" id="simpleDataInput">
                                             </div>
                                         </div>
                                     </div>
@@ -195,7 +195,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" id="fecha_inicial_ope" name="fecha_inicial_ope" class="form-control" value="{{ $fecha_inicial_ope }}" id="simpleDataInput">
+                                                <input type="text" id="fecha_inicial_ope" name="fecha_inicial_ope" class="form-control" value="{{ date('d/m/Y', strtotime($fecha_inicial_ope)) }}" id="simpleDataInput">
                                             </div>
                                         </div>
                                     </div>
@@ -207,7 +207,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                                 </div>
-                                                <input type="text" id="fecha_final_ope" name="fecha_final_ope" class="form-control" value="{{ $fecha_final_ope }}" id="simpleDataInput">
+                                                <input type="text" id="fecha_final_ope" name="fecha_final_ope" class="form-control" value="{{ date('d/m/Y', strtotime($fecha_final_ope)) }}" id="simpleDataInput">
                                             </div>
                                         </div>
                                     </div>
