@@ -182,7 +182,7 @@
 
                                 <div class="col-4">
                                     <label  class="font-weight-bold text-primary">Observaciones</label>
-                                    <textarea class="form-control" id="observaciones_com" name="observaciones_com" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('observaciones')">{{ $observaciones_com }}</textarea>                                   
+                                    <textarea class="form-control" id="observaciones_com" name="observaciones_com" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('observaciones_com')">{{ $observaciones_com }}</textarea>                                   
                                 </div>
 
                                 <div class="col-4">                                     

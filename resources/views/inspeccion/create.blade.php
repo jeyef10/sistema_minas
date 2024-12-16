@@ -126,17 +126,17 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Funcionario Acompañante</label>
-                                        <textarea class="form-control" id="funcionario_acomp" name="funcionario_acomp" cols="10" rows="10" style="max-height: 6rem;"  oninput="capitalizarInput('funcionario')"> {{ old('funcionario_acomp') }} </textarea>                                   
+                                        <textarea class="form-control" id="funcionario_acomp" name="funcionario_acomp" cols="10" rows="10" style="max-height: 6rem;"  oninput="capitalizarInput('funcionario_acomp')">{{ old('funcionario_acomp') }}</textarea>                                   
                                     </div>
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Observaciones</label>
-                                        <textarea class="form-control" id="observaciones" name="observaciones" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('observaciones')"> {{ old('observaciones') }} </textarea>                                   
+                                        <textarea class="form-control" id="observaciones" name="observaciones" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('observaciones')">{{ old('observaciones') }}</textarea>                                   
                                     </div>
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Conclusiones</label>
-                                        <textarea class="form-control" id="conclusiones" name="conclusiones" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('conclusiones')"> {{ old('conclusiones') }} </textarea>                                   
+                                        <textarea class="form-control" id="conclusiones" name="conclusiones" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('conclusiones')">{{ old('conclusiones') }}</textarea>                                   
                                     </div>
 
                                 </div>
@@ -159,7 +159,7 @@
 
                                     <div class="col-4">
                                         <label  class="font-weight-bold text-primary">Lugar</label>
-                                        <textarea class="form-control" id="lugar_direccion" name="lugar_direccion" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('lugar_direccion')"> {{ old('lugar_direccion') }} </textarea>                                   
+                                        <textarea class="form-control" id="lugar_direccion" name="lugar_direccion" cols="10" rows="10" style="max-height: 6rem;" oninput="capitalizarInput('lugar_direccion')">{{ old('lugar_direccion') }}</textarea>                                   
                                     </div>
 
                                     <div class="col-8">

@@ -65,8 +65,8 @@
                                         @endif
                                         </td> --}}
 
-                                        <td class="font-weight-bold text-Secondary">{{ $licencia->fecha_inicial_ope}}</td>
-                                        <td class="font-weight-bold text-Secondary">{{ $licencia->fecha_final_ope}}</td>
+                                        <td class="font-weight-bold text-Secondary">{{ date('d/m/Y', strtotime($licencia->fecha_inicial_ope)) }}</td>
+                                        <td class="font-weight-bold text-Secondary">{{ date('d/m/Y', strtotime($licencia->fecha_final_ope)) }}</td>
                                         <td class="font-weight-bold text-Secondary">
                                             
                                             @if ($licencia->comprobante_pago->inspeccion->planificacion->recepcion->categoria == "Aprovechamiento")

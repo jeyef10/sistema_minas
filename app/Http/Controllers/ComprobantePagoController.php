@@ -111,7 +111,7 @@ class ComprobantePagoController extends Controller
         $comprabantepagos = new ComprobantePago ();
         $comprabantepagos->id_inspeccion = $request->input('id_inspeccion');
         $comprabantepagos->nro_oficio = $request->input('nro_oficio');
-        $comprabantepagos->fecha_oficio = $request->input('fecha_oficio');
+        $comprabantepagos->fecha_oficio = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_oficio'));
         $comprabantepagos->estatus_oficio = $request->input('estatus_oficio');
         $comprabantepagos->nombre_firma = $request->input('nombre_firma');
         $comprabantepagos->id_tipo_pago = $request->input('id_tipo_pago');
@@ -138,7 +138,7 @@ class ComprobantePagoController extends Controller
         $comprabantepagos->observaciones_com = $request->input('observaciones_com');
         $comprabantepagos->timbre_fiscal = $request->input('timbre_fiscal');
         $comprabantepagos->observaciones_fiscal = $request->input('observaciones_fiscal');
-        $comprabantepagos->fecha_pago = $request->input('fecha_pago');
+        $comprabantepagos->fecha_pago = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_pago')); 
         // $comprabantepagos->estatus_pago = $request->input('estatus_pago');
 
         $comprabantepagos->save();
@@ -222,7 +222,7 @@ class ComprobantePagoController extends Controller
         $comprobante_pago = ComprobantePago::findOrFail($id);
         $comprobante_pago->id_inspeccion = $request->input('id_inspeccion');
         $comprobante_pago->nro_oficio = $request->input('nro_oficio');
-        $comprobante_pago->fecha_oficio = $request->input('fecha_oficio');
+        $comprobante_pago->fecha_oficio = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_oficio'));
         $comprobante_pago->estatus_oficio = $request->input('estatus_oficio');
         $comprobante_pago->nombre_firma = $request->input('nombre_firma');
         $comprobante_pago->id_tipo_pago = $request->input('id_tipo_pago');
@@ -252,7 +252,7 @@ class ComprobantePagoController extends Controller
         $comprobante_pago->observaciones_com = $comprobante_pago->observaciones_com ?? $request->input('observaciones_com');
         $comprobante_pago->timbre_fiscal = $request->input('timbre_fiscal');
         $comprobante_pago->observaciones_fiscal = $request->input('observaciones_fiscal');
-        $comprobante_pago->fecha_pago = $request->input('fecha_pago');
+        $comprobante_pago->fecha_pago = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_pago'));
         // $comprobante_pago->estatus_pago = $request->input('estatus_pago');
 
         $comprobante_pago->save();

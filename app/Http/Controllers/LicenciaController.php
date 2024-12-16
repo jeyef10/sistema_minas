@@ -217,10 +217,10 @@ class LicenciaController extends Controller
 
         
 
-        $licencias->fecha_oficio = $request->input('fecha_oficio');
+        $licencias->fecha_oficio = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_oficio'));
         $licencias->id_plazo = $request->input('id_plazo');
-        $licencias->fecha_inicial_ope = $request->input('fecha_inicial_ope');
-        $licencias->fecha_final_ope = $request->input('fecha_final_ope');
+        $licencias->fecha_inicial_ope = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_inicial_ope'));
+        $licencias->fecha_final_ope = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_final_ope'));
         $licencias->talonario = $request->input('talonario');
 
           // Inicializar la variable nro_cuotas
@@ -361,9 +361,9 @@ class LicenciaController extends Controller
             $nro_cuotas_apro = 3;
         } 
 
-        $licencia->fecha_oficio = $request->input('fecha_oficio');
-        $licencia->fecha_inicial_ope = $request->input('fecha_inicial_ope');
-        $licencia->fecha_final_ope = $request->input('fecha_final_ope');
+        $licencia->fecha_oficio = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_oficio'));
+        $licencia->fecha_inicial_ope = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_inicial_ope'));
+        $licencia->fecha_final_ope = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_final_ope'));
         $licencia->id_plazo = $request->input('id_plazo');
         $licencia->talonario = $request->input('talonario');
 

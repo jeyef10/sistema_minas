@@ -209,10 +209,10 @@ class PagoRegaliaController extends Controller
             $pago_regalias->comprobante = '[]'; // null
         }
         
-        $pago_regalias->fecha_pago = $request->input('fecha_pago');
+        $pago_regalias->fecha_pago = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_pago'));
 
-        $fecha_venci_apro = $request->input('fecha_venci_apro'); 
-        $fecha_venci_pro = $request->input('fecha_venci_pro');
+        $fecha_venci_apro = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_venci_apro'));
+        $fecha_venci_pro = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_venci_pro'));
 
         $numeroPagos = ControlRegalia::where('id_licencia', $licencia->id)->count();
         $nroCuotas = $pago_regalias->licencia->nro_cuotas;
@@ -375,9 +375,9 @@ class PagoRegaliaController extends Controller
             $pago_regalia->comprobante = json_encode($todosLosArchivos);
         }
         
-        $pago_regalia->fecha_pago = $request->input('fecha_pago');
-        $fecha_venci_apro = $request->input('fecha_venci_apro'); 
-        $fecha_venci_pro = $request->input('fecha_venci_pro');
+        $pago_regalia->fecha_pago = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_pago'));
+        $fecha_venci_apro = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_venci_apro'));
+        $fecha_venci_pro = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_venci_pro'));
 
         $numeroPagos = ControlRegalia::where('id_licencia', $pago_regalia->licencia->id)->count();
         $nroCuotas = $pago_regalia->licencia->nro_cuotas;
