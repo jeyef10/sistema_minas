@@ -126,7 +126,7 @@ class InspeccionesController extends Controller
             
         }
            
-        $inspecciones->fecha_inspeccion = $request->input('fecha_inspeccion');
+        $inspecciones->fecha_inspeccion = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_inspeccion'))->format('Y-m-d');
         $inspecciones->estatus = $request->input('estatus');
         // $inspecciones->estatus_resp = $request->input('estatus_resp');
 
@@ -325,7 +325,7 @@ class InspeccionesController extends Controller
             $inspeccion->res_fotos = json_encode($nombresImagenes);
         }
 
-        $inspeccion->fecha_inspeccion = $request->input('fecha_inspeccion');
+        $inspeccion->fecha_inspeccion = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('fecha_inspeccion'))->format('Y-m-d');
         $inspeccion->estatus = $request->input('estatus');
         $inspeccion->estatus_resp = $request->input('estatus_resp');
 
